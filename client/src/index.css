@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+  @font-face {
+    font-family: "brushesregular";
+    src: url("/font/brushes-webfront.ttf") format('ttf'),
+    url("/font/brushes-webfont.woff2") format('woff2'),
+    url("/font/brushes-webfont.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+body {
+    height: 100vh;
+}
