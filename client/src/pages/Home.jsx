@@ -59,25 +59,55 @@ export default function Home() {
 
 
     //get width of parent div
-    let b = document.getElementById("insertTreeIndex");
+    let b = document.getElementById("treeHolder");
     let w = b.clientWidth;
+    let h = 0;
+    
+    p.getHeight = (w) => {
+      if (w <= 400) {
+        h = 330;
+      }
+      
+      else if (w / 2 <= 650) {
+        h = w / 1.2;
+        
+      }
 
+      if (w > 650) {
+        h = 650;
+      }
+    }
 
+    p.getHeight(w);
+
+    let treeScale = 1;
+
+    p.getScale = (h) => { 
+      if (h < 580) {
+        treeScale = (h / 580);
+      }
+  
+    }
+
+    p.getScale(h);
+
+    var bg = p.loadImage('treeBG.png');
 
     const Y_AXIS = 1;
     //var b1, b2;
 
     p.setup = () => {
 
-
+      console.log('width: ' + w);
+      console.log('height: ' + h);
       //create a canvas instance
-      p.createCanvas(w, 500).parent("insertTreeIndex");
+      p.createCanvas(w, h).parent("treeHolder");
 
 
 
       div_inputs = p.createDiv('');
       div_inputs.id('div_Settings');
-      div_inputs.parent("insertTreeIndex");
+      div_inputs.parent("sliderHolder");
       div_inputs.style('visibility', 'hidden');
 
       //size
@@ -139,15 +169,15 @@ export default function Home() {
       slider_leafProb.input(p.getInputs = () => { p.readInputs(true) });
 
 
-      button_seed = p.createButton('Make it Bloom!');
+      button_seed = p.createButton('MAKE IT BLOOM!');
       button_seed.position();
-      button_seed.parent("insertTreeIndex");
+      button_seed.parent("buttonHolder");
       button_seed.id('growButton');
       button_seed.mousePressed(p.buttonGrow = () => {p.startGrow()});
 
-      button_hide = p.createButton('Create a Seed');
+      button_hide = p.createButton('CREATE A SEED');
       button_hide.position();
-      button_hide.parent("insertTreeIndex");
+      button_hide.parent("buttonHolder");
       button_hide.id('hideButton');
       button_hide.mousePressed(p.buttonHide = () => {p.showHide()});
 
@@ -180,7 +210,7 @@ export default function Home() {
       //panY = 0;
 
 
-      var bg = p.loadImage('treeBG.png');
+      
       
       p.readInputs(false);
       p.startGrow();
@@ -196,21 +226,18 @@ export default function Home() {
       else {
         p.hideUI();
 
-
       }
     }
 
     p.showUI = () => {
 
       div_inputs.style('visibility', 'initial');
-
       hide = false;
     }
 
     p.hideUI = () => {
 
       div_inputs.style('visibility', 'hidden');
-
       hide = true;
     }
 
@@ -238,27 +265,38 @@ export default function Home() {
 
 
     p.windowResized = () => {
-      b = document.getElementById("insertTreeIndex");
+      b = document.getElementById("treeHolder");
       w = b.clientWidth;
-      p.resizeCanvas(w, 500);
+
+      p.getHeight(w);
+
+      p.resizeCanvas(w, h);
+
+      p.getScale(h);
+
+      console.log('width: ' + w);
+      console.log('height: ' + h);
     }
 
     p.draw = () => {
 
       // stroke(255, 255, 255);
-      p.background(p.bg);
+      p.background(bg);
       //setGradient(0, 0, width, height, b2, b1, Y_AXIS);
       p.stroke('#2b4e46');
 
       // background(33, 66, 62);
-      p.translate(w / 2, 500);
-      p.scale(1, -1);
+      p.translate(w / 2, h);
+
+
+
+      p.scale(treeScale, -treeScale);
+
+      console.log('Tree Scale: ' + treeScale);
 
       p.translate(0, 0);
 
       p.branch(1, randSeed);
-
-
 
       p.noLoop();
     }
@@ -364,29 +402,57 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='w-full min-h-screen'>
+    <div className='w-full min-h-screen dark:bg-white'>
 
 
       {/* Intro Container */}
-      <div className='dark:bg-black dark:bg-opacity-40 border-b-[1px] border-gray-300 dark:border-gray-700 mx-auto py-10 px-5 flex flex-col gap-8 justify-center'>
+      <div className='dark:bg-white dark:bg-opacity-100 mx-auto pb-10 px-5 flex flex-col justify-center'>
 
-        <div className=' border-gray-300 dark:border-gray-700 max-w-6xl flex-1'>
-          <h1 className='text-2xl font-semibold text-center '>Welcome to Bloom!</h1>
-          <p className='text-center font-semibold pt-2 pb-5 '>Bloom is a goal tracking website meant to help you visualize and see your progress</p> 
-          <p className='dark:text-gray-300'>The goal of Bloom is to provide a way to visualy track your progress within three separate life categories: Mental, Physical and Spiritual, 
-            since we often cannot see our individual progress until we step back and take a look at the bigger picture. 
-            The reason for the three categories is to provide us a way to compare our progress between them in order to help us become a well-rounded person. 
-            Our method of visualization is a little tree that grows with you as you accomplish your goals and habits </p>
-          
+        <div id="treeHolder" className='mobile sm:small md:medium lg:large'></div>
+        <div id="underTree">
+          <img src="/underTree.png" alt='under tree picture' />
         </div>
 
+        <div id="buttonHolder" className='mb-20'> 
+          <div id="sliderHolder"></div>
+        </div>
 
+        <div className='flex justify-center mb-10'>
+ 
+          <div className='text-md text-center max-w-4xl flex flex-col gap-4 text-gray-800 dark:text-gray-400'>
 
+              <h1 className='text-3xl dark:text-white font font-semibold text-center mt-7 '>
+                Welcome to Bloom!
+              </h1>
 
-        <div id="insertTreeIndex"></div>
-        <div id="underTree"><img src="./underTree.png"> </img></div>
+              <h1 className='text-2xl dark:text-white font font-semibold text-center '>
+                A goal tracking website meant to help you visualize and see your progress!
+              </h1>
+              <p className='text-left px-5 sm:px-10'>
+                The purpose of Bloom is to provide a way to visualy track your progress within three separate life categories: Mental, Physical and Spiritual,
+                since we often cannot see our individual progress until we step back and take a look at the bigger picture. The reason for the three categories
+                is to provide us a way to compare our progress between them in order to help us become a well-rounded person. Our method of visualization is a little
+                tree that grows with you as you accomplish your goals and habits
+              </p>
 
+            <h1 className='text-2xl dark:text-white font font-semibold text-center mt-10 px-5 sm:px-10 '>
+                Click the "Create a Seed" button for a preview of the tree creation process. 
+                Watch it grow in real time with the Bloom button.
+              </h1>
+              <p className='text-left px-5 sm:px-10'>
+              Bloom's Trees are created using P5.JS canvas. The shape is made up of many variables such as: <br /> <br />
+              <b>Size</b> - the general scale of tree while keeping proportions, <br />
+              <b>Recursion Level</b> - the number of branch levels, <br />
+              <b>Length Variation</b> - the variation in length of branches, <br />
+              <b>Split Probability</b> - probability that a branch will split into multiple branches, <br />
+              <b>Flower Probabilty</b> - probability that a flower will appear at a branch level.<br /> <br />
+              And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end. 
+              Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.
+              </p>
 
+            </div>
+
+        </div>
 
 
       </div>
