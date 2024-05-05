@@ -12,6 +12,11 @@
     font-style: normal;
   }
 
+  @font-face {
+    font-family: "Qwigley";
+    src: url("/font/Qwigley-Regular.ttf") format('ttf')
+  }
+
 
 body {
     height: 100vh;
