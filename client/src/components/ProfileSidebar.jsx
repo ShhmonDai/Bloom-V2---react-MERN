@@ -54,16 +54,11 @@ export default function ProfileSidebar() {
 
     return (
 
-        <Sidebar theme={customTheme} className='w-full md:w-56'>
+        <Sidebar theme={customTheme} className='w-full md:w-56 sm:hidden'>
             <Sidebar.Items className=''>
                 <Sidebar.ItemGroup className='flex flex-col gap-1'>
 
-            
-                    <Link to='/dashboard?tab=profile'>
-                        <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'Admin' : 'User'} labelColor='dark' as='div'>
-                            Profile
-                        </Sidebar.Item>
-                    </Link>
+        
 
                     {currentUser && (
                         <Link to='/profile?tab=mind'>
@@ -89,10 +84,6 @@ export default function ProfileSidebar() {
                         </Link>
                     )}
 
-
-                    <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
-                        Sign Out
-                    </Sidebar.Item>
 
                 </Sidebar.ItemGroup>
             </Sidebar.Items>

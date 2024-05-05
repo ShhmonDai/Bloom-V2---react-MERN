@@ -1,5 +1,7 @@
 import { Sidebar } from 'flowbite-react';
 import {HiAnnotation, HiArrowSmRight, HiChartPie, HiDocumentText, HiOutlineUserGroup, HiUser} from 'react-icons/hi';
+import { FaMoon, FaSun } from 'react-icons/fa';
+import { toggleTheme } from "../redux/theme/themeSlice";
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +23,8 @@ export default function DashSidebar() {
     const location = useLocation();
     const dispatch = useDispatch();
     const {currentUser} = useSelector(state => state.user);
+    const { theme } = useSelector((state) => state.theme);
+
 
     const [tab, setTab] = useState('');
     useEffect(() => {
@@ -30,7 +34,7 @@ export default function DashSidebar() {
             setTab(tabFromUrl);
         }
     }, [location.search]);
-    
+
     
     const handleSignout = async () => {
         try {
@@ -82,6 +86,11 @@ export default function DashSidebar() {
                     </Sidebar.Item>
                     </Link>
                 )}
+
+   
+                  <Sidebar.Item icon={HiAnnotation} className='cursor-pointer' label={theme === 'dark' ? <FaMoon /> : <FaSun />} labelColor='dark' onClick={() => dispatch(toggleTheme())}>
+                      THEME
+                </Sidebar.Item> 
 
                 <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                     Sign Out
