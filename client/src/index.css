@@ -20,4 +20,157 @@
 
 body {
     height: 100vh;
+        --color-bg: #033333;
+        
+          --color-bg-light: #208da8;
+          --color-bg-dark: #176376;
+        
+          /*--color-bg-light: #4e967e;
+            --color-bg-dark: #045a5b; */
+        
+          --color-bg-inner-light: #46b9e7;
+          --color-bg-inner-dark: #3b9fc7;
+        
+          --color-tree: #2b4e46;
+          --color-primary: #0c2630;
+          --color-secondary: #102b24;
+        
+          --color-white: #fff;
+          --color-light: rgba(255, 255, 255, 0.6);
+}
+
+#buttonHolder{
+  position: relative;
+}
+
+#buttonHolder button {
+  font-family: 'Julius Sans One', sans-serif;
+  font-weight: bold;
+  color: var(--color-primary);
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  border: solid 1px var(--color-bg);
+  border-radius: 10px;
+  padding: 8px 16px;
+}
+
+#buttonHolder button:hover {
+  background: rgba(240, 140, 140, 0.9);
+  color: var(--color-white);
+  border: solid 1px var(--color-bg);
+}
+
+#buttonHolder #growButton {
+  right: 10%;
+}
+
+#buttonHolder #hideButton {
+  left: 10%;
+}
+
+#div_Settings {
+  position: absolute;
+  bottom: 55%;
+  left: 10%;
+  z-index: 12;
+}
+
+#div_Settings input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#div_Settings input[type='range'] {
+  -webkit-appearance: none;
+  overflow: hidden;
+  background-color: rgb(0, 0, 0, 0.2);
+  width: 100%;
+  height: 12px;
+}
+
+#div_Settings input[type='range']::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 12px;
+  color: var(--color-primary);
+}
+
+#div_Settings input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 15px;
+  background: rgb(240, 140, 140);
+  box-shadow: -100px 0 0 100px var(--color-bg-inner-dark);
+}
+
+
+#div_Settings span {
+  font-family: 'Julius Sans One', sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+#underTree {
+  margin-top: -1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#underTree img {
+  height: 50%;
+  width: 43%;
+  padding-left: 2rem;
+}
+
+@media screen and (max-width: 800px) { 
+#buttonHolder button {
+    padding: 8px 16px;
+  }
+
+  #buttonHolder button:hover {
+    background: rgba(240, 140, 140, 0.9);
+  }
+
+  #buttonHolder #growButton {
+    right: 5%;
+  }
+
+  #buttonHolder #hideButton {
+    left: 5%;
+  }
+
+  #div_Settings {
+    left: 5%;
+  }
+
+}
+
+@media screen and (max-width: 420px) {
+  #buttonHolder button {
+
+    padding: 8px 16px;
+  }
+
+  #buttonHolder button:hover {
+    background: rgba(240, 140, 140, 0.9);
+
+  }
+
+  #buttonHolder #growButton {
+    right: 1%;
+  }
+
+  #buttonHolder #hideButton {
+    left: 1%;
+  }
+
+  #div_Settings {
+    left: 1%;
+  }
+
 }
