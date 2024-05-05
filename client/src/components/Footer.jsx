@@ -1,5 +1,5 @@
 import { Footer } from "flowbite-react";
-import { BsLinkedin, BsInstagram, BsDribbble, BsGithub, BsLaptop } from 'react-icons/bs';
+import { BsLinkedin, BsInstagram, BsGithub, BsLaptop } from 'react-icons/bs';
 import { Link } from "react-router-dom";
 
 export default function FooterCom() {
@@ -11,7 +11,7 @@ export default function FooterCom() {
 
 
             <div className='items-center justify-left hidden sm:flex'>
-                <Link to='/' className='text-6xl font-BrushFont'>Bloom</Link>    
+                <Link to='/' className='text-6xl font-QwigleyFont'>Bloom</Link>    
             </div>
             
             <div className='mt-3'>

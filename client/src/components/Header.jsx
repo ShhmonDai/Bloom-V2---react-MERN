@@ -230,55 +230,9 @@ export default function Header() {
 
       <div className='w-full dark:bg-[url("/Header.png")] bg-cover px-8 pt-8 pb-12 sm:pb-8 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
 
-        {/* left side */}
-        <div className='gap-4 hidden sm:flex sm:absolute left-8'>
-          <Link to='https://www.linkedin.com/in/shhmon/' target='_blank' rel='noopener noreferrer' > <BsLinkedin/> </Link>
-          <Link to='https://github.com/ShhmonDai' target='_blank' rel='noopener noreferrer' > <BsGithub /> </Link>
-          <Link to='https://www.shhmon.com' target='_blank' rel='noopener noreferrer'> <RiComputerLine /> </Link>
-          <Link to='https://instagram.com/shh.mon' target='_blank' rel='noopener noreferrer'> <BsInstagram /> </Link>
-        </div>
-        
         {/* middle */}
         <div className='w-100 flex flex-col justify-start sm:justify-center sm:text-center'>
-          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl sm:text-center font-BrushFont'>Bloom</Link>
-        </div>
-
-        {/* right side */}
-        <div className='hidden sm:flex absolute right-8'>
-          <div className='flex items-start gap-2 z-20'>
-            {/* Toggle Theme Button */}
-            <Button className='w-12 h-10' color='gray' pill onClick={() => dispatch(toggleTheme())}>
-              {theme === 'dark' ? <FaSun /> : <FaMoon />}
-            </Button>
-
-            {/* Sign In or Profile Dropdown */}
-            {currentUser ? (
-              <Dropdown arrowIcon={false} inline label={<Avatar alt='user' img={currentUser.profilePicture} status="online" statusPosition="top-right" bordered color="light" rounded />}>
-                <Dropdown.Header>
-                  <span className='block text-sm'>@{currentUser.username}</span>
-                  <span className='block text-sm font-medium truncate'>
-                    {currentUser.email}
-                  </span>
-                </Dropdown.Header>
-                <Link to={'/dashboard?tab=profile'}>
-                  <Dropdown.Item>Profile</Dropdown.Item>
-                </Link>
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
-              </Dropdown>
-
-            ) :
-              (
-                <Link to='/sign-in'>
-                  <Button gradientDuoTone="skyToBlue" outline pill>
-                    Sign In
-                  </Button>
-                </Link>
-              )
-            }
-            {/* End of SignIn/Profile Dropdown */}
-
-          </div>  
+          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl sm:text-center font-QwigleyFont'>Bloom</Link>
         </div>
 
       </div>
@@ -331,31 +285,43 @@ export default function Header() {
       <Navbar.Collapse>
 
           {currentUser ? (
-            <>
-            <Navbar.Link active={path === "/"} as={'div'}>
-              <Link to='/'> HOME </Link>
-            </Navbar.Link>
-              <Navbar.Link active={path === '/profile?tab=mind'} as={'div'}>
-                <Link to='/profile?tab=mind'> MIND </Link>
-            </Navbar.Link>
-              <Navbar.Link active={path === "/profile?tab=body"} as={'div'}>
-                <Link to='/profile?tab=body'> BODY </Link>
-            </Navbar.Link>
-              <Navbar.Link active={path === "/profile?tab=spirit"} as={'div'}>
-                <Link to='/profile?tab=spirit'> SPIRIT </Link>
-            </Navbar.Link>               
-            </>
+            <div className="sm:flex sm:flex-row sm:justify-around sm:text-md">
+              <Navbar.Link active={path === "/"} as={Link} to='/'>
+                HOME
+              </Navbar.Link>
+              
+              <div className="sm:flex sm:flex-row sm:gap-6 sm:text-md sm:mx-20 md:mx-32">
+                <Navbar.Link active={path === '/profile?tab=mind'} as={Link} to='/profile?tab=mind'>
+                    MIND
+                </Navbar.Link>
+                    <Navbar.Link active={path === "/profile?tab=body"} as={Link} to='/profile?tab=body'>
+                    BODY
+                </Navbar.Link>
+                <Navbar.Link active={path === "/profile?tab=spirit"} as={Link} to='/profile?tab=spirit'>
+                    SPIRIT
+                </Navbar.Link>    
+              </div>
+
+              <Navbar.Link active={path === "/dashboard"} as={Link} to='/dashboard?tab=profile'>
+                PROFILE
+              </Navbar.Link>           
+            </div>
           ) :
             (
-              <></>
+              <>
+                <Navbar.Link active={path === "/"} as={Link} to='/'>
+                  HOME
+                </Navbar.Link>
+                <Navbar.Link active={path === "/about"} as={Link} to='/about'>
+                  ABOUT
+                </Navbar.Link>
+                <Navbar.Link active={path === "/sign-in"} as={Link} to='/sign-in'>
+                  SIGN IN
+                </Navbar.Link>              
+              </>
             )
           }
     
-            <Navbar.Link className='sm:hidden' as={'div'}>
-            <div className="flex gap-2 items-center" onClick={() => dispatch(toggleTheme())}>
-              THEME: {theme === 'dark' ? <FaSun /> : <FaMoon />}
-            </div>
-            </Navbar.Link>
               
       </Navbar.Collapse>
 
