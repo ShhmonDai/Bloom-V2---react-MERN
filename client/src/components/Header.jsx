@@ -1,12 +1,15 @@
-import { Avatar, Button, Dropdown, Navbar} from "flowbite-react";
+import { Avatar, Dropdown, Navbar} from "flowbite-react";
 import { Link, useLocation } from 'react-router-dom';
-import { FaMoon, FaSun } from 'react-icons/fa';
-import { toggleTheme } from "../redux/theme/themeSlice";
+
 import { useDispatch, useSelector } from 'react-redux';
 import { signoutSuccess } from "../redux/user/userSlice";
 import { Flowbite } from 'flowbite-react';
-import { BsLinkedin, BsInstagram, BsGithub } from 'react-icons/bs';
-import { RiComputerLine } from 'react-icons/ri';
+
+import { FaToriiGate, FaBrain, FaDumbbell } from "react-icons/fa";
+import { BsYinYang } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { GiMagicGate } from "react-icons/gi";
+
 
 
 const customNavTheme = {
@@ -204,7 +207,6 @@ export default function Header() {
     const path = useLocation().pathname;
     const dispatch = useDispatch();
     const {currentUser} = useSelector(state => state.user);
-    const {theme} = useSelector((state) => state.theme);
 
   const handleSignout = async () => {
     try {
@@ -228,11 +230,11 @@ export default function Header() {
     <Flowbite theme={{ theme: customNavTheme }}>
 
 
-      <div className='w-full dark:bg-[url("/Header.png")] bg-cover px-8 pt-8 pb-12 sm:pb-8 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
+      <div className='w-full dark:bg-[url("/Header.png")] bg-cover px-8 pt-6 pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
 
         {/* middle */}
         <div className='w-100 flex flex-col justify-start sm:justify-center sm:text-center'>
-          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl sm:text-center font-QwigleyFont'>Bloom</Link>
+          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl sm:text-center font-QwigleyFont'>Bloom</Link>
         </div>
 
       </div>
@@ -258,6 +260,10 @@ export default function Header() {
               </Dropdown.Header>
               <Link to={'/dashboard?tab=profile'}>
                 <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
+              <Link to={'/profile?tab=body'}>
+                  <Dropdown.Item>Goals</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
@@ -286,37 +292,37 @@ export default function Header() {
 
           {currentUser ? (
             <div className="sm:flex sm:flex-row sm:justify-around sm:text-md">
-              <Navbar.Link active={path === "/"} as={Link} to='/'>
-                HOME
+              <Navbar.Link className='flex gap-2 items-center' active={path === "/"} as={Link} to='/'>
+                < FaToriiGate /> HOME
               </Navbar.Link>
               
-              <div className="sm:flex sm:flex-row sm:gap-6 sm:text-md sm:mx-20 md:mx-32">
-                <Navbar.Link active={path === '/profile?tab=mind'} as={Link} to='/profile?tab=mind'>
-                    MIND
+              <div className="sm:flex sm:flex-row sm:gap-6 sm:text-md sm:mx-20 md:mx-24">
+                <Navbar.Link className='flex gap-2 items-center' active={path === '/profile?tab=mind'} as={Link} to='/profile?tab=mind'>
+                  < FaBrain /> MIND
                 </Navbar.Link>
-                    <Navbar.Link active={path === "/profile?tab=body"} as={Link} to='/profile?tab=body'>
-                    BODY
+                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=body"} as={Link} to='/profile?tab=body'>
+                  < FaDumbbell /> BODY
                 </Navbar.Link>
-                <Navbar.Link active={path === "/profile?tab=spirit"} as={Link} to='/profile?tab=spirit'>
-                    SPIRIT
+                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=spirit"} as={Link} to='/profile?tab=spirit'>
+                  < BsYinYang /> SPIRIT
                 </Navbar.Link>    
               </div>
 
-              <Navbar.Link active={path === "/dashboard"} as={Link} to='/dashboard?tab=profile'>
-                PROFILE
+              <Navbar.Link className='flex gap-2 items-center' active={path === "/dashboard"} as={Link} to='/dashboard?tab=profile'>
+                PROFILE < CgProfile /> 
               </Navbar.Link>           
             </div>
           ) :
             (
               <>
-                <Navbar.Link active={path === "/"} as={Link} to='/'>
-                  HOME
+                <Navbar.Link className="flex gap-2 items-center" active={path === "/"} as={Link} to='/'>
+                  < FaToriiGate /> HOME
                 </Navbar.Link>
                 <Navbar.Link active={path === "/about"} as={Link} to='/about'>
                   ABOUT
                 </Navbar.Link>
-                <Navbar.Link active={path === "/sign-in"} as={Link} to='/sign-in'>
-                  SIGN IN
+                <Navbar.Link className='flex gap-2 items-center' active={path === "/sign-in"} as={Link} to='/sign-in'>
+                  SIGN IN <GiMagicGate />
                 </Navbar.Link>              
               </>
             )
