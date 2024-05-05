@@ -51,12 +51,12 @@ export default function SignUp() {
   return (
     <div className='min-h-screen mt-20'>
  
-      <div className='flex p-3 max-w-4xl mx-auto flex-col md:flex-row md:items-top sm:gap-10 md:gap-15 lg:gap-20 md:px-14'>
+      <div className='flex p-3 max-w-4xl mx-auto flex-col lg:flex-row md:items-top sm:gap-10 md:gap-15 lg:gap-20 md:px-14'>
         {/* left side */}
-        <div className='flex flex-col mb-10 w-auto md:max-w-72 md:-max-w-xl'>
-          <Link to='/' className='text-6xl md:text-7xl text-center font-QwigleyFont'>Bloom</Link>
-          <span className='text-center italic font-semibold'>A journey in search of growth</span>
-          <p className='text-center md:text-left text-sm mt-5'>
+        <div className='flex flex-col mb-10 w-auto lg:max-w-72 md:-max-w-xl'>
+          <Link to='/' className='text-6xl md:text-7xl text-center font-QwigleyFont'>Sign Up</Link>
+          <span className='text-center italic font-semibold'>Start your Journey</span>
+          <p className='text-center lg:text-left text-sm mt-5'>
             You can sign up with your email and password or with Google.
           </p>
         </div>
