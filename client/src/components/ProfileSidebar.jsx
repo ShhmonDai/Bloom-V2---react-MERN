@@ -54,7 +54,7 @@ export default function ProfileSidebar() {
 
     return (
 
-        <Sidebar theme={customTheme} className='w-full md:w-56 sm:hidden'>
+        <Sidebar theme={customTheme} className='w-full md:w-56 sm:hidden mb-10'>
             <Sidebar.Items className=''>
                 <Sidebar.ItemGroup className='flex flex-col gap-1'>
 

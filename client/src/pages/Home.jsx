@@ -408,7 +408,7 @@ export default function Home() {
       {/* Intro Container */}
       <div className='dark:bg-white dark:bg-opacity-100 mx-auto pb-10 px-5 flex flex-col justify-center'>
 
-        <div id="treeHolder" className='mobile sm:small md:medium lg:large'></div>
+        <div id="treeHolder" className=''></div>
         <div id="underTree">
           <img src="/underTree.png" alt='under tree picture' />
         </div>
@@ -419,13 +419,13 @@ export default function Home() {
 
         <div className='flex justify-center mb-10'>
  
-          <div className='text-md text-center max-w-4xl flex flex-col gap-4 text-gray-800 dark:text-gray-400'>
+          <div className='text-md text-center max-w-4xl flex flex-col gap-4 text-gray-800'>
 
-              <h1 className='text-3xl dark:text-white font font-semibold text-center mt-7 '>
+              <h1 className='text-3xl font-semibold text-center mt-7 '>
                 Welcome to Bloom!
               </h1>
 
-              <h1 className='text-2xl dark:text-white font font-semibold text-center '>
+              <h1 className='text-2xl font-semibold text-center '>
                 A goal tracking website meant to help you visualize and see your progress!
               </h1>
               <p className='text-left px-5 sm:px-10'>
@@ -435,7 +435,7 @@ export default function Home() {
                 tree that grows with you as you accomplish your goals and habits
               </p>
 
-            <h1 className='text-2xl dark:text-white font font-semibold text-center mt-10 px-5 sm:px-10 '>
+            <h1 className='text-2xl font-semibold text-center mt-10 px-5 sm:px-10 '>
                 Click the "Create a Seed" button for a preview of the tree creation process. 
                 Watch it grow in real time with the Bloom button.
               </h1>
