@@ -14,7 +14,11 @@
 
   @font-face {
     font-family: "Qwigley";
-    src: url("/font/Qwigley-Regular.ttf") format('ttf')
+    src: url("/font/Qwigley-Regular.ttf") format('ttf'),
+    url('qwigley-regular-webfont.woff2') format('woff2'),
+    url('qwigley-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
   }
 
 
