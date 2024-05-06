@@ -296,7 +296,7 @@ export default function Header() {
                 < FaToriiGate /> HOME
               </Navbar.Link>
               
-              <div className="sm:flex sm:flex-row sm:gap-6 sm:text-md sm:mx-20 md:mx-24">
+              <div className="sm:flex sm:flex-row sm:gap-1 md:gap-4 sm:text-md sm:mx-20 md:mx-24">
                 <Navbar.Link className='flex gap-2 items-center' active={path === '/profile?tab=mind'} as={Link} to='/profile?tab=mind'>
                   < FaBrain /> MIND
                 </Navbar.Link>
