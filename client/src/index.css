@@ -48,14 +48,14 @@ body {
   font-weight: bold;
   color: var(--color-primary);
   position: absolute;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.3);
   border: solid 1px var(--color-bg);
   border-radius: 10px;
   padding: 8px 16px;
 }
 
 #buttonHolder button:hover {
-  background: rgba(240, 140, 140, 0.9);
+  background: rgba(240, 140, 140, 1);
   color: var(--color-white);
   border: solid 1px var(--color-bg);
 }
@@ -133,7 +133,7 @@ body {
   }
 
   #buttonHolder button:hover {
-    background: rgba(240, 140, 140, 0.9);
+    background: rgba(240, 140, 140, 1);
   }
 
   #buttonHolder #growButton {
@@ -157,7 +157,7 @@ body {
   }
 
   #buttonHolder button:hover {
-    background: rgba(240, 140, 140, 0.9);
+    background: rgba(240, 140, 140, 1);
 
   }
 
