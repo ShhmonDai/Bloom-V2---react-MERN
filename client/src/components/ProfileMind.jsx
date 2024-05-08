@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import p5 from 'p5';
+import GoalsComp from './Goals';
+import HabitsComp from './Habits';
 
 
 
@@ -71,13 +73,13 @@ export default function ProfileMind() {
         h = 330;
       }
 
-      else if (w / 2 <= 650) {
-        h = w / 1.2;
+      else if (w / 2 <= 800) {
+        h = w / 1.4;
 
       }
 
-      if (w > 650) {
-        h = 650;
+      if (w > 800) {
+        h = 600;
       }
     }
 
@@ -87,7 +89,7 @@ export default function ProfileMind() {
 
     p.getScale = (h) => {
       if (h < 580) {
-        treeScale = (h / 580);
+        treeScale = (h / 580 - 0.1);
       }
 
     }
@@ -427,9 +429,26 @@ export default function ProfileMind() {
 
   }
 
+  {/**/}
+  const [goalsToggle, setGoalsToggle] = useState();
+  const [habitsToggle, setHabitsToggle] = useState();
+  
+  const toggleGoals = () => {
+    setHabitsToggle(false);
+    setGoalsToggle(true);
+    console.log('Goals On');
+
+  };
+  
+  const toggleHabits = () => {
+    setGoalsToggle(false);
+    setHabitsToggle(true);
+    console.log('Habits On');
+  };
+  
   useEffect(() => {
     const myP5 = new p5(Sketch)
-  }, []);
+  }, [currentUser]);
 
 
 
@@ -437,15 +456,34 @@ export default function ProfileMind() {
     <div className='w-full min-h-screen'>
 
 
-      {/* Intro Container */}
+      {/* Main */}
       <div className=' mx-auto pb-10 flex flex-col justify-center'>
 
+        {/* Tree container */}
         <div id="treeHolder" className='border-b-2 border-slate-800 mb-2'></div>
 
-
+        {/* Button Container */}
         <div id="buttonHolder" className='mb-20'>
+          {/* Tree Sliders Container */}
           <div id="sliderHolder"></div>
         </div>
+
+        {/* GOALS / HABITS selector buttons */}
+        <div className='flex flex-row gap-5 justify-center'>
+          <button className='border rounded-lg px-2 py-1' type='button' onClick={toggleGoals}>Goals</button>
+          <button className='border rounded-lg px-2 py-1' type='button' onClick={toggleHabits}>Habits</button>
+        </div>
+
+        {/* Container for Goals and Habits */}
+        <div className='flex flex-col gap-5 justify-center'>
+
+        {goalsToggle ? ( < GoalsComp /> ) : ( < HabitsComp /> ) } 
+
+
+
+        </div>
+
+
 
       </div>
     </div>
