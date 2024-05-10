@@ -29,7 +29,7 @@ export const getgoals = async (req, res, next) => {
         const goals = await Goal.find({ userId: req.params.userId }).sort({
             createdAt: -1,
         });
-        res.status(200).json(goals);
+        res.status(200).json({goals});
     } catch (error) {
         next(error);
     }

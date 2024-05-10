@@ -30,7 +30,7 @@ export const getsubgoals = async (req, res, next) => {
         const subgoals = await Subgoal.find({ userId: req.params.userId }).sort({
             createdAt: -1,
         });
-        res.status(200).json(subgoals);
+        res.status(200).json({subgoals});
     } catch (error) {
         next(error);
     }
@@ -38,10 +38,10 @@ export const getsubgoals = async (req, res, next) => {
 
 export const getgoalsubgoals = async (req, res, next) => {
     try {
-        const subgoals = await Subgoal.find({ goalId: req.params.goalId }).sort({
+        const subgoal = await Subgoal.find({ goalId: req.params.goalId }).sort({
             createdAt: -1,
         });
-        res.status(200).json(subgoals);
+        res.status(200).json(subgoal);
     } catch (error) {
         next(error);
     }
