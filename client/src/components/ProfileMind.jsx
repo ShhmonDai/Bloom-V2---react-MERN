@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import p5 from 'p5';
 import GoalsComp from './Goals';
 import HabitsComp from './Habits';
+import GoalHolder from './GoalHolder';
 
 
 
@@ -62,11 +63,15 @@ export default function ProfileMind() {
       //paramSeed = Math.floor(Math.random() * 1000),
       randBias = 0;
 
+      
+
 
     //get width of parent div
     let b = document.getElementById("treeHolder");
-    let w = b.clientWidth;
+    let w = 0;
+    b.clientWidth < 800 ? ( w = b.clientWidth ) : ( w = 800);
     let h = 0;
+
 
     p.getHeight = (w) => {
       if (w <= 400) {
@@ -98,8 +103,13 @@ export default function ProfileMind() {
 
     const Y_AXIS = 1;
 
-    var backgroundImage = p.loadImage('treeBGMind.png');
+    var backgroundImage = p.loadImage('MindTreeBackground.png');
+    
+    let tmaxLen;
+    let tminLen;
 
+    var barkColor = 110;
+    console.log(barkColor);
 
     var colorTop = p.color(56, 134, 151);
     var colorBottom = p.color(157, 182, 207);
@@ -218,6 +228,10 @@ export default function ProfileMind() {
       //panX = 0;
       //panY = 0;
 
+      tmaxLen = h*0.16;
+      tminLen = tmaxLen * 0.1;
+      
+
 
 
       p.readInputs(false);
@@ -274,8 +288,7 @@ export default function ProfileMind() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      w = b.clientWidth;
-
+      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
@@ -292,8 +305,11 @@ export default function ProfileMind() {
       //p.background(220, 0);
 
       p.background(backgroundImage);
+      //p.background('#ffffff');
       //p.setGradient(0, 0, w, h, colorTop, colorBottom, Y_AXIS);
-      p.stroke('#2b4e46');
+
+
+      //p.stroke('#2b4e46');
 
 
       p.translate(w / 2, h);
@@ -302,7 +318,7 @@ export default function ProfileMind() {
 
       p.scale(treeScale, -treeScale);
 
-      console.log('Tree Scale: ' + treeScale);
+      //console.log('Tree Scale: ' + treeScale);
 
       p.translate(0, 0);
 
@@ -322,11 +338,32 @@ export default function ProfileMind() {
 
       var growthLevel = (prog - level > 1) || (prog >= maxLevel + 1) ? 1 : (prog - level);
 
-      p.strokeWeight(15 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
+
 
       var len = growthLevel * size * (1 + p.rand2() * lenRand);
+      
 
+      let col = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 10, 100, 240);
+
+
+      let colLeft = col;
+      let colMiddle = col * 0.70;
+      let colRight = col * 0.60;
+     
+
+   
+      p.strokeWeight(16 * Math.pow((maxLevel - level + 1) / maxLevel, 6));
+      p.stroke(150, barkColor +40, 250, 255 )
       p.line(0, 0, 0, len / level);
+
+      p.strokeWeight(14 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
+      p.stroke(colMiddle, barkColor, 130, 255)
+      p.line((6 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 0, (6 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), len / level);
+
+      p.strokeWeight(12 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
+      p.stroke(colRight, barkColor,130, 255)
+      p.line((12 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 0, (12 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), len / level);
+
       p.translate(0, len / level);
 
 
@@ -360,11 +397,11 @@ export default function ProfileMind() {
         var flowerSize = (size / 100) * cunt * (1 / 6) * (len / level);
 
         p.strokeWeight(4);
-        p.stroke(240 + 15 * p.rand2(), 140 + 15 * p.rand2(), 140 + 15 * p.rand2());
+        p.stroke(140 + 15 * p.rand2(), 155 + 15 * p.rand2(), 240 + 15 * p.rand2());
 
         p.rotate(-PI);
         for (var i = 0; i <= 8; i++) {
-          p.line(0, 0, 0, flowerSize * (1 + 0.5 * p.rand2()));
+          p.line(0, 0, 0, flowerSize * (1.2 + 0.5 * p.rand2()));
           p.rotate(2 * PI / 8);
         }
       }
@@ -392,6 +429,9 @@ export default function ProfileMind() {
       setTimeout(p.grow, Math.max(1, 20 - diff));
     }
 
+    p.randBark = () => {
+      return p.random(25, 100);
+    }
 
     p.rand = () => {
       return p.random(1000) / 1000;
@@ -460,7 +500,10 @@ export default function ProfileMind() {
       <div className=' mx-auto pb-10 flex flex-col justify-center'>
 
         {/* Tree container */}
-        <div id="treeHolder" className='border-b-2 border-slate-800 mb-2'></div>
+        <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
+        <div id="MindUnderTree" className='flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
+          <img src="/MindUnderTree.png" alt='under tree picture' className=' w-fit' />
+        </div>
 
         {/* Button Container */}
         <div id="buttonHolder" className='mb-20'>
@@ -468,20 +511,7 @@ export default function ProfileMind() {
           <div id="sliderHolder"></div>
         </div>
 
-        {/* GOALS / HABITS selector buttons */}
-        <div className='flex flex-row gap-5 justify-center'>
-          <button className='border rounded-lg px-2 py-1' type='button' onClick={toggleGoals}>Goals</button>
-          <button className='border rounded-lg px-2 py-1' type='button' onClick={toggleHabits}>Habits</button>
-        </div>
-
-        {/* Container for Goals and Habits */}
-        <div className='flex flex-col gap-5 justify-center'>
-
-        {goalsToggle ? ( < GoalsComp /> ) : ( < HabitsComp /> ) } 
-
-
-
-        </div>
+        <GoalHolder />
 
 
 

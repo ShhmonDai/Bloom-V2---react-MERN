@@ -77,6 +77,10 @@ body {
   bottom: 55%;
   left: 10%;
   z-index: 12;
+  padding: 12px;
+  border-radius: 5%;
+  color: #0c2630;
+  background-color: rgb(255,255,255,0.8);
 }
 
 #div_Settings input {

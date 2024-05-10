@@ -93,31 +93,25 @@ export default function ProfileBody() {
     }
 
     p.getScale(h);
-    
+
     const Y_AXIS = 1;
 
     var backgroundImage = p.loadImage('treeBGBody.png');
 
-    
+
     var colorTop = p.color(83, 137, 166);
     var colorBottom = p.color(166, 220, 238);
-
-    const light = ['#ECE4B7', '#F1FFFA', '#FDFFFF', '#C5EFCB', '#EAF2EF'];
-    const dark1 = ['#364652', '#6461A0', '#570000', '#540D6E', '#D2E4C4', '#3D3B30', '#F6D8AE', '#161032', '#020402', '#912F56'];
-    
-    let randomColorNum;
-    let padding = -35;
 
 
     p.setup = () => {
 
       console.log('width: ' + w);
       console.log('height: ' + h);
-
       //create a canvas instance
       p.createCanvas(w, h).parent("treeHolder");
 
-      //slider holder
+
+
       div_inputs = p.createDiv('');
       div_inputs.id('div_Settings');
       div_inputs.parent("sliderHolder");
@@ -197,14 +191,35 @@ export default function ProfileBody() {
 
 
 
+      // button_randomParams = createButton('Set level to 0.72');
+      // button_randomParams.position(10, 1200);
+      // button_randomParams.mousePressed(function () {
+
+
+
+      //     slider_level.value(13);
+
+      //     readInputs(true);
+      // });
+
+      //Darker Color
+      //b1 = p.color(39, 40, 39);
+      // b2 = color(125, 169, 154);
+
+      //Lighter Color
+      //b2 = p.color(56, 134, 151);
+
+      //div_inputs = createDiv('ooga');
+
+      //mX = mouseX;
+      //mY = mouseY;
+      //panX = 0;
+      //panY = 0;
+
+
+
       p.readInputs(false);
       p.startGrow();
-
-      p.pixelDensity(3)
-      randomColorNum = p.floor(p.random(light.length))
-    
-
-
 
     }
 
@@ -267,46 +282,37 @@ export default function ProfileBody() {
 
       console.log('width: ' + w);
       console.log('height: ' + h);
-
-      
-
     }
 
     p.draw = () => {
 
       p.clear();
-      //p.background(backgroundImage);
-      p.background(220, 0);
-      //p.background('#2E4057');
+      //p.background(220, 0);
 
-      
-      //p.stroke('#1f1d1a');
-      //p.underGround(padding);
-      p.stroke('#1b4017');
-      p.grassFlower(padding);
-      
-    
+      p.background(backgroundImage);
       //p.setGradient(0, 0, w, h, colorTop, colorBottom, Y_AXIS);
-      
+      p.stroke('#38211c');
+
+
       p.translate(w / 2, h);
 
+
+
       p.scale(treeScale, -treeScale);
-      
-      p.stroke('#F6D8AE');
-      p.shiningObject();
-      
+
+      console.log('Tree Scale: ' + treeScale);
+
+      p.translate(0, 0);
+
       p.branch(1, randSeed);
-      
 
       p.noLoop();
-
     }
 
     p.branch = (level, seed) => {
       if (prog < level)
         return;
 
-      p.stroke('#5e5447');
       p.randomSeed(seed);
 
       var seed1 = p.random(1000),
@@ -351,15 +357,18 @@ export default function ProfileBody() {
 
         var flowerSize = (size / 100) * cunt * (1 / 6) * (len / level);
 
-        p.strokeWeight(4);
-        p.stroke(215 + 15 * p.rand2(), 175 + 15 * p.rand2(), 115 + 15 * p.rand2());
+        p.strokeWeight(p.random(4,6));
+        p.stroke(52 + 15 * p.rand2(), 107 + 15 * p.rand2(), 48 + 15 * p.rand2());
 
         p.rotate(-PI);
+
         for (var i = 0; i <= 8; i++) {
           p.line(0, 0, 0, flowerSize * (1 + 0.5 * p.rand2()));
           p.rotate(2 * PI / 8);
         }
+
       }
+      
     }
 
     p.startGrow = () => {
@@ -417,171 +426,6 @@ export default function ProfileBody() {
           p.line(i, y, i, y + h);
         }
       }
-    }
-
-    p.shiningObject = () => {
-      p.push()
-
-      // setup
-      const sunBeamWith = p.random(.15, .45)
-      p.translate(w/2.6, h/1.3)
-
-
-      //sun
-
-
-      // first part of the sun
-      p.fill(0, 0, 0, 0)
-      p.strokeWeight(sunBeamWith / 3)
-      let sunFirstPart = p.random(75, 100)
-      let numLines1 = p.random(350, 450)
-      for (let i = 0; i < numLines1; i++) {
-
-        // calculate the angle for each line
-        let angle = i * p.TWO_PI / numLines1
-
-        // ranodm extention
-        let offsetEnd = p.random(25, 45)
-
-        // calculate the x-coordinate of the end point
-        let x = (sunFirstPart + offsetEnd) * p.cos(angle)
-
-        // calculate the y-coordinate of the end point  
-        let y = (sunFirstPart + offsetEnd) * p.sin(angle)
-
-        // draw
-        p.handDrawnLine(0, 0, x, y, .1)
-
-      }
-
-      // second part of the sun
-      //p.fill(light[randomColorNum])
-      p.strokeWeight(0)
-      p.circle(0, 0, sunFirstPart * 2.2)
-      p.fill(0, 0, 0, 0)
-      p.strokeWeight(sunBeamWith / 2)
-      let numLines2 = p.random(350, 450)
-      for (let i = 0; i < numLines2; i++) {
-
-        // calculate the angle for each line
-        let angle = i * p.TWO_PI / numLines2
-
-        // ranodm extention
-        let offsetEnd = p.random(10, 25)
-
-        // calculate the x-coordinate of the end point
-        let x = (sunFirstPart + offsetEnd) * p.cos(angle)
-
-        // calculate the y-coordinate of the end point  
-        let y = (sunFirstPart + offsetEnd) * p.sin(angle)
-
-        // draw
-        p.handDrawnLine(0, 0, x, y, .1)
-
-      }
-
-      // third part of the sun
-      //p.fill('#2E4057')
-      p.strokeWeight(0)
-      p.circle(0, 0, sunFirstPart * 1.5)
-      p.fill(0, 0, 0, 0)
-      p.strokeWeight(sunBeamWith)
-      let numLines3 = p.random(250, 350)
-      for (let i = 0; i < numLines3; i++) {
-
-        // calculate the angle for each line
-        let angle = i * p.TWO_PI / numLines3
-
-        // ranodm extention
-        let offsetEnd = p.random(10, 25)
-
-        // calculate the x-coordinate of the end point
-        let x = (sunFirstPart / 1.5 + offsetEnd) * p.cos(angle)
-
-        // calculate the y-coordinate of the end point  
-        let y = (sunFirstPart / 1.5 + offsetEnd) * p.sin(angle)
-
-        // draw
-        p.handDrawnLine(0, 0, x, y, .1)
-
-      }
-
-      // final
-      p.fill('#ffffff')
-      p.strokeWeight(sunBeamWith * 1.5)
-      p.circle(0, 0, sunFirstPart / 1.5)
-
-
-      p.pop()
-    }
-
-    p.twistedVertex = (_sx, _sy, _ex, _ey, _t) => {
-      const dLen = p.dist(_sx, _sy, _ex, _ey) * _t
-      const secL = p.random(0.2, 0.4)
-      const trdL = secL * 2.0
-      p.vertex(_sx, _sy)
-      p.bezierVertex(
-        p.lerp(_sx, _ex, secL) + p.random(-1.0, 1.0) * dLen,
-        p.lerp(_sy, _ey, secL) + p.random(-1.0, 1.0) * dLen,
-        p.lerp(_sx, _ex, trdL) + p.random(-1.0, 1.0) * dLen,
-        p.lerp(_sy, _ey, trdL) + p.random(-1.0, 1.0) * dLen,
-        _ex,
-        _ey
-      )
-    }
-    p.handDrawnLine = (x1, y1, x2, y2, t) => {
-      p.beginShape()
-      p.twistedVertex(x1, y1, x2, y2, t)
-      p.endShape()
-    }
-    p.handDrawnFlower = (x1, y1, x2, y2, t) => {
-      p.beginShape()
-      p.twistedVertex(x1, y1, x2, y2, t)
-      p.endShape()
-
-      p.push()
-      p.fill(dark1[randomColorNum])
-      p.circle(x2, y2, p.random(3, 5))
-      p.pop()
-
-    }
-
-    p.underGround = (ground) => {
-      p.push()
-
-      // move horizontal line
-      p.translate(0, -ground)
-      p.fill(0, 0, 0, 0)
-      p.strokeWeight(1.25)
-      for (let x = 0; x < w; x += p.random(3, 5)) {
-        p.handDrawnLine(x, h - p.random(5, 15) - h / 100, x, h, .1)
-        p.handDrawnLine(x, h - p.random(5, 15) - h / 25, x, h - p.random(5, 15) - h / 100, .1)
-        p.handDrawnLine(x, h - p.random(5, 15) - h / 15, x, h - p.random(5, 15) - h / 25, .1)
-        p.handDrawnLine(x, h - h / 10, x, h - p.random(5, 15) - h / 15, .1)
-      }
-
-      p.pop()
-    }
-    p.grassFlower = (ground) => {
-      p.push()
-
-      // move horizontal line
-      p.translate(0, -ground)
-      p.fill(0, 0, 0, 0)
-
-      // grass
-      p.strokeWeight(.5)
-      for (let x = 0; x < w; x += p.random(1.5)) {
-        p.handDrawnLine(x, h - h / 19, x + p.random(-5, 5), h - h / 8 - p.noise(x / 5) * 60 + 30, .1)
-      }
-
-      // flowers
-      p.strokeWeight(1)
-      for (let x = 0; x < w; x += p.random(150)) {
-        p.handDrawnFlower(x, h - h / 10, x + p.random(-15, 15), h - h / 5 - p.noise(x) * 70 + 50, p.random(.15, .20))
-      }
-
-      p.pop()
     }
 
   }
