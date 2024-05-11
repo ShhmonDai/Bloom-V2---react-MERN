@@ -455,7 +455,7 @@ export default function ProfileMind() {
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="MindUnderTree" className='flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
+        <div id="MindUnderTree" className='mt-[-1px] flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
           <img src="/MindUnderTree.png" alt='under tree picture' className=' w-fit' />
         </div>
 

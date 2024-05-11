@@ -440,7 +440,7 @@ export default function ProfileSpirit() {
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="SpiritUnderTree" className='flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
+        <div id="SpiritUnderTree" className='mt-[-1px] flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
           <img src="/SpiritUnderTree.png" alt='under tree picture' className=' w-fit' />
         </div>
 

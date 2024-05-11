@@ -439,7 +439,7 @@ export default function ProfileBody() {
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="BodyUnderTree" className='flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
+        <div id="BodyUnderTree" className='mt-[-1px] flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
           <img src="/BodyUnderTree.png" alt='under tree picture' className=' w-fit' />
         </div>
 
