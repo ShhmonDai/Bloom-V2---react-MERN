@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import p5 from 'p5';
-import GoalsComp from './Goals';
-import HabitsComp from './Habits';
 import GoalHolder from './GoalHolder';
 
 
@@ -59,7 +57,7 @@ export default function ProfileMind() {
       prog = 1,
       growing = false,
       //mutating = false,
-      randSeed = 80,
+      randSeed = 398,
       //paramSeed = Math.floor(Math.random() * 1000),
       randBias = 0;
 
@@ -105,16 +103,6 @@ export default function ProfileMind() {
 
     var backgroundImage = p.loadImage('MindTreeBackground.png');
     
-    let tmaxLen;
-    let tminLen;
-
-    var barkColor = 110;
-    console.log(barkColor);
-
-    var colorTop = p.color(56, 134, 151);
-    var colorBottom = p.color(157, 182, 207);
-
-
     p.setup = () => {
 
       console.log('width: ' + w);
@@ -200,39 +188,11 @@ export default function ProfileMind() {
       button_hide.id('hideButton');
       button_hide.mousePressed(p.buttonHide = () => { p.showHide() });
 
+      //button_newSeed = p.createButton('New Seed');
+      //button_hide.position();
+      //button_hide.parent("buttonHolder");
 
-
-
-      // button_randomParams = createButton('Set level to 0.72');
-      // button_randomParams.position(10, 1200);
-      // button_randomParams.mousePressed(function () {
-
-
-
-      //     slider_level.value(13);
-
-      //     readInputs(true);
-      // });
-
-      //Darker Color
-      //b1 = p.color(39, 40, 39);
-      // b2 = color(125, 169, 154);
-
-      //Lighter Color
-      //b2 = p.color(56, 134, 151);
-
-      //div_inputs = createDiv('ooga');
-
-      //mX = mouseX;
-      //mY = mouseY;
-      //panX = 0;
-      //panY = 0;
-
-      tmaxLen = h*0.16;
-      tminLen = tmaxLen * 0.1;
-      
-
-
+      //button_newSeed.mousePressed(p.getSeed = () => { randSeed = p.random(1,500); console.log('RandSeed: ' + randSeed); });
 
       p.readInputs(false);
       p.startGrow();
@@ -345,24 +305,34 @@ export default function ProfileMind() {
 
       let col = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 10, 100, 240);
 
+      let barkColor = 110;
 
       let colLeft = col;
       let colMiddle = col * 0.70;
       let colRight = col * 0.60;
      
 
-   
+      //p.drawingContext.shadowColor = p.color(150, 110, 250);
+      
       p.strokeWeight(16 * Math.pow((maxLevel - level + 1) / maxLevel, 6));
-      p.stroke(150, barkColor +40, 250, 255 )
+      p.stroke(150, barkColor + 40, 250, 255 )
       p.line(0, 0, 0, len / level);
+      
+      
+      p.drawingContext.shadowBlur = 10;
+      p.drawingContext.shadowColor = p.color(colMiddle, 110, 250);      
 
       p.strokeWeight(14 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
       p.stroke(colMiddle, barkColor, 130, 255)
       p.line((6 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 0, (6 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), len / level);
+      
+
+      p.drawingContext.shadowBlur = 0;
 
       p.strokeWeight(12 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
       p.stroke(colRight, barkColor,130, 255)
       p.line((12 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 0, (12 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), len / level);
+      
 
       p.translate(0, len / level);
 
@@ -397,7 +367,7 @@ export default function ProfileMind() {
         var flowerSize = (size / 100) * cunt * (1 / 6) * (len / level);
 
         p.strokeWeight(4);
-        p.stroke(140 + 15 * p.rand2(), 155 + 15 * p.rand2(), 240 + 15 * p.rand2());
+        p.stroke(204 + 15 * p.rand2(), 50 + 15 * p.rand2(), 40 + 15 * p.rand2());
 
         p.rotate(-PI);
         for (var i = 0; i <= 8; i++) {
@@ -469,22 +439,6 @@ export default function ProfileMind() {
 
   }
 
-  {/**/}
-  const [goalsToggle, setGoalsToggle] = useState();
-  const [habitsToggle, setHabitsToggle] = useState();
-  
-  const toggleGoals = () => {
-    setHabitsToggle(false);
-    setGoalsToggle(true);
-    console.log('Goals On');
-
-  };
-  
-  const toggleHabits = () => {
-    setGoalsToggle(false);
-    setHabitsToggle(true);
-    console.log('Habits On');
-  };
   
   useEffect(() => {
     const myP5 = new p5(Sketch)

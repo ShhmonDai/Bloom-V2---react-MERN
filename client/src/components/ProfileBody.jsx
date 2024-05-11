@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import p5 from 'p5';
+import GoalHolder from './GoalHolder';
 
 
 
@@ -56,28 +57,32 @@ export default function ProfileBody() {
       prog = 1,
       growing = false,
       //mutating = false,
-      randSeed = 80,
+      randSeed = 398,
       //paramSeed = Math.floor(Math.random() * 1000),
       randBias = 0;
 
 
+
+
     //get width of parent div
     let b = document.getElementById("treeHolder");
-    let w = b.clientWidth;
+    let w = 0;
+    b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
     let h = 0;
+
 
     p.getHeight = (w) => {
       if (w <= 400) {
         h = 330;
       }
 
-      else if (w / 2 <= 650) {
-        h = w / 1.2;
+      else if (w / 2 <= 800) {
+        h = w / 1.4;
 
       }
 
-      if (w > 650) {
-        h = 650;
+      if (w > 800) {
+        h = 600;
       }
     }
 
@@ -87,7 +92,7 @@ export default function ProfileBody() {
 
     p.getScale = (h) => {
       if (h < 580) {
-        treeScale = (h / 580);
+        treeScale = (h / 580 - 0.1);
       }
 
     }
@@ -96,11 +101,7 @@ export default function ProfileBody() {
 
     const Y_AXIS = 1;
 
-    var backgroundImage = p.loadImage('treeBGBody.png');
-
-
-    var colorTop = p.color(83, 137, 166);
-    var colorBottom = p.color(166, 220, 238);
+    var backgroundImage = p.loadImage('BodyTreeBackground.png');
 
 
     p.setup = () => {
@@ -190,34 +191,6 @@ export default function ProfileBody() {
 
 
 
-
-      // button_randomParams = createButton('Set level to 0.72');
-      // button_randomParams.position(10, 1200);
-      // button_randomParams.mousePressed(function () {
-
-
-
-      //     slider_level.value(13);
-
-      //     readInputs(true);
-      // });
-
-      //Darker Color
-      //b1 = p.color(39, 40, 39);
-      // b2 = color(125, 169, 154);
-
-      //Lighter Color
-      //b2 = p.color(56, 134, 151);
-
-      //div_inputs = createDiv('ooga');
-
-      //mX = mouseX;
-      //mY = mouseY;
-      //panX = 0;
-      //panY = 0;
-
-
-
       p.readInputs(false);
       p.startGrow();
 
@@ -272,8 +245,7 @@ export default function ProfileBody() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      w = b.clientWidth;
-
+      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
@@ -290,8 +262,11 @@ export default function ProfileBody() {
       //p.background(220, 0);
 
       p.background(backgroundImage);
+      //p.background('#ffffff');
       //p.setGradient(0, 0, w, h, colorTop, colorBottom, Y_AXIS);
-      p.stroke('#38211c');
+
+
+      //p.stroke('#2b4e46');
 
 
       p.translate(w / 2, h);
@@ -300,7 +275,7 @@ export default function ProfileBody() {
 
       p.scale(treeScale, -treeScale);
 
-      console.log('Tree Scale: ' + treeScale);
+      //console.log('Tree Scale: ' + treeScale);
 
       p.translate(0, 0);
 
@@ -320,11 +295,28 @@ export default function ProfileBody() {
 
       var growthLevel = (prog - level > 1) || (prog >= maxLevel + 1) ? 1 : (prog - level);
 
-      p.strokeWeight(15 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
+
 
       var len = growthLevel * size * (1 + p.rand2() * lenRand);
 
+
+      let col = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 10, 140, 240);
+
+      let colLeft = 255;
+      let colMiddle = 150;
+      let colRight = 150;
+
+      
+      p.drawingContext.shadowBlur = 15;
+      p.drawingContext.shadowColor = p.color(colLeft, col, colRight);
+  
+
+      p.strokeWeight(15 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
+      p.stroke(colLeft, col, colRight, 255)
       p.line(0, 0, 0, len / level);
+
+      p.drawingContext.shadowBlur = 0;
+
       p.translate(0, len / level);
 
 
@@ -357,18 +349,15 @@ export default function ProfileBody() {
 
         var flowerSize = (size / 100) * cunt * (1 / 6) * (len / level);
 
-        p.strokeWeight(p.random(4,6));
-        p.stroke(52 + 15 * p.rand2(), 107 + 15 * p.rand2(), 48 + 15 * p.rand2());
+        p.strokeWeight(4);
+        p.stroke(240 + 15 * p.rand2(), 230 + 15 * p.rand2(), 204 + 15 * p.rand2());
 
         p.rotate(-PI);
-
         for (var i = 0; i <= 8; i++) {
-          p.line(0, 0, 0, flowerSize * (1 + 0.5 * p.rand2()));
+          p.line(0, 0, 0, flowerSize * (1.2 + 0.5 * p.rand2()));
           p.rotate(2 * PI / 8);
         }
-
       }
-      
     }
 
     p.startGrow = () => {
@@ -393,6 +382,9 @@ export default function ProfileBody() {
       setTimeout(p.grow, Math.max(1, 20 - diff));
     }
 
+    p.randBark = () => {
+      return p.random(25, 100);
+    }
 
     p.rand = () => {
       return p.random(1000) / 1000;
@@ -430,9 +422,11 @@ export default function ProfileBody() {
 
   }
 
+
   useEffect(() => {
     const myP5 = new p5(Sketch)
-  }, []);
+  }, [currentUser]);
+
 
 
 
@@ -440,15 +434,24 @@ export default function ProfileBody() {
     <div className='w-full min-h-screen'>
 
 
-      {/* Intro Container */}
+      {/* Main */}
       <div className=' mx-auto pb-10 flex flex-col justify-center'>
 
-        <div id="treeHolder" className='border-b-2 border-slate-800 mb-2'></div>
+        {/* Tree container */}
+        <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
+        <div id="BodyUnderTree" className='flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
+          <img src="/BodyUnderTree.png" alt='under tree picture' className=' w-fit' />
+        </div>
 
-
+        {/* Button Container */}
         <div id="buttonHolder" className='mb-20'>
+          {/* Tree Sliders Container */}
           <div id="sliderHolder"></div>
         </div>
+
+        <GoalHolder />
+
+
 
       </div>
     </div>
