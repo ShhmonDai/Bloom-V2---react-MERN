@@ -29,7 +29,7 @@ export default function GoalHolder() {
 
 
   return (
-    <div className=' mx-auto pb-10 flex flex-col justify-center'>
+    <div className='pb-10 flex flex-col justify-center'>
 
         {/* GOALS / HABITS selector buttons */ }
         < div className = 'flex flex-row gap-5 justify-center' >

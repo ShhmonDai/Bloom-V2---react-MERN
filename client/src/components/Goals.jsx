@@ -1,6 +1,10 @@
 import React from 'react'
 import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { Dropdown, Table, Checkbox, Label, TextInput, Button } from "flowbite-react";
+import { BsThreeDots } from "react-icons/bs";
+import { IoIosAddCircleOutline } from "react-icons/io";
+
 
 export default function Goals() {
 
@@ -47,9 +51,9 @@ export default function Goals() {
     <div className='w-full min-h-screen'>
       
       {/* Main Container */}
-      <div className=' mx-auto pb-10 my-6 flex flex-col justify-center'> 
+      <div className='mx-auto p-10 my-6 flex flex-col justify-center gap-5 max-w-5xl'> 
       
-      {/* If user logged in map userGoals */}
+      {/* If user logged-in, map userGoals */}
       {currentUser ? (
         
         <>
@@ -60,41 +64,99 @@ export default function Goals() {
           <div key={goal._id} className='group m-4' >
 
             {/* Title Div */}
-            <div className='flex flex-row border-2 p-10 max-w-2xl w-screen'> 
-              <p>Goal Title: {goal.title}</p>
-              <button className='hidden group-hover:inline'>dropdown</button>
+            <div className='flex flex-row justify-between border-2 p-10 text-2xl'> 
+              <p>{goal.title}</p>
+              <div className='hidden group-hover:inline'>
+                <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
+                  <Dropdown.Item>Edit</Dropdown.Item>
+                  <Dropdown.Item>Delete</Dropdown.Item>
+                </Dropdown> 
+              </div>
             </div>
 
             {/* Inner Div of Goals */}
-            <div className='hidden group-hover:flex flex-col mx-10 px-2 border-2'>
+            <div className='hidden group-hover:flex flex-col mx-10 px-2 py-10 border-2 transition-all duration-500'>
+
+
+              {/* Goal Description */}
+              <div className='m-5 border-2 p-10' >{goal.content}</div>
+
+              {/* Add subgoal Input */}
+              <div className="ml-5 block">
+                <Label htmlFor="base" value="Add Task" />
+              </div>
+              <div className='mx-5 flex flex-row gap-2 justify-between' >
+                <TextInput className='w-full' id="base" type="text" sizing="md" />
+                <Button>ADD</Button>
+              </div>
+
+              {/* Subgoal Table */}
+              <div className='m-5 border-2'>
 
                     {/* User Subgoals */}
                     {userSubGoals.map((subgoal) => (
                       <>
+                        
                       {/* Show Subgoals for current Goal */}
                       {(subgoal.goalId == goal._id) ? 
                         
-                      (
-                      <div className='' key={subgoal._id}>
+                       (
+                        
+                        <div className='flex flex-row justify-between gap-2 m-2 p-2' key={subgoal._id}>
 
-                        <div className='flex flex-row gap-2'>
-                                <span>Subgoal title: {subgoal.title}</span>
-                                <button>Edit</button>
-                        </div>
+                          <div className='flex flex-row gap-5 justify-between'>
+                            <div>
+                              {subgoal.accomplished ? (<Checkbox id="accomplish" defaultChecked></Checkbox>) : (<Checkbox id="accomplish"></Checkbox>)}
+                            </div>
 
-                      </div>
+                            <div>
+                              {subgoal.title}
+                            </div>
+
+                          </div>
+                              
+                          <div>
+                            {subgoal.content}
+                          </div>
+
+                          <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
+                            <Dropdown.Item>Edit</Dropdown.Item>
+                            <Dropdown.Item>Delete</Dropdown.Item>
+                          </Dropdown> 
+
+
+                        </div> 
+                        
+                      
                       )
                       : 
                       (
                         <></>
                       )}
 
+
                     </>    
                     ))}
+              </div>
+
+              {/* Notes */}
+              <div className='m-5 border-2 p-10' >Notes go Here</div> 
+
+              {/* Add Note */}
+              <div className='mx-auto border-2 rounded-lg p-5 flex flex-col justify-center items-center gap-2 ' >
+                <IoIosAddCircleOutline className='text-4xl'/>
+                <span>Add new note</span>  
+              </div>         
+
             </div>
 
             {/* Outer Div of Goals */}
-            <div className='flex flex-row border-2 p-4 max-w-2xl w-screen'></div>
+            <div className='border-2 p-6'>
+              <div className='hidden group-hover:flex flex-row justify-between text-xl'>
+                <span>Date Created: {new Date(goal.createdOn).toLocaleDateString()} </span>
+                <Button> Accomplish Goal </Button>
+              </div>
+            </div>
 
           </div>
 
