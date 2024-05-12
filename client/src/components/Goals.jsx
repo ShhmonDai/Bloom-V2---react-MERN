@@ -1,18 +1,273 @@
 import React from 'react'
 import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Dropdown, Table, Checkbox, Label, TextInput, Button } from "flowbite-react";
+import { Dropdown, Table, Checkbox, Label, TextInput, Button, Modal, Alert } from "flowbite-react";
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 
 export default function Goals( {category} ) {
 
   const { currentUser } = useSelector((state) => state.user);
+  const [reload, setReload] = useState(false);
 
   const [userGoals, setUserGoals] = useState([]);
   const [userSubGoals, setUserSubGoals] = useState([]);
   const [userNotes, setUserNotes] = useState([]);
+
+  const [showModalAddSubgoal, setShowModalAddSubgoal] = useState(false);
+  const [showModalAddGoal, setShowModalAddGoal] = useState(false);
+  const [showModalAddNote, setShowModalAddNote] = useState(false);
+
+  const [showModalUpdateSubgoal, setShowModalUpdateSubgoal] = useState(false);
+  const [showModalUpdateGoal, setShowModalUpdateGoal] = useState(false);
+  const [showModalUpdateNote, setShowModalUpdateNote] = useState(false);
+
+  
+  const [showModalDeleteSubgoal, setShowModalDeleteSubgoal] = useState(false);
+  const [showModalDeleteGoal, setShowModalDeleteGoal] = useState(false);
+  const [showModalDeleteNote, setShowModalDeleteNote] = useState(false);
+  
+  const [formDataAddSubgoal, setFormDataAddSubgoal] = useState({});
+  const [formDataAddGoal, setFormDataAddGoal] = useState({});
+  const [formDataAddNote, setFormDataAddNote] = useState({});
+
+  const [formDataUpdateSubgoal, setFormDataUpdateSubgoal] = useState({});
+  const [formDataUpdateGoal, setFormDataUpdateGoal] = useState({});
+  const [formDataUpdateNote, setFormDataUpdateNote] = useState({});
+
+  const [idToDelete, setIdToDelete] = useState({});
+ 
+
+
+  const [publishError, setPublishError] = useState(null);
+
+
+  const handleCreateSubgoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/subgoal/createsubgoal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataAddSubgoal),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalAddSubgoal(false);
+        setFormDataAddSubgoal({});
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleCreateGoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/goal/creategoal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataAddGoal),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalAddGoal(false);
+        setFormDataAddGoal({});
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleCreateNote = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/note/createnote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataAddNote),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalAddNote(false);
+        setFormDataAddNote({});
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleUpdateGoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/goal/editgoal/${formDataUpdateGoal._id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataUpdateGoal),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalUpdateGoal(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleUpdateSubgoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/subgoal/editsubgoal/${formDataUpdateSubgoal._id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataUpdateSubgoal),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalUpdateSubgoal(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleUpdateNote = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/note/editnote/${formDataUpdateNote._id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataUpdateNote),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalUpdateNote(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleDeleteGoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/goal/deletegoal/${idToDelete._id}/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalDeleteGoal(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleDeleteSubgoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/subgoal/deletesubgoal/${idToDelete._id}/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalDeleteSubgoal(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleDeleteNote = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/note/deletenote/${idToDelete._id}/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalDeleteNote(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
 
 
 
@@ -61,13 +316,22 @@ export default function Goals( {category} ) {
       fetchSubGoals();
       fetchNotes();
     }
-  }, [currentUser._id, category]);
+  }, [currentUser._id, category, reload]);
 
   return (
-    <div className='w-full min-h-screen transition-all duration-500'>
+    <div className='w-full min-h-screen'>
       
       {/* Main Container */}
       <div className='mx-auto p-10 my-6 flex flex-col justify-center gap-5 max-w-5xl'> 
+
+        {/* Add Goal Input */}
+        <div className='mx-5 mb-10 flex flex-row gap-2 justify-center' >
+
+          <Button onClick={() => {
+            setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
+            setShowModalAddGoal(true);
+          }}>Add Goal</Button>
+        </div>
       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
@@ -77,21 +341,27 @@ export default function Goals( {category} ) {
         {userGoals.map((goal) => (
           
           
-          <div key={goal._id} className='group m-4 ' >
+          <div key={goal._id} className='group m-4' >
 
             {/* Title Div */}
             <div className='flex flex-row justify-between border-2 p-10 text-2xl'> 
               <p>{goal.title}</p>
               <div className='hidden group-hover:inline'>
                 <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
-                  <Dropdown.Item>Edit</Dropdown.Item>
-                  <Dropdown.Item>Delete</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    setShowModalUpdateGoal(true);
+                    setFormDataUpdateGoal({ ...formDataUpdateGoal, _id: goal._id, title: goal.title, content: goal.content});
+                  }}>Edit</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    setShowModalDeleteGoal(true);
+                    setIdToDelete({ ...idToDelete, _id: goal._id });
+                  }}>Delete</Dropdown.Item>
                 </Dropdown> 
               </div>
             </div>
 
             {/* Inner Div of Goals */}
-            <div className='hidden group-hover:flex opacity-0 group-hover:opacity-100 flex-col mx-10 px-2 py-10 border-2 transition-all duration-500'>
+            <div className='h-0 group-hover:h-auto group-hover:py-10 flex scale-y-0 group-hover:scale-y-100 overflow-hidden flex-col mx-10 px-2 border-2 origin-top transition-all duration-700'>
 
 
               {/* Goal Description */}
@@ -100,11 +370,7 @@ export default function Goals( {category} ) {
               </div>
               <div className='mx-5 mb-10 p-5 border-2 min-h-20' >{goal.content}</div>
 
-              {/* Add subgoal Input */}
-              <div className='mx-5 mb-10 flex flex-row gap-2 justify-between' >
-                <TextInput className='w-full' id="base" type="text" sizing="md" placeholder='Add A Subgoal'/>
-                <Button>ADD</Button>
-              </div>
+
 
               {/* Subgoals */}
               <div className="ml-5">
@@ -139,8 +405,14 @@ export default function Goals( {category} ) {
                           </div>
 
                           <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                            <Dropdown.Item>Edit</Dropdown.Item>
-                            <Dropdown.Item>Delete</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {
+                                  setShowModalUpdateSubgoal(true);
+                                  setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, title: subgoal.title, content: subgoal.content });
+                                }}>Edit</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {
+                                  setShowModalDeleteSubgoal(true);
+                                  setIdToDelete({ ...idToDelete, _id: subgoal._id });
+                                }}>Delete</Dropdown.Item>
                           </Dropdown> 
 
 
@@ -158,6 +430,15 @@ export default function Goals( {category} ) {
                     ))}
               </div>
 
+              {/* Add subgoal Input */}
+              <div className='mx-5 mb-10 flex flex-row gap-2 justify-center' >
+
+                <Button onClick={() => {
+                  setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goal._id, userId: currentUser._id });
+                  setShowModalAddSubgoal(true);
+                }}>Add Subgoal</Button>
+              </div>
+
           
               {/* Notes */}
               <div className="ml-5">
@@ -169,7 +450,7 @@ export default function Goals( {category} ) {
                 {userNotes.map((note) => (
                   <>
 
-                    {/* Show Subgoals for current Goal */}
+                    {/* Show Notes for current Goal */}
                     {(note.goalId == goal._id) ? (
 
                         <div className='flex flex-col justify-between gap-2 m-2 p-5 border-2' key={note._id}>
@@ -184,11 +465,17 @@ export default function Goals( {category} ) {
                           </div>
 
                           <div className='flex flex-row justify-between'>
-                            <span>Last Update: {new Date(goal.createdOn).toLocaleDateString()} </span>
+                            <span>Last Update: {new Date(note.updatedAt).toLocaleDateString()} </span>
 
                             <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                              <Dropdown.Item>Edit</Dropdown.Item>
-                              <Dropdown.Item>Delete</Dropdown.Item>
+                            <Dropdown.Item onClick={() => {
+                              setShowModalUpdateNote(true);
+                              setFormDataUpdateNote({ ...formDataUpdateNote, _id: note._id, title: note.title, content: note.content });
+                            }}>Edit</Dropdown.Item>
+                            <Dropdown.Item onClick={() => {
+                              setShowModalDeleteNote(true);
+                              setIdToDelete({ ...idToDelete, _id: note._id});
+                            }}>Delete</Dropdown.Item>
                             </Dropdown>
                           </div>
 
@@ -209,7 +496,10 @@ export default function Goals( {category} ) {
                 
 
               {/* Add Note */}
-              <div className='mx-auto border-2 rounded-lg p-5 flex flex-col justify-center items-center gap-2 ' >
+              <div className='mx-auto border-2 rounded-lg p-5 flex flex-col justify-center items-center gap-2 cursor-pointer' onClick={() => {
+                setFormDataAddNote({ ...formDataAddNote, category: category, userId: currentUser._id, goalId: goal._id });
+                setShowModalAddNote(true);
+              }}>
                 <IoIosAddCircleOutline className='text-4xl'/>
                 <span>Add new note</span>  
               </div>         
@@ -234,7 +524,353 @@ export default function Goals( {category} ) {
       
       </div>
 
-    
+      {/* Add Subgoal Modal */}
+      <Modal
+        show={showModalAddSubgoal}
+        onClose={() => setShowModalAddSubgoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Add a new subgoal:
+            </h3>
+            <form onSubmit={handleCreateSubgoal}>
+              <Label>Subgoal Title</Label>
+              <TextInput type='text' placeholder='Title' id='title' value={formDataAddSubgoal.title} onChange={(e) =>
+                setFormDataAddSubgoal({ ...formDataAddSubgoal, title: e.target.value })
+              } />
+              <Label>Subgoal Description</Label>
+              <TextInput type='text' placeholder='Description' id='content' value={formDataAddSubgoal.content} onChange={(e) =>
+                setFormDataAddSubgoal({ ...formDataAddSubgoal, content: e.target.value })
+              } />
+ 
+
+              <div className='my-5 flex justify-center gap-4'>
+                <Button color='gray' type='submit'>
+                  Add
+                </Button>
+                <Button color='gray' onClick={() => setShowModalAddSubgoal(false)}>
+                  Cancel
+                </Button>
+              </div>
+
+            </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>
+      
+      {/* Add Goal Modal */}
+      <Modal
+        show={showModalAddGoal}
+        onClose={() => setShowModalAddGoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Add a new goal:
+            </h3>
+            <form onSubmit={handleCreateGoal}>
+              <Label>Goal Title</Label>
+              <TextInput type='text' placeholder='Title' id='title' value={formDataAddGoal.title} onChange={(e) =>
+                setFormDataAddGoal({ ...formDataAddGoal, title: e.target.value })
+              } />
+              <Label>Goal Description</Label>
+              <TextInput type='text' placeholder='Description' id='content' value={formDataAddGoal.content} onChange={(e) =>
+                setFormDataAddGoal({ ...formDataAddGoal, content: e.target.value })
+              } />
+
+
+              <div className='my-5 flex justify-center gap-4'>
+                <Button color='gray' type='submit'>
+                  Add
+                </Button>
+                <Button color='gray' onClick={() => setShowModalAddGoal(false)}>
+                  Cancel
+                </Button>
+              </div>
+
+            </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Add Note Modal */}
+      <Modal
+        show={showModalAddNote}
+        onClose={() => setShowModalAddNote(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Add a new note:
+            </h3>
+            <form onSubmit={handleCreateNote}>
+              <Label>Note Title</Label>
+              <TextInput type='text' placeholder='Title' id='title' value={formDataAddNote.title} onChange={(e) =>
+                setFormDataAddNote({ ...formDataAddNote, title: e.target.value })
+              } />
+              <Label>Note Description</Label>
+              <TextInput type='text' placeholder='Description' id='content' value={formDataAddNote.content} onChange={(e) =>
+                setFormDataAddNote({ ...formDataAddNote, content: e.target.value })
+              } />
+
+
+              <div className='my-5 flex justify-center gap-4'>
+                <Button color='gray' type='submit'>
+                  Add
+                </Button>
+                <Button color='gray' onClick={() => setShowModalAddNote(false)}>
+                  Cancel
+                </Button>
+              </div>
+
+            </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Update Goal Modal */}
+      <Modal
+        show={showModalUpdateGoal}
+        onClose={() => setShowModalUpdateGoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Edit Goal:
+            </h3>
+            <form onSubmit={handleUpdateGoal}>
+              <Label>Goal Title</Label>
+              <TextInput type='text' placeholder='Title' id='title' value={formDataUpdateGoal.title} onChange={(e) =>
+                setFormDataUpdateGoal({ ...formDataUpdateGoal, title: e.target.value })
+              } />
+              <Label>Goal Description</Label>
+              <TextInput type='text' placeholder='Description' id='content' value={formDataUpdateGoal.content} onChange={(e) =>
+                setFormDataUpdateGoal({ ...formDataUpdateGoal, content: e.target.value })
+              } />
+
+
+              <div className='my-5 flex justify-center gap-4'>
+                <Button color='gray' type='submit'>
+                  Update
+                </Button>
+                <Button color='gray' onClick={() => setShowModalUpdateGoal(false)}>
+                  Cancel
+                </Button>
+              </div>
+
+            </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Update Subgoal Modal */}
+      <Modal
+        show={showModalUpdateSubgoal}
+        onClose={() => setShowModalUpdateSubgoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Edit Subgoal:
+            </h3>
+            <form onSubmit={handleUpdateSubgoal}>
+              <Label>Subgoal Title</Label>
+              <TextInput type='text' placeholder='Title' id='title' value={formDataUpdateSubgoal.title} onChange={(e) =>
+                setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, title: e.target.value })
+              } />
+              <Label>Subgoal Description</Label>
+              <TextInput type='text' placeholder='Description' id='content' value={formDataUpdateSubgoal.content} onChange={(e) =>
+                setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, content: e.target.value })
+              } />
+
+
+              <div className='my-5 flex justify-center gap-4'>
+                <Button color='gray' type='submit'>
+                  Update
+                </Button>
+                <Button color='gray' onClick={() => setShowModalUpdateSubgoal(false)}>
+                  Cancel
+                </Button>
+              </div>
+
+            </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Update Note Modal */}
+      <Modal
+        show={showModalUpdateNote}
+        onClose={() => setShowModalUpdateNote(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Edit Note:
+            </h3>
+            <form onSubmit={handleUpdateNote}>
+              <Label>Note Title</Label>
+              <TextInput type='text' placeholder='Title' id='title' value={formDataUpdateNote.title} onChange={(e) =>
+                setFormDataUpdateNote({ ...formDataUpdateNote, title: e.target.value })
+              } />
+              <Label>Note Description</Label>
+              <TextInput type='text' placeholder='Description' id='content' value={formDataUpdateNote.content} onChange={(e) =>
+                setFormDataUpdateNote({ ...formDataUpdateNote, content: e.target.value })
+              } />
+
+
+              <div className='my-5 flex justify-center gap-4'>
+                <Button color='gray' type='submit'>
+                  Update
+                </Button>
+                <Button color='gray' onClick={() => setShowModalUpdateNote(false)}>
+                  Cancel
+                </Button>
+              </div>
+
+            </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>   
+
+      {/* Delete Goal Modal*/}    
+      <Modal
+        show={showModalDeleteGoal}
+        onClose={() => setShowModalDeleteGoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Are you sure you want to delete this goal?
+            </h3>
+            <div className='flex justify-center gap-4'>
+              <Button color='failure' onClick={handleDeleteGoal}>
+                Yes, Im sure
+              </Button>
+              <Button color='gray' onClick={() => setShowModalDeleteGoal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Delete Subgoal Modal */}
+      <Modal
+        show={showModalDeleteSubgoal}
+        onClose={() => setShowModalDeleteSubgoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Are you sure you want to delete this subgoal?
+            </h3>
+            <div className='flex justify-center gap-4'>
+              <Button color='failure' onClick={handleDeleteSubgoal}>
+                Yes, Im sure
+              </Button>
+              <Button color='gray' onClick={() => setShowModalDeleteSubgoal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Delete Note Modal */}
+      <Modal
+        show={showModalDeleteNote}
+        onClose={() => setShowModalDeleteNote(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Are you sure you want to delete this note?
+            </h3>
+            <div className='flex justify-center gap-4'>
+              <Button color='failure' onClick={handleDeleteNote}>
+                Yes, Im sure
+              </Button>
+              <Button color='gray' onClick={() => setShowModalDeleteNote(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
 
     </div>
   )
