@@ -20,10 +20,7 @@ export default function Profile() {
     }, [location.search]);
     return (
         <div className='min-h-screen flex flex-col md:flex-row'>
-            <div className=''>
-                {/* Sidebar */}
-                <ProfileSidebar />
-            </div>
+
             {/* profile... */}
             {tab === 'profile' && <DashProfile />}
             {/* mind */}
