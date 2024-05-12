@@ -3,7 +3,7 @@ import Goal from '../models/goal.model.js';
 
 export const creategoal = async (req, res, next) => {
     try {
-        const { userId, title, content } = req.body;
+        const { userId, title, content, category } = req.body;
 
         if (userId !== req.user.id) {
             return next(
@@ -15,6 +15,7 @@ export const creategoal = async (req, res, next) => {
             userId,
             title,
             content,
+            category,
         });
         await newGoal.save();
 
@@ -24,12 +25,28 @@ export const creategoal = async (req, res, next) => {
     }
 };
 
-export const getgoals = async (req, res, next) => {
+export const getcategorygoals = async (req, res, next) => {
     try {
-        const goals = await Goal.find({ userId: req.params.userId }).sort({
-            createdAt: -1,
+        const goals = await Goal.find({ 
+            userId: req.params.userId,
+            ...(req.query.category && { category: req.query.category }),
+        }).sort({
+            createdAt: 1,
         });
         res.status(200).json({goals});
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+export const getgoals = async (req, res, next) => {
+    try {
+        const goals = await Goal.find({ userId: req.params.userId}).sort({
+            createdAt: 1,
+        });
+        res.status(200).json({ goals });
     } catch (error) {
         next(error);
     }

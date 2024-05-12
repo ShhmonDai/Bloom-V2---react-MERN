@@ -9,6 +9,7 @@ export default function ProfileMind() {
 
 
   const { currentUser, error, loading } = useSelector(state => state.user);
+  const [category, setCategory] = useState('mind');
 
   const Sketch = (p) => {
 
@@ -465,7 +466,7 @@ export default function ProfileMind() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder />
+        <GoalHolder category={category}/>
 
 
 

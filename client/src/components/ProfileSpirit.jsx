@@ -9,6 +9,7 @@ export default function ProfileSpirit() {
 
 
   const { currentUser, error, loading } = useSelector(state => state.user);
+  const [category, setCategory] = useState('spirit');
 
   const Sketch = (p) => {
 
@@ -450,7 +451,7 @@ export default function ProfileSpirit() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder />
+        <GoalHolder category={category} />
 
 
 

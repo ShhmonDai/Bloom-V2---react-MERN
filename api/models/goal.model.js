@@ -18,6 +18,10 @@ const goalSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        category: {
+            type: String,
+            default: 'uncategorized',
+        },
         createdOn: { 
             type: Date, 
             default: Date.now,

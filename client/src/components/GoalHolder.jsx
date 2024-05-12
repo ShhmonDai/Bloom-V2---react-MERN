@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import GoalsComp from './Goals';
+import Goals from './Goals';
 import HabitsComp from './Habits';
 
 
-export default function GoalHolder() {
+export default function GoalHolder( {category} ) {
 
-    const { currentUser, error, loading } = useSelector(state => state.user);
+    const {currentUser, error, loading } = useSelector(state => state.user);
     
     const [goalsToggle, setGoalsToggle] = useState();
     const [habitsToggle, setHabitsToggle] = useState();
@@ -38,7 +38,7 @@ export default function GoalHolder() {
         </div >
 
         <div className='flex flex-col gap-5 justify-center'>
-          {habitsToggle ? (< HabitsComp />) : (< GoalsComp />)}
+          {habitsToggle ? (< HabitsComp />) : (< Goals category={category} />)}
         </div>
         
     </div>
