@@ -5,6 +5,7 @@ import { Dropdown, Table, Checkbox, Label, TextInput, Button, Modal, Alert, Text
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { TfiAngleDoubleDown } from "react-icons/tfi";
 
 
 export default function Goals( {category} ) {
@@ -38,7 +39,20 @@ export default function Goals( {category} ) {
   const [formDataUpdateNote, setFormDataUpdateNote] = useState({});
 
   const [idToDelete, setIdToDelete] = useState({});
+
+
+
+  const goalColor = {
+    'mind': ' bg-gradient-to-b from-pink-500 to-purple-500',
+    'body': ' bg-gradient-to-b from-amber-500 to-pink-500',
+    'spirit': ' bg-gradient-to-b from-sky-500 to-teal-500',
+  };
  
+  const goalButton = {
+    'mind': 'purpleToPink',
+    'body': 'pinkToOrange',
+    'spirit': 'cyanToBlue',
+  };
 
 
   const [publishError, setPublishError] = useState(null);
@@ -335,7 +349,7 @@ export default function Goals( {category} ) {
           <div key={goal._id} className='group' >
 
             {/* Title Div */}
-            <div className='bg-gradient-to-b from-amber-500 to-pink-500 border-b-2 rounded-lg shadow-lg'> 
+            <div className={`border-b-2 rounded-lg shadow-lg ${goalColor[category]}`}> 
               <div className='mx-2 bg-white flex flex-row justify-between p-5 text-xl font-semibold shadow-lg'>
 
               <p>{goal.title}</p>
@@ -388,13 +402,13 @@ export default function Goals( {category} ) {
                           </div>
    
 
-                          <div className='flex flex-col justify-self-center w-full'>
+                          <div className='flex flex-col justify-self-center w-full pb-6'>
 
                             <div className='font-semibold text-center border-b-2 '>
                               {subgoal.title}
                             </div>
 
-                            <div className='my-2 px-4'>
+                            <div className='my-2 px-4 text-wrap break-all'>
                               {subgoal.content}
                             </div>
 
@@ -457,11 +471,11 @@ export default function Goals( {category} ) {
 
                       <div className='bg-white  min-h-60 flex flex-col justify-between py-2 border-2 border-orange-500 rounded-lg shadow-xl' key={note._id}>
 
-                          <div className='flex flex-col justify-between items-center px-4'>
+                          <div className='flex flex-col px-4'>
                             <div className='font-semibold border-b-2'>
                               {note.title}
                             </div>
-                            <div className='my-2'>
+                            <div className='my-2 text-wrap break-all'>
                               {note.content}
                             </div>
                           </div>
@@ -499,8 +513,9 @@ export default function Goals( {category} ) {
             </div>
 
             {/* Outer Div of Goals */}
-            <div className='bg-gradient-to-b from-amber-500 to-pink-500 border-t-2 rounded-lg min-h-[70px] shadow-lg'>
+            <div className={`border-t-2 rounded-lg min-h-[70px] shadow-2xl ${goalColor[category]}`}>
               <div className='mx-2 flex bg-white min-h-[70px] flex-row justify-around items-center'>
+                <span className='flex justify-center group-hover:hidden'><TfiAngleDoubleDown /></span>
                 <span className='hidden group-hover:flex'>Started on: {new Date(goal.createdOn).toLocaleDateString()} </span>
                 <Button className='hidden group-hover:flex' outline gradientDuoTone="greenToBlue"> Accomplish Goal </Button>
               </div>
@@ -512,9 +527,9 @@ export default function Goals( {category} ) {
 
 
             {/* Add Goal Input */}
-            <div className='my-5 flex flex-row justify-center' >
+            <div className='my-5 mb-20 flex flex-row justify-center' >
 
-              <Button className='w-full shadow-md' gradientDuoTone="pinkToOrange" onClick={() => {
+              <Button className='w-full shadow-md' gradientDuoTone={`${goalButton[category]}`} onClick={() => {
                 setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
                 setShowModalAddGoal(true);
               }}>Add Goal</Button>
