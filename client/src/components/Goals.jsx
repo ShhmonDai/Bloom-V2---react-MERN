@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Dropdown, Table, Checkbox, Label, TextInput, Button, Modal, Alert } from "flowbite-react";
+import { Dropdown, Table, Checkbox, Label, TextInput, Button, Modal, Alert, Textarea } from "flowbite-react";
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
@@ -322,10 +322,10 @@ export default function Goals( {category} ) {
     <div className='w-full min-h-screen'>
       
       {/* Main Container */}
-      <div className='mx-auto p-10 my-6 flex flex-col justify-center gap-5 max-w-5xl'> 
+      <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-5 max-w-4xl'> 
 
         {/* Add Goal Input */}
-        <div className='mx-5 mb-10 flex flex-row gap-2 justify-center' >
+        <div className='my-5 flex flex-row justify-center' >
 
           <Button onClick={() => {
             setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
@@ -341,10 +341,10 @@ export default function Goals( {category} ) {
         {userGoals.map((goal) => (
           
           
-          <div key={goal._id} className='group m-4' >
+          <div key={goal._id} className='group' >
 
             {/* Title Div */}
-            <div className='flex flex-row justify-between border-2 p-10 text-2xl'> 
+            <div className='flex flex-row justify-between border-2 p-5 text-xl font-semibold shadow-lg'> 
               <p>{goal.title}</p>
               <div className='hidden group-hover:inline'>
                 <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
@@ -361,22 +361,22 @@ export default function Goals( {category} ) {
             </div>
 
             {/* Inner Div of Goals */}
-            <div className='h-0 group-hover:h-auto group-hover:py-10 flex scale-y-0 group-hover:scale-y-100 overflow-hidden flex-col mx-10 px-2 border-2 origin-top transition-all duration-700'>
+            <div className='h-0 group-hover:h-auto group-hover:py-5 flex scale-y-0 group-hover:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 border-x-2 origin-top transition-all duration-700'>
 
 
               {/* Goal Description */}
-              <div className="ml-5">
-                <Label htmlFor="description" value="Goal Description" />
+              <div className="text-center">
+                <Label htmlFor="description" value="About" />
               </div>
-              <div className='mx-5 mb-10 p-5 border-2 min-h-20' >{goal.content}</div>
+              <div className='mb-5 p-2 min-h-20 text-center' >{goal.content}</div>
 
 
 
               {/* Subgoals */}
-              <div className="ml-5">
+              <div className="text-center">
                 <Label htmlFor="subgoals" value="Subgoals" />
               </div>
-              <div className='mx-5 mb-10 border-2 min-h-20'>
+              <div className='p-2 gap-4 min-h-20 flex flex-col'>
 
                     {/* User Subgoals */}
                     {userSubGoals.map((subgoal) => (
@@ -387,34 +387,36 @@ export default function Goals( {category} ) {
                         
                        (
                         
-                        <div className='flex flex-row justify-between gap-2 m-2 p-2' key={subgoal._id}>
+                        <div className='bg-white grid grid-flow-col min-h-28 items-center p-2 border-2 border-cyan-500 rounded-lg shadow-xl' key={subgoal._id}>
 
-                          <div className='flex flex-row gap-5 justify-between'>
-                            <div>
-                              {subgoal.accomplished ? (<Checkbox id="accomplish" defaultChecked></Checkbox>) : (<Checkbox id="accomplish"></Checkbox>)}
-                            </div>
+                          <div className=' justify-self-start'>
+                            {subgoal.accomplished ? (<Checkbox id="accomplish" defaultChecked></Checkbox>) : (<Checkbox id="accomplish"></Checkbox>)}
+                          </div>
+   
 
-                            <div>
+                          <div className='flex flex-col justify-self-center w-full'>
+
+                            <div className='font-semibold text-center border-b-2 '>
                               {subgoal.title}
                             </div>
 
-                          </div>
-                              
-                          <div>
-                            {subgoal.content}
-                          </div>
+                            <div className='my-2'>
+                              {subgoal.content}
+                            </div>
 
-                          <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                                <Dropdown.Item onClick={() => {
-                                  setShowModalUpdateSubgoal(true);
-                                  setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, title: subgoal.title, content: subgoal.content });
-                                }}>Edit</Dropdown.Item>
-                                <Dropdown.Item onClick={() => {
-                                  setShowModalDeleteSubgoal(true);
-                                  setIdToDelete({ ...idToDelete, _id: subgoal._id });
-                                }}>Delete</Dropdown.Item>
-                          </Dropdown> 
-
+                          </div>
+                          <div className=' justify-self-end'>
+                            <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
+                                  <Dropdown.Item onClick={() => {
+                                    setShowModalUpdateSubgoal(true);
+                                    setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, title: subgoal.title, content: subgoal.content });
+                                  }}>Edit</Dropdown.Item>
+                                  <Dropdown.Item onClick={() => {
+                                    setShowModalDeleteSubgoal(true);
+                                    setIdToDelete({ ...idToDelete, _id: subgoal._id });
+                                  }}>Delete</Dropdown.Item>
+                            </Dropdown> 
+                          </div>
 
                         </div> 
                         
@@ -431,20 +433,26 @@ export default function Goals( {category} ) {
               </div>
 
               {/* Add subgoal Input */}
-              <div className='mx-5 mb-10 flex flex-row gap-2 justify-center' >
+              <div className='my-10 flex flex-row gap-4 justify-around' >
 
-                <Button onClick={() => {
+                <Button outline gradientDuoTone="cyanToBlue" onClick={() => {
                   setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goal._id, userId: currentUser._id });
                   setShowModalAddSubgoal(true);
                 }}>Add Subgoal</Button>
+
+                <Button outline gradientDuoTone="pinkToOrange" onClick={() => {
+                  setFormDataAddNote({ ...formDataAddNote, category: category, userId: currentUser._id, goalId: goal._id });
+                  setShowModalAddNote(true);
+                }}>Add Note</Button>
+
               </div>
 
           
               {/* Notes */}
-              <div className="ml-5">
+              <div className="text-center">
                 <Label htmlFor="Notes" value="Notes" />
               </div>
-              <div className='mx-5 mb-10 border-2 min-h-20'>
+              <div className='p-2 gap-4 flex flex-col'>
 
                 {/* User Notes */}
                 {userNotes.map((note) => (
@@ -453,19 +461,19 @@ export default function Goals( {category} ) {
                     {/* Show Notes for current Goal */}
                     {(note.goalId == goal._id) ? (
 
-                        <div className='flex flex-col justify-between gap-2 m-2 p-5 border-2' key={note._id}>
+                      <div className='bg-white  min-h-60 flex flex-col justify-between py-2 border-2 border-orange-500 rounded-lg shadow-xl' key={note._id}>
 
-                          <div className='flex flex-col justify-between'>
-                            <div>
+                          <div className='flex flex-col justify-between items-center'>
+                            <div className='font-semibold border-b-2'>
                               {note.title}
                             </div>
-                            <div>
+                            <div className='my-2'>
                               {note.content}
                             </div>
                           </div>
 
-                          <div className='flex flex-row justify-between'>
-                            <span>Last Update: {new Date(note.updatedAt).toLocaleDateString()} </span>
+                          <div className='flex flex-row justify-between p-2 px-4'>
+                            <span className='text-sm font-light'>Last Updated: {new Date(note.updatedAt).toLocaleDateString()} </span>
 
                             <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
                             <Dropdown.Item onClick={() => {
@@ -492,25 +500,15 @@ export default function Goals( {category} ) {
                   </>
                 ))}
               </div>
-
-                
-
-              {/* Add Note */}
-              <div className='mx-auto border-2 rounded-lg p-5 flex flex-col justify-center items-center gap-2 cursor-pointer' onClick={() => {
-                setFormDataAddNote({ ...formDataAddNote, category: category, userId: currentUser._id, goalId: goal._id });
-                setShowModalAddNote(true);
-              }}>
-                <IoIosAddCircleOutline className='text-4xl'/>
-                <span>Add new note</span>  
-              </div>         
+       
 
             </div>
 
             {/* Outer Div of Goals */}
-            <div className='border-2 p-6'>
-              <div className='hidden group-hover:flex flex-row justify-between text-xl'>
-                <span>Date Created: {new Date(goal.createdOn).toLocaleDateString()} </span>
-                <Button> Accomplish Goal </Button>
+            <div className='bg-white border-2 min-h-[70px] shadow-lg'>
+              <div className='hidden min-h-[70px] group-hover:flex flex-row justify-around items-center'>
+                <span>Started on: {new Date(goal.createdOn).toLocaleDateString()} </span>
+                <Button outline gradientDuoTone="greenToBlue"> Accomplish Goal </Button>
               </div>
             </div>
 
@@ -519,7 +517,7 @@ export default function Goals( {category} ) {
         ))}
 
       </>
-      ) : (<p>You have no users yet!</p>) }
+      ) : (<p>Log in</p>) }
       
       
       </div>
@@ -632,8 +630,8 @@ export default function Goals( {category} ) {
               <TextInput type='text' placeholder='Title' id='title' value={formDataAddNote.title} onChange={(e) =>
                 setFormDataAddNote({ ...formDataAddNote, title: e.target.value })
               } />
-              <Label>Note Description</Label>
-              <TextInput type='text' placeholder='Description' id='content' value={formDataAddNote.content} onChange={(e) =>
+              <Label>Note Content</Label>
+              <Textarea required rows={6} placeholder='Content' id='content' value={formDataAddNote.content} onChange={(e) =>
                 setFormDataAddNote({ ...formDataAddNote, content: e.target.value })
               } />
 
@@ -767,8 +765,8 @@ export default function Goals( {category} ) {
               <TextInput type='text' placeholder='Title' id='title' value={formDataUpdateNote.title} onChange={(e) =>
                 setFormDataUpdateNote({ ...formDataUpdateNote, title: e.target.value })
               } />
-              <Label>Note Description</Label>
-              <TextInput type='text' placeholder='Description' id='content' value={formDataUpdateNote.content} onChange={(e) =>
+              <Label>Note Content</Label>
+              <Textarea rows={6} placeholder='Content' id='content' value={formDataUpdateNote.content} onChange={(e) =>
                 setFormDataUpdateNote({ ...formDataUpdateNote, content: e.target.value })
               } />
 
