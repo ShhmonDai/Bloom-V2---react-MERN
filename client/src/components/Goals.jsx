@@ -322,16 +322,7 @@ export default function Goals( {category} ) {
     <div className='w-full min-h-screen'>
       
       {/* Main Container */}
-      <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-5 max-w-4xl'> 
-
-        {/* Add Goal Input */}
-        <div className='my-5 flex flex-row justify-center' >
-
-          <Button onClick={() => {
-            setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
-            setShowModalAddGoal(true);
-          }}>Add Goal</Button>
-        </div>
+      <div className='mx-auto p-2 pt-20 mb-10 flex flex-col justify-center gap-5 max-w-4xl'> 
       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
@@ -344,7 +335,9 @@ export default function Goals( {category} ) {
           <div key={goal._id} className='group' >
 
             {/* Title Div */}
-            <div className='flex flex-row justify-between border-2 p-5 text-xl font-semibold shadow-lg'> 
+            <div className='bg-gradient-to-b from-amber-500 to-pink-500 border-b-2 rounded-lg shadow-lg'> 
+              <div className='mx-2 bg-white flex flex-row justify-between p-5 text-xl font-semibold shadow-lg'>
+
               <p>{goal.title}</p>
               <div className='hidden group-hover:inline'>
                 <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
@@ -359,9 +352,10 @@ export default function Goals( {category} ) {
                 </Dropdown> 
               </div>
             </div>
+            </div>
 
             {/* Inner Div of Goals */}
-            <div className='h-0 group-hover:h-auto group-hover:py-5 flex scale-y-0 group-hover:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 border-x-2 origin-top transition-all duration-700'>
+            <div className='h-0 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-hover:h-auto group-hover:py-10 flex scale-y-0 group-hover:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
 
 
               {/* Goal Description */}
@@ -376,7 +370,7 @@ export default function Goals( {category} ) {
               <div className="text-center">
                 <Label htmlFor="subgoals" value="Subgoals" />
               </div>
-              <div className='p-2 gap-4 min-h-20 flex flex-col'>
+              <div className='p-2 gap-4 min-h-20 flex flex-col border-b-2 border-cyan-500 rounded-lg'>
 
                     {/* User Subgoals */}
                     {userSubGoals.map((subgoal) => (
@@ -400,12 +394,12 @@ export default function Goals( {category} ) {
                               {subgoal.title}
                             </div>
 
-                            <div className='my-2'>
+                            <div className='my-2 px-4'>
                               {subgoal.content}
                             </div>
 
                           </div>
-                          <div className=' justify-self-end'>
+                          <div className='flex flex-col h-full pr-2 pb-2 justify-end justify-self-end'>
                             <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
                                   <Dropdown.Item onClick={() => {
                                     setShowModalUpdateSubgoal(true);
@@ -452,7 +446,7 @@ export default function Goals( {category} ) {
               <div className="text-center">
                 <Label htmlFor="Notes" value="Notes" />
               </div>
-              <div className='p-2 gap-4 flex flex-col'>
+              <div className='p-2 gap-4 flex flex-col border-t-2 border-orange-500 rounded-lg'>
 
                 {/* User Notes */}
                 {userNotes.map((note) => (
@@ -463,7 +457,7 @@ export default function Goals( {category} ) {
 
                       <div className='bg-white  min-h-60 flex flex-col justify-between py-2 border-2 border-orange-500 rounded-lg shadow-xl' key={note._id}>
 
-                          <div className='flex flex-col justify-between items-center'>
+                          <div className='flex flex-col justify-between items-center px-4'>
                             <div className='font-semibold border-b-2'>
                               {note.title}
                             </div>
@@ -505,10 +499,10 @@ export default function Goals( {category} ) {
             </div>
 
             {/* Outer Div of Goals */}
-            <div className='bg-white border-2 min-h-[70px] shadow-lg'>
-              <div className='hidden min-h-[70px] group-hover:flex flex-row justify-around items-center'>
-                <span>Started on: {new Date(goal.createdOn).toLocaleDateString()} </span>
-                <Button outline gradientDuoTone="greenToBlue"> Accomplish Goal </Button>
+            <div className='bg-gradient-to-b from-amber-500 to-pink-500 border-t-2 rounded-lg min-h-[70px] shadow-lg'>
+              <div className='mx-2 flex bg-white min-h-[70px] flex-row justify-around items-center'>
+                <span className='hidden group-hover:flex'>Started on: {new Date(goal.createdOn).toLocaleDateString()} </span>
+                <Button className='hidden group-hover:flex' outline gradientDuoTone="greenToBlue"> Accomplish Goal </Button>
               </div>
             </div>
 
@@ -516,6 +510,15 @@ export default function Goals( {category} ) {
 
         ))}
 
+
+            {/* Add Goal Input */}
+            <div className='my-5 flex flex-row justify-center' >
+
+              <Button className='w-full shadow-md' gradientDuoTone="pinkToOrange" onClick={() => {
+                setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
+                setShowModalAddGoal(true);
+              }}>Add Goal</Button>
+            </div>    
       </>
       ) : (<p>Log in</p>) }
       

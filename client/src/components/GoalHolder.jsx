@@ -29,7 +29,7 @@ export default function GoalHolder( {category} ) {
 
 
   return (
-    <div className='pb-10 flex flex-col justify-center'>
+    <div className='pb-10 flex flex-col justify-center bg-gradient-to-b from-white via-indigo-100 to-indigo-100'>
 
         {/* GOALS / HABITS selector buttons */ }
         < div className = 'flex flex-row gap-5 justify-center' >

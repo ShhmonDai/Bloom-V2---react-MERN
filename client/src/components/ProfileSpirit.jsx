@@ -437,7 +437,7 @@ export default function ProfileSpirit() {
 
 
       {/* Main */}
-      <div className=' mx-auto pb-10 flex flex-col justify-center'>
+      <div className=' mx-auto flex flex-col justify-center'>
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
