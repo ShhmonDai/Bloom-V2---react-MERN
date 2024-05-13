@@ -230,7 +230,7 @@ export default function Header() {
     <Flowbite theme={{ theme: customNavTheme }}>
 
 
-      <div className='w-full dark:bg-[url("/Header.png")] bg-cover px-8 pt-6 pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
+      <div className='w-full px-8 pt-3 pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
 
         {/* middle */}
         <div className='w-100 flex flex-col justify-start sm:justify-center sm:text-center'>
@@ -245,7 +245,7 @@ export default function Header() {
 
       {/* Navbar Elements */}
       <div className='flex gap-6 justify-start'>  
-          <Link to='/' className='text-3xl font-QwigleyFont sm:hidden'>Bloom</Link>
+          <Link to='/' className='text-5xl font-QwigleyFont sm:hidden'>Bloom</Link>
 
           <div className='flex gap-2 absolute right-5 '>
 
