@@ -17,6 +17,10 @@ const subgoalSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        category: {
+            type: String,
+            default: 'uncategorized',
+        },
         accomplished: {
             type: Boolean,
             default: false,

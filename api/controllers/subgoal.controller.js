@@ -3,7 +3,7 @@ import Subgoal from '../models/subgoal.model.js';
 
 export const createsubgoal = async (req, res, next) => {
     try {
-        const { title, content, goalId, userId } = req.body;
+        const { title, content, goalId, userId, category } = req.body;
 
         if (userId !== req.user.id) {
             return next(
@@ -16,6 +16,7 @@ export const createsubgoal = async (req, res, next) => {
             content,
             goalId,
             userId,
+            category,
         });
         await newSubgoal.save();
 
@@ -25,12 +26,27 @@ export const createsubgoal = async (req, res, next) => {
     }
 };
 
+export const getcategorysubgoals = async (req, res, next) => {
+    try {
+        const subgoals = await Subgoal.find({ 
+            userId: req.params.userId,
+            ...(req.query.category && {category: req.query.category }),
+         }).sort({
+            accomplished: 1,
+        });
+        res.status(200).json({subgoals});
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 export const getsubgoals = async (req, res, next) => {
     try {
         const subgoals = await Subgoal.find({ userId: req.params.userId }).sort({
             createdAt: 1,
         });
-        res.status(200).json({subgoals});
+        res.status(200).json({ subgoals });
     } catch (error) {
         next(error);
     }
