@@ -29,12 +29,16 @@ export default function Goals( {category} ) {
   const [showModalDeleteSubgoal, setShowModalDeleteSubgoal] = useState(false);
   const [showModalDeleteGoal, setShowModalDeleteGoal] = useState(false);
   const [showModalDeleteNote, setShowModalDeleteNote] = useState(false);
+
+  const [showModalAccomplishSubgoal, setShowModalAccomplishSubgoal] = useState(false);
+
   
   const [formDataAddSubgoal, setFormDataAddSubgoal] = useState({});
   const [formDataAddGoal, setFormDataAddGoal] = useState({});
   const [formDataAddNote, setFormDataAddNote] = useState({});
 
   const [formDataUpdateSubgoal, setFormDataUpdateSubgoal] = useState({});
+  const [formDataAccomplishSubgoal, setFormDataAccomplishSubgoal] = useState({});
   const [formDataUpdateGoal, setFormDataUpdateGoal] = useState({});
   const [formDataUpdateNote, setFormDataUpdateNote] = useState({});
 
@@ -191,6 +195,32 @@ export default function Goals( {category} ) {
     }
   };
 
+  const handleAccomplishSubgoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/subgoal/accomplishsubgoal/${formDataAccomplishSubgoal._id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataAccomplishSubgoal),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalAccomplishSubgoal(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
   const handleUpdateNote = async (e) => {
     e.preventDefault();
     try {
@@ -301,7 +331,7 @@ export default function Goals( {category} ) {
     };
     const fetchSubGoals = async () => {
       try {
-        const resSub = await fetch(`/api/subgoal/getsubgoals/${currentUser._id}`);
+        const resSub = await fetch(`/api/subgoal/getcategorysubgoals/${currentUser._id}?category=${category}`);
         const dataSub = await resSub.json();
         if (resSub.ok) {
           setUserSubGoals(dataSub.subgoals);
@@ -376,7 +406,7 @@ export default function Goals( {category} ) {
               <div className="text-center">
                 <Label htmlFor="description" value="About" />
               </div>
-              <div className='mb-5 p-2 min-h-20 text-center' >{goal.content}</div>
+              <div className='mb-5 p-2 min-h-20 text-center break-words' >{goal.content}</div>
 
 
 
@@ -395,25 +425,30 @@ export default function Goals( {category} ) {
                         
                        (
                         
-                        <div className='bg-white grid grid-flow-col min-h-28 items-center p-2 border-2 border-cyan-500 rounded-lg shadow-xl' key={subgoal._id}>
+                        <div className={` ${subgoal.accomplished ? 'border-green-500 line-through opacity-70' :'border-cyan-500'} flex flex-row items-end bg-white min-h-28 items-center p-2 border-2 rounded-lg shadow-xl`} key={subgoal._id}>
 
-                          <div className=' justify-self-start'>
-                            {subgoal.accomplished ? (<Checkbox id="accomplish" defaultChecked></Checkbox>) : (<Checkbox id="accomplish"></Checkbox>)}
-                          </div>
-   
-
-                          <div className='flex flex-col justify-self-center w-full pb-6'>
+                          <div className='flex flex-col justify-between w-full'>
 
                             <div className='font-semibold text-center border-b-2 '>
                               {subgoal.title}
                             </div>
 
-                            <div className='my-2 px-4 text-wrap break-all'>
+                            <div className='my-2 px-4 text-wrap break-words'>
                               {subgoal.content}
                             </div>
 
+                            <div className='flex flex-row justify-center items-center py-6'> 
+                                  {subgoal.accomplished ? (<Button type='button' onClick={() => {
+                                    setFormDataAccomplishSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, accomplished: false});
+                                    setShowModalAccomplishSubgoal(true);
+                                  }}>Mark To Do</Button>) : (<Button type='button' onClick={() => 
+                                    { setFormDataAccomplishSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, accomplished: true });
+                                    setShowModalAccomplishSubgoal(true); 
+                                    }}>Mark Done</Button>)}
+                            </div>
+
                           </div>
-                          <div className='flex flex-col h-full pr-2 pb-2 justify-end justify-self-end'>
+                          <div className='flex flex-col pr-2 pb-2 items-end justify-end text-end'>
                             <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
                                   <Dropdown.Item onClick={() => {
                                     setShowModalUpdateSubgoal(true);
@@ -444,7 +479,7 @@ export default function Goals( {category} ) {
               <div className='my-10 flex flex-row gap-4 justify-around' >
 
                 <Button outline gradientDuoTone="cyanToBlue" onClick={() => {
-                  setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goal._id, userId: currentUser._id });
+                  setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goal._id, userId: currentUser._id, category: category });
                   setShowModalAddSubgoal(true);
                 }}>Add Subgoal</Button>
 
@@ -475,7 +510,7 @@ export default function Goals( {category} ) {
                             <div className='font-semibold border-b-2'>
                               {note.title}
                             </div>
-                            <div className='my-2 text-wrap break-all'>
+                            <div className='my-2 text-wrap break-words'>
                               {note.content}
                             </div>
                           </div>
@@ -532,7 +567,7 @@ export default function Goals( {category} ) {
               <Button className='w-full shadow-md' gradientDuoTone={`${goalButton[category]}`} onClick={() => {
                 setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
                 setShowModalAddGoal(true);
-              }}>Add Goal</Button>
+              }}>Start A New Goal</Button>
             </div>    
       </>
       ) : (<p>Log in</p>) }
@@ -559,7 +594,7 @@ export default function Goals( {category} ) {
                 setFormDataAddSubgoal({ ...formDataAddSubgoal, title: e.target.value })
               } />
               <Label>Subgoal Description</Label>
-              <TextInput type='text' placeholder='Description' id='content' value={formDataAddSubgoal.content} onChange={(e) =>
+              <Textarea rows={6} placeholder='Description' id='content' value={formDataAddSubgoal.content} onChange={(e) =>
                 setFormDataAddSubgoal({ ...formDataAddSubgoal, content: e.target.value })
               } />
  
@@ -604,7 +639,7 @@ export default function Goals( {category} ) {
                 setFormDataAddGoal({ ...formDataAddGoal, title: e.target.value })
               } />
               <Label>Goal Description</Label>
-              <TextInput type='text' placeholder='Description' id='content' value={formDataAddGoal.content} onChange={(e) =>
+              <Textarea rows={6} placeholder='Description' id='content' value={formDataAddGoal.content} onChange={(e) =>
                 setFormDataAddGoal({ ...formDataAddGoal, content: e.target.value })
               } />
 
@@ -694,7 +729,7 @@ export default function Goals( {category} ) {
                 setFormDataUpdateGoal({ ...formDataUpdateGoal, title: e.target.value })
               } />
               <Label>Goal Description</Label>
-              <TextInput type='text' placeholder='Description' id='content' value={formDataUpdateGoal.content} onChange={(e) =>
+              <Textarea rows={6} placeholder='Description' id='content' value={formDataUpdateGoal.content} onChange={(e) =>
                 setFormDataUpdateGoal({ ...formDataUpdateGoal, content: e.target.value })
               } />
 
@@ -739,7 +774,7 @@ export default function Goals( {category} ) {
                 setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, title: e.target.value })
               } />
               <Label>Subgoal Description</Label>
-              <TextInput type='text' placeholder='Description' id='content' value={formDataUpdateSubgoal.content} onChange={(e) =>
+              <Textarea rows={6} placeholder='Description' id='content' value={formDataUpdateSubgoal.content} onChange={(e) =>
                 setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, content: e.target.value })
               } />
 
@@ -855,6 +890,32 @@ export default function Goals( {category} ) {
                 Yes, Im sure
               </Button>
               <Button color='gray' onClick={() => setShowModalDeleteSubgoal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Accomplish Subgoal Modal */}
+      <Modal
+        show={showModalAccomplishSubgoal}
+        onClose={() => setShowModalAccomplishSubgoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              {formDataAccomplishSubgoal.accomplished ? (<>Mark Subgoal as Done?</>) : (<>Mark Subgoal As To Do?</>)}
+            </h3>
+            <div className='flex justify-center gap-4'>
+              <Button color='failure' onClick={handleAccomplishSubgoal}>
+                Yes, Im sure
+              </Button>
+              <Button color='gray' onClick={() => setShowModalAccomplishSubgoal(false)}>
                 No, cancel
               </Button>
             </div>
