@@ -7,12 +7,16 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { TfiAngleDoubleDown } from "react-icons/tfi";
 
-export default function Subgoals({goalId, category}) {
+export default function Subgoals({goalId, category, sendDataToParent}) {
   
     const { currentUser } = useSelector((state) => state.user);
     const [reload, setReload] = useState(false);
 
+
+
     const [userSubGoals, setUserSubGoals] = useState([]);
+    const [totalSubgoals, setTotalSubgoals] = useState(0);
+    const [finishedSubgoals, setFinishedSubgoals] = useState(0);
     const [userNotes, setUserNotes] = useState([]);
 
     const [showModalAddSubgoal, setShowModalAddSubgoal] = useState(false);
@@ -225,11 +229,13 @@ export default function Subgoals({goalId, category}) {
 
         const fetchSubGoals = async () => {
             try {
-                const resSub = await fetch(`/api/subgoal/getgoalsubgoals/${goalId}`);
+                const resSub = await fetch(`/api/subgoal/getgoalsubgoals/${goalId}?category=${category}`);
                 const dataSub = await resSub.json();
                 if (resSub.ok) {
                     setUserSubGoals(dataSub.subgoals);
-
+                    setTotalSubgoals(dataSub.totalSubgoals);
+                    setFinishedSubgoals(dataSub.finishedSubgoals);
+                    sendDataToParent(dataSub.categoryScore);
                 }
             } catch (error) {
                 console.log(error.message);
@@ -265,7 +271,12 @@ export default function Subgoals({goalId, category}) {
           <div className="text-center">
               <Label htmlFor="subgoals" value="Subgoals" />
           </div>  
-          <div className='p-2 gap-4 min-h-20 flex flex-col border-b-2 border-cyan-500 rounded-lg'>
+          <div className='p-2 gap-4 min-h-20 flex flex-col'>
+
+            <div className='flex flex-row justify-center gap-5'>
+                    <span className='text-blue-500'>Total Tasks: <span className='font-bold'>{totalSubgoals}</span></span>
+                    <span className='text-green-500'>Finished Tasks: <span className='font-bold'>{finishedSubgoals}</span></span>
+            </div>
 
               {/* User Subgoals */}
               {userSubGoals.map((subgoal) => (
@@ -273,17 +284,17 @@ export default function Subgoals({goalId, category}) {
 
                      
 
-                            <div className={` ${subgoal.accomplished ? 'border-green-500 line-through opacity-70 bg-green-100' : 'border-cyan-500 bg-white'} group/item flex flex-row min-h-28 items-center p-2 border-2 rounded-lg shadow-xl`} key={subgoal._id}>
+                            <div className={` ${subgoal.accomplished ? 'border-green-500 line-through opacity-70 bg-green-100' : 'border-cyan-500 bg-white'} group/item min-h-28 items-center p-4 border-2 rounded-lg shadow-xl`} key={subgoal._id}>
 
                                   <div className='flex flex-col justify-between w-full'>
 
-                                      <div className='font-semibold text-center border-b-2 '>
+                                    <div className='font-semibold text-center border-b-2 '>
                                           {subgoal.title}
-                                      </div>
+                                    </div>
 
-                                      <div className='my-2 px-4 text-wrap break-words'>
-                                          {subgoal.content}
-                                      </div>
+                                    <div className='my-2 px-4 text-wrap break-words whitespace-pre-wrap'>
+                                        {subgoal.content}
+                                    </div>
 
                                       <div className='flex flex-row justify-between pt-6 px-2'>
                                         
@@ -327,7 +338,7 @@ export default function Subgoals({goalId, category}) {
           </div>
 
           {/* Add subgoal Input */}
-          <div className='my-10 flex flex-row gap-4 justify-around' >
+            <div className='my-10 py-5 flex flex-row gap-4 justify-around border-2 border-r-transparent border-l-transparent border-b-orange-500 border-t-cyan-500 rounded-lg' >
 
               <Button outline gradientDuoTone="cyanToBlue" onClick={() => {
                   setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goalId, userId: currentUser._id, category: category });
@@ -345,7 +356,7 @@ export default function Subgoals({goalId, category}) {
           <div className="text-center">
               <Label htmlFor="Notes" value="Notes" />
           </div>
-          <div className='p-2 gap-4 flex flex-col border-t-2 border-orange-500 rounded-lg'>
+          <div className='p-2 gap-4 flex flex-col'>
 
               {/* User Notes */}
               {userNotes.map((note) => (
