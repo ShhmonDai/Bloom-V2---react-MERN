@@ -58,7 +58,7 @@ export default function ProfileMind() {
       prog = 1,
       growing = false,
       //mutating = false,
-      randSeed = 398,
+      randSeed = 80,
       //paramSeed = Math.floor(Math.random() * 1000),
       randBias = 0;
 
@@ -119,7 +119,7 @@ export default function ProfileMind() {
       div_inputs.style('visibility', 'hidden');
 
       //size
-      slider_size = p.createSlider(100, 150, 140, 1);
+      slider_size = p.createSlider(100, 150, 125, 1);
       slider_size.position();
       slider_size.id('slidersIndex');
       slider_size.parent("div_Settings");
