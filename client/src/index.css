@@ -122,18 +122,6 @@ body {
   margin-bottom: 1rem;
 }
 
-#underTree {
-  margin-top: -1px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#underTree img {
-  height: 50%;
-  width: 43%;
-  padding-left: 2rem;
-}
 
 @media screen and (max-width: 800px) { 
 #buttonHolder button {
