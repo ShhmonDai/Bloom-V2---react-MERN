@@ -6,6 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { TfiAngleDoubleDown } from "react-icons/tfi";
+import { TfiAngleDoubleUp } from "react-icons/tfi";
 import Subgoals from './Subgoals';
 
 
@@ -35,6 +36,12 @@ export default function Goals( {category} ) {
 
 
   const [idToDelete, setIdToDelete] = useState({});
+
+  const [finishedTasks, setFinishedTasks] = useState("");
+
+  function handleDataFromChild(data) {
+    setFinishedTasks(data);
+  }
 
 
 
@@ -131,10 +138,6 @@ export default function Goals( {category} ) {
 
 
 
-
-
-
-
   useEffect(() => {
     const fetchGoals = async () => {
       try {
@@ -159,41 +162,48 @@ export default function Goals( {category} ) {
     <div className='w-full min-h-screen'>
       
       {/* Main Container */}
-      <div className='mx-auto p-2 pt-20 mb-10 flex flex-col justify-center gap-5 max-w-4xl'> 
+      <div className='mx-auto p-2 pt-20 mb-10 flex flex-col justify-center gap-10 max-w-4xl'>
+
+      <span>Category Score: {finishedTasks} finished tasks </span> 
       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
         
         <>
         {/* User Goals */}
-        {userGoals.map((goal) => (
+        {userGoals.map((goal, index) => (
           
           
-          <div key={goal._id} className='group' >
+          <div key={goal._id} id={index} className='group sm:mx-2' >
 
             {/* Title Div */}
             <div className={`border-b-2 rounded-lg shadow-lg ${goalColor[category]}`}> 
               <div className='mx-2 bg-white flex flex-row justify-between p-5 text-xl font-semibold shadow-lg'>
 
-              <p>{goal.title}</p>
-              <div className='hidden group-hover:inline'>
-                <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
-                  <Dropdown.Item onClick={() => {
-                    setShowModalUpdateGoal(true);
-                    setFormDataUpdateGoal({ ...formDataUpdateGoal, _id: goal._id, title: goal.title, content: goal.content});
-                  }}>Edit</Dropdown.Item>
-                  <Dropdown.Item onClick={() => {
-                    setShowModalDeleteGoal(true);
-                    setIdToDelete({ ...idToDelete, _id: goal._id });
-                  }}>Delete</Dropdown.Item>
-                </Dropdown> 
-              </div>
+                <div className='w-full cursor-pointer' onClick={() => document.getElementById(index).classList.toggle('is-open')}>{goal.title}</div>
+
+                <div className='hidden group-[.is-open]:inline'>
+                  <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
+                    <Dropdown.Item onClick={() => {
+                      setShowModalUpdateGoal(true);
+                      setFormDataUpdateGoal({ ...formDataUpdateGoal, _id: goal._id, title: goal.title, content: goal.content});
+                    }}>Edit</Dropdown.Item>
+                    <Dropdown.Item onClick={() => {
+                      setShowModalDeleteGoal(true);
+                      setIdToDelete({ ...idToDelete, _id: goal._id });
+                    }}>Delete</Dropdown.Item>
+                  </Dropdown> 
+                </div>
             </div>
             </div>
 
             {/* Inner Div of Goals */}
-            <div className='h-0 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-hover:h-auto group-hover:py-10 flex scale-y-0 group-hover:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
-
+            <div className='h-0 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
+            
+            <div className='flex flex-row cursor-pointer justify-between' onClick={() => document.getElementById(index).classList.toggle('is-open')} >
+              <button type='button' className=''><TfiAngleDoubleUp /></button>
+              <button type='button' className=''><TfiAngleDoubleUp /></button>
+            </div>
 
               {/* Goal Description */}
               <div className="text-center">
@@ -202,17 +212,17 @@ export default function Goals( {category} ) {
               <div className='mb-5 p-2 min-h-20 text-center break-words' >{goal.content}</div>
 
 
-            < Subgoals goalId={goal._id} category={category} />
+              < Subgoals goalId={goal._id} category={category} sendDataToParent={handleDataFromChild} />
        
 
             </div>
 
             {/* Outer Div of Goals */}
-            <div className={`border-t-2 rounded-lg min-h-[70px] shadow-2xl ${goalColor[category]}`}>
-              <div className='mx-2 flex bg-white min-h-[70px] flex-row justify-around items-center'>
-                <span className='flex justify-center group-hover:hidden'><TfiAngleDoubleDown /></span>
-                <span className='hidden group-hover:flex'>Started on: {new Date(goal.createdOn).toLocaleDateString()} </span>
-                <Button className='hidden group-hover:flex' outline gradientDuoTone="greenToBlue"> Accomplish Goal </Button>
+            <div className={`border-t-2 rounded-lg min-h-[70px] shadow-2xl ${goalColor[category]}`} >
+              <div className='mx-2 flex bg-white min-h-[70px] flex-row justify-around items-center px-4'>
+                <span className='hidden group-[.is-open]:flex'>Started on: {new Date(goal.createdOn).toLocaleDateString()} </span>
+                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById(index).classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
+                <Button className='hidden group-[.is-open]:flex' outline gradientDuoTone="greenToBlue"> Accomplish Goal </Button>
               </div>
             </div>
 
