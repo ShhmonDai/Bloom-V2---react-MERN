@@ -60,21 +60,23 @@ export default function Home() {
 
     //get width of parent div
     let b = document.getElementById("treeHolder");
-    let w = b.clientWidth;
+    let w = 0;
+    b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
     let h = 0;
-    
+
+
     p.getHeight = (w) => {
       if (w <= 400) {
         h = 330;
       }
-      
-      else if (w / 2 <= 650) {
-        h = w / 1.2;
-        
+
+      else if (w / 2 <= 800) {
+        h = w / 1.4;
+
       }
 
-      if (w > 650) {
-        h = 650;
+      if (w > 800) {
+        h = 600;
       }
     }
 
@@ -82,16 +84,17 @@ export default function Home() {
 
     let treeScale = 1;
 
-    p.getScale = (h) => { 
+    p.getScale = (h) => {
       if (h < 580) {
-        treeScale = (h / 580);
+        treeScale = (h / 580 - 0.1);
       }
-  
+
     }
 
     p.getScale(h);
 
-    var bg = p.loadImage('treeBG.png');
+
+    var bg = p.loadImage('MainTreeBackground.png');
 
     const Y_AXIS = 1;
     //var b1, b2;
@@ -266,8 +269,7 @@ export default function Home() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      w = b.clientWidth;
-
+      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
@@ -406,11 +408,11 @@ export default function Home() {
 
 
       {/* Intro Container */}
-      <div className='dark:bg-white dark:bg-opacity-100 mx-auto pb-10 px-5 flex flex-col justify-center'>
+      <div className='dark:bg-white dark:bg-opacity-100 mx-auto pb-10 flex flex-col justify-center'>
 
-        <div id="treeHolder" className=''></div>
-        <div id="underTree">
-          <img src="/underTree.png" alt='under tree picture' />
+        <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
+        <div id="underTree" className='mt-[-1px] flex justify-center items-center bg-white'>
+          <img src="/MainUnderTree.png" alt='under tree picture' />
         </div>
 
         <div id="buttonHolder" className='mb-20'> 
@@ -419,7 +421,7 @@ export default function Home() {
 
         <div className='flex justify-center mb-10'>
  
-          <div className='text-md text-center max-w-4xl flex flex-col gap-4 text-gray-800'>
+          <div className='text-md text-center max-w-4xl flex flex-col gap-4 px-5 text-gray-800'>
 
               <h1 className='text-3xl font-semibold text-center mt-7 '>
                 Welcome to Bloom!
