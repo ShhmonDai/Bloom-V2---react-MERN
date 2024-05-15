@@ -57,7 +57,22 @@ export const getgoalsubgoals = async (req, res, next) => {
         const subgoals = await Subgoal.find({ goalId: req.params.goalId }).sort({
             accomplished: 1,
         });
-        res.status(200).json({subgoals});
+
+        const finishedSubgoals = await Subgoal.countDocuments({
+            accomplished: true,
+            goalId: req.params.goalId,
+        });
+
+        const totalSubgoals = await Subgoal.countDocuments({
+            goalId: req.params.goalId,
+        });
+
+        const categoryScore = await Subgoal.countDocuments({
+            category: req.query.category,
+            accomplished: true,
+        });
+
+        res.status(200).json({subgoals, finishedSubgoals, totalSubgoals, categoryScore});
     } catch (error) {
         next(error);
     }
