@@ -8,7 +8,7 @@ import { Flowbite } from 'flowbite-react';
 import { FaToriiGate, FaBrain, FaDumbbell } from "react-icons/fa";
 import { BsYinYang } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { GiMagicGate } from "react-icons/gi";
+
 
 
 
@@ -322,7 +322,7 @@ export default function Header() {
                   ABOUT
                 </Navbar.Link>
                 <Navbar.Link className='flex gap-2 items-center' active={path === "/sign-in"} as={Link} to='/sign-in'>
-                  SIGN IN <GiMagicGate />
+                  SIGN IN <FaToriiGate />
                 </Navbar.Link>              
               </>
             )

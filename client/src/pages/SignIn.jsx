@@ -64,7 +64,7 @@ export default function SignIn() {
         
         <div className='flex flex-col mb-10 justify-center items-center w-auto lg:max-w-72 md:-max-w-xl'>
           <Link to='/' className='text-6xl md:text-7xl text-center font-QwigleyFont'>Sign In</Link>
-          <span className='text-center italic font-semibold'>Continue Your Journey</span>
+          <span className='mt-4 text-center italic font-semibold'>Continue Your Journey</span>
           <p className='text-center lg:text-left text-sm mt-5'>
             You can sign in with your email and password or with Google.
           </p>

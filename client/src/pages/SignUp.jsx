@@ -55,7 +55,7 @@ export default function SignUp() {
         {/* left side */}
         <div className='flex flex-col mb-10 w-auto lg:max-w-72 md:-max-w-xl'>
           <Link to='/' className='text-6xl md:text-7xl text-center font-QwigleyFont'>Sign Up</Link>
-          <span className='text-center italic font-semibold'>Start your Journey</span>
+          <span className='mt-4 text-center italic font-semibold'>Start your Journey</span>
           <p className='text-center lg:text-left text-sm mt-5'>
             You can sign up with your email and password or with Google.
           </p>
