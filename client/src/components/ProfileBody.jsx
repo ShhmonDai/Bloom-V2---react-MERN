@@ -425,7 +425,11 @@ export default function ProfileBody() {
 
 
   useEffect(() => {
-    const myP5 = new p5(Sketch)
+
+    const myP5 = new p5(Sketch);
+
+    return () => myP5.remove();
+
   }, [currentUser]);
 
 
@@ -436,16 +440,16 @@ export default function ProfileBody() {
 
 
       {/* Main */}
-      <div className=' mx-auto flex flex-col justify-center'>
+      <div className=' mx-auto pt-10 flex flex-col justify-center'>
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="BodyUnderTree" className='mt-[-1px] flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
+        <div id="BodyUnderTree" className='mt-[-1px] flex justify-center items-center bg-white mb-2'>
           <img src="/BodyUnderTree.png" alt='under tree picture' className=' w-fit' />
         </div>
 
         {/* Button Container */}
-        <div id="buttonHolder" className='mb-20'>
+        <div id="buttonHolder" className='hidden'>
           {/* Tree Sliders Container */}
           <div id="sliderHolder"></div>
         </div>

@@ -303,35 +303,40 @@ export default function ProfileMind() {
 
       var len = growthLevel * size * (1 + p.rand2() * lenRand);
       
+      let shadowCol = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 10, 0, 10);
 
-      let col = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 10, 100, 240);
+      let col = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 9, 70, 10);
+      let colM = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 9, 80, 20);
+      let colR= p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 9, 90, 30);
 
-      let barkColor = 110;
-
-      let colLeft = col;
-      let colMiddle = col * 0.70;
-      let colRight = col * 0.60;
+      let barkColor = 82;
+      let colMiddle = col + 20;
+      let colRight = col + 40 ;
      
+      let colThird = 73;
 
       //p.drawingContext.shadowColor = p.color(150, 110, 250);
       
+      //Left
       p.strokeWeight(16 * Math.pow((maxLevel - level + 1) / maxLevel, 6));
-      p.stroke(150, barkColor + 40, 250, 255 )
+      p.stroke(col, colM, colR, 255 )
       p.line(0, 0, 0, len / level);
       
-      
-      p.drawingContext.shadowBlur = 10;
-      p.drawingContext.shadowColor = p.color(colMiddle, 110, 250);      
+
+      //Middle
+      p.drawingContext.shadowBlur = 5;
+      p.drawingContext.shadowColor = p.color(shadowCol, shadowCol, shadowCol);      
 
       p.strokeWeight(14 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
-      p.stroke(colMiddle, barkColor, 130, 255)
+      p.stroke(col + 5, colM + 5, colR + 5, 255)
       p.line((6 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 0, (6 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), len / level);
       
 
+      //Right
       p.drawingContext.shadowBlur = 0;
 
       p.strokeWeight(12 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
-      p.stroke(colRight, barkColor,130, 255)
+      p.stroke(col +15, colM + 15, colR + 15, 255)
       p.line((12 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 0, (12 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), len / level);
       
 
@@ -368,7 +373,7 @@ export default function ProfileMind() {
         var flowerSize = (size / 100) * cunt * (1 / 6) * (len / level);
 
         p.strokeWeight(4);
-        p.stroke(204 + 15 * p.rand2(), 50 + 15 * p.rand2(), 40 + 15 * p.rand2());
+        p.stroke(240 + 10 * p.rand2(), 190 + 10 * p.rand2(), 125 + 10 * p.rand2());
 
         p.rotate(-PI);
         for (var i = 0; i <= 8; i++) {
@@ -442,7 +447,11 @@ export default function ProfileMind() {
 
   
   useEffect(() => {
-    const myP5 = new p5(Sketch)
+
+    const myP5 = new p5(Sketch);
+
+    return () => myP5.remove();
+
   }, [currentUser]);
 
 
@@ -452,16 +461,16 @@ export default function ProfileMind() {
 
 
       {/* Main */}
-      <div className=' mx-auto flex flex-col justify-center'>
+      <div className=' mx-auto pt-10 flex flex-col justify-center'>
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="MindUnderTree" className='mt-[-1px] flex justify-center items-center bg-white border-b-2 border-slate-800 mb-2'>
+        <div id="MindUnderTree" className='mt-[-1px] flex justify-center items-center bg-white mb-2'>
           <img src="/MindUnderTree.png" alt='under tree picture' className=' w-fit' />
         </div>
 
         {/* Button Container */}
-        <div id="buttonHolder" className='mb-20'>
+        <div id="buttonHolder" className='hidden'>
           {/* Tree Sliders Container */}
           <div id="sliderHolder"></div>
         </div>
