@@ -423,6 +423,10 @@ export default function ProfileBody() {
 
   }
 
+  const [bodyCategoryScore, setBodyCategoryScore] = useState('');
+  function handleDataFromChild(data) {
+    setBodyCategoryScore(data);
+  }
 
   useEffect(() => {
 
@@ -430,7 +434,9 @@ export default function ProfileBody() {
 
     return () => myP5.remove();
 
-  }, [currentUser]);
+  }, [currentUser, bodyCategoryScore]);
+
+
 
 
 
@@ -441,6 +447,10 @@ export default function ProfileBody() {
 
       {/* Main */}
       <div className=' mx-auto pt-10 flex flex-col justify-center'>
+
+        <div className='justify-center items-center text-center'>
+          {bodyCategoryScore}
+        </div>
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
@@ -454,7 +464,7 @@ export default function ProfileBody() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder category={category} />
+        <GoalHolder category={category} sendDataToCategory={handleDataFromChild} />
 
 
 

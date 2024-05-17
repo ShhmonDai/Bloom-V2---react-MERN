@@ -5,7 +5,7 @@ import Goals from './Goals';
 import HabitsComp from './Habits';
 
 
-export default function GoalHolder( {category} ) {
+export default function GoalHolder( {category, sendDataToCategory} ) {
 
 
     const [goalsToggle, setGoalsToggle] = useState(true);
@@ -56,7 +56,7 @@ export default function GoalHolder( {category} ) {
         </div >
 
         <div className='flex flex-col justify-center bg-gradient-to-b from-white via-indigo-100 to-indigo-100'>
-          {habitsToggle ? (< HabitsComp />) : (< Goals category={category} />)}
+          {habitsToggle ? (< HabitsComp />) : (< Goals category={category} sendDataToCategory={sendDataToCategory}/>)}
         </div>
 
         

@@ -11,9 +11,17 @@ export default function ProfileMind() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('mind');
 
+  const [mindCategoryScore, setMindCategoryScore] = useState('');
+  function handleDataFromChild(data) {
+    setMindCategoryScore(data);
+  }
+
   const Sketch = (p) => {
 
     const PI = 3.1416;
+
+    var score;
+    score = mindCategoryScore;
 
     var slider_size,
       slider_level,
@@ -72,6 +80,8 @@ export default function ProfileMind() {
     let h = 0;
 
 
+
+
     p.getHeight = (w) => {
       if (w <= 400) {
         h = 330;
@@ -117,6 +127,11 @@ export default function ProfileMind() {
       div_inputs.id('div_Settings');
       div_inputs.parent("sliderHolder");
       div_inputs.style('visibility', 'hidden');
+
+      //score 
+      let label_score = p.createSpan(score);
+      label_score.position();
+      label_score.parent("div_Settings");
 
       //size
       slider_size = p.createSlider(100, 150, 125, 1);
@@ -166,6 +181,8 @@ export default function ProfileMind() {
       label_leafProb = p.createSpan('Flower probability');
       label_leafProb.position();
       label_leafProb.parent("div_Settings");
+
+
 
 
       //Read inputs of sliders initial values ? 
@@ -445,14 +462,15 @@ export default function ProfileMind() {
 
   }
 
-  
+
   useEffect(() => {
 
     const myP5 = new p5(Sketch);
 
     return () => myP5.remove();
 
-  }, [currentUser]);
+  }, [mindCategoryScore]);
+
 
 
 
@@ -462,6 +480,10 @@ export default function ProfileMind() {
 
       {/* Main */}
       <div className=' mx-auto pt-10 flex flex-col justify-center'>
+        
+        <div className='justify-center items-center text-center'>
+        {mindCategoryScore}
+        </div>
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
@@ -475,7 +497,8 @@ export default function ProfileMind() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder category={category}/>
+
+        <GoalHolder category={category} sendDataToCategory={handleDataFromChild} />
 
 
 

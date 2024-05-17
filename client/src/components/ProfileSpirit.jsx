@@ -422,16 +422,17 @@ export default function ProfileSpirit() {
 
   }
 
+  const [spiritCategoryScore, setSpiritCategoryScore] = useState('');
+  function handleDataFromChild(data) {
+    setSpiritCategoryScore(data);
+  }
 
   useEffect(() => {
     const myP5 = new p5(Sketch);
 
     return () => myP5.remove();
 
-  }, [currentUser]);
-
-
-
+  }, [currentUser, spiritCategoryScore]);
 
 
 
@@ -441,6 +442,10 @@ export default function ProfileSpirit() {
 
       {/* Main */}
       <div className=' mx-auto pt-10 flex flex-col justify-center'>
+
+        <div className='justify-center items-center text-center'>
+          {spiritCategoryScore}
+        </div>
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
@@ -454,7 +459,7 @@ export default function ProfileSpirit() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder category={category} />
+        <GoalHolder category={category} sendDataToCategory={handleDataFromChild} />
 
 
 
