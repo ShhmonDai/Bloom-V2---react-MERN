@@ -1,16 +1,14 @@
-import React from 'react'
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Dropdown, Table, Checkbox, Label, TextInput, Button, Modal, Alert, Textarea } from "flowbite-react";
+import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea } from "flowbite-react";
 import { BsThreeDots } from "react-icons/bs";
-import { IoIosAddCircleOutline } from "react-icons/io";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { TfiAngleDoubleDown } from "react-icons/tfi";
 import { TfiAngleDoubleUp } from "react-icons/tfi";
 import Subgoals from './Subgoals';
 
 
-export default function Goals( {category} ) {
+export default function Goals( {category, sendDataToCategory} ) {
 
   const { currentUser } = useSelector((state) => state.user);
   const [reload, setReload] = useState(false);
@@ -18,22 +16,13 @@ export default function Goals( {category} ) {
   const [userGoals, setUserGoals] = useState([]);
 
   const [showModalAddGoal, setShowModalAddGoal] = useState(false);
-
-
-
   const [showModalUpdateGoal, setShowModalUpdateGoal] = useState(false);
-
-  
-
   const [showModalDeleteGoal, setShowModalDeleteGoal] = useState(false);
-
-  
+  const [showModalAccomplishGoal, setShowModalAccomplishGoal] = useState(false);
 
   const [formDataAddGoal, setFormDataAddGoal] = useState({});
-
-
   const [formDataUpdateGoal, setFormDataUpdateGoal] = useState({});
-
+  const [formDataAccomplishGoal, setFormDataAccomplishGoal] = useState({});
 
   const [idToDelete, setIdToDelete] = useState({});
 
@@ -43,6 +32,10 @@ export default function Goals( {category} ) {
     setFinishedTasks(data);
   }
 
+  const [finishedGoals, setFinishedGoals] = useState("");
+
+  const [categoryScore, setCategoryScore] = useState('');
+  
 
 
   const goalColor = {
@@ -137,6 +130,32 @@ export default function Goals( {category} ) {
     }
   };
 
+  const handleAccomplishGoal = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/goal/accomplishgoal/${formDataAccomplishGoal._id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataAccomplishGoal),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalAccomplishGoal(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
 
 
   useEffect(() => {
@@ -146,7 +165,8 @@ export default function Goals( {category} ) {
         const data = await res.json();
         if (res.ok) {
           setUserGoals(data.goals);
- 
+          setFinishedGoals(data.finishedGoals);
+
         }
       } catch (error) {
         console.log(error.message);
@@ -159,6 +179,18 @@ export default function Goals( {category} ) {
     }
   }, [currentUser._id, category, reload]);
 
+  useEffect(() => {
+
+    const catScore = finishedTasks + (finishedGoals * 2)
+
+    setCategoryScore(catScore);
+
+  }, [finishedGoals, finishedTasks]);
+
+  useEffect(() => {
+    sendDataToCategory(categoryScore);
+  },[categoryScore])
+
   return (
     <div className='w-full min-h-screen'>
 
@@ -166,7 +198,7 @@ export default function Goals( {category} ) {
       {/* Main Container */}
       <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-10 max-w-4xl'>
 
-      <span className='text-center my-10'>Category Score: {finishedTasks} finished tasks </span> 
+      <span className='text-center my-10'>Category Score: {finishedTasks} finished tasks, {finishedGoals} finished goals. Total: {categoryScore} </span> 
       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
@@ -180,9 +212,9 @@ export default function Goals( {category} ) {
 
             {/* Title Div */}
             <div className={`border-b-2 rounded-lg shadow-lg ${goalColor[category]}`}> 
-              <div className='mx-2 bg-white flex flex-row justify-between p-5 text-xl font-semibold shadow-lg'>
+              <div className={`mx-2 ${goal.accomplished ? 'bg-white bg-opacity-40 line-through' : 'bg-white'} flex flex-row justify-between p-5 text-xl font-semibold shadow-lg`}>
 
-                <div className='w-full cursor-pointer' onClick={() => document.getElementById(index).classList.toggle('is-open')}>{goal.title}</div>
+                <div className={` w-full cursor-pointer`} onClick={() => document.getElementById(index).classList.toggle('is-open')}>{goal.title}</div>
 
                 <div className='hidden group-[.is-open]:inline'>
                   <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
@@ -221,10 +253,25 @@ export default function Goals( {category} ) {
 
             {/* Outer Div of Goals */}
             <div className={`border-t-2 rounded-lg min-h-[70px] shadow-2xl ${goalColor[category]}`} >
-              <div className='mx-2 flex bg-white min-h-[70px] flex-row justify-around items-center px-4'>
-                <span className='hidden group-[.is-open]:flex'>Started on: {new Date(goal.createdOn).toLocaleDateString()} </span>
+              <div className={`mx-2 flex ${goal.accomplished ? 'bg-white bg-opacity-40' : 'bg-white'} min-h-[70px] flex-row justify-evenly items-center px-4`}>
+                <span className='hidden group-[.is-open]:flex font-semibold'>Created on: {new Date(goal.createdOn).toLocaleDateString()} </span>
                 <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById(index).classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
-                <Button className='hidden group-[.is-open]:flex' outline gradientDuoTone="greenToBlue"> Accomplish Goal </Button>
+
+                {goal.accomplished ?
+                  (<button type='button' onClick={() => {
+                    setFormDataAccomplishGoal({ ...formDataAccomplishGoal, _id: goal._id, accomplished: false});
+                    setShowModalAccomplishGoal(true);
+                  }} className='hidden group-[.is-open]:flex'>
+                    <span className=' text-red-700 font-semibold'>Undo Accomplishment</span>
+                  </button>)
+                  :
+                  (<Button type='button' onClick={() => {
+                    setFormDataAccomplishGoal({ ...formDataAccomplishGoal, _id: goal._id, accomplished: true });
+                    setShowModalAccomplishGoal(true);
+                  }} className='hidden group-[.is-open]:flex' outline gradientDuoTone="greenToBlue">
+                    Accomplish Goal
+                  </Button>)
+                }
               </div>
             </div>
 
@@ -369,6 +416,31 @@ export default function Goals( {category} ) {
         </Modal.Body>
       </Modal>
 
+      {/* Accomplish Goal Modal */}
+      <Modal
+        show={showModalAccomplishGoal}
+        onClose={() => setShowModalAccomplishGoal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              {formDataAccomplishGoal.accomplished ? (<>Mark Goal as Done?</>) : (<>Mark Goal As To Do?</>)}
+            </h3>
+            <div className='flex justify-center gap-4'>
+              <Button color='failure' onClick={handleAccomplishGoal}>
+                Yes, Im sure
+              </Button>
+              <Button color='gray' onClick={() => setShowModalAccomplishGoal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
 
 
 

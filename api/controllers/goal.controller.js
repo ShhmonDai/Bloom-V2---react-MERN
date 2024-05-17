@@ -31,9 +31,16 @@ export const getcategorygoals = async (req, res, next) => {
             userId: req.params.userId,
             ...(req.query.category && { category: req.query.category }),
         }).sort({
-            createdAt: 1,
+            accomplished: 1,
         });
-        res.status(200).json({goals});
+
+        const finishedGoals = await Goal.countDocuments({
+            accomplished: true,
+            category: req.query.category,
+        });
+
+
+        res.status(200).json({goals, finishedGoals});
     } catch (error) {
         next(error);
     }

@@ -22,6 +22,10 @@ const goalSchema = new mongoose.Schema(
             type: String,
             default: 'uncategorized',
         },
+        priority: {
+            type: Number,
+            default: 0,
+        },
         createdOn: { 
             type: Date, 
             default: Date.now,
