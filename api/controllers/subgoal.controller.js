@@ -3,7 +3,7 @@ import Subgoal from '../models/subgoal.model.js';
 
 export const createsubgoal = async (req, res, next) => {
     try {
-        const { title, content, goalId, userId, category } = req.body;
+        const { title, content, goalId, userId, category, priority } = req.body;
 
         if (userId !== req.user.id) {
             return next(
@@ -17,6 +17,7 @@ export const createsubgoal = async (req, res, next) => {
             goalId,
             userId,
             category,
+            priority,
         });
         await newSubgoal.save();
 
@@ -32,7 +33,7 @@ export const getcategorysubgoals = async (req, res, next) => {
             userId: req.params.userId,
             ...(req.query.category && {category: req.query.category }),
          }).sort({
-            accomplished: 1,
+            priority: -1,
         });
         res.status(200).json({subgoals});
     } catch (error) {
@@ -44,7 +45,7 @@ export const getcategorysubgoals = async (req, res, next) => {
 export const getsubgoals = async (req, res, next) => {
     try {
         const subgoals = await Subgoal.find({ userId: req.params.userId }).sort({
-            createdAt: 1,
+            priority: -1,
         });
         res.status(200).json({subgoals});
     } catch (error) {
@@ -55,7 +56,7 @@ export const getsubgoals = async (req, res, next) => {
 export const getgoalsubgoals = async (req, res, next) => {
     try {
         const subgoals = await Subgoal.find({ goalId: req.params.goalId }).sort({
-            accomplished: 1,
+            priority: -1,
         });
 
         const finishedSubgoals = await Subgoal.countDocuments({
@@ -94,6 +95,7 @@ export const accomplishsubgoal = async (req, res, next) => {
             req.params.subgoalId,
             {
                 accomplished: req.body.accomplished,
+                priority: req.body.priority,
             },
             { new: true }
         );
@@ -114,6 +116,7 @@ export const editsubgoal = async (req, res, next) => {
                 $set: {
                     title: req.body.title,
                     content: req.body.content,
+                    priority: req.body.priority,
                 },
             },
             { new: true }

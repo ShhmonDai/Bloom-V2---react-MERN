@@ -1,6 +1,6 @@
 import { useEffect, useState, } from 'react';
 import { useSelector } from 'react-redux';
-import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea } from "flowbite-react";
+import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea, Select } from "flowbite-react";
 import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import Notes from './Notes';
@@ -196,6 +196,14 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
         }
     }, [currentUser._id, category, reload]);  
   
+
+    const priorityStyling = {
+        '4': 'border-red-500 bg-white',
+        '3': 'border-amber-500 bg-white',
+        '2': 'border-cyan-500 bg-white',
+        '1': 'border-gray-400 bg-white',
+        '0': 'border-green-500 line-through opacity-70 bg-green-100',
+    };
   
     return (
     <div>
@@ -215,10 +223,7 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
               {/* User Subgoals */}
               {userSubGoals.map((subgoal) => (
                   <>
-
-                     
-
-                            <div className={` ${subgoal.accomplished ? 'border-green-500 line-through opacity-70 bg-green-100' : 'border-cyan-500 bg-white'} group/item min-h-28 items-center p-4 border-2 rounded-lg shadow-xl`} key={subgoal._id}>
+                            <div className={` ${priorityStyling[subgoal.priority]} group/item min-h-28 items-center p-4 border-2 rounded-lg shadow-xl`} key={subgoal._id}>
 
                                   <div className='flex flex-col justify-between w-full'>
 
@@ -235,13 +240,13 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                                         <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500'>
                                         {subgoal.accomplished ? 
                                             (<button type='button' onClick={() => {
-                                                setFormDataAccomplishSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, accomplished: false });
+                                                setFormDataAccomplishSubgoal({ ...formDataAccomplishSubgoal, _id: subgoal._id, accomplished: false, priority: 2 });
                                                 setShowModalAccomplishSubgoal(true);}}>
                                                 <span className=' text-red-400 font-semibold'>-Undo-</span>
                                             </button>) 
                                             : 
                                             (<button type='button'onClick={() => {
-                                                setFormDataAccomplishSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, accomplished: true });
+                                                setFormDataAccomplishSubgoal({ ...formDataAccomplishSubgoal, _id: subgoal._id, accomplished: true, priority: 0 });
                                                 setShowModalAccomplishSubgoal(true);}}>
                                                 <span className=' text-green-400 font-semibold'>-Mark Done-</span>
                                             </button>)
@@ -251,7 +256,7 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                                         <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
                                             <Dropdown.Item onClick={() => {
                                                 setShowModalUpdateSubgoal(true);
-                                                setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, title: subgoal.title, content: subgoal.content });
+                                                setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, _id: subgoal._id, title: subgoal.title, content: subgoal.content, priority: subgoal.priority });
                                             }}>Edit</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
                                                 setShowModalDeleteSubgoal(true);
@@ -265,8 +270,6 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
 
                             </div>
 
-
-
                   </>
               ))}
           </div>
@@ -275,7 +278,7 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
             <div className='my-10 py-5 flex flex-row gap-4 justify-around border-2 border-r-transparent border-l-transparent border-b-orange-500 border-t-cyan-500 rounded-lg' >
 
               <Button outline gradientDuoTone="cyanToBlue" onClick={() => {
-                  setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goalId, userId: currentUser._id, category: category });
+                  setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goalId, userId: currentUser._id, category: category, priority: 2 });
                   setShowModalAddSubgoal(true);
               }}>Add Task</Button>
 
@@ -311,6 +314,15 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                             <Textarea rows={6} placeholder='Description' id='content' value={formDataAddSubgoal.content} onChange={(e) =>
                                 setFormDataAddSubgoal({ ...formDataAddSubgoal, content: e.target.value })
                             } />
+
+                            <Label>Task Priority</Label>
+                            <Select id="priority" required onChange={(e) =>
+                                setFormDataAddSubgoal({ ...formDataAddSubgoal, priority: e.target.value })}>
+                                <option value='2'>Default</option>
+                                <option value='4'>Maximum</option>
+                                <option value='3'>Higher</option>
+                                <option value='1'>Unimportant</option>
+                            </Select>
 
 
                             <div className='my-5 flex justify-center gap-4'>
@@ -357,6 +369,15 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                             <Textarea rows={6} placeholder='Description' id='content' value={formDataUpdateSubgoal.content} onChange={(e) =>
                                 setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, content: e.target.value })
                             } />
+
+                            <Label>Task Priority</Label>
+                            <Select id="priority" value={formDataUpdateSubgoal.priority} onChange={(e) =>
+                                setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, priority: e.target.value })}>
+                                <option value='2'>Default</option>
+                                <option value='4'>Maximum</option>
+                                <option value='3'>High</option>
+                                <option value='1'>Unimportant</option>
+                            </Select>
 
 
                             <div className='my-5 flex justify-center gap-4'>

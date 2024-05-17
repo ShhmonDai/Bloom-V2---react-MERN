@@ -25,6 +25,10 @@ const subgoalSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        priority: {
+            type: Number,
+            default: 1,
+        },
         createdOn: {
             type: Date,
             default: Date.now,
