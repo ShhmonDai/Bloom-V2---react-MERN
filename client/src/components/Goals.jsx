@@ -46,16 +46,17 @@ export default function Goals( {category} ) {
 
 
   const goalColor = {
-    'mind': ' bg-gradient-to-b from-rose-400 to-red-500',
-    'body': ' bg-gradient-to-b from-amber-500 to-pink-500',
+    'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
+    'body': ' bg-gradient-to-b from-amber-400 to-pink-400',
     'spirit': ' bg-gradient-to-b from-sky-500 to-teal-500',
   };
  
   const goalButton = {
-    'mind': 'pinkToOrange',
+    'mind': 'greenToBlue',
     'body': 'pinkToOrange',
     'spirit': 'cyanToBlue',
   };
+
 
 
   const [publishError, setPublishError] = useState(null);
@@ -160,11 +161,12 @@ export default function Goals( {category} ) {
 
   return (
     <div className='w-full min-h-screen'>
+
       
       {/* Main Container */}
-      <div className='mx-auto p-2 pt-20 mb-10 flex flex-col justify-center gap-10 max-w-4xl'>
+      <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-10 max-w-4xl'>
 
-      <span>Category Score: {finishedTasks} finished tasks </span> 
+      <span className='text-center my-10'>Category Score: {finishedTasks} finished tasks </span> 
       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
