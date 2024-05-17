@@ -40,6 +40,19 @@ export const getcategorynotes = async (req, res, next) => {
     }
 };
 
+export const getgoalnotes = async (req, res, next) => {
+    try {
+        const notes = await Note.find({
+            goalId: req.params.goalId,
+            ...(req.query.category && { category: req.query.category }),
+        }).sort({
+            createdAt: 1,
+        });
+        res.status(200).json({ notes });
+    } catch (error) {
+        next(error);
+    }
+};
 
 export const editnote = async (req, res, next) => {
     if (req.user.id !== req.params.userId) {
