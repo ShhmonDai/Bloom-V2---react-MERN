@@ -72,6 +72,14 @@ body {
   left: 10%;
 }
 
+
+#buttonHolder #hideLabel {
+  position: absolute;
+  left: 10%;
+  bottom: 10%;
+  font-weight: bold;
+}
+
 #div_Settings {
   position: absolute;
   bottom: 55%;

@@ -36,6 +36,8 @@ export default function Home() {
       label_seed,
       label_source,
       label_source2,
+      label_seed,
+      label_hide,
       label_Count;
 
     var div_inputs;
@@ -172,16 +174,21 @@ export default function Home() {
       slider_leafProb.input(p.getInputs = () => { p.readInputs(true) });
 
 
-      button_seed = p.createButton('MAKE IT BLOOM!');
+
+      button_seed = p.createButton('Grow Tree');
       button_seed.position();
       button_seed.parent("buttonHolder");
       button_seed.id('growButton');
       button_seed.mousePressed(p.buttonGrow = () => {p.startGrow()});
-
-      button_hide = p.createButton('CREATE A SEED');
+      
+      label_hide = p.createSpan('How its made:');
+      label_hide.position();
+      label_hide.parent("buttonHolder");
+      button_hide = p.createButton('Show inputs');
       button_hide.position();
       button_hide.parent("buttonHolder");
       button_hide.id('hideButton');
+      label_hide.id('hideLabel');
       button_hide.mousePressed(p.buttonHide = () => {p.showHide()});
 
 

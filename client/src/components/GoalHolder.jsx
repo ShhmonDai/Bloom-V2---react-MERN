@@ -3,6 +3,9 @@ import { useState } from 'react';
 
 import Goals from './Goals';
 import HabitsComp from './Habits';
+import { PiFlowerLotus } from "react-icons/pi";
+import { Link } from 'react-router-dom';
+
 
 
 export default function GoalHolder( {category, sendDataToCategory} ) {
@@ -38,11 +41,24 @@ export default function GoalHolder( {category, sendDataToCategory} ) {
     and small daily acts that bring peace to your mind - like keeping a diary or taking more breaks to catch a breather from work`),
   };
 
+  const categoryColor = {
+    'mind': 'text-teal-500',
+    'body': 'text-amber-500',
+    'spirit': 'text-sky-500',
+  };
+
+  const borderColor = {
+    'mind': 'border-teal-500',
+    'body': 'border-amber-500',
+    'spirit': 'border-sky-500',
+  };
+
+
 
   return (
     <div className='flex flex-col justify-center '>
 
-      <div className='px-5 pt-5 pb-24 sm:px-10 flex flex-col justify-center items-center bg-gradient-to-b from-white via-indigo-100 to-indigo-50'>
+      <div className='px-5 pt-5 pb-28 sm:px-10 flex flex-col justify-center items-center bg-gradient-to-b from-white via-indigo-100 to-indigo-50'>
         <h1 className='font-BrushFont text-8xl sm:text-9xl'>{category}</h1>
         <p className='text-wrap break-words italic max-w-4xl'> {categoryDescription[category]}</p>
       </div>
@@ -50,9 +66,10 @@ export default function GoalHolder( {category, sendDataToCategory} ) {
 
 
         {/* GOALS / HABITS selector buttons */ }
-        < div className = {`flex flex-row gap-5 justify-center border-b-2 border-gray-300 relative min-h-[41px] bg-indigo-50 `} >
-          <button className={` w-[40%] border-r-2 border-t-2 rounded-t-lg  px-2 py-1 text-xl font-semibold border-gray-300 ${goalsToggle ? 'bottom-[-2px] bg-white' : 'text-gray-600 bottom-[-1px] border-b-2 bg-indigo-50'} absolute left-0 overflow-y-visible z-10`} type='button' onClick={toggleGoals}>GOALS</button>
-          <button className={` w-[40%] border-l-2 border-t-2 rounded-t-lg px-2 py-1 text-xl font-semibold border-gray-300 ${habitsToggle ? 'bottom-[-2px] bg-white' : 'text-gray-600 bottom-[-1px] border-b-2 bg-indigo-50'} absolute right-0 overflow-y-visible z-10`} type='button' onClick={toggleHabits}>DAILY TASKS</button>
+        < div className = {`flex flex-row gap-5 justify-center relative min-h-[41px] bg-indigo-50 `} >
+        <button className={` w-[40.4%] border-t-4 rounded-tr-full text-xl font-semibold ${borderColor[category]} pt-4 pb-3 bottom-[-1px] ${goalsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute left-0 overflow-y-visible z-10`} type='button' onClick={toggleGoals}>GOALS</button>
+        <Link to='/' className={`flex justify-center  w-[20.2%] lg:w-[19.6%] bg-indigo-50 border-b-4 rounded-b-full  text-xl font-semibold ${borderColor[category]}   absolute bottom-[-41px] overflow-y-visible z-20`}> <PiFlowerLotus className={`${categoryColor[category]} text-6xl`}/> </Link>
+        <button className={` w-[40.4%] border-t-4 rounded-tl-full text-xl font-semibold ${borderColor[category]}  pt-4 pb-3 bottom-[-1px] ${habitsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute right-0 overflow-y-visible z-10`} type='button' onClick={toggleHabits}>HABITS</button>
         </div >
 
         <div className='flex flex-col justify-center bg-gradient-to-b from-white via-indigo-100 to-indigo-100'>

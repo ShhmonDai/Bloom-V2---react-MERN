@@ -14,6 +14,49 @@ export default function Goals( {category, sendDataToCategory} ) {
   const [reload, setReload] = useState(false);
 
   const [userGoals, setUserGoals] = useState([]);
+  const [finishedTasks, setFinishedTasks] = useState("");
+  const [finishedGoals, setFinishedGoals] = useState("");
+  const [categoryScore, setCategoryScore] = useState('');
+
+  useEffect(() => {
+    const fetchGoals = async () => {
+      try {
+        const res = await fetch(`/api/goal/getcategorygoals/${currentUser._id}?category=${category}`);
+        const data = await res.json();
+        if (res.ok) {
+          setUserGoals(data.goals);
+          setFinishedGoals(data.finishedGoals);
+
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    if (currentUser) {
+      fetchGoals();
+
+    }
+  }, [currentUser._id, category, reload]);
+
+
+  function handleDataFromChild(data) {
+    setFinishedTasks(data);
+  }
+
+  useEffect(() => {
+
+    const catScore = finishedTasks + (finishedGoals * 2)
+
+    setCategoryScore(catScore);
+
+  }, [finishedGoals, finishedTasks]);
+
+  useEffect(() => {
+    sendDataToCategory(categoryScore);
+  }, [categoryScore])
+
+  const [idToDelete, setIdToDelete] = useState({});
 
   const [showModalAddGoal, setShowModalAddGoal] = useState(false);
   const [showModalUpdateGoal, setShowModalUpdateGoal] = useState(false);
@@ -23,20 +66,6 @@ export default function Goals( {category, sendDataToCategory} ) {
   const [formDataAddGoal, setFormDataAddGoal] = useState({});
   const [formDataUpdateGoal, setFormDataUpdateGoal] = useState({});
   const [formDataAccomplishGoal, setFormDataAccomplishGoal] = useState({});
-
-  const [idToDelete, setIdToDelete] = useState({});
-
-  const [finishedTasks, setFinishedTasks] = useState("");
-
-  function handleDataFromChild(data) {
-    setFinishedTasks(data);
-  }
-
-  const [finishedGoals, setFinishedGoals] = useState("");
-
-  const [categoryScore, setCategoryScore] = useState('');
-  
-
 
   const goalColor = {
     'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
@@ -49,7 +78,6 @@ export default function Goals( {category, sendDataToCategory} ) {
     'body': 'pinkToOrange',
     'spirit': 'cyanToBlue',
   };
-
 
 
   const [publishError, setPublishError] = useState(null);
@@ -158,39 +186,6 @@ export default function Goals( {category, sendDataToCategory} ) {
 
 
 
-  useEffect(() => {
-    const fetchGoals = async () => {
-      try {
-        const res = await fetch(`/api/goal/getcategorygoals/${currentUser._id}?category=${category}`);
-        const data = await res.json();
-        if (res.ok) {
-          setUserGoals(data.goals);
-          setFinishedGoals(data.finishedGoals);
-
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    if (currentUser) {
-      fetchGoals();
-
-    }
-  }, [currentUser._id, category, reload]);
-
-  useEffect(() => {
-
-    const catScore = finishedTasks + (finishedGoals * 2)
-
-    setCategoryScore(catScore);
-
-  }, [finishedGoals, finishedTasks]);
-
-  useEffect(() => {
-    sendDataToCategory(categoryScore);
-  },[categoryScore])
-
   return (
     <div className='w-full min-h-screen'>
 
@@ -198,7 +193,7 @@ export default function Goals( {category, sendDataToCategory} ) {
       {/* Main Container */}
       <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-10 max-w-4xl'>
 
-      <span className='text-center my-10'>Category Score: {finishedTasks} finished tasks, {finishedGoals} finished goals. Total: {categoryScore} </span> 
+      <span className='text-center mb-10 mt-20'>Category Score: {finishedTasks} finished tasks, {finishedGoals} finished goals. Total: {categoryScore} </span> 
       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
