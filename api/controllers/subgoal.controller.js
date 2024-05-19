@@ -69,6 +69,7 @@ export const getgoalsubgoals = async (req, res, next) => {
         });
 
         const categoryScore = await Subgoal.countDocuments({
+            userId: req.params.userId,
             category: req.query.category,
             accomplished: true,
         });

@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/createsubgoal', verifyToken, createsubgoal)
 router.get('/getsubgoals/:userId', getsubgoals)
 router.get('/getcategorysubgoals/:userId', getcategorysubgoals)
-router.get('/getgoalsubgoals/:goalId', getgoalsubgoals)
+router.get('/getgoalsubgoals/:goalId/:userId', getgoalsubgoals)
 router.delete('/deletesubgoal/:subgoalId/:userId', verifyToken, deletesubgoal)
 router.put('/editsubgoal/:subgoalId/:userId', verifyToken, editsubgoal)
 router.put('/accomplishsubgoal/:subgoalId/:userId', verifyToken, accomplishsubgoal)

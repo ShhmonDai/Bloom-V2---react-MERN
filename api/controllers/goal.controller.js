@@ -35,6 +35,7 @@ export const getcategorygoals = async (req, res, next) => {
         });
 
         const finishedGoals = await Goal.countDocuments({
+            userId: req.params.userId,
             accomplished: true,
             category: req.query.category,
         });
