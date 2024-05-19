@@ -11,6 +11,36 @@ export default function ProfileBody() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('body');
 
+  const [bodyCategoryScore, setBodyCategoryScore] = useState('');
+  function handleDataFromChild(data) {
+    setBodyCategoryScore(data);
+  }
+
+
+  const [subgoalScore, setSubgoalScore] = useState('');
+  const [goalScore, setGoalScore] = useState('');
+  const [totalScore, setTotalScore] = useState('');
+
+  useEffect(() => {
+    const fetchCategoryScore = async () => {
+      try {
+        const res = await fetch(`/api/category/getcategoryscore/${currentUser._id}?category=${category}`);
+        const data = await res.json();
+        if (res.ok) {
+          setSubgoalScore(data.subgoalScore);
+          setGoalScore(data.goalScore);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    if (currentUser) {
+      fetchCategoryScore();
+    }
+  }, [currentUser._id, bodyCategoryScore]);
+
+
   const Sketch = (p) => {
 
     const PI = 3.1416;
@@ -104,6 +134,8 @@ export default function ProfileBody() {
 
     var backgroundImage = p.loadImage('BodyTreeBackground.png');
 
+    let growthScore = totalScore;
+
 
     p.setup = () => {
 
@@ -168,14 +200,17 @@ export default function ProfileBody() {
       label_leafProb.position();
       label_leafProb.parent("div_Settings");
 
+      p.readInputs(true);
+
+      console.log('growth score: ' + growthScore);
 
       //Read inputs of sliders initial values ? 
-      slider_size.input(p.getInputs = () => { p.readInputs(true) });
-      slider_level.input(p.getInputs = () => { p.readInputs(true) });
-      slider_lenRand.input(p.getInputs = () => { p.readInputs(true) });
-      slider_branchProb.input(p.getInputs = () => { p.readInputs(true) });
-      slider_Count.input(p.getInputs = () => { p.readInputs(true) });
-      slider_leafProb.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_size.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_level.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_lenRand.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_branchProb.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_Count.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_leafProb.input(p.getInputs = () => { p.readInputs(true) });
 
 
       button_seed = p.createButton('MAKE IT BLOOM!');
@@ -192,6 +227,7 @@ export default function ProfileBody() {
 
 
 
+      console.log('Rendering')
       p.readInputs(false);
       p.startGrow();
 
@@ -230,11 +266,25 @@ export default function ProfileBody() {
 
       //Dynamic Values
       //completedCount = slider_Count.value();
-      size = slider_size.value();
-      maxLevel = slider_level.value();
-      lenRand = slider_lenRand.value();
-      branchProb = slider_branchProb.value();
-      leafProb = slider_leafProb.value();
+      size = 100;
+      maxLevel = 1;
+      lenRand = 0;
+      branchProb = 0.7;
+      leafProb = 0;
+
+      if (growthScore > 0) {
+        { growthScore <= 50 ? size = size + growthScore : size = 150 }
+        { growthScore <= 60 ? lenRand = lenRand + (growthScore * 0.02) : lenRand = 1.2 }
+        { (growthScore / 4) <= 12 ? maxLevel = maxLevel + Math.trunc(growthScore / 4) : maxLevel = 12 }
+
+        if (growthScore - 5 > 0) {
+          { (growthScore - 5) <= 28 ? branchProb = branchProb + ((growthScore - 5) * 0.01) : branchProb = 1 }
+        }
+
+        if (growthScore - 15 > 0) {
+          { (growthScore - 15) <= 45 ? leafProb = leafProb + ((growthScore - 15) * 0.01) : leafProb = 1 }
+        }
+      }
 
       if (updateTree && !growing) {
         prog = maxLevel + 1;
@@ -423,19 +473,26 @@ export default function ProfileBody() {
 
   }
 
-  const [bodyCategoryScore, setBodyCategoryScore] = useState('');
-  function handleDataFromChild(data) {
-    setBodyCategoryScore(data);
-  }
 
   useEffect(() => {
 
-    const myP5 = new p5(Sketch);
+    setTotalScore((goalScore * 2) + subgoalScore);
 
-    return () => myP5.remove();
 
-  }, [currentUser, bodyCategoryScore]);
+  }, [goalScore, subgoalScore]);
 
+
+  useEffect(() => {
+
+    if (totalScore !== '') {
+
+      console.log('totalScore: ' + totalScore);
+      const myP5 = new p5(Sketch);
+      return () => myP5.remove();
+
+    }
+
+  }, [totalScore]);
 
 
 
@@ -449,7 +506,7 @@ export default function ProfileBody() {
       <div className=' mx-auto pt-10 flex flex-col justify-center'>
 
         <div className='justify-center items-center text-center'>
-          {bodyCategoryScore}
+          {totalScore}
         </div>
 
         {/* Tree container */}

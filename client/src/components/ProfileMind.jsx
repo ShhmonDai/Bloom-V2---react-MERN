@@ -12,16 +12,38 @@ export default function ProfileMind() {
   const [category, setCategory] = useState('mind');
 
   const [mindCategoryScore, setMindCategoryScore] = useState('');
+
   function handleDataFromChild(data) {
     setMindCategoryScore(data);
   }
 
+  const [subgoalScore, setSubgoalScore] = useState('');
+  const [goalScore, setGoalScore] = useState('');
+  const [totalScore, setTotalScore] = useState('');
+
+
+  useEffect(() => {
+    const fetchCategoryScore = async () => {
+      try {
+        const res = await fetch(`/api/category/getcategoryscore/${currentUser._id}?category=${category}`);
+        const data = await res.json();
+        if (res.ok) {
+          setSubgoalScore(data.subgoalScore);
+          setGoalScore(data.goalScore);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    if (currentUser) {
+      fetchCategoryScore();
+    }
+  }, [currentUser._id, mindCategoryScore]);
+
   const Sketch = (p) => {
 
     const PI = 3.1416;
-
-    var score;
-    score = mindCategoryScore;
 
     var slider_size,
       slider_level,
@@ -113,11 +135,13 @@ export default function ProfileMind() {
     const Y_AXIS = 1;
 
     var backgroundImage = p.loadImage('MindTreeBackground.png');
+
+    let growthScore = totalScore;
     
     p.setup = () => {
 
-      console.log('width: ' + w);
-      console.log('height: ' + h);
+      //console.log('width: ' + w);
+      //console.log('height: ' + h);
       //create a canvas instance
       p.createCanvas(w, h).parent("treeHolder");
 
@@ -127,11 +151,6 @@ export default function ProfileMind() {
       div_inputs.id('div_Settings');
       div_inputs.parent("sliderHolder");
       div_inputs.style('visibility', 'hidden');
-
-      //score 
-      let label_score = p.createSpan(score);
-      label_score.position();
-      label_score.parent("div_Settings");
 
       //size
       slider_size = p.createSlider(100, 150, 125, 1);
@@ -183,15 +202,18 @@ export default function ProfileMind() {
       label_leafProb.parent("div_Settings");
 
 
+      p.readInputs(true);
+
+      console.log('growth score: ' + growthScore);
 
 
       //Read inputs of sliders initial values ? 
-      slider_size.input(p.getInputs = () => { p.readInputs(true) });
-      slider_level.input(p.getInputs = () => { p.readInputs(true) });
-      slider_lenRand.input(p.getInputs = () => { p.readInputs(true) });
-      slider_branchProb.input(p.getInputs = () => { p.readInputs(true) });
-      slider_Count.input(p.getInputs = () => { p.readInputs(true) });
-      slider_leafProb.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_size.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_level.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_lenRand.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_branchProb.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_Count.input(p.getInputs = () => { p.readInputs(true) });
+      //slider_leafProb.input(p.getInputs = () => { p.readInputs(true) });
 
 
       button_seed = p.createButton('MAKE IT BLOOM!');
@@ -212,6 +234,7 @@ export default function ProfileMind() {
 
       //button_newSeed.mousePressed(p.getSeed = () => { randSeed = p.random(1,500); console.log('RandSeed: ' + randSeed); });
 
+      console.log('Rendering')
       p.readInputs(false);
       p.startGrow();
 
@@ -250,11 +273,28 @@ export default function ProfileMind() {
 
       //Dynamic Values
       //completedCount = slider_Count.value();
-      size = slider_size.value();
-      maxLevel = slider_level.value();
-      lenRand = slider_lenRand.value();
-      branchProb = slider_branchProb.value();
-      leafProb = slider_leafProb.value();
+
+
+
+      size = 100;
+      maxLevel = 1;
+      lenRand = 0;
+      branchProb = 0.7;
+      leafProb = 0;
+
+      if (growthScore > 0) {
+        {growthScore <= 50 ? size = size + growthScore : size = 150}
+        { growthScore <= 60 ? lenRand = lenRand + (growthScore * 0.02) : lenRand = 1.2 }
+        { (growthScore / 4) <= 12 ? maxLevel = maxLevel + Math.trunc(growthScore / 4) : maxLevel = 12 }
+
+        if (growthScore - 5 > 0) {
+          {(growthScore - 5) <= 28 ? branchProb = branchProb + ((growthScore-5) * 0.01) : branchProb = 1 } 
+        }
+
+        if (growthScore - 15 > 0) {
+          { (growthScore - 15) <= 45 ? leafProb = leafProb + ((growthScore - 15) * 0.01) : leafProb = 1 }
+        }
+      }
 
       if (updateTree && !growing) {
         prog = maxLevel + 1;
@@ -273,8 +313,8 @@ export default function ProfileMind() {
 
       p.getScale(h);
 
-      console.log('width: ' + w);
-      console.log('height: ' + h);
+      //console.log('width: ' + w);
+      //console.log('height: ' + h);
     }
 
     p.draw = () => {
@@ -465,11 +505,23 @@ export default function ProfileMind() {
 
   useEffect(() => {
 
-    const myP5 = new p5(Sketch);
+    setTotalScore((goalScore * 2 )+ subgoalScore);
 
-    return () => myP5.remove();
 
-  }, [mindCategoryScore]);
+  }, [goalScore, subgoalScore]);
+
+
+  useEffect(() => {
+
+    if (totalScore !== '') {
+
+      console.log('totalScore: ' + totalScore);
+      const myP5 = new p5(Sketch);
+      return () => myP5.remove();
+
+    }
+
+  }, [totalScore]);
 
 
 
@@ -477,14 +529,15 @@ export default function ProfileMind() {
   return (
     <div className='w-full min-h-screen'>
 
+    
 
       {/* Main */}
       <div className=' mx-auto pt-10 flex flex-col justify-center'>
-        
-        <div className='justify-center items-center text-center'>
-        {mindCategoryScore}
-        </div>
 
+        <div className='justify-center items-center text-center'>
+          {totalScore}
+        </div>
+        
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
         <div id="MindUnderTree" className='mt-[-1px] flex justify-center items-center bg-white mb-2'>
