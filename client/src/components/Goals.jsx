@@ -207,7 +207,7 @@ export default function Goals( {category, sendDataToCategory} ) {
 
             {/* Title Div */}
             <div className={`border-b-2 rounded-lg shadow-lg ${goalColor[category]}`}> 
-              <div className={`mx-2 ${goal.accomplished ? 'bg-white bg-opacity-40 line-through' : 'bg-white'} flex flex-row justify-between p-5 text-xl font-semibold shadow-lg`}>
+              <div className={`mx-2 ${goal.accomplished ? 'bg-white bg-opacity-70 line-through' : 'bg-white'} flex flex-row justify-between p-5 text-xl font-semibold shadow-lg`}>
 
                 <div className={` w-full cursor-pointer`} onClick={() => document.getElementById(index).classList.toggle('is-open')}>{goal.title}</div>
 
@@ -248,7 +248,7 @@ export default function Goals( {category, sendDataToCategory} ) {
 
             {/* Outer Div of Goals */}
             <div className={`border-t-2 rounded-lg min-h-[70px] shadow-2xl ${goalColor[category]}`} >
-              <div className={`mx-2 flex ${goal.accomplished ? 'bg-white bg-opacity-40' : 'bg-white'} min-h-[70px] flex-row justify-evenly items-center px-4`}>
+              <div className={`mx-2 flex ${goal.accomplished ? 'bg-white bg-opacity-70' : 'bg-white'} min-h-[70px] flex-row justify-evenly items-center px-4`}>
                 <span className='hidden group-[.is-open]:flex font-semibold'>Created on: {new Date(goal.createdOn).toLocaleDateString()} </span>
                 <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById(index).classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
 
@@ -257,7 +257,7 @@ export default function Goals( {category, sendDataToCategory} ) {
                     setFormDataAccomplishGoal({ ...formDataAccomplishGoal, _id: goal._id, accomplished: false});
                     setShowModalAccomplishGoal(true);
                   }} className='hidden group-[.is-open]:flex'>
-                    <span className=' text-red-700 font-semibold'>Undo Accomplishment</span>
+                    <span className=' text-red-500 font-medium'>Undo Accomplishment</span>
                   </button>)
                   :
                   (<Button type='button' onClick={() => {

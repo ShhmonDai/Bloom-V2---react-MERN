@@ -40,6 +40,30 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
     const [publishError, setPublishError] = useState(null);
 
 
+    useEffect(() => {
+
+        const fetchSubGoals = async () => {
+            try {
+                const resSub = await fetch(`/api/subgoal/getgoalsubgoals/${goalId}/${currentUser._id}?category=${category}`);
+                const dataSub = await resSub.json();
+                if (resSub.ok) {
+                    setUserSubGoals(dataSub.subgoals);
+                    setTotalSubgoals(dataSub.totalSubgoals);
+                    setFinishedSubgoals(dataSub.finishedSubgoals);
+                    sendDataToParent(dataSub.categoryScore);
+                }
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+
+        if (currentUser) {
+
+            fetchSubGoals();
+        }
+    }, [currentUser._id, category, reload]); 
+
+
     const handleCreateSubgoal = async (e) => {
         e.preventDefault();
         try {
@@ -170,33 +194,7 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
             setPublishError('Something went wrong');
         }
     };
-
-
-
-    useEffect(() => {
-
-        const fetchSubGoals = async () => {
-            try {
-                const resSub = await fetch(`/api/subgoal/getgoalsubgoals/${goalId}?category=${category}`);
-                const dataSub = await resSub.json();
-                if (resSub.ok) {
-                    setUserSubGoals(dataSub.subgoals);
-                    setTotalSubgoals(dataSub.totalSubgoals);
-                    setFinishedSubgoals(dataSub.finishedSubgoals);
-                    sendDataToParent(dataSub.categoryScore);
-                }
-            } catch (error) {
-                console.log(error.message);
-            }
-        };
-
-        if (currentUser) {
-
-            fetchSubGoals();
-        }
-    }, [currentUser._id, category, reload]);  
-  
-
+ 
     const priorityStyling = {
         '4': 'border-red-500 bg-white',
         '3': 'border-amber-500 bg-white',

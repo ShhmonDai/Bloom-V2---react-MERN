@@ -43,13 +43,13 @@ export default function GoalHolder( {category, sendDataToCategory} ) {
 
   const categoryColor = {
     'mind': 'text-teal-500',
-    'body': 'text-amber-500',
+    'body': 'text-orange-300',
     'spirit': 'text-sky-500',
   };
 
   const borderColor = {
     'mind': 'border-teal-500',
-    'body': 'border-amber-500',
+    'body': 'border-orange-300',
     'spirit': 'border-sky-500',
   };
 
@@ -67,9 +67,9 @@ export default function GoalHolder( {category, sendDataToCategory} ) {
 
         {/* GOALS / HABITS selector buttons */ }
         < div className = {`flex flex-row gap-5 justify-center relative min-h-[41px] bg-indigo-50 `} >
-        <button className={` w-[40.4%] border-t-4 rounded-tr-full text-xl font-semibold ${borderColor[category]} pt-4 pb-3 bottom-[-1px] ${goalsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute left-0 overflow-y-visible z-10`} type='button' onClick={toggleGoals}>GOALS</button>
-        <Link to='/' className={`flex justify-center  w-[20.2%] lg:w-[19.6%] bg-indigo-50 border-b-4 rounded-b-full  text-xl font-semibold ${borderColor[category]}   absolute bottom-[-41px] overflow-y-visible z-20`}> <PiFlowerLotus className={`${categoryColor[category]} text-6xl`}/> </Link>
-        <button className={` w-[40.4%] border-t-4 rounded-tl-full text-xl font-semibold ${borderColor[category]}  pt-4 pb-3 bottom-[-1px] ${habitsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute right-0 overflow-y-visible z-10`} type='button' onClick={toggleHabits}>HABITS</button>
+        <button className={` w-[40.4%] border-t-4 rounded-tr-full text-xl font-semibold ${borderColor[category]} pt-4 pb-3 bottom-[-1px] ${goalsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute left-0 overflow-y-visible z-1`} type='button' onClick={toggleGoals}>GOALS</button>
+        <Link to='/' className={`flex justify-center  w-[20.2%] lg:w-[19.6%] bg-indigo-50 border-b-4 rounded-b-full  text-xl font-semibold ${borderColor[category]}   absolute bottom-[-41px] overflow-y-visible z-2`}> <PiFlowerLotus className={`${categoryColor[category]} text-6xl`}/> </Link>
+        <button className={` w-[40.4%] border-t-4 rounded-tl-full text-xl font-semibold ${borderColor[category]}  pt-4 pb-3 bottom-[-1px] ${habitsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute right-0 overflow-y-visible z-1`} type='button' onClick={toggleHabits}>HABITS</button>
         </div >
 
         <div className='flex flex-col justify-center bg-gradient-to-b from-white via-indigo-100 to-indigo-100'>

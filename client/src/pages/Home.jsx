@@ -407,7 +407,9 @@ export default function Home() {
  }   
 
   useEffect(() => {
-    const myP5 = new p5(Sketch)
+    const myP5 = new p5(Sketch);
+
+    return () => myP5.remove();
   }, []);
 
   return (

@@ -148,6 +148,10 @@ body {
     left: 5%;
   }
 
+  #buttonHolder #hideLabel {
+    left: 5%;
+  }
+
   #div_Settings {
     left: 5%;
   }
@@ -170,6 +174,10 @@ body {
   }
 
   #buttonHolder #hideButton {
+    left: 1%;
+  }
+
+  #buttonHolder #hideLabel {
     left: 1%;
   }
 
