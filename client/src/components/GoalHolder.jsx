@@ -67,9 +67,9 @@ export default function GoalHolder( {category, sendDataToCategory} ) {
 
         {/* GOALS / HABITS selector buttons */ }
         < div className = {`flex flex-row gap-5 justify-center relative min-h-[41px] bg-indigo-50 `} >
-        <button className={` w-[40.4%] border-t-4 rounded-tr-full text-xl font-semibold ${borderColor[category]} pt-4 pb-3 bottom-[-1px] ${goalsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute left-0 overflow-y-visible z-1`} type='button' onClick={toggleGoals}>GOALS</button>
-        <Link to='/' className={`flex justify-center  w-[20.2%] lg:w-[19.6%] bg-indigo-50 border-b-4 rounded-b-full  text-xl font-semibold ${borderColor[category]}   absolute bottom-[-41px] overflow-y-visible z-2`}> <PiFlowerLotus className={`${categoryColor[category]} text-6xl`}/> </Link>
-        <button className={` w-[40.4%] border-t-4 rounded-tl-full text-xl font-semibold ${borderColor[category]}  pt-4 pb-3 bottom-[-1px] ${habitsToggle ? 'italic' : 'text-gray-400 '} bg-white absolute right-0 overflow-y-visible z-1`} type='button' onClick={toggleHabits}>HABITS</button>
+        <button className={` w-[35%] sm:w-[40.4%] pr-3 border-t-4 rounded-tr-full text-xl font-medium ${borderColor[category]} pt-4 pb-3 bottom-[-1px] ${goalsToggle ? `font-bold ${categoryColor[category]}` : `text-gray-400 `} bg-gradient-to-b from-white to-white absolute left-0 overflow-y-visible z-1`} type='button' onClick={toggleGoals}>GOALS</button>
+        <Link to='/' className={`flex justify-center w-[31.5%]  sm:w-[20.2%] lg:w-[19.9%] bg-gradient-to-t from-indigo-50 to-indigo-50 border-b-4 rounded-b-full  text-xl font-semibold ${borderColor[category]}   absolute bottom-[-41px] overflow-y-visible z-2`}> <PiFlowerLotus className={`${categoryColor[category]} text-6xl`}/> </Link>
+        <button className={` w-[35%] sm:w-[40.4%] pl-3 border-t-4 rounded-tl-full text-xl font-medium ${borderColor[category]}  pt-4 pb-3 bottom-[-1px] ${habitsToggle ? `font-bold ${categoryColor[category]}` : 'text-gray-400 '} bg-gradient-to-b from-white to-white absolute right-0 overflow-y-visible z-1`} type='button' onClick={toggleHabits}>HABITS</button>
         </div >
 
         <div className='flex flex-col justify-center bg-gradient-to-b from-white via-indigo-100 to-indigo-100'>

@@ -202,6 +202,13 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
         '1': 'border-gray-400 bg-white',
         '0': 'border-green-500 line-through opacity-70 bg-green-100',
     };
+
+    const [hideCompleted, setHideCompleted] = useState('false');
+
+    const handleHide = () => {
+        {hideCompleted == 'false' ? setHideCompleted('hidden') : setHideCompleted('false') }
+    }  
+
   
     return (
     <div>
@@ -214,14 +221,24 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
           <div className='p-2 gap-4 min-h-20 flex flex-col'>
 
             <div className='flex flex-row justify-center gap-5'>
-                    <span className='text-blue-500'>Total Tasks: <span className='font-bold'>{totalSubgoals}</span></span>
                     <span className='text-green-500'>Finished Tasks: <span className='font-bold'>{finishedSubgoals}</span></span>
+                    <span className='text-blue-500'>Total Tasks: <span className='font-bold'>{totalSubgoals}</span></span>
             </div>
+
+            {totalSubgoals >= 10 ? (
+                <div className='flex flex-row justify-center gap-16'>
+                <button type='button' className='text-green-500 font-bold' onClick={handleHide} >Hide Done</button>
+                    <button type='button' className='text-blue-500 font-bold' onClick={() => {
+                        setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goalId, userId: currentUser._id, category: category, priority: 2 });
+                        setShowModalAddSubgoal(true);
+                    }}>Add new</button>
+            </div>
+            ) : (<></>) }
 
               {/* User Subgoals */}
               {userSubGoals.map((subgoal) => (
                   <>
-                            <div className={` ${priorityStyling[subgoal.priority]} group/item min-h-28 items-center p-4 border-2 rounded-lg shadow-xl`} key={subgoal._id}>
+                            <div className={` ${priorityStyling[subgoal.priority]} ${subgoal.accomplished ? ` ${hideCompleted} ` : ' '} group/item min-h-28 items-center p-4 border-2 rounded-lg shadow-xl`} key={subgoal._id}>
 
                                   <div className='flex flex-col justify-between w-full'>
 
