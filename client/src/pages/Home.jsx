@@ -447,8 +447,8 @@ export default function Home() {
               </p>
 
             <h1 className='text-2xl font-semibold text-center mt-10 px-5 sm:px-10 '>
-                Click the "Create a Seed" button for a preview of the tree creation process. 
-                Watch it grow in real time with the Bloom button.
+                Click the "Show Inputs" button for a preview of the tree creation process. 
+                Watch it grow in real time with the "Grow Tree" button.
               </h1>
               <p className='text-left px-5 sm:px-10'>
               Bloom's Trees are created using P5.JS canvas. The shape is made up of many variables such as: <br /> <br />

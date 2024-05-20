@@ -32,11 +32,11 @@ export default function GoalHolder( {category, sendDataToCategory} ) {
     'mind': (`This category refers to the growth of your knowledge, intelligence, processing power and accomplishments related to the use of your head.
     Use it for goals related to school, career, learning and creating. Some items might fall into multiple categories, in such cases define your main intent. 
     For example: "Learning An Instrument" can clearly fall under Mind if your goal is to get more technically skilled at it. 
-    But if youre playing with the main intention of playing an instrument, lets say: to play regularly or as a hobby, then it might fit better under your Spirit category.`),
+    But if youre playing with the main intention of playing an instrument, to lets say: play regularly or as a hobby, then it might fit better under your Spirit category.`),
     'body': (`The physical category. Related to your physical health, strength and physical acts. Losing weight, getting stronger, chores, habits, good sleep and things 
     that will root you down to the earth and pull you out of day dreaming will all belong here.`),
     'spirit': (`Spirit refers to your mental and spiritual well being and the state of zen. Do not confuse it with spirituality in only a religious sense. While such spirituality 
-    might fall under spirit, the category encompasses more than that. A vacation for example, while a physical act and good for both the body and the mind, can fall into this
+    might fall under Spirit, the category encompasses more than that. A vacation for example, while a physical act and good for both the body and the mind, can fall into this
     category because it intends to help your mental well being, to destress and let you relax. Use this category for hobbies, bucket lists, meditations and yoga, exploring nature
     and small daily acts that bring peace to your mind - like keeping a diary or taking more breaks to catch a breather from work`),
   };
