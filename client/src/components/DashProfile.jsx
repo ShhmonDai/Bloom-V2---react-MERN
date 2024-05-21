@@ -16,7 +16,6 @@ import {
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
 
 const customModalTheme = {
     modal: {
@@ -205,6 +204,7 @@ export default function DashProfile() {
     console.log(imageFileUploadProgress, imageFileUploadError);
     const filePickerRef = useRef();
     const dispatch = useDispatch();
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -326,7 +326,7 @@ export default function DashProfile() {
     };
 
   return (
-      <div className='max-w-lg mx-auto p-3 w-full'>
+      <div className='max-w-lg mx-auto p-3 w-full min-h-screen'>
         <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
             <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden
@@ -369,13 +369,6 @@ export default function DashProfile() {
                 {loading || imageFileUploading ? 'Loading...' : 'Update'}
             </Button>
 
-            { 
-                currentUser.isAdmin && (
-                    <Link to={'/create-post'}>
-                        <Button type='button' gradientDuoTone='pinkToOrange' className='w-full'> Create a post</Button>
-                    </Link>    
-                )
-            }
 
 
         </Flowbite>
