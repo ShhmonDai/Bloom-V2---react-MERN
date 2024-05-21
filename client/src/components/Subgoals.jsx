@@ -203,11 +203,18 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
         '0': 'border-green-500 line-through opacity-70 bg-green-100',
     };
 
+    const goalColor = {
+        'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
+        'body': ' bg-gradient-to-b from-amber-400 to-pink-400',
+        'spirit': ' bg-gradient-to-b from-sky-500 to-teal-500',
+    };
+
     const [hideCompleted, setHideCompleted] = useState('false');
 
     const handleHide = () => {
         {hideCompleted == 'false' ? setHideCompleted('hidden') : setHideCompleted('false') }
     }  
+
 
   
     return (
@@ -223,6 +230,13 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
             <div className='flex flex-row justify-center gap-5'>
                     <span className='text-green-500'>Finished Tasks: <span className='font-bold'>{finishedSubgoals}</span></span>
                     <span className='text-blue-500'>Total Tasks: <span className='font-bold'>{totalSubgoals}</span></span>
+            </div>
+
+            <div className={`w-full flex justify-center items-center rounded-lg shadow-md ${goalColor[category]}`}>
+                <div className='mx-2 w-full border-2 border-blue-500 bg-white'>
+                    <div style={{ width: `${Math.trunc((finishedSubgoals / totalSubgoals) * 100)}%` }} className={` h-5 bg-green-300 transition-all duration-300`}>
+                    </div>
+                </div>
             </div>
 
             {totalSubgoals >= 10 ? (
