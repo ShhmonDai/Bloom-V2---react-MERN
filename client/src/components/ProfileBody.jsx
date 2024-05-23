@@ -11,14 +11,23 @@ export default function ProfileBody() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('body');
 
-  const [bodyCategoryScore, setBodyCategoryScore] = useState('');
-  function handleDataFromChild(data) {
-    setBodyCategoryScore(data);
+  const [bodyGoalsScore, setBodyGoalsScore] = useState('');
+  const [bodyHabitsScore, setBodyHabitsScore] = useState('');
+
+  function handleDataFromGoals(data) {
+    setBodyGoalsScore(data);
   }
+
+  function handleDataFromHabits(data) {
+    setBodyHabitsScore(data);
+  }
+
 
 
   const [subgoalScore, setSubgoalScore] = useState('');
   const [goalScore, setGoalScore] = useState('');
+  const [habitsScore, setHabitsScore] = useState('');
+
   const [totalScore, setTotalScore] = useState('');
 
   useEffect(() => {
@@ -38,7 +47,7 @@ export default function ProfileBody() {
     if (currentUser) {
       fetchCategoryScore();
     }
-  }, [currentUser._id, bodyCategoryScore]);
+  }, [currentUser._id, bodyGoalsScore, bodyHabitsScore]);
 
 
   const Sketch = (p) => {
@@ -479,7 +488,7 @@ export default function ProfileBody() {
     setTotalScore((goalScore * 2) + subgoalScore);
 
 
-  }, [goalScore, subgoalScore]);
+  }, [goalScore, subgoalScore, habitsScore]);
 
 
   useEffect(() => {
@@ -521,7 +530,7 @@ export default function ProfileBody() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder category={category} sendDataToCategory={handleDataFromChild} />
+        <GoalHolder category={category} sendDataToCategory={handleDataFromGoals} sendDataToCategory2={handleDataFromHabits} />
 
 
 

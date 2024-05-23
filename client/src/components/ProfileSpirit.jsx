@@ -11,14 +11,21 @@ export default function ProfileSpirit() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('spirit');
 
-  const [spiritCategoryScore, setSpiritCategoryScore] = useState('');
+  const [spiritGoalsScore, setSpiritGoalsScore] = useState('');
+  const [spiritHabitsScore, setSpiritHabitsScore] = useState('');
 
-  function handleDataFromChild(data) {
-    setSpiritCategoryScore(data);
+  function handleDataFromGoals(data) {
+    setSpiritGoalsScore(data);
+  }
+
+  function handleDataFromHabits(data) {
+    setSpiritHabitsScore(data);
   }
 
   const [subgoalScore, setSubgoalScore] = useState('');
   const [goalScore, setGoalScore] = useState('');
+  const [habitsScore, setHabitsScore] = useState('');
+
   const [totalScore, setTotalScore] = useState('');
 
   useEffect(() => {
@@ -38,7 +45,7 @@ export default function ProfileSpirit() {
     if (currentUser) {
       fetchCategoryScore();
     }
-  }, [currentUser._id, spiritCategoryScore]);
+  }, [currentUser._id, spiritGoalsScore, spiritHabitsScore]);
 
   const Sketch = (p) => {
 
@@ -476,7 +483,7 @@ export default function ProfileSpirit() {
 
     setTotalScore((goalScore * 2) + subgoalScore);
 
-  }, [goalScore, subgoalScore]);
+  }, [goalScore, subgoalScore, habitsScore]);
 
 
   useEffect(() => {
@@ -514,7 +521,7 @@ export default function ProfileSpirit() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder category={category} sendDataToCategory={handleDataFromChild} />
+        <GoalHolder category={category} sendDataToCategory={handleDataFromGoals} sendDataToCategory2={handleDataFromHabits} />
 
 
 

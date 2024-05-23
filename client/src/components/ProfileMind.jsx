@@ -11,14 +11,23 @@ export default function ProfileMind() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('mind');
 
-  const [mindCategoryScore, setMindCategoryScore] = useState('');
+  const [mindGoalsScore, setMindGoalsScore] = useState('');
+  const [mindHabitsScore, setMindHabitsScore] = useState('');
 
-  function handleDataFromChild(data) {
-    setMindCategoryScore(data);
+
+  function handleDataFromGoals(data) {
+    setMindGoalsScore(data);
   }
+
+  function handleDataFromHabits(data) {
+    setMindHabitsScore(data);
+  }
+
 
   const [subgoalScore, setSubgoalScore] = useState('');
   const [goalScore, setGoalScore] = useState('');
+  const [habitsScore, setHabitsScore] = useState('');
+
   const [totalScore, setTotalScore] = useState('');
 
 
@@ -39,7 +48,7 @@ export default function ProfileMind() {
     if (currentUser) {
       fetchCategoryScore();
     }
-  }, [currentUser._id, mindCategoryScore]);
+  }, [currentUser._id, mindGoalsScore, mindHabitsScore]);
 
   const Sketch = (p) => {
 
@@ -505,10 +514,10 @@ export default function ProfileMind() {
 
   useEffect(() => {
 
-    setTotalScore((goalScore * 2 )+ subgoalScore);
+    setTotalScore((goalScore * 2 ) + subgoalScore);
 
 
-  }, [goalScore, subgoalScore]);
+  }, [goalScore, subgoalScore, habitsScore]);
 
 
   useEffect(() => {
@@ -551,7 +560,7 @@ export default function ProfileMind() {
         </div>
 
 
-        <GoalHolder category={category} sendDataToCategory={handleDataFromChild} />
+        <GoalHolder category={category} sendDataToCategory={handleDataFromGoals} sendDataToCategory2={handleDataFromHabits} />
 
 
 
