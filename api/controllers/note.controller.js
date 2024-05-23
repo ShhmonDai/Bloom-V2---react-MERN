@@ -95,3 +95,11 @@ export const deletenote = async (req, res, next) => {
     }
 };
 
+export const deletegoalnotes = async (req, res, next) => {
+    try {
+        await Note.deleteMany({ goalId: req.params.goalId, userId: req.params.userId });
+        res.status(200).json('Notes have been deleted');
+    } catch (error) {
+        next(error);
+    }
+};

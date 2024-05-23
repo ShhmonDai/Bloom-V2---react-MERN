@@ -148,3 +148,12 @@ export const deletesubgoal = async (req, res, next) => {
     }
 };
 
+export const deletegoalsubgoals = async (req, res, next) => {
+    try {
+        await Subgoal.deleteMany({ goalId: req.params.goalId, userId: req.params.userId });
+        res.status(200).json('Subgoals have been deleted');
+    } catch (error) {
+        next(error);
+    }
+};
+

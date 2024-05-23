@@ -138,7 +138,47 @@ export default function Goals( {category, sendDataToCategory} ) {
 
   const handleDeleteGoal = async (e) => {
     e.preventDefault();
+
     try {
+
+      const res = await fetch(`/api/note/deletegoalnotes/${idToDelete._id}/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+      }
+
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+
+    try {
+
+      const res = await fetch(`/api/subgoal/deletegoalsubgoals/${idToDelete._id}/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+      }
+
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+
+    try {
+
       const res = await fetch(`/api/goal/deletegoal/${idToDelete._id}/${currentUser._id}`, {
         method: 'DELETE',
       });
@@ -153,9 +193,11 @@ export default function Goals( {category, sendDataToCategory} ) {
         setShowModalDeleteGoal(false);
         reload ? setReload(false) : setReload(true);
       }
+
     } catch (error) {
       setPublishError('Something went wrong');
-    }
+    }    
+
   };
 
   const handleAccomplishGoal = async (e) => {
