@@ -30,6 +30,8 @@ export default function Habits( {category, sendDataToCategory2}) {
   const [todaysDay, setTodaysDay] = useState(weekday[date.getDay()]);
   const [todaysDate, setTodaysDate] = useState(moment().format('MMM-DD-YYYY'));
 
+  const [selectDay, setSelectDay] = useState('1');
+
   const categoryGradient = {
     'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
     'body': ' bg-gradient-to-b from-amber-400 to-pink-400',
@@ -158,20 +160,20 @@ export default function Habits( {category, sendDataToCategory2}) {
         </div>
 
         {/* Todays Day */}
-        <div className='mx-2 min-h-16 flex flex-col '>
+        <div className='mx-2 min-h-16 flex flex-col py-10 bg-white bg-opacity-50 rounded-xl'>
           <span className='text-center text-md font-semibold text-gray-500'>Todays Tasks</span>
 
           {todaysTasks[date.getDay()].map((todayshabit) => (
             <>
               <div className='group my-1' key={todayshabit._id}>
 
-                <div className='grid grid-cols-[10%_10%_10%_auto_5%]  sm:grid-cols-[5%_5%_5%_auto_5%]  items-center mx-2 sm:mx-5'>
+                <div className='grid grid-cols-[10%_15%_10%_auto_5%]  sm:grid-cols-[5%_7%_5%_auto_5%]  items-center mx-2 sm:mx-5'>
 
                   {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
                   <div className={`w-4 h-4 border-2 ${categoryBorder[todayshabit.category]} justify-self-start `}></div>
 
-                  <div className={`max-w-1`}> {todayshabit.timeofday}</div>
+                  <div className={``}> {todayshabit.timeofday}</div>
 
                   <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[todayshabit.category]}`}></div>
 
@@ -211,14 +213,21 @@ export default function Habits( {category, sendDataToCategory2}) {
           </div>
  
 
-          {/* MONDAY CONTAINER */}
-          <div id='monday' className='group sm:mx-2' >
+          {/* DAY CONTAINER */}
+          <div id='day' className='group sm:mx-2' >
 
             {/* Top Outer - Header*/}
-            <div className={`shadow-lg rounded-t-lg bg-indigo-200 border-b-2`}>
-              <div className={`mx-2 bg-white flex flex-row justify-between p-3 text-xl font-semibold shadow-lg`}>
+            <div className={`shadow-lg rounded-t-lg bg-white border-b-2`}>
+              <div className={`mx-2 sm:px-5 bg-white flex flex-row justify-between p-3 text-md font-semibold shadow-lg`}>
 
-                <div className={` w-full cursor-pointer text-center`} onClick={() => document.getElementById('monday').classList.toggle('is-open')}>Monday</div>
+                <button type='button' onClick={() => setSelectDay('1')} className={`${selectDay == '1' ? 'text-blue-500 underline underline-offset-4 ' : 'text-gray-500' }`}>Mon</button>
+                <button type='button' onClick={() => setSelectDay('2')} className={`${selectDay == '2' ? 'text-blue-500 underline underline-offset-4' : 'text-gray-500'}`}>Tue</button>
+                <button type='button' onClick={() => setSelectDay('3')} className={`${selectDay == '3' ? 'text-blue-500 underline underline-offset-4' : 'text-gray-500'}`}>Wed</button>
+                <button type='button' onClick={() => setSelectDay('4')} className={`${selectDay == '4' ? 'text-blue-500 underline underline-offset-4' : 'text-gray-500'}`}>Thu</button>
+                <button type='button' onClick={() => setSelectDay('5')} className={`${selectDay == '5' ? 'text-blue-500 underline underline-offset-4' : 'text-gray-500'}`}>Fri</button>
+                <button type='button' onClick={() => setSelectDay('6')} className={`${selectDay == '6' ? 'text-blue-500 underline underline-offset-4' : 'text-gray-500'}`}>Sat</button>
+                <button type='button' onClick={() => setSelectDay('0')} className={`${selectDay == '0' ? 'text-blue-500 underline underline-offset-4' : 'text-gray-500'}`}>Sun</button>
+
 
               </div>
             </div>
@@ -228,11 +237,11 @@ export default function Habits( {category, sendDataToCategory2}) {
 
               {/* Description */}
               <div className="text-center">
-                <Label htmlFor="description" value="Your Tasks for Monday" />
+                <Label htmlFor="description" value={`Your Tasks for ${weekday[selectDay]}`} />
               </div>
 
               {/* Map Days Habits Here */}
-              {mondayHabits.map((habit) => (
+              {todaysTasks[selectDay].map((habit) => (
                 <>
                   <div className='group/item my-1' key={habit._id}>
 
@@ -240,7 +249,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                       {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
-                      <div className={`max-w-1`}> {habit.timeofday}</div>
+                      <div className={``}> {habit.timeofday}</div>
 
                       <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
 
@@ -272,430 +281,14 @@ export default function Habits( {category, sendDataToCategory2}) {
             </div>
 
             {/* Bottom Outer - Footer */}
-            <div className={`border-t-2 shadow-2xl bg-indigo-200`} >
-              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4`}>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById('monday').classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
+            <div className={`border-t-2 shadow-2xl rounded-b-lg bg-white`} >
+              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4 shadow-lg`} onClick={() => document.getElementById('day').classList.toggle('is-open')}>
+                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full'><TfiAngleDoubleDown /></span>
               </div>
             </div>
 
           </div>
-
-          {/* TUESDAY CONTAINER */}
-          <div id='tuesday' className='group sm:mx-2' >
-
-            {/* Top Outer - Header*/}
-            <div className={`shadow-lg bg-indigo-200 border-b-2`}>
-              <div className={`mx-2 bg-white flex flex-row justify-between p-3 text-xl font-semibold shadow-lg`}>
-
-                <div className={` w-full cursor-pointer text-center`} onClick={() => document.getElementById('tuesday').classList.toggle('is-open')}>Tuesday</div>
-
-              </div>
-            </div>
-
-            {/* Inner Container */}
-            <div className='h-0 gap-4 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
-
-              {/* Description */}
-              <div className="text-center">
-                <Label htmlFor="description" value="Tuesdays Tasks" />
-              </div>
-
-              {/* Map Days Habits Here */}
-              {tuesdayHabits.map((habit) => (
-                <>
-                  <div className='group/item my-1' key={habit._id}>
-
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center mx-2 sm:mx-5'>
-
-                      {/* Checkmark - Time - Icon - Task - EditOnHover */}
-
-                      <div className={`max-w-1`}> {habit.timeofday}</div>
-
-                      <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
-
-                      <div className='font-semibold my-2 text-wrap break-words'>
-                        {habit.title}
-                      </div>
-
-                      <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex justify-self-end items-center justify-center'>
-                        <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                          <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
-                          <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
-                        </Dropdown>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </>
-              ))}
-
-              {/* Add Habit Input */}
-              <div className='flex flex-row justify-center' >
-                <button className='font-normal text-blue-500' type='button' onClick={() => {
-                  setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
-                  setShowModalAddHabit(true);
-                }}>Add new Task</button>
-              </div>
-            </div>
-
-            {/* Bottom Outer - Footer */}
-            <div className={`border-t-2 shadow-2xl bg-indigo-200 `} >
-              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4`}>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById('tuesday').classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* WEDNESDAY CONTAINER */}
-          <div id='wednesday' className='group sm:mx-2' >
-
-            {/* Top Outer - Header*/}
-            <div className={`shadow-lg bg-indigo-300 border-b-2`}>
-              <div className={`mx-2 bg-white flex flex-row justify-between p-3 text-xl font-semibold shadow-lg`}>
-
-                <div className={` w-full cursor-pointer text-center`} onClick={() => document.getElementById('wednesday').classList.toggle('is-open')}>Wednesday</div>
-
-              </div>
-            </div>
-
-            {/* Inner Container */}
-            <div className='h-0 gap-4 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
-
-              {/* Description */}
-              <div className="text-center">
-                <Label htmlFor="description" value="Wednesday Tasks" />
-              </div>
-
-              {/* Map Days Habits Here */}
-              {wednesdayHabits.map((habit) => (
-                <>
-                  <div className='group/item my-1' key={habit._id}>
-
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center mx-2 sm:mx-5'>
-
-                      {/* Checkmark - Time - Icon - Task - EditOnHover */}
-
-                      <div className={`max-w-1`}> {habit.timeofday}</div>
-
-                      <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
-
-                      <div className='font-semibold my-2 text-wrap break-words'>
-                        {habit.title}
-                      </div>
-
-                      <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex justify-self-end items-center justify-center'>
-                        <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                          <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
-                          <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
-                        </Dropdown>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </>
-              ))}
-
-              {/* Add Habit Input */}
-              <div className='flex flex-row justify-center' >
-                <button className='font-normal text-blue-500' type='button' onClick={() => {
-                  setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
-                  setShowModalAddHabit(true);
-                }}>Add new Task</button>
-              </div>
-            </div>
-
-            {/* Bottom Outer - Footer */}
-            <div className={`border-t-2 shadow-2xl bg-indigo-300`} >
-              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4`}>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById('wednesday').classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* THURSDAY CONTAINER */}
-          <div id='thursday' className='group sm:mx-2' >
-
-            {/* Top Outer - Header*/}
-            <div className={`shadow-lg bg-indigo-400 border-b-2`}>
-              <div className={`mx-2 bg-white flex flex-row justify-between p-3 text-xl font-semibold shadow-lg`}>
-
-                <div className={` w-full cursor-pointer text-center`} onClick={() => document.getElementById('thursday').classList.toggle('is-open')}>Thursday</div>
-
-              </div>
-            </div>
-
-            {/* Inner Container */}
-            <div className='h-0 gap-4 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
-
-              {/* Description */}
-              <div className="text-center">
-                <Label htmlFor="description" value="Thursdays Tasks" />
-              </div>
-
-              {/* Map Days Habits Here */}
-              {thursdayHabits.map((habit) => (
-                <>
-                  <div className='group/item my-1' key={habit._id}>
-
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center mx-2 sm:mx-5'>
-
-                      {/* Checkmark - Time - Icon - Task - EditOnHover */}
-
-                      <div className={`max-w-1`}> {habit.timeofday}</div>
-
-                      <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
-
-                      <div className='font-semibold my-2 text-wrap break-words'>
-                        {habit.title}
-                      </div>
-
-                      <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex justify-self-end items-center justify-center'>
-                        <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                          <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
-                          <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
-                        </Dropdown>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </>
-              ))}
-
-              {/* Add Habit Input */}
-              <div className='flex flex-row justify-center' >
-                <button className='font-normal text-blue-500' type='button' onClick={() => {
-                  setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
-                  setShowModalAddHabit(true);
-                }}>Add new Task</button>
-              </div>
-
-            </div>
-
-            {/* Bottom Outer - Footer */}
-            <div className={`border-t-2  shadow-2xl bg-indigo-400`} >
-              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4`}>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById('thursday').classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* FRIDAY CONTAINER */}
-          <div id='friday' className='group sm:mx-2' >
-
-            {/* Top Outer - Header*/}
-            <div className={`shadow-lg bg-indigo-400 border-b-2`}>
-              <div className={`mx-2 bg-white flex flex-row justify-between p-3 text-xl font-semibold shadow-lg`}>
-
-                <div className={` w-full cursor-pointer text-center`} onClick={() => document.getElementById('friday').classList.toggle('is-open')}>Friday</div>
-
-              </div>
-            </div>
-
-            {/* Inner Container */}
-            <div className='h-0 gap-4 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
-
-              {/* Description */}
-              <div className="text-center">
-                <Label htmlFor="description" value="Fridays Tasks" />
-              </div>
-
-              {/* Map Days Habits Here */}
-              {fridayHabits.map((habit) => (
-                <>
-                  <div className='group/item my-1' key={habit._id}>
-
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center mx-2 sm:mx-5'>
-
-                      {/* Checkmark - Time - Icon - Task - EditOnHover */}
-
-                      <div className={`max-w-1`}> {habit.timeofday}</div>
-
-                      <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
-
-                      <div className='font-semibold my-2 text-wrap break-words'>
-                        {habit.title}
-                      </div>
-
-                      <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex justify-self-end items-center justify-center'>
-                        <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                          <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
-                          <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
-                        </Dropdown>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </>
-              ))}
-
-              {/* Add Habit Input */}
-              <div className='flex flex-row justify-center' >
-                <button className='font-normal text-blue-500' type='button' onClick={() => {
-                  setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
-                  setShowModalAddHabit(true);
-                }}>Add new Task</button>
-              </div>
-            </div>
-
-            {/* Bottom Outer - Footer */}
-            <div className={`border-t-2shadow-2xl bg-indigo-400`} >
-              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4`}>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById('friday').classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* SATURDAY CONTAINER */}
-          <div id='saturday' className='group sm:mx-2' >
-
-            {/* Top Outer - Header*/}
-            <div className={`shadow-lg bg-orange-300 border-b-2`}>
-              <div className={`mx-2 bg-white flex flex-row justify-between p-3 text-xl font-semibold shadow-lg`}>
-
-                <div className={` w-full cursor-pointer text-center`} onClick={() => document.getElementById('saturday').classList.toggle('is-open')}>Saturday</div>
-
-              </div>
-            </div>
-
-            {/* Inner Container */}
-            <div className='h-0 gap-4 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
-
-              {/* Description */}
-              <div className="text-center">
-                <Label htmlFor="description" value="Saturdays Tasks" />
-              </div>
-
-              {/* Map Days Habits Here */}
-              {saturdayHabits.map((habit) => (
-                <>
-                  <div className='group/item my-1' key={habit._id}>
-
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center mx-2 sm:mx-5'>
-
-                      {/* Checkmark - Time - Icon - Task - EditOnHover */}
-
-                      <div className={`max-w-1`}> {habit.timeofday}</div>
-
-                      <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
-
-                      <div className='font-semibold my-2 text-wrap break-words'>
-                        {habit.title}
-                      </div>
-
-                      <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex justify-self-end items-center justify-center'>
-                        <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                          <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
-                          <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
-                        </Dropdown>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </>
-              ))}
-
-              {/* Add Habit Input */}
-              <div className='flex flex-row justify-center' >
-                <button className='font-normal text-blue-500' type='button' onClick={() => {
-                  setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
-                  setShowModalAddHabit(true);
-                }}>Add new Task</button>
-              </div>
-            </div>
-
-            {/* Bottom Outer - Footer */}
-            <div className={`border-t-2 shadow-2xl bg-orange-300`} >
-              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4`}>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById('saturday').classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* SUNDAY CONTAINER */}
-          <div id='sunday' className='group sm:mx-2' >
-
-            {/* Top Outer - Header*/}
-            <div className={`shadow-lg bg-orange-300 border-b-2`}>
-              <div className={`mx-2 bg-white flex flex-row justify-between p-3 text-xl font-semibold shadow-lg`}>
-
-                <div className={` w-full cursor-pointer text-center`} onClick={() => document.getElementById('sunday').classList.toggle('is-open')}>Sunday</div>
-
-              </div>
-            </div>
-
-            {/* Inner Container */}
-            <div className='h-0 gap-4 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
-
-              {/* Description */}
-              <div className="text-center">
-                <Label htmlFor="description" value="Sundays Tasks" />
-              </div>
-
-              {/* Map Days Habits Here */}
-              {sundayHabits.map((habit) => (
-                <>
-                  <div className='group/item my-1' key={habit._id}>
-
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center mx-2 sm:mx-5'>
-
-                      {/* Checkmark - Time - Icon - Task - EditOnHover */}
-
-                      <div className={`max-w-1`}> {habit.timeofday}</div>
-
-                      <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
-
-                      <div className='font-semibold my-2 text-wrap break-words'>
-                        {habit.title}
-                      </div>
-
-                      <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex justify-self-end items-center justify-center'>
-                        <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                          <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
-                          <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
-                        </Dropdown>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </>
-              ))}
-
-              {/* Add Habit Input */}
-              <div className='flex flex-row justify-center' >
-                <button className='font-normal text-blue-500' type='button' onClick={() => {
-                  setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
-                  setShowModalAddHabit(true);
-                }}>Add new Task</button>
-              </div>
-            </div>
-
-            {/* Bottom Outer - Footer */}
-            <div className={`border-t-2 rounded-b-lg shadow-2xl bg-orange-300`} >
-              <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4`}>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById('sunday').classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Add Habit Input */}
-          <div className='flex flex-row justify-center' >
-            <button className='font-normal text-blue-500' type='button' onClick={() => {
-              setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
-              setShowModalAddHabit(true);
-            }}>Add new Task</button>
-          </div>  
+ 
 
         </div>
 
