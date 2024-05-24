@@ -6,7 +6,7 @@ import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { TfiAngleDoubleDown } from "react-icons/tfi";
 import { TfiAngleDoubleUp } from "react-icons/tfi";
 import Subgoals from './Subgoals';
-
+import moment from 'moment';
 
 export default function Goals( {category, sendDataToCategory} ) {
 
@@ -14,8 +14,8 @@ export default function Goals( {category, sendDataToCategory} ) {
   const [reload, setReload] = useState(false);
 
   const [userGoals, setUserGoals] = useState([]);
-  const [finishedTasks, setFinishedTasks] = useState("");
-  const [finishedGoals, setFinishedGoals] = useState("");
+  const [finishedTasks, setFinishedTasks] = useState(0);
+  const [finishedGoals, setFinishedGoals] = useState(0);
   const [categoryScore, setCategoryScore] = useState('');
 
   useEffect(() => {
@@ -66,6 +66,11 @@ export default function Goals( {category, sendDataToCategory} ) {
   const [formDataAddGoal, setFormDataAddGoal] = useState({});
   const [formDataUpdateGoal, setFormDataUpdateGoal] = useState({});
   const [formDataAccomplishGoal, setFormDataAccomplishGoal] = useState({});
+
+  const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const date = new Date();
+  const [todaysDay, setTodaysDay] = useState(weekday[date.getDay()]);
+  const [todaysDate, setTodaysDate] = useState(moment().format('MMM-DD-YYYY'));
 
   const goalColor = {
     'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
@@ -235,7 +240,14 @@ export default function Goals( {category, sendDataToCategory} ) {
       {/* Main Container */}
       <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-10 max-w-4xl'>
 
-      <span className='text-center mb-10 mt-20'>Category Score: {finishedTasks} finished tasks, {finishedGoals} finished goals. Total: {categoryScore} </span> 
+        {/* Welcome text */}
+        <div className='text-center flex flex-col mt-20'>
+          <span className='text-md font-semibold text-gray-500'>Welcome To Goals</span>
+          <span className='font-bold text-2xl text-gray-600 '>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
+          <span className='text-md font-medium text-gray-500'> {todaysDate} </span>
+        </div>
+
+        <span className='text-center'>Your Category Score: <span className='font-bold'>{finishedTasks}</span> finished tasks, <span className='font-bold'>{finishedGoals}</span> finished goals. <span className='font-bold'>Total: {categoryScore}</span> </span> 
       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
