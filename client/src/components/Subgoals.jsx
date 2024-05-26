@@ -232,9 +232,9 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                     <span className='text-blue-500'>Total Tasks: <span className='font-bold'>{totalSubgoals}</span></span>
             </div>
 
-            <div className={`w-full flex justify-center items-center rounded-lg shadow-md ${goalColor[category]}`}>
-                <div className='mx-2 w-full border-2 border-blue-500 bg-white'>
-                    <div style={{ width: `${Math.trunc((finishedSubgoals / totalSubgoals) * 100)}%` }} className={` h-5 bg-green-300 transition-all duration-300`}>
+            <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
+                <div className='mx-2 w-full border-y-2 border-blue-500 bg-indigo-50'>
+                    <div style={ totalSubgoals !== 0 ? { width: `${Math.trunc((finishedSubgoals / totalSubgoals) * 100)}%` } : { width: `0%`}} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
                     </div>
                 </div>
             </div>
