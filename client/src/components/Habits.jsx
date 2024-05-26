@@ -352,7 +352,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                 {showPicker && ( 
                   <div className='flex flex-col justify-center items-center gap-4'>
-                    <EmojiPicker emojiStyle='native' width="95%" reactionsDefaultOpen={true} onEmojiClick={onEmojiClick} />
+                    <EmojiPicker emojiStyle='native' width="95%" reactions={["1f955","1f37d-fe0f", "2600-fe0f", "1f4a4", "1f98d", "1f3cb-fe0f" ]} reactionsDefaultOpen={true} onEmojiClick={onEmojiClick} />
                     <button type='button' onClick={() => setShowPicker((val) => !val)} className='font-bold text-md text-blue-500'>Cancel</button>
                   </div>  
                 )}
