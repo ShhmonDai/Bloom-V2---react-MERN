@@ -14,6 +14,10 @@ const habitSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        icon: {
+            type: String,
+            required: true,
+        },
         timeofday: {
             type: String,
             required: true,

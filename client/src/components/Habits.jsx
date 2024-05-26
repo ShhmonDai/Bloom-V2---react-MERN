@@ -4,7 +4,10 @@ import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea, Select, Che
 import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { TfiAngleDoubleDown } from "react-icons/tfi";
-import { TfiAngleDoubleUp } from "react-icons/tfi";
+import { FaCheck, FaTimes, FaSlidersH } from 'react-icons/fa';
+import { RiSettings3Fill } from "react-icons/ri";
+import EmojiPicker from 'emoji-picker-react';
+
 import moment from 'moment';
 
 export default function Habits( {category, sendDataToCategory2}) {
@@ -31,6 +34,13 @@ export default function Habits( {category, sendDataToCategory2}) {
   const [todaysDate, setTodaysDate] = useState(moment().format('MMM-DD-YYYY'));
 
   const [selectDay, setSelectDay] = useState('1');
+
+  const [showPicker, setShowPicker] = useState(true);
+
+  const onEmojiClick = (emojiObject) => {
+    setFormDataAddHabit({ ...formDataAddHabit, icon: emojiObject.emoji })
+    setShowPicker(false);
+  };
 
   const categoryGradient = {
     'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
@@ -160,14 +170,21 @@ export default function Habits( {category, sendDataToCategory2}) {
         </div>
 
         {/* Todays Day */}
-        <div className='mx-2 min-h-16 flex flex-col py-10 bg-white bg-opacity-50 rounded-xl'>
-          <span className='text-center text-md font-semibold text-gray-500'>Todays Tasks</span>
+        <div className='mx-2 min-h-16 flex flex-col bg-white bg-opacity-70 rounded-xl'>
+          <span className='text-center text-md font-semibold text-gray-500 py-6 '>Todays Tasks</span>
+
+          <div className='grid grid-cols-[10%_15%_auto_5%] md:grid-cols-[5%_7%_auto_5%] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+            <span className='justify-self-start'><FaCheck/> </span>
+            <span>Time</span>
+            <span className='justify-self-center'>Task</span>
+            <span className='justify-self-end'><RiSettings3Fill/></span>
+          </div>
 
           {todaysTasks[date.getDay()].map((todayshabit) => (
             <>
               <div className='group my-1' key={todayshabit._id}>
 
-                <div className='grid grid-cols-[10%_15%_10%_auto_5%]  sm:grid-cols-[5%_7%_5%_auto_5%]  items-center mx-2 sm:mx-5'>
+                <div className='grid grid-cols-[10%_15%_10%_auto_5%]  md:grid-cols-[5%_7%_5%_auto_5%]  items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                   {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
@@ -195,7 +212,7 @@ export default function Habits( {category, sendDataToCategory2}) {
           ))}
 
           {/* Add New Task Button */}
-          <div className='flex flex-row justify-center mt-5' >
+          <div className='flex flex-row justify-center py-8' >
             <button className='font-normal text-blue-500' type='button' onClick={() => {
               setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
               setShowModalAddHabit(true);
@@ -233,31 +250,36 @@ export default function Habits( {category, sendDataToCategory2}) {
             </div>
 
             {/* Inner Container */}
-            <div className='h-0 gap-4 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
+            <div className='h-0 gap-1 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]:h-auto group-[.is-open]:py-10 flex scale-y-0 group-[.is-open]:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-6 px-2 origin-top transition-all duration-700'>
 
               {/* Description */}
               <div className="text-center">
                 <Label htmlFor="description" value={`Your Tasks for ${weekday[selectDay]}`} />
               </div>
+              <div className='grid grid-cols-[15%_auto_5%] md:grid-cols-[7%_auto_5%] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+                <span>Time</span>
+                <span className='justify-self-center'>Task</span>
+                <span className='justify-self-end'><RiSettings3Fill /></span>
+              </div>
 
               {/* Map Days Habits Here */}
               {todaysTasks[selectDay].map((habit) => (
                 <>
-                  <div className='group/item my-1' key={habit._id}>
+                  <div className='group/item' key={habit._id}>
 
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center mx-2 sm:mx-5'>
+                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center rounded-md mx-1 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                       {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
                       <div className={``}> {habit.timeofday}</div>
 
-                      <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[habit.category]}`}></div>
+                      <div className={``}>{habit.icon}</div>
 
                       <div className='font-semibold my-2 text-wrap break-words'>
                         {habit.title}
                       </div>
 
-                      <div className='opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex justify-self-end items-center justify-center'>
+                      <div className='flex justify-self-end items-center justify-center'>
                         <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
                           <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
                           <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
@@ -316,7 +338,26 @@ export default function Habits( {category, sendDataToCategory2}) {
                 setFormDataAddHabit({ ...formDataAddHabit, title: e.target.value })
               } />
 
-                <Label className='mt-4'>Habit Category</Label>
+              <Label className='mt-4'>Habit Icon</Label>
+
+                {showPicker ? 
+                (<></>) : 
+                (
+                <div className='flex flex-row justify-evenly'>
+                  <span>Icon: {formDataAddHabit.icon}</span>  
+                  <button type = 'button' onClick = { () => setShowPicker((val) => !val)} className='font-bold text-md text-blue-500'>Change Icon</button>
+                </div>
+                )}
+                
+
+                {showPicker && ( 
+                  <div className='flex flex-col justify-center items-center gap-4'>
+                    <EmojiPicker emojiStyle='native' pickerStyle={{ width: "100%" }} reactionsDefaultOpen={true} onEmojiClick={onEmojiClick} />
+                    <button type='button' onClick={() => setShowPicker((val) => !val)} className='font-bold text-md text-blue-500'>Cancel</button>
+                  </div>  
+                )}
+
+              <Label className='mt-4'>Habit Category</Label>
               <Select id="category" required onChange={(e) =>
                 setFormDataAddHabit({ ...formDataAddHabit, category: e.target.value })}>
                 <option value='mind'>Mind</option>
@@ -394,7 +435,8 @@ export default function Habits( {category, sendDataToCategory2}) {
                 <span className='flex flex-col font-semibold'> 
                   Settings Preview:
                 </span> 
-                  <span>Category: <span className={`${categoryText[formDataAddHabit.category]} font-bold`}>{formDataAddHabit.category}</span> </span>
+                <span>Icon: {formDataAddHabit.icon}</span>
+                <span>Category: <span className={`${categoryText[formDataAddHabit.category]} font-bold`}>{formDataAddHabit.category}</span> </span>
                 <span>Deadline: {formDataAddHabit.timeofday}</span>
               
                 <div>

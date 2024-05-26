@@ -3,7 +3,7 @@ import Habit from '../models/habit.model.js';
 
 export const createhabit = async (req, res, next) => {
     try {
-        const { userId, category, title, timeofday, daysofweek, datescompleted } = req.body;
+        const { userId, category, title, icon, timeofday, daysofweek, datescompleted } = req.body;
 
         if (userId !== req.user.id) {
             return next(
@@ -15,6 +15,7 @@ export const createhabit = async (req, res, next) => {
             userId,
             category,
             title,
+            icon,
             timeofday,
             daysofweek,
             datescompleted,
