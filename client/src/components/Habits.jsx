@@ -7,6 +7,7 @@ import { TfiAngleDoubleDown } from "react-icons/tfi";
 import { FaCheck, FaTimes, FaSlidersH } from 'react-icons/fa';
 import { RiSettings3Fill } from "react-icons/ri";
 import EmojiPicker from 'emoji-picker-react';
+import Timeline from './Timeline';
 
 import moment from 'moment';
 
@@ -19,6 +20,7 @@ export default function Habits( {category, sendDataToCategory2}) {
   const [showModalAddHabit, setShowModalAddHabit] = useState(false);
   const [formDataAddHabit, setFormDataAddHabit] = useState({});
   const [formDataDays, setFormDataDays] = useState([]);
+  const [formDataEmoji, setFormDataEmoji] = useState('');
 
   const [mondayHabits, setMondayHabits] = useState([]);
   const [tuesdayHabits, setTuesdayHabits] = useState([]);
@@ -37,8 +39,9 @@ export default function Habits( {category, sendDataToCategory2}) {
 
   const [showPicker, setShowPicker] = useState(true);
 
+
   const onEmojiClick = (emojiObject) => {
-    setFormDataAddHabit({ ...formDataAddHabit, icon: emojiObject.emoji })
+    setFormDataEmoji(emojiObject.emoji);
     setShowPicker(false);
   };
 
@@ -118,6 +121,10 @@ export default function Habits( {category, sendDataToCategory2}) {
   };
 
   useEffect(() => {
+    setFormDataAddHabit({ ...formDataAddHabit, icon: formDataEmoji});
+  }, [formDataEmoji])
+
+  useEffect(() => {
     setFormDataAddHabit({ ...formDataAddHabit, daysofweek: formDataDays});
   }, [formDataDays])
 
@@ -143,6 +150,8 @@ export default function Habits( {category, sendDataToCategory2}) {
         setShowModalAddHabit(false);
         setFormDataAddHabit({});
         setFormDataDays([]);
+        setFormDataEmoji('');
+        setShowPicker(false);
         reload ? setReload(false) : setReload(true);
       }
     } catch (error) {
@@ -165,12 +174,11 @@ export default function Habits( {category, sendDataToCategory2}) {
 
 
         {/* Timeline */}
-        <div className='mx-2 min-h-16 border-gray-500 border text-center'>
-          <span className='text-md font-semibold text-gray-500'>Todays Task Timeline</span>
-        </div>
+        <Timeline tasks={todaysTasks[date.getDay()]} category={category} />
+
 
         {/* Todays Day */}
-        <div className='mx-2 min-h-16 flex flex-col bg-white bg-opacity-70 rounded-xl'>
+        <div className='mx-2 min-h-16 flex flex-col bg-white rounded-xl'>
           <span className='text-center text-md font-semibold text-gray-500 py-6 '>Todays Tasks</span>
 
           <div className='grid grid-cols-[10%_15%_auto_5%] md:grid-cols-[5%_7%_auto_5%] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
@@ -275,7 +283,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                       <div className={``}>{habit.icon}</div>
 
-                      <div className='font-semibold my-2 text-wrap break-words'>
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0'>
                         {habit.title}
                       </div>
 
@@ -366,34 +374,21 @@ export default function Habits( {category, sendDataToCategory2}) {
               </Select>
 
                 <Label className='mt-4'>Time to Complete By</Label>
-              <Select id="time" required onChange={(e) =>
-                setFormDataAddHabit({ ...formDataAddHabit, timeofday: e.target.value })}>
-                <option value='Any'>All day</option>
-                <option value='6 am'>6 am</option>
-                <option value='7 am'>7 am</option>
-                <option value='8 am'>8 am</option>
-                <option value='9 am'>9 am</option>
-                <option value='10 am'>10 am</option>
-                <option value='11 am'>11 am</option>
-                <option value='12 pm'>12 pm</option>
-                <option value='1 pm'>1 pm</option>
-                <option value='2 pm'>2 pm</option>
-                <option value='3 pm'>3 pm</option>
-                <option value='4 pm'>4 pm</option>
-                <option value='5 pm'>5 pm</option>
-                <option value='6 pm'>6 pm</option>
-                <option value='7 pm'>7 pm</option>
-                <option value='8 pm'>8 pm</option>
-                <option value='9 pm'>9 pm</option>
-                <option value='10 pm'>10 pm</option>
-                <option value='11 pm'>11 pm</option>
-                <option value='12 am'>12 am</option>
-                <option value='1 am'>1 am</option>
-                <option value='2 am'>2 am</option>
-                <option value='3 am'>3 am</option>
-                <option value='4 am'>4 am</option>
-                <option value='5 am'>5 am</option>
-              </Select>
+                
+                <div className='flex flex-col items-center'>
+                  <input
+                    type="time"
+                    min="00:00"
+                    max="23:59"
+                    step="60"
+                    value={formDataAddHabit.timeofday}
+                    onChange={(e) => 
+                      setFormDataAddHabit({ ...formDataAddHabit, timeofday: e.target.value })
+                    }
+                    className='w-full'/>
+                  <button type='button' onClick={() =>
+                    setFormDataAddHabit({ ...formDataAddHabit, timeofday: 'Any' })} className='p-2 w-auto text-blue-500'>Set No Deadline</button>
+                </div>
 
               <Label className='mt-6'>Days to Complete On </Label>
               <div className='flex flex-wrap justify-center gap-5 mt-2 mb-4 '> 
@@ -435,6 +430,7 @@ export default function Habits( {category, sendDataToCategory2}) {
                 <span className='flex flex-col font-semibold'> 
                   Settings Preview:
                 </span> 
+                <span>Task: {formDataAddHabit.title}</span>
                 <span>Icon: {formDataAddHabit.icon}</span>
                 <span>Category: <span className={`${categoryText[formDataAddHabit.category]} font-bold`}>{formDataAddHabit.category}</span> </span>
                 <span>Deadline: {formDataAddHabit.timeofday}</span>
