@@ -296,12 +296,12 @@ export default function ProfileMind() {
         { growthScore <= 60 ? lenRand = lenRand + (growthScore * 0.02) : lenRand = 1.2 }
         { (growthScore / 4) <= 12 ? maxLevel = maxLevel + Math.trunc(growthScore / 4) : maxLevel = 12 }
 
-        if (growthScore - 5 > 0) {
-          {(growthScore - 5) <= 28 ? branchProb = branchProb + ((growthScore-5) * 0.01) : branchProb = 1 } 
+        if (growthScore - 10 > 0) {
+          {(growthScore - 10) <= 28 ? branchProb = branchProb + ((growthScore-10) * 0.01) : branchProb = 1 } 
         }
 
-        if (growthScore - 15 > 0) {
-          { (growthScore - 15) <= 45 ? leafProb = leafProb + ((growthScore - 15) * 0.01) : leafProb = 1 }
+        if (growthScore - 20 > 0) {
+          { (growthScore - 20) <= 45 ? leafProb = leafProb + ((growthScore - 20) * 0.01) : leafProb = 1 }
         }
       }
 
