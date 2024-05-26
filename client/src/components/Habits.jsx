@@ -184,7 +184,7 @@ export default function Habits( {category, sendDataToCategory2}) {
             <>
               <div className='group my-1' key={todayshabit._id}>
 
-                <div className='grid grid-cols-[10%_15%_10%_auto_5%]  md:grid-cols-[5%_7%_5%_auto_5%]  items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                <div className='grid grid-cols-[10%_20%_10%_auto_5%]  md:grid-cols-[5%_15%_5%_auto_5%]  items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                   {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
@@ -192,7 +192,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                   <div className={``}> {todayshabit.timeofday}</div>
 
-                  <div className={`h-4 w-4 border-2 rounded-full ${categoryBorder[todayshabit.category]}`}></div>
+                  <div className={``}>{todayshabit.icon}</div>
 
                   <div className='font-semibold my-2 text-wrap break-words whitespace-pre-wrap'>
                     {todayshabit.title}
@@ -256,7 +256,7 @@ export default function Habits( {category, sendDataToCategory2}) {
               <div className="text-center">
                 <Label htmlFor="description" value={`Your Tasks for ${weekday[selectDay]}`} />
               </div>
-              <div className='grid grid-cols-[15%_auto_5%] md:grid-cols-[7%_auto_5%] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+              <div className='grid grid-cols-[15%_auto_5%] md:grid-cols-[7%_auto_5%] font-bold items-center rounded-t-md mx-1 px-2 py-1 sm:mx-4 bg-indigo-200'>
                 <span>Time</span>
                 <span className='justify-self-center'>Task</span>
                 <span className='justify-self-end'><RiSettings3Fill /></span>
@@ -267,7 +267,7 @@ export default function Habits( {category, sendDataToCategory2}) {
                 <>
                   <div className='group/item' key={habit._id}>
 
-                    <div className='grid grid-cols-[15%_10%_auto_5%] items-center rounded-md mx-1 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                    <div className='grid grid-cols-[22%_15%_auto_5%] items-center rounded-md mx-1 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                       {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
@@ -352,7 +352,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                 {showPicker && ( 
                   <div className='flex flex-col justify-center items-center gap-4'>
-                    <EmojiPicker emojiStyle='native' pickerStyle={{ width: "100%" }} reactionsDefaultOpen={true} onEmojiClick={onEmojiClick} />
+                    <EmojiPicker emojiStyle='native' width="95%" reactionsDefaultOpen={true} onEmojiClick={onEmojiClick} />
                     <button type='button' onClick={() => setShowPicker((val) => !val)} className='font-bold text-md text-blue-500'>Cancel</button>
                   </div>  
                 )}
