@@ -26,7 +26,9 @@ const habitSchema = new mongoose.Schema(
             type: [String],
             validate: v => Array.isArray(v) && v.length > 0,
         },
-        datescompleted: [{type:Date,}],
+        datescompleted: {
+            type: [Date],
+        },
     },
     { timestamps: true }
 );

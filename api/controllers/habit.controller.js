@@ -90,3 +90,45 @@ export const gethabits = async (req, res, next) => {
     }
 };
 
+export const edithabit = async (req, res, next) => {
+    if (req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to edit this habit'));
+    }
+    try {
+        const editedHabit = await Habit.findByIdAndUpdate(
+            req.params.habitId,
+            {
+                $set: {
+                    title: req.body.title,
+                    category: req.body.category,
+                    icon: req.body.icon,
+                    timeofday: req.body.timeofday,
+                    daysofweek: req.body.daysofweek,
+                },
+            },
+            { new: true }
+        );
+        res.status(200).json(editedHabit);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deletehabit = async (req, res, next) => {
+    try {
+        const habit = await Habit.findById(req.params.habitId);
+        if (!habit) {
+            return next(errorHandler(404, 'Habit not found'));
+        }
+        if (habit.userId !== req.user.id) {
+            return next(
+                errorHandler(403, 'You are not allowed to delete this habit')
+            );
+        }
+        await Habit.findByIdAndDelete(req.params.habitId);
+        res.status(200).json('Habit has been deleted');
+    } catch (error) {
+        next(error);
+    }
+};
+

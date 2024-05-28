@@ -19,6 +19,13 @@ export default function Habits( {category, sendDataToCategory2}) {
 
   const [showModalAddHabit, setShowModalAddHabit] = useState(false);
   const [formDataAddHabit, setFormDataAddHabit] = useState({});
+
+  const [showModalDeleteHabit, setShowModalDeleteHabit] = useState(false);
+  const [idToDelete, setIdToDelete] = useState({});
+
+  const [showModalUpdateHabit, setShowModalUpdateHabit] = useState(false);
+  const [formDataUpdateHabit, setFormDataUpdateHabit] = useState({});
+
   const [formDataDays, setFormDataDays] = useState([]);
   const [formDataEmoji, setFormDataEmoji] = useState('');
 
@@ -121,11 +128,13 @@ export default function Habits( {category, sendDataToCategory2}) {
   };
 
   useEffect(() => {
-    setFormDataAddHabit({ ...formDataAddHabit, icon: formDataEmoji});
+    setFormDataAddHabit({ ...formDataAddHabit, icon: formDataEmoji });
+    setFormDataUpdateHabit({ ...formDataUpdateHabit, icon: formDataEmoji });
   }, [formDataEmoji])
 
   useEffect(() => {
-    setFormDataAddHabit({ ...formDataAddHabit, daysofweek: formDataDays});
+    setFormDataAddHabit({ ...formDataAddHabit, daysofweek: formDataDays });
+    setFormDataUpdateHabit({ ...formDataUpdateHabit, daysofweek: formDataDays });
   }, [formDataDays])
 
   const handleCreateHabit = async (e) => {
@@ -158,6 +167,57 @@ export default function Habits( {category, sendDataToCategory2}) {
       setPublishError('Something went wrong');
     }
   };
+
+  const handleDeleteHabit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/habit/deletehabit/${idToDelete._id}/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalDeleteHabit(false);
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleUpdateHabit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/habit/edithabit/${formDataUpdateHabit._id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataUpdateHabit),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setShowModalUpdateHabit(false);
+        setFormDataDays([]);
+        setFormDataEmoji('');
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setPublishError('Something went wrong');
+    }
+  };
+
 
   return (
     <div className='w-full min-h-screen'>
@@ -208,8 +268,15 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                   <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 flex justify-self-end items-center justify-center'>
                     <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                      <Dropdown.Item onClick={() => {}}>Edit</Dropdown.Item>
-                      <Dropdown.Item onClick={() => {}}>Delete</Dropdown.Item>
+                      <Dropdown.Item onClick={() => {
+                        setShowModalUpdateHabit(true);
+                        setFormDataDays(todayshabit.daysofweek);
+                        setFormDataUpdateHabit({ ...formDataUpdateHabit, _id: todayshabit._id, title: todayshabit.title, category: todayshabit.category, icon: todayshabit.icon, timeofday: todayshabit.timeofday, daysofweek: todayshabit.daysofweek });
+                      }}>Edit</Dropdown.Item>
+                      <Dropdown.Item onClick={() => {
+                        setShowModalDeleteHabit(true);
+                        setIdToDelete({ ...idToDelete, _id: todayshabit._id });
+                      }}>Delete</Dropdown.Item>
                     </Dropdown>
                   </div>
 
@@ -289,8 +356,15 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                       <div className='flex justify-self-end items-center justify-center'>
                         <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
-                          <Dropdown.Item onClick={() => { }}>Edit</Dropdown.Item>
-                          <Dropdown.Item onClick={() => { }}>Delete</Dropdown.Item>
+                          <Dropdown.Item onClick={() => {
+                            setShowModalUpdateHabit(true);
+                            setFormDataDays(habit.daysofweek);
+                            setFormDataUpdateHabit({ ...formDataUpdateHabit, _id: habit._id, title: habit.title, category: habit.category, icon: habit.icon, timeofday: habit.timeofday, daysofweek: habit.daysofweek });
+                          }}>Edit</Dropdown.Item>
+                          <Dropdown.Item onClick={() => {
+                            setShowModalDeleteHabit(true);
+                            setIdToDelete({ ...idToDelete, _id: habit._id });
+                          }}>Delete</Dropdown.Item>
                         </Dropdown>
                       </div>
 
@@ -325,7 +399,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
       </div>
 
-      {/* Add Goal Modal */}
+      {/* Add Habit Modal */}
       <Modal
         show={showModalAddHabit}
         onClose={() => setShowModalAddHabit(false)}
@@ -458,6 +532,181 @@ export default function Habits( {category, sendDataToCategory2}) {
               </div>
 
             </div>
+            </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Delete Habit Modal */}
+      <Modal
+        show={showModalDeleteHabit}
+        onClose={() => setShowModalDeleteHabit(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Are you sure you want to delete this Task?
+            </h3>
+            <div className='flex justify-center gap-4'>
+              <Button color='failure' onClick={handleDeleteHabit}>
+                Yes, Im sure
+              </Button>
+              <Button color='gray' onClick={() => setShowModalDeleteHabit(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Update Habit Modal */}
+      <Modal
+        show={showModalUpdateHabit}
+        onClose={() => setShowModalUpdateHabit(false)}
+        popup
+        size='lg'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Edit habit:
+            </h3>
+
+            <form onSubmit={handleUpdateHabit}>
+              <div className='flex flex-col'>
+                <Label className='mt-4'>Habit</Label>
+                <TextInput type='text' placeholder='Habit' id='title' value={formDataUpdateHabit.title} onChange={(e) =>
+                  setFormDataUpdateHabit({ ...formDataUpdateHabit, title: e.target.value })
+                } />
+
+                <Label className='mt-4'>Habit Icon</Label>
+
+                {showPicker ?
+                  (<></>) :
+                  (
+                    <div className='flex flex-row justify-evenly'>
+                      <span>Icon: {formDataUpdateHabit.icon}</span>
+                      <button type='button' onClick={() => setShowPicker((val) => !val)} className='font-bold text-md text-blue-500'>Change Icon</button>
+                    </div>
+                  )}
+
+
+                {showPicker && (
+                  <div className='flex flex-col justify-center items-center gap-4'>
+                    <EmojiPicker emojiStyle='native' width="95%" reactions={["1f955", "1f37d-fe0f", "2600-fe0f", "1f4a4", "1f98d", "1f3cb-fe0f"]} reactionsDefaultOpen={true} onEmojiClick={onEmojiClick} />
+                    <button type='button' onClick={() => setShowPicker((val) => !val)} className='font-bold text-md text-blue-500'>Cancel</button>
+                  </div>
+                )}
+
+                <Label className='mt-4'>Habit Category</Label>
+                <Select id="category" required onChange={(e) =>
+                  setFormDataUpdateHabit({ ...formDataUpdateHabit, category: e.target.value })}>
+                  <option value='mind'>Mind</option>
+                  <option value='body'>Body</option>
+                  <option value='spirit'>Spirit</option>
+                </Select>
+
+                <Label className='mt-4'>Time to Complete By</Label>
+
+                <div className='flex flex-col items-center'>
+                  <input
+                    type="time"
+                    min="00:00"
+                    max="23:59"
+                    step="60"
+                    value={formDataUpdateHabit.timeofday}
+                    onChange={(e) =>
+                      setFormDataUpdateHabit({ ...formDataUpdateHabit, timeofday: e.target.value })
+                    }
+                    className='w-full' />
+                  <button type='button' onClick={() =>
+                    setFormDataUpdateHabit({ ...formDataUpdateHabit, timeofday: 'Any' })} className='p-2 w-auto text-blue-500'>Set No Deadline</button>
+                </div>
+
+                <Label className='mt-6'>Days to Complete On </Label>
+                <div className='flex flex-wrap justify-center gap-5 mt-2 mb-4 '>
+
+                  <span className='flex flex-row items-center gap-1'>
+                    <Checkbox id="monday" defaultChecked={formDataDays.includes('monday')} onChange={(e) => handleCheckday(e.target.id)} />
+                    <Label>Mon</Label>
+                  </span>
+
+                  <span className='flex flex-row items-center gap-1'>
+                    <Checkbox id="tuesday" defaultChecked={formDataDays.includes('tuesday')} onChange={(e) => handleCheckday(e.target.id)} />
+                    <Label>Tue</Label>
+                  </span>
+
+                  <span className='flex flex-row items-center gap-1'>
+                    <Checkbox id="wednesday" defaultChecked={formDataDays.includes('wednesday')} onChange={(e) => handleCheckday(e.target.id)} />
+                    <Label>Wed</Label>
+                  </span>
+
+                  <span className='flex flex-row items-center gap-1'>
+                    <Checkbox id="thursday" defaultChecked={formDataDays.includes('thursday')} onChange={(e) => handleCheckday(e.target.id)} />
+                    <Label>Thur</Label>
+                  </span>
+                  <span className='flex flex-row items-center gap-1'>
+                    <Checkbox id="friday" defaultChecked={formDataDays.includes('friday')} onChange={(e) => handleCheckday(e.target.id)} />
+                    <Label>Fri</Label>
+                  </span>
+                  <span className='flex flex-row items-center gap-1'>
+                    <Checkbox id="saturday" defaultChecked={formDataDays.includes('saturday')} onChange={(e) => handleCheckday(e.target.id)} />
+                    <Label>Sat</Label>
+                  </span>
+                  <span className='flex flex-row items-center gap-1'>
+                    <Checkbox id="sunday" defaultChecked={formDataDays.includes('sunday')} onChange={(e) => handleCheckday(e.target.id)} />
+                    <Label>Sun</Label>
+                  </span>
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                  <span className='flex flex-col font-semibold'>
+                    Settings Preview:
+                  </span>
+                  <span>Task: {formDataUpdateHabit.title}</span>
+                  <span>Icon: {formDataUpdateHabit.icon}</span>
+                  <span>Category: <span className={`${categoryText[formDataUpdateHabit.category]} font-bold`}>{formDataUpdateHabit.category}</span> </span>
+                  <span>Deadline: {formDataUpdateHabit.timeofday}</span>
+
+                  <div>
+                    <span className='font-semibold'>Days To Complete On: </span>
+                    {formDataDays.map((day, index) => (
+                      <div key={index}>
+                        {day}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+
+
+
+                <div className='my-5 flex justify-center gap-4'>
+                  <Button color='gray' type='submit'>
+                    Add
+                  </Button>
+                  <Button color='gray' onClick={() => {
+                    setShowModalUpdateHabit(false);
+                    setFormDataDays([]);
+                    setFormDataEmoji('');
+                  }}>
+                    Cancel
+                  </Button>
+                </div>
+
+              </div>
             </form>
 
             {publishError && (
