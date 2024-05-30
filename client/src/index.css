@@ -21,6 +21,14 @@
     font-style: normal;
   }
 
+  @font-face {
+    font-family: "Grandiflora";
+    src: url("/font/GrandifloraOne-Regular.woff") format('woff'),
+    url("/font/GrandifloraOne-Regular.woff2") format('woff2'),
+    url("/font/GrandifloraOne-Regular.ttf") format('ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
 
 body {
     height: 100vh;

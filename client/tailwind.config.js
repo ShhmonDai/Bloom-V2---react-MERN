@@ -13,7 +13,8 @@ export default {
     extend: {
       fontFamily: {
         'BrushFont': ["brushesregular", "sans-serif"],
-        'QwigleyFont': ["Qwigley", "sans-serif"]
+        'QwigleyFont': ["Qwigley", "sans-serif"],
+        'Grandiflora': ["Grandiflora", "sans-serif"],
       },
     },
   },
