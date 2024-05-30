@@ -74,7 +74,7 @@ export default function Goals( {category, sendDataToCategory} ) {
 
   const goalColor = {
     'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
-    'body': ' bg-gradient-to-b from-amber-400 to-pink-400',
+    'body': ' bg-gradient-to-b from-amber-600 to-pink-400',
     'spirit': ' bg-gradient-to-b from-sky-500 to-teal-500',
   };
  
@@ -238,13 +238,13 @@ export default function Goals( {category, sendDataToCategory} ) {
 
       
       {/* Main Container */}
-      <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-10 max-w-4xl'>
+      <div className='mx-auto p-2 mb-10 flex flex-col justify-center gap-8 max-w-4xl'>
 
         {/* Welcome text */}
         <div className='text-center flex flex-col mt-20'>
-          <span className='text-md font-semibold text-gray-500'>Welcome To Goals</span>
-          <span className='font-bold text-2xl text-gray-600 '>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
-          <span className='text-md font-medium text-gray-500'> {todaysDate} </span>
+          <span className='text-md font-semibold text-gray-500 font-Grandiflora'>Welcome To Goals</span>
+          <span className='font-bold text-2xl text-gray-600 font-Grandiflora'>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
+          <span className='text-md font-medium text-gray-500 '> {todaysDate} </span>
         </div>
 
         <span className='text-center'>Your Category Score: <span className='font-bold'>{finishedTasks}</span> finished tasks, <span className='font-bold'>{finishedGoals}</span> finished goals. <span className='font-bold'>Total: {categoryScore}</span> </span> 
@@ -260,10 +260,10 @@ export default function Goals( {category, sendDataToCategory} ) {
           <div key={goal._id} id={index} className='group sm:mx-2' >
 
             {/* Title Div */}
-            <div className={`border-b-2 rounded-lg shadow-lg ${goalColor[category]}`}> 
-              <div className={`mx-2 ${goal.accomplished ? 'bg-white bg-opacity-70 line-through' : 'bg-white'} flex flex-row justify-between p-5 text-xl font-semibold shadow-lg`}>
+            <div className={`border-b-2 rounded-t-md shadow-lg ${goalColor[category]}`}> 
+              <div className={`mx-2 ${goal.accomplished ? 'bg-slate-200 line-through' : 'bg-white'} flex flex-row justify-between px-5 py-4 text-xl font-semibold shadow-lg`}>
 
-                <div className={` w-full cursor-pointer`} onClick={() => document.getElementById(index).classList.toggle('is-open')}>{goal.title}</div>
+                <div className={` w-full cursor-pointer `} onClick={() => document.getElementById(index).classList.toggle('is-open')}>{goal.title}</div>
 
                 <div className='hidden group-[.is-open]:inline'>
                   <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
@@ -301,10 +301,10 @@ export default function Goals( {category, sendDataToCategory} ) {
             </div>
 
             {/* Outer Div of Goals */}
-            <div className={`border-t-2 rounded-lg min-h-[70px] shadow-2xl ${goalColor[category]}`} >
-              <div className={`mx-2 flex ${goal.accomplished ? 'bg-white bg-opacity-70' : 'bg-white'} min-h-[70px] flex-row justify-evenly items-center px-4`}>
+            <div className={`border-t-2 rounded-b shadow-md ${goalColor[category]}`} >
+              <div className={`mx-2 flex ${goal.accomplished ? 'bg-slate-200' : 'bg-white'} min-h-[60px] flex-row justify-evenly items-center px-4`}>
                 <span className='hidden group-[.is-open]:flex font-semibold'>Created on: {new Date(goal.createdOn).toLocaleDateString()} </span>
-                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full' onClick={() => document.getElementById(index).classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
+                <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full text-gray-400' onClick={() => document.getElementById(index).classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
 
                 {goal.accomplished ?
                   (<button type='button' onClick={() => {

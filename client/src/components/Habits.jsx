@@ -287,8 +287,8 @@ export default function Habits( {category, sendDataToCategory2}) {
 
         {/* Welcome text */}
         <div className='text-center flex flex-col'>
-          <span className='text-md font-semibold text-gray-500'>Welcome To Habits</span>
-          <span className='font-bold text-2xl text-gray-600 '>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
+          <span className='text-md font-semibold text-gray-500 font-Grandiflora'>Welcome To Habits</span>
+          <span className='font-bold text-2xl text-gray-600 font-Grandiflora'>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
           <span className='text-md font-medium text-gray-500'> {todaysDate} </span>
         </div>
 
