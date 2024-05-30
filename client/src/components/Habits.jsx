@@ -26,7 +26,13 @@ export default function Habits( {category, sendDataToCategory2}) {
   const [showModalUpdateHabit, setShowModalUpdateHabit] = useState(false);
   const [formDataUpdateHabit, setFormDataUpdateHabit] = useState({});
 
+  const [formDataAccomplishHabit, setFormDataAccomplishHabit] = useState({});
+
+  const [showModalOverview, setShowModalOverview] = useState(false);
+  const [formDataOverview, setFormDataOverview] = useState({});
+
   const [formDataDays, setFormDataDays] = useState([]);
+  const [formDataCompleted, setFormDataCompleted] = useState([]);
   const [formDataEmoji, setFormDataEmoji] = useState('');
 
   const [mondayHabits, setMondayHabits] = useState([]);
@@ -218,6 +224,60 @@ export default function Habits( {category, sendDataToCategory2}) {
     }
   };
 
+  const handleAccomplishHabit = async (id) => {
+    try {
+      const res = await fetch(`/api/habit/accomplishhabit/${id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({datescompleted: todaysDate}),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setFormDataAccomplishHabit({});
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setFormDataAccomplishHabit({});
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setFormDataAccomplishHabit({});
+      setPublishError('Something went wrong');
+    }
+  };
+
+  const handleUndoHabit = async (id) => {
+    try {
+      const res = await fetch(`/api/habit/undohabit/${id}/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({datescompleted: todaysDate}),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setFormDataAccomplishHabit({});
+        setPublishError(data.message);
+        return;
+      }
+
+      if (res.ok) {
+        setPublishError(null);
+        setFormDataAccomplishHabit({});
+        reload ? setReload(false) : setReload(true);
+      }
+    } catch (error) {
+      setFormDataAccomplishHabit({});
+      setPublishError('Something went wrong');
+    }
+  };
+
 
   return (
     <div className='w-full min-h-screen'>
@@ -256,18 +316,31 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                   {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
-                  <div className={`w-4 h-4 border-2 ${categoryBorder[todayshabit.category]} justify-self-start `}></div>
+                  <div className={`w-4 h-4 border-2 ${categoryBorder[todayshabit.category]} justify-self-start relative`} onClick={() => {
+                    todayshabit.datescompleted.includes(todaysDate) ? handleUndoHabit(todayshabit._id) : handleAccomplishHabit(todayshabit._id)
+                  }}>{todayshabit.datescompleted.includes(todaysDate) ? <FaCheck className='absolute -bottom-[1px] text-lg'/> : <></> }</div>
 
                   <div className={``}> {todayshabit.timeofday}</div>
 
                   <div className={``}>{todayshabit.icon}</div>
 
-                  <div className='font-semibold my-2 text-wrap break-words whitespace-pre-wrap'>
+                  <div className='font-semibold my-2 text-wrap break-words whitespace-pre-wrap' onClick={() => {
+                    setShowModalOverview(true);
+                    setFormDataDays(todayshabit.daysofweek);
+                    setFormDataCompleted(todayshabit.datescompleted);
+                    setFormDataOverview({ title: todayshabit.title, category: todayshabit.category, icon: todayshabit.icon, timeofday: todayshabit.timeofday, daysofweek: todayshabit.daysofweek, datescompleted: todayshabit.datescompleted });
+                  }}>
                     {todayshabit.title}
                   </div>
 
                   <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 flex justify-self-end items-center justify-center'>
                     <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
+                      <Dropdown.Item onClick={() => {
+                        setShowModalOverview(true);
+                        setFormDataDays(todayshabit.daysofweek);
+                        setFormDataCompleted(todayshabit.datescompleted);
+                        setFormDataOverview({ title: todayshabit.title, category: todayshabit.category, icon: todayshabit.icon, timeofday: todayshabit.timeofday, daysofweek: todayshabit.daysofweek, datescompleted: todayshabit.datescompleted });
+                      }}>Overview</Dropdown.Item>
                       <Dropdown.Item onClick={() => {
                         setShowModalUpdateHabit(true);
                         setFormDataDays(todayshabit.daysofweek);
@@ -350,12 +423,23 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                       <div className={``}>{habit.icon}</div>
 
-                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0'>
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0' onClick={() => {
+                        setShowModalOverview(true);
+                        setFormDataDays(habit.daysofweek);
+                        setFormDataCompleted(habit.datescompleted);
+                        setFormDataOverview({ title: habit.title, category: habit.category, icon: habit.icon, timeofday: habit.timeofday, daysofweek: habit.daysofweek, datescompleted: habit.datescompleted });
+                      }}>
                         {habit.title}
                       </div>
 
                       <div className='flex justify-self-end items-center justify-center'>
                         <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
+                          <Dropdown.Item onClick={() => {
+                            setShowModalOverview(true);
+                            setFormDataDays(habit.daysofweek);
+                            setFormDataCompleted(habit.datescompleted);
+                            setFormDataOverview({ title: habit.title, category: habit.category, icon: habit.icon, timeofday: habit.timeofday, daysofweek: habit.daysofweek, datescompleted: habit.datescompleted });
+                          }}>Overview</Dropdown.Item>
                           <Dropdown.Item onClick={() => {
                             setShowModalUpdateHabit(true);
                             setFormDataDays(habit.daysofweek);
@@ -375,7 +459,7 @@ export default function Habits( {category, sendDataToCategory2}) {
               ))}
 
               {/* Add Habit Input */}
-              <div className='flex flex-row justify-center' >
+              <div className='flex flex-row justify-center pt-8' >
                 <button className='font-normal text-blue-500' type='button' onClick={() => {
                   setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
                   setShowModalAddHabit(true);
@@ -708,6 +792,72 @@ export default function Habits( {category, sendDataToCategory2}) {
 
               </div>
             </form>
+
+            {publishError && (
+              <Alert className='mt-5' color='failure'>
+                {publishError}
+              </Alert>
+            )}
+
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* OVERVIEW Habit Modal */}
+      <Modal
+        show={showModalOverview}
+        onClose={() => setShowModalOverview(false)}
+        popup
+        size='lg'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              {formDataOverview.title}
+            </h3>
+
+            <div className='flex flex-col gap-2'>
+              <span className='font-semibold'>
+                Settings Overview:
+              </span>
+              <span>Icon: {formDataOverview.icon}</span>
+              <span>Category: <span className={`${categoryText[formDataOverview.category]} font-bold`}>{formDataOverview.category}</span> </span>
+              <span>Deadline: {formDataOverview.timeofday}</span>
+
+              <span className='font-semibold'>Days To Complete On: </span>
+              <div className='flex flex-wrap justify-center gap-2 mt-1 mb-4'>
+                {formDataDays.map((day, index) => (
+                  <div key={index}>
+                    {day}
+                  </div>
+                ))}
+              </div>
+
+              <span className='font-semibold'>Dates Completed: </span>
+              <div className='flex flex-wrap justify-center gap-2 mt-1 mb-4'>
+                {formDataCompleted.map((dateCompleted, index) => (
+                  <div key={index} >
+                    {dateCompleted}
+                  </div>
+                ))}
+              </div>
+
+
+            </div>
+
+            <div className='my-5 flex justify-center gap-4'>
+              <Button color='gray' onClick={() => {
+                setShowModalOverview(false);
+                setFormDataOverview({});
+                setFormDataDays([]);
+              }}>
+                Close Overview
+              </Button>
+            </div>
+
+            
+
 
             {publishError && (
               <Alert className='mt-5' color='failure'>

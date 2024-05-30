@@ -132,3 +132,42 @@ export const deletehabit = async (req, res, next) => {
     }
 };
 
+export const accomplishhabit = async (req, res, next) => {
+    if (req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to edit this habit'));
+    }
+    try {
+        const accomplishedHabit = await Habit.findByIdAndUpdate(
+            req.params.habitId,
+            {
+                $addToSet: {
+                    datescompleted: req.body.datescompleted,
+                },
+            },
+            { new: true }
+        );
+        res.status(200).json(accomplishedHabit);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const undohabit = async (req, res, next) => {
+    if (req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to edit this habit'));
+    }
+    try {
+        const undoneHabit = await Habit.findByIdAndUpdate(
+            req.params.habitId,
+            {
+                $pull: {
+                    datescompleted: req.body.datescompleted,
+                },
+            },
+            { new: true }
+        );
+        res.status(200).json(undoneHabit);
+    } catch (error) {
+        next(error);
+    }
+};
