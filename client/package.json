@@ -12,6 +12,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
     "@tinymce/tinymce-react": "^4.3.2",
+    "date-fns": "^3.6.0",
+    "date-streaks": "^1.2.1",
     "emoji-picker-react": "^4.9.3",
     "firebase": "^10.8.0",
     "flowbite": "^2.3.0",
@@ -21,6 +23,7 @@
     "p5": "^1.9.3",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
+    "react-calendar": "^5.0.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",

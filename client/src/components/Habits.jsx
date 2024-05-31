@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea, Select, Checkbox } from "flowbite-react";
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDots, BsYinYang } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { TfiAngleDoubleDown } from "react-icons/tfi";
-import { FaCheck, FaTimes, FaSlidersH } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaSlidersH, FaToriiGate, FaBrain, FaDumbbell } from 'react-icons/fa';
 import { RiSettings3Fill } from "react-icons/ri";
+import { summary } from 'date-streaks';
+
+import Calendar from 'react-calendar'
 import EmojiPicker from 'emoji-picker-react';
 import Timeline from './Timeline';
-
 import moment from 'moment';
+import { formatDistance, subDays, isSameDay } from "date-fns";
+
 
 export default function Habits( {category, sendDataToCategory2}) {
 
@@ -33,6 +37,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
   const [formDataDays, setFormDataDays] = useState([]);
   const [formDataCompleted, setFormDataCompleted] = useState([]);
+  const [summaryData, setSummaryData] = useState({});
   const [formDataEmoji, setFormDataEmoji] = useState('');
 
   const [mondayHabits, setMondayHabits] = useState([]);
@@ -58,6 +63,18 @@ export default function Habits( {category, sendDataToCategory2}) {
     setShowPicker(false);
   };
 
+  const [value, setValue] = useState(date);
+
+  function tileClassName({ date, view }) {
+    // Add class to tiles in month view only
+    if (view === 'month') {
+      // Check if a date React-Calendar wants to check is on the list of dates to add class to
+      if (formDataCompleted.find(dDate => isSameDay(dDate, date))) {
+        return 'myClassName';
+      }
+    }
+  }
+
   const categoryGradient = {
     'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
     'body': ' bg-gradient-to-b from-amber-400 to-pink-400',
@@ -68,6 +85,12 @@ export default function Habits( {category, sendDataToCategory2}) {
     'mind': 'border-teal-500',
     'body': 'border-orange-300',
     'spirit': 'border-sky-500',
+  };
+
+  const categoryIcon = {
+    'mind': <FaBrain/>,
+    'body': <FaDumbbell/>,
+    'spirit': <BsYinYang/>,
   };
 
   const categoryColor = {
@@ -92,6 +115,8 @@ export default function Habits( {category, sendDataToCategory2}) {
     '6': saturdayHabits,
 
   };
+
+  
 
   useEffect(() => {
 
@@ -142,6 +167,11 @@ export default function Habits( {category, sendDataToCategory2}) {
     setFormDataAddHabit({ ...formDataAddHabit, daysofweek: formDataDays });
     setFormDataUpdateHabit({ ...formDataUpdateHabit, daysofweek: formDataDays });
   }, [formDataDays])
+
+  useEffect(() => {
+    setSummaryData(summary(formDataCompleted));
+    
+  }, [formDataCompleted])
 
   const handleCreateHabit = async (e) => {
     e.preventDefault();
@@ -324,7 +354,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                   <div className={``}>{todayshabit.icon}</div>
 
-                  <div className='font-semibold my-2 text-wrap break-words whitespace-pre-wrap' onClick={() => {
+                  <div className='font-semibold my-2 text-wrap break-words whitespace-pre-wrap cursor-pointer' onClick={() => {
                     setShowModalOverview(true);
                     setFormDataDays(todayshabit.daysofweek);
                     setFormDataCompleted(todayshabit.datescompleted);
@@ -813,27 +843,29 @@ export default function Habits( {category, sendDataToCategory2}) {
         <Modal.Header />
         <Modal.Body>
           <div className='text-center'>
-            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-              {formDataOverview.title}
+
+            <h3 className='text-xl text-gray-700'>
+              {formDataOverview.icon} {formDataOverview.title}
             </h3>
+            <span className='font-semibold text-gray-600'>
+              Time <span className='font-normal'>{formDataOverview.timeofday}</span>
+            </span>
 
-            <div className='flex flex-col gap-2'>
-              <span className='font-semibold'>
-                Settings Overview:
-              </span>
-              <span>Icon: {formDataOverview.icon}</span>
-              <span>Category: <span className={`${categoryText[formDataOverview.category]} font-bold`}>{formDataOverview.category}</span> </span>
-              <span>Deadline: {formDataOverview.timeofday}</span>
+            <div className='flex flex-col items-center'>
 
-              <span className='font-semibold'>Days To Complete On: </span>
-              <div className='flex flex-wrap justify-center gap-2 mt-1 mb-4'>
-                {formDataDays.map((day, index) => (
-                  <div key={index}>
-                    {day}
-                  </div>
-                ))}
+              <span className={`${categoryText[formDataOverview.category]} my-5 text-4xl`}>{categoryIcon[formDataOverview.category]}</span>
+
+              <span className='font-semibold'>Streaks: </span>
+              <div className='flex flex-wrap gap-2 mt-1 mb-4'>
+                <span>Current Streak: <span className='font-bold'>{summaryData.currentStreak}</span></span>
+                <span>Longest Streak: <span className='font-bold'>{summaryData.longestStreak}</span></span>
               </div>
 
+
+              <div className='mb-4'>
+                <Calendar value={value} tileClassName={tileClassName} />
+              </div>
+              
               <span className='font-semibold'>Dates Completed: </span>
               <div className='flex flex-wrap justify-center gap-2 mt-1 mb-4'>
                 {formDataCompleted.map((dateCompleted, index) => (
@@ -843,6 +875,14 @@ export default function Habits( {category, sendDataToCategory2}) {
                 ))}
               </div>
 
+              <span className='font-semibold'>Days To Complete On: </span>
+              <div className='flex flex-wrap justify-center gap-2 mt-1 mb-4'>
+                {formDataDays.map((day, index) => (
+                  <div key={index}>
+                    {day}
+                  </div>
+                ))}
+              </div>
 
             </div>
 
