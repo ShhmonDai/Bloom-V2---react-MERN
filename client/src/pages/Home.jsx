@@ -175,20 +175,17 @@ export default function Home() {
 
 
 
-      button_seed = p.createButton('Grow Tree');
+      button_seed = p.createButton('Regrow Tree');
       button_seed.position();
       button_seed.parent("buttonHolder");
       button_seed.id('growButton');
       button_seed.mousePressed(p.buttonGrow = () => {p.startGrow()});
       
-      label_hide = p.createSpan('How its made:');
-      label_hide.position();
-      label_hide.parent("buttonHolder");
+
       button_hide = p.createButton('Show inputs');
       button_hide.position();
       button_hide.parent("buttonHolder");
       button_hide.id('hideButton');
-      label_hide.id('hideLabel');
       button_hide.mousePressed(p.buttonHide = () => {p.showHide()});
 
 
