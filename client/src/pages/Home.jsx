@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import p5 from 'p5';
 
+import { RiTreeFill } from "react-icons/ri";
+import { MdOutlineChecklist } from "react-icons/md";
+import { FaBrain, FaDumbbell } from "react-icons/fa";
+import { BsYinYang } from "react-icons/bs";
+import { MdOutlineArtTrack } from "react-icons/md";
+
 export default function Home() {
 
 
@@ -280,8 +286,8 @@ export default function Home() {
 
       p.getScale(h);
 
-      console.log('width: ' + w);
-      console.log('height: ' + h);
+      //console.log('width: ' + w);
+      //console.log('height: ' + h);
     }
 
     p.draw = () => {
@@ -298,7 +304,7 @@ export default function Home() {
 
       p.scale(treeScale, -treeScale);
 
-      console.log('Tree Scale: ' + treeScale);
+      //console.log('Tree Scale: ' + treeScale);
 
       p.translate(0, 0);
 
@@ -414,7 +420,7 @@ export default function Home() {
 
 
       {/* Intro Container */}
-      <div className='dark:bg-white dark:bg-opacity-100 mx-auto pb-10 flex flex-col justify-center'>
+      <div className='dark:bg-white dark:bg-opacity-100 mx-auto flex flex-col justify-center'>
 
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
         <div id="underTree" className='mt-[-1px] flex justify-center items-center bg-white'>
@@ -425,40 +431,148 @@ export default function Home() {
           <div id="sliderHolder"></div>
         </div>
 
-        <div className='flex justify-center mb-10'>
+        <div className='flex flex-col justify-center items-center pb-20 bg-gradient-to-b from-white via-blue-100 to-blue-50'>
  
-          <div className='text-md text-center max-w-4xl flex flex-col gap-4 px-5 text-gray-800'>
+          <div className='text-md text-center max-w-4xl flex flex-col gap-4 px-5 text-gray-800 '>
 
-              <h1 className='text-3xl font-semibold text-center mt-7 '>
-                Welcome to Bloom!
+              <h1 className='text-3xl font-bold text-center mt-7 '>
+                Track, Achieve, Thrive:
+                <h1>
+                  Bloom your way to success
+                </h1>
               </h1>
 
-              <h1 className='text-2xl font-semibold text-center '>
-                A goal tracking website meant to help you visualize and see your progress!
+
+              <h1 className='text-xl text-center text-gray-600 sm:px-10'>
+                Welcome to Bloom, your personal growth companion! Watch your aspirations take root and flourish into reality 
+                as each goal accomplished adds a vibrant leaf 
+                to your thriving tree of progress. With Bloom, cultivate habits, track goals, 
+                and witness your journey towards success unfold in a visually captivating way.
               </h1>
-              <p className='text-left px-5 sm:px-10'>
-                The purpose of Bloom is to provide a way to visualy track your progress within three separate life categories: Mental, Physical and Spiritual,
-                since we often cannot see our individual progress until we step back and take a look at the bigger picture. The reason for the three categories
-                is to provide us a way to compare our progress between them in order to help us become a well-rounded person. Our method of visualization is a little
-                tree that grows with you as you accomplish your goals and habits
+
+              <div> 
+                <img src="/Categories.png" alt='Categories' /> 
+              </div>
+
+              <div className='text-left px-5 sm:px-10 text-wrap break-words whitespace-pre-wrap flex flex-col gap-4'>
+
+                In Bloom, we believe in holistic growth, which is why we categorize goals and habits into three distinct 
+                yet interconnected categories: mind, body, and spirit.
+
+                <p className='flex flex-col'>
+                  <span className='flex flex-row items-center'><FaBrain className='inline'/><b> Mind: </b></span> 
+                  This category focuses on mental well-being, cognitive development, and intellectual pursuits.
+                  Goals and habits related to learning new skills, expanding knowledge, practicing mindfulness, and 
+                  improving mental health fall under this category.
+                </p> 
+
+                <p className='flex flex-col'>
+                <span className='flex flex-row items-center'><FaDumbbell className='inline' /><b> Body: </b></span> 
+                  The body category encompasses physical health, fitness, nutrition, and overall well-being. 
+                  Goals and habits here revolve around exercise, diet, sleep hygiene, and self-care practices. 
+                </p> 
+
+                <p className='flex flex-col'>
+                <span className='flex flex-row items-center'><BsYinYang className='inline' /><b> Spirit: </b></span> 
+                  Spirituality, personal values, and emotional well-being form the foundation of the spirit category.
+                  Goals and habits in this realm include cultivating gratitude, fostering meaningful relationships, practicing self-reflection, 
+                  and connecting with something greater than oneself.
+                </p> 
+
+                By categorizing goals and habits into mind, body, and spirit, Bloom empowers users to address all aspects of
+                their well-being and achieve balanced growth in their lives.
+              </div>
+
+          </div>
+
+          <div className='text-md text-center max-w-4xl flex flex-col gap-4 sm:px-5 text-gray-800 '>
+            <div className='rounded-t-[50px] pb-10 mt-10 bg-gradient-to-b from-blue-200 via-transparent to-transparent flex flex-col gap-4'>
+
+              <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7 gap-2'>
+
+                <MdOutlineChecklist className='text-center text-3xl text-blue-500' />
+
+                Cultivate Your Success,
+                <h1>one goal at a time</h1>
+              </h1>
+
+              <p className='text-left px-5 sm:px-10 flex flex-col gap-2'>
+                With Bloom, you can:
+
+                <span><b>1.</b> Define overarching goals for each of the: mind, body, and spirit categories.</span>
+
+                <span><b>2.</b> Break down goals into actionable steps or tasks.</span>
+
+                <span><b>3.</b> Add detailed notes to track progress and insights.</span>
+              </p>  
+
+              <div className='flex flex-col gap-10 px-2 py-5'>
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2a.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2b.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2c.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2d.png" alt='Categories' />
+              </div>
+
+              <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7 gap-2 '>
+
+                <MdOutlineArtTrack className='text-center text-4xl text-blue-500' />
+
+                Your Personal Growth Garden
+              </h1>
+
+              <p className='text-left px-5 sm:px-10 text-wrap break-words whitespace-pre-wrap flex flex-col gap-4'>
+              <span>
+              In Bloom, tracking daily habits is effortless and insightful. You can easily input your daily habits, 
+              whether it's reading, exercising, or meditating, and mark them as completed with a simple tap.
+              </span>
+
+              <span>
+              Bloom motivates by showcasing streaks, highlighting how many consecutive days 
+              you've successfully completed each habit. This visual representation encourages consistency and 
+              helps you stay on track with your goals.
+              </span>
+
+              <span>
+              Additionally, Bloom provides a daily timeline feature, offering a snapshot of the your day ahead. 
+              With this feature, you can plan their day effectively, allocating time for your habits, work commitments, 
+              personal tasks, and leisure activities. By visualizing your schedule, you can optimize your time and prioritize tasks accordingly.
+              </span>
+
+              <span>
+              Moreover, Bloom allows you to plan out your entire week in advance. By setting goals and scheduling habits for each day of the week, 
+              you can establish a structured routine and maintain consistency in your behaviors. 
+              This comprehensive planning feature empowers you to take control of your time and progress towards your goals with purpose and clarity.
+              </span>
               </p>
 
-            <h1 className='text-2xl font-semibold text-center mt-10 px-5 sm:px-10 '>
-                Click the "Show Inputs" button for a preview of the tree creation process. 
-                Watch it grow in real time with the "Grow Tree" button.
-              </h1>
-              <p className='text-left px-5 sm:px-10'>
-              Bloom's Trees are created using P5.JS canvas. The shape is made up of many variables such as: <br /> <br />
-              <b>Size</b> - the general scale of tree while keeping proportions, <br />
-              <b>Recursion Level</b> - the number of branch levels, <br />
-              <b>Length Variation</b> - the variation in length of branches, <br />
-              <b>Split Probability</b> - probability that a branch will split into multiple branches, <br />
-              <b>Flower Probabilty</b> - probability that a flower will appear at a branch level.<br /> <br />
-              And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end. 
-              Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.
-              </p>
+              <div className='flex flex-col gap-10 px-2 py-5'>
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3a.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3b.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3c.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3d.png" alt='Categories' />
+              </div>
+              </div>
 
-            </div>
+              <div className='flex flex-col items-center px-5 sm:px-10 gap-4 mt-7 '>
+
+                <RiTreeFill className='text-6xl text-blue-500'/>
+
+                <h1 className='text-3xl font-semibold text-center'>
+                  Why wait to transform your life? 
+                </h1>
+
+                <p className='text-center'>
+                  Sign up to Bloom today and start cultivating the habits that will 
+                  shape your future. With Bloom's intuitive tools and visual progress tracking, you'll be amazed at how 
+                  quickly you can turn your aspirations into reality. 
+                  Don't delay - your journey to a better you starts now!
+                </p>
+
+                <button type='button' className='bg-blue-500 text-white rounded px-4 py-2'>Try Bloom Free</button>
+
+              </div>
+          </div>
+
 
         </div>
 
