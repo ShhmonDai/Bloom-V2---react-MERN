@@ -14,6 +14,9 @@ export default function Goals( {category, sendDataToCategory} ) {
   const [reload, setReload] = useState(false);
 
   const [userGoals, setUserGoals] = useState([]);
+  const [userGoalsAccomplished, setUserGoalsAccomplished] = useState([]);
+
+
   const [finishedTasks, setFinishedTasks] = useState(0);
   const [finishedGoals, setFinishedGoals] = useState(0);
   const [categoryScore, setCategoryScore] = useState('');
@@ -25,6 +28,7 @@ export default function Goals( {category, sendDataToCategory} ) {
         const data = await res.json();
         if (res.ok) {
           setUserGoals(data.goals);
+          setUserGoalsAccomplished(data.accomplishedGoals);
           setFinishedGoals(data.finishedGoals);
 
         }
@@ -247,8 +251,12 @@ export default function Goals( {category, sendDataToCategory} ) {
           <span className='text-md font-medium text-gray-500 '> {todaysDate} </span>
         </div>
 
-        <span className='text-center'>Your Category Score: <span className='font-bold'>{finishedTasks}</span> finished tasks, <span className='font-bold'>{finishedGoals}</span> finished goals. <span className='font-bold'>Total: {categoryScore}</span> </span> 
-      
+        <div className='text-center flex flex-col'>
+          <span className='text-lg font-medium text-gray-500 underline underline-offset-2'>Your Achievements So Far:</span>
+          <span className='text-center'>Accomplished <span className='font-bold'>{finishedGoals}</span> Goals </span>
+          <span className='text-center'>Completed <span className='font-bold'>{finishedTasks}</span> Tasks </span>
+        </div>
+       
       {/* If user logged-in, map userGoals */}
       {currentUser ? (
         
@@ -310,14 +318,14 @@ export default function Goals( {category, sendDataToCategory} ) {
                   (<button type='button' onClick={() => {
                     setFormDataAccomplishGoal({ ...formDataAccomplishGoal, _id: goal._id, accomplished: false});
                     setShowModalAccomplishGoal(true);
-                  }} className='hidden group-[.is-open]:flex'>
+                  }} className='hidden group-[.is-open]:flex my-2'>
                     <span className=' text-red-500 font-medium'>Undo Accomplishment</span>
                   </button>)
                   :
                   (<Button type='button' onClick={() => {
                     setFormDataAccomplishGoal({ ...formDataAccomplishGoal, _id: goal._id, accomplished: true });
                     setShowModalAccomplishGoal(true);
-                  }} className='hidden group-[.is-open]:flex' outline gradientDuoTone="greenToBlue">
+                  }} className='hidden group-[.is-open]:flex my-2' outline gradientDuoTone="greenToBlue">
                     Accomplish Goal
                   </Button>)
                 }
@@ -328,15 +336,127 @@ export default function Goals( {category, sendDataToCategory} ) {
 
         ))}
 
+        {/* Add Goal Input */}
+        <div className='my-5 flex flex-row justify-center' >
 
-            {/* Add Goal Input */}
-            <div className='my-5 mb-20 flex flex-row justify-center' >
+          <Button className='shadow-md' gradientDuoTone={`${goalButton[category]}`} onClick={() => {
+            setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
+            setShowModalAddGoal(true);
+          }}>Begin a New Goal</Button>
+        </div>
 
-              <Button className='w-full shadow-md' gradientDuoTone={`${goalButton[category]}`} onClick={() => {
-                setFormDataAddGoal({ ...formDataAddGoal, category: category, userId: currentUser._id });
-                setShowModalAddGoal(true);
-              }}>Start A New Goal</Button>
-            </div>    
+        {/* Accomplished Goals Container */}
+        <div className='flex flex-col mt-10 mb-20 gap-5 '>
+
+              <div className='text-center flex flex-col'>
+                <span className='text-md font-semibold text-gray-500'>History</span>
+                <span className='font-bold text-xl text-gray-600 '>Your Accomplished Goals </span>
+              </div>
+
+
+              {/* CONTAINER */}
+              <div id='day' className='group/archive sm:mx-2' >
+
+                {/* Top Outer - Header*/}
+                <div className={`shadow-lg rounded-t-lg bg-white border-b-2`}>
+                  <div className={`mx-2 sm:px-5 bg-white flex flex-row justify-center cursor-pointer p-3 text-md font-semibold shadow-lg`} onClick={() => document.getElementById('day').classList.toggle('is-open')}>
+
+                    ARCHIVES
+
+                  </div>
+                </div>
+
+                {/* Inner Container */}
+                <div className='h-0 gap-5 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]/archive:h-auto group-[.is-open]/archive:py-10 flex scale-y-0 group-[.is-open]/archive:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-6 px-2 origin-top transition-all duration-700'>
+                  
+                  {/* User Goals */}
+                  {userGoalsAccomplished.map((goalDone) => (
+
+
+                    <div key={goalDone._id} id={goalDone._id} className='group/done sm:mx-2' >
+
+                      {/* Title Div */}
+                      <div className={`border-b-2 rounded-t-md shadow-lg ${goalColor[category]}`}>
+                        <div className={`mx-2 ${goalDone.accomplished ? 'bg-slate-200 line-through' : 'bg-white'} flex flex-row justify-between px-5 py-4 text-xl font-semibold shadow-lg`}>
+
+                          <div className={` w-full cursor-pointer `} onClick={() => document.getElementById(goalDone._id).classList.toggle('is-open')}>{goalDone.title}</div>
+
+                          <div className='hidden group-[.is-open]/done:inline'>
+                            <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
+                              <Dropdown.Item onClick={() => {
+                                setShowModalUpdateGoal(true);
+                                setFormDataUpdateGoal({ ...formDataUpdateGoal, _id: goalDone._id, title: goalDone.title, content: goalDone.content });
+                              }}>Edit</Dropdown.Item>
+                              <Dropdown.Item onClick={() => {
+                                setShowModalDeleteGoal(true);
+                                setIdToDelete({ ...idToDelete, _id: goalDone._id });
+                              }}>Delete</Dropdown.Item>
+                            </Dropdown>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Inner Div of Goals */}
+                      <div className='h-0 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]/done:h-auto group-[.is-open]/done:py-10 flex scale-y-0 group-[.is-open]/done:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
+
+                        <div className='flex flex-row cursor-pointer justify-between' onClick={() => document.getElementById(goalDone._id).classList.toggle('is-open')} >
+                          <button type='button' className=''><TfiAngleDoubleUp /></button>
+                          <button type='button' className=''><TfiAngleDoubleUp /></button>
+                        </div>
+
+                        {/* Goal Description */}
+                        <div className="text-center">
+                          <Label htmlFor="description" value="About" />
+                        </div>
+                        <div className='mb-5 p-2 min-h-20 text-center break-words' >{goalDone.content}</div>
+
+
+                        < Subgoals goalId={goalDone._id} category={category} sendDataToParent={handleDataFromChild} />
+
+
+                      </div>
+
+                      {/* Outer Div of Goals */}
+                      <div className={`border-t-2 rounded-b shadow-md ${goalColor[category]}`} >
+                        <div className={`mx-2 flex ${goalDone.accomplished ? 'bg-slate-200' : 'bg-white'} min-h-[60px] flex-row justify-evenly items-center px-4`}>
+                          <span className='hidden group-[.is-open]/done:flex font-semibold'>Created on: {new Date(goalDone.createdOn).toLocaleDateString()} </span>
+                          <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full text-gray-400' onClick={() => document.getElementById(goalDone._id).classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
+
+                          {goalDone.accomplished ?
+                            (<button type='button' onClick={() => {
+                              setFormDataAccomplishGoal({ ...formDataAccomplishGoal, _id: goalDone._id, accomplished: false });
+                              setShowModalAccomplishGoal(true);
+                            }} className='hidden group-[.is-open]/done:flex'>
+                              <span className=' text-red-500 font-medium'>Undo Accomplishment</span>
+                            </button>)
+                            :
+                            (<Button type='button' onClick={() => {
+                              setFormDataAccomplishGoal({ ...formDataAccomplishGoal, _id: goalDone._id, accomplished: true });
+                              setShowModalAccomplishGoal(true);
+                            }} className='hidden group-[.is-open]/done:flex' outline gradientDuoTone="greenToBlue">
+                              Accomplish Goal
+                            </Button>)
+                          }
+                        </div>
+                      </div>
+
+                    </div>
+
+                  ))}
+                </div>
+
+                {/* Bottom Outer - Footer */}
+                <div className={`border-t-2 shadow-2xl rounded-b-lg bg-white`} >
+                  <div className={`mx-2 flex bg-white py-5 flex-row justify-evenly items-center px-4 shadow-lg`} onClick={() => document.getElementById('day').classList.toggle('is-open')}>
+                    <span className='flex justify-center group-[.is-open]/archive:rotate-180 cursor-pointer w-full'><TfiAngleDoubleDown /></span>
+                  </div>
+                </div>
+
+              </div>
+
+
+        </div>
+    
       </>
       ) : (<p>Log in</p>) }
       

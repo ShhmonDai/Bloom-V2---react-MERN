@@ -29,9 +29,18 @@ export const getcategorygoals = async (req, res, next) => {
     try {
         const goals = await Goal.find({ 
             userId: req.params.userId,
+            accomplished: false,
             ...(req.query.category && { category: req.query.category }),
         }).sort({
-            accomplished: 1,
+            createdAt: 1,
+        });
+
+        const accomplishedGoals = await Goal.find({
+            userId: req.params.userId,
+            accomplished: true,
+            ...(req.query.category && { category: req.query.category }),
+        }).sort({
+            createdAt: 1,
         });
 
         const finishedGoals = await Goal.countDocuments({
@@ -41,7 +50,7 @@ export const getcategorygoals = async (req, res, next) => {
         });
 
 
-        res.status(200).json({goals, finishedGoals});
+        res.status(200).json({goals, finishedGoals, accomplishedGoals});
     } catch (error) {
         next(error);
     }
