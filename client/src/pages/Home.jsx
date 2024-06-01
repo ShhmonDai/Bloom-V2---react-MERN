@@ -433,9 +433,9 @@ export default function Home() {
 
         <div className='flex flex-col justify-center items-center pb-20 bg-gradient-to-b from-white via-blue-100 to-blue-50'>
  
-          <div className='text-md text-center max-w-4xl flex flex-col gap-4 px-5 text-gray-800 '>
+          <div className='text-md text-center max-w-6xl flex flex-col gap-10 px-5 text-gray-800 pb-20 '>
 
-              <h1 className='text-3xl font-bold text-center mt-7 '>
+              <h1 className='text-3xl lg:text-5xl font-bold text-center mt-7 '>
                 Track, Achieve, Thrive:
                 <h1>
                   Bloom your way to success
@@ -450,37 +450,50 @@ export default function Home() {
                 and witness your journey towards success unfold in a visually captivating way.
               </h1>
 
-              <div> 
-                <img src="/Categories.png" alt='Categories' /> 
+              <div >
+                <img src="/mockup.png" alt='mockup' className='rounded-lg' />
               </div>
+          </div>
+
+          <div className='text-md text-center max-w-4xl flex flex-col gap-4 px-5 text-gray-800 '>
 
               <div className='text-left px-5 sm:px-10 text-wrap break-words whitespace-pre-wrap flex flex-col gap-4'>
 
-                In Bloom, we believe in holistic growth, which is why we categorize goals and habits into three distinct 
-                yet interconnected categories: mind, body, and spirit.
+                <p className='text-lg font-semibold'>
+                  In Bloom, we believe in holistic growth, which is why we categorize goals and habits into three distinct 
+                  yet interconnected categories: mind, body, and spirit.
+                </p>
+
+                <div className='flex flex-col md:flex-row max-w-4xl'> 
+                <img src="/1a.png" alt='mind' className=' md:w-[33%]'/>
+                <img src="/1b.png" alt='body' className=' md:w-[33%]' />
+                <img src="/1c.png" alt='spirit' className=' md:w-[33%]' /> 
+                </div>
 
                 <p className='flex flex-col'>
-                  <span className='flex flex-row items-center'><FaBrain className='inline'/><b> Mind: </b></span> 
+                  <span className='flex flex-row items-center justify-center'><FaBrain className='inline'/><b> Mind </b></span> 
                   This category focuses on mental well-being, cognitive development, and intellectual pursuits.
                   Goals and habits related to learning new skills, expanding knowledge, practicing mindfulness, and 
                   improving mental health fall under this category.
                 </p> 
 
                 <p className='flex flex-col'>
-                <span className='flex flex-row items-center'><FaDumbbell className='inline' /><b> Body: </b></span> 
+                <span className='flex flex-row items-center justify-center'><FaDumbbell className='inline' /><b> Body </b></span> 
                   The body category encompasses physical health, fitness, nutrition, and overall well-being. 
                   Goals and habits here revolve around exercise, diet, sleep hygiene, and self-care practices. 
                 </p> 
 
                 <p className='flex flex-col'>
-                <span className='flex flex-row items-center'><BsYinYang className='inline' /><b> Spirit: </b></span> 
+                <span className='flex flex-row items-center justify-center'><BsYinYang className='inline' /><b> Spirit </b></span> 
                   Spirituality, personal values, and emotional well-being form the foundation of the spirit category.
                   Goals and habits in this realm include cultivating gratitude, fostering meaningful relationships, practicing self-reflection, 
                   and connecting with something greater than oneself.
                 </p> 
 
-                By categorizing goals and habits into mind, body, and spirit, Bloom empowers users to address all aspects of
-                their well-being and achieve balanced growth in their lives.
+                <p className='font-semibold py-5'>
+                  By categorizing goals and habits into mind, body, and spirit, Bloom empowers users to address all aspects of
+                  their well-being and achieve balanced growth in their lives.
+                </p>
               </div>
 
           </div>
@@ -488,9 +501,9 @@ export default function Home() {
           <div className='text-md text-center max-w-4xl flex flex-col gap-4 sm:px-5 text-gray-800 '>
             <div className='rounded-t-[50px] pb-10 mt-10 bg-gradient-to-b from-blue-200 via-transparent to-transparent flex flex-col gap-4'>
 
-              <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7 gap-2'>
+              <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7'>
 
-                <MdOutlineChecklist className='text-center text-3xl text-blue-500' />
+                <MdOutlineChecklist className='text-center text-3xl text-blue-500 my-2' />
 
                 Cultivate Your Success,
                 <h1>one goal at a time</h1>
@@ -507,10 +520,10 @@ export default function Home() {
               </p>  
 
               <div className='flex flex-col gap-10 px-2 py-5'>
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/2a.png" alt='Categories' />
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/2b.png" alt='Categories' />
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/2c.png" alt='Categories' />
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/2d.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2a.png" alt='goal' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2b.png" alt='goal' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2c.png" alt='goal' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/2d.png" alt='goal' />
               </div>
 
               <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7 gap-2 '>
@@ -522,34 +535,34 @@ export default function Home() {
 
               <p className='text-left px-5 sm:px-10 text-wrap break-words whitespace-pre-wrap flex flex-col gap-4'>
               <span>
-              In Bloom, tracking daily habits is effortless and insightful. You can easily input your daily habits, 
+              In Bloom, tracking daily habits is effortless and insightful. You can easily input your <b>daily habits</b>, 
               whether it's reading, exercising, or meditating, and mark them as completed with a simple tap.
               </span>
 
               <span>
-              Bloom motivates by showcasing streaks, highlighting how many consecutive days 
+              Bloom motivates by showcasing <b>streaks</b>, highlighting how many consecutive days 
               you've successfully completed each habit. This visual representation encourages consistency and 
               helps you stay on track with your goals.
               </span>
 
               <span>
-              Additionally, Bloom provides a daily timeline feature, offering a snapshot of the your day ahead. 
+                  Additionally, Bloom provides a <b>daily timeline</b> feature, offering a snapshot of the your day ahead. 
               With this feature, you can plan their day effectively, allocating time for your habits, work commitments, 
               personal tasks, and leisure activities. By visualizing your schedule, you can optimize your time and prioritize tasks accordingly.
               </span>
 
               <span>
-              Moreover, Bloom allows you to plan out your entire week in advance. By setting goals and scheduling habits for each day of the week, 
+                  Moreover, Bloom allows you to <b>plan out your entire week</b> in advance. By setting goals and scheduling habits for each day of the week, 
               you can establish a structured routine and maintain consistency in your behaviors. 
               This comprehensive planning feature empowers you to take control of your time and progress towards your goals with purpose and clarity.
               </span>
               </p>
 
               <div className='flex flex-col gap-10 px-2 py-5'>
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/3a.png" alt='Categories' />
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/3b.png" alt='Categories' />
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/3c.png" alt='Categories' />
-                <img className='border-4 border-white rounded-lg shadow-lg' src="/3d.png" alt='Categories' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3a.png" alt='habit' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3b.png" alt='habit' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3c.png" alt='habit' />
+                <img className='border-4 border-white rounded-lg shadow-lg' src="/3d.png" alt='habit' />
               </div>
               </div>
 
