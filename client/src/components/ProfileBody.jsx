@@ -514,9 +514,11 @@ export default function ProfileBody() {
       {/* Main */}
       <div className=' mx-auto pt-10 flex flex-col justify-center'>
 
+        {/* 
         <div className='justify-center items-center text-center'>
           {totalScore}
         </div>
+        */}
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>

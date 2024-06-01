@@ -206,6 +206,7 @@ body {
 
 .react-calendar__month-view__weekdays__weekday {
   padding: 0.5em;
+  text-decoration: underline;
 }
 
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
