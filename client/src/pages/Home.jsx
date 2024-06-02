@@ -6,6 +6,7 @@ import { MdOutlineChecklist } from "react-icons/md";
 import { FaBrain, FaDumbbell } from "react-icons/fa";
 import { BsYinYang } from "react-icons/bs";
 import { MdOutlineArtTrack } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 export default function Home() {
 
@@ -433,10 +434,10 @@ export default function Home() {
 
         <div className='flex flex-col justify-center items-center pb-20 bg-gradient-to-b from-white via-blue-100 to-blue-50'>
  
-          <div className='text-md text-center max-w-6xl flex flex-col gap-10 px-5 text-gray-800 pb-20 '>
+          <div className='text-md text-center max-w-6xl flex flex-col gap-10 px-3 sm:px-5 text-gray-800 pb-10 '>
 
               <h1 className='text-3xl lg:text-5xl font-bold text-center mt-7 '>
-                Track, Achieve, Thrive:
+                Track, Achieve, Thrive
                 <h1>
                   Bloom your way to success
                 </h1>
@@ -452,7 +453,9 @@ export default function Home() {
 
               <div >
                 <img src="/mockup.png" alt='mockup' className='rounded-lg' />
+                <h3 className='text-md font-light text-gray-400'>Pictured: Bloom viewed on different devices</h3>
               </div>
+
           </div>
 
           <div className='text-md text-center max-w-4xl flex flex-col gap-4 px-5 text-gray-800 '>
@@ -462,9 +465,13 @@ export default function Home() {
                 <p className='text-lg font-semibold'>
                   In Bloom, we believe in holistic growth, which is why we categorize goals and habits into three distinct 
                   yet interconnected categories: mind, body, and spirit.
+
+                  <p className='text-2xl font-semibold text-center text-gray-600 py-5'> 
+                    Each category has it's own tree which will grow with you as you accomplish the goals and habits under it's category!
+                  </p>
                 </p>
 
-                <div className='flex flex-col md:flex-row max-w-4xl'> 
+                <div className='flex flex-col md:flex-row max-w-4xl pb-5'> 
                 <img src="/1a.png" alt='mind' className=' md:w-[33%]'/>
                 <img src="/1b.png" alt='body' className=' md:w-[33%]' />
                 <img src="/1c.png" alt='spirit' className=' md:w-[33%]' /> 
@@ -581,7 +588,7 @@ export default function Home() {
                   Don't delay - your journey to a better you starts now!
                 </p>
 
-                <button type='button' className='bg-blue-500 text-white rounded px-4 py-2'>Try Bloom Free</button>
+              <Link to='/sign-up'><button type='button' className='bg-blue-500 text-white rounded px-4 py-2'>Try Bloom for Free</button></Link>
 
               </div>
           </div>
