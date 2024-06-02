@@ -421,7 +421,7 @@ export default function Home() {
 
 
       {/* Intro Container */}
-      <div className='dark:bg-white dark:bg-opacity-100 mx-auto flex flex-col justify-center'>
+      <div className='mx-auto flex flex-col justify-center'>
 
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
         <div id="underTree" className='mt-[-1px] flex justify-center items-center bg-white'>
@@ -510,8 +510,8 @@ export default function Home() {
 
           </div>
 
-          <div className='text-md text-center max-w-4xl flex flex-col gap-4 sm:px-5 text-gray-800 '>
-            <div className='rounded-t-[50px] pb-10 mt-10 bg-gradient-to-b from-blue-200 via-transparent to-transparent flex flex-col gap-4'>
+          <div className='mt-10 text-md w-full text-center flex flex-col items-center rounded-t-[50px] bg-gradient-to-b from-blue-200 via-[#ceecfa] to-transparent sm:px-5 text-gray-700 '>
+            <div className='max-w-4xl  pb-10 flex flex-col gap-4'>
 
               <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7'>
 
@@ -576,9 +576,11 @@ export default function Home() {
                 <img className='border-4 border-white rounded-lg shadow-lg' src="/3c.png" alt='habit' />
                 <img className='border-4 border-white rounded-lg shadow-lg' src="/3d.png" alt='habit' />
               </div>
-              </div>
 
-              <div className='flex flex-col items-center px-5 sm:px-10 gap-4 mt-7 '>
+            </div>
+
+          </div>
+            <div className='flex flex-col max-w-4xl items-center px-5 sm:px-10 gap-4 mt-7 '>
 
                 <RiTreeFill className='text-6xl text-blue-500'/>
 
@@ -595,8 +597,7 @@ export default function Home() {
 
               <Link to='/sign-up'><button type='button' className='bg-blue-500 text-white rounded px-4 py-2'>Try Bloom for Free</button></Link>
 
-              </div>
-          </div>
+            </div>
 
 
         </div>
