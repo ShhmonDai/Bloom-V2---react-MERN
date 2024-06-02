@@ -451,11 +451,12 @@ export default function Home() {
                 and witness your journey towards success unfold in a visually captivating way.
               </h1>
 
-              <div >
-                <img src="/mockup.png" alt='mockup' className='rounded-lg' />
-                <h3 className='text-md font-light text-gray-400'>Pictured: Bloom viewed on different devices</h3>
-              </div>
 
+          </div>
+
+          <div className='text-center max-w-screen-xl pb-10 sm:px-4'>
+            <img src="/mockup.png" alt='mockup' className='rounded-lg' />
+            <h3 className='text-md font-light text-gray-400'>Pictured: Bloom viewed on different devices</h3>
           </div>
 
           <div className='text-md text-center max-w-4xl flex flex-col gap-4 px-5 text-gray-800 '>
