@@ -115,12 +115,7 @@ export default function About() {
 
     p.setup = () => {
 
-      b = document.getElementById("treeHolder");
-      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
-      console.log('width: ' + w);
-      console.log('height: ' + h);
-      p.getHeight(w);
-      p.getScale(h);
+  
       //create a canvas instance
       p.createCanvas(w, h).parent("treeHolder");
 
@@ -500,65 +495,59 @@ export default function About() {
 
 
   return (
-    <div className='min-h-screen w-full flex flex-col items-center pb-40 '>
-    
-      <div className='text-md flex flex-col gap-6 max-w-7xl pt-10 sm:mx-5 px-10 sm:px-20 md:px-40 text-left text-gray-900 dark:text-gray-400 dark:bg-black dark:bg-opacity-40'>
+    <div className='w-full min-h-screen dark:bg-white pb-20'>
 
-          <h1 className='text-3xl dark:text-white font-semibold text-center mt-7 '>
-            Welcome to Bloom!
-          </h1>
+      <div className='text-md flex flex-col items-center justify-center mx-auto gap-6 max-w-5xl px-5 sm:px-10 text-left text-gray-900 dark:text-gray-400 dark:bg-black dark:bg-opacity-40'>
 
-          <h1 className='text-3xl dark:text-white font-semibold text-center mb-7 '>
-            A goal tracking website meant to help you visualize and see your progress!
-          </h1>
-            <p>
-              The purpose of Bloom is to provide a way to visualy track your progress within three separate life categories: Mental, Physical and Spiritual,
-              since we often cannot see our individual progress until we step back and take a look at the bigger picture. The reason for the three categories
-              is to provide us a way to compare our progress between them in order to help us become a well-rounded person. Our method of visualization is a little
-              tree that grows with you as you accomplish your goals and habits 
-            </p>
+        <h1 className='text-3xl dark:text-white font-semibold text-center mt-7 '>
+          Welcome to Bloom!
+        </h1>
 
-            <p className='font-bold'>Bloom's Trees are created using P5.JS canvas. The shape is made up of many variables such as: <br /> <br /></p>
+        <h1 className='text-3xl dark:text-white font-semibold text-center mb-7 '>
+          A goal tracking website meant to help you visualize and see your progress!
+        </h1>
+        <p>
+          The purpose of Bloom is to provide a way to visualy track your progress within three separate life categories: Mental, Physical and Spiritual,
+          since we often cannot see our individual progress until we step back and take a look at the bigger picture. The reason for the three categories
+          is to provide us a way to compare our progress between them in order to help us become a well-rounded person. Our method of visualization is a little
+          tree that grows with you as you accomplish your goals and habits
+        </p>
 
-            <p className='text-left px-5 sm:px-10'>
-              <b>Size</b> - the general scale of tree while keeping proportions, <br />
-              <b>Recursion Level</b> - the number of branch levels, <br />
-              <b>Length Variation</b> - the variation in length of branches, <br />
-              <b>Split Probability</b> - probability that a branch will split into multiple branches, <br />
-              <b>Flower Probabilty</b> - probability that a flower will appear at a branch level.<br /> <br />
-            </p>
+        <p className='font-bold'>Bloom's Trees are created using P5.JS canvas. The shape is made up of many variables such as: <br /> <br /></p>
 
-            <p>And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end.
-            Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.</p>
+        <p className='text-left px-5 sm:px-10'>
+          <b>Size</b> - the general scale of tree while keeping proportions, <br />
+          <b>Recursion Level</b> - the number of branch levels, <br />
+          <b>Length Variation</b> - the variation in length of branches, <br />
+          <b>Split Probability</b> - probability that a branch will split into multiple branches, <br />
+          <b>Flower Probabilty</b> - probability that a flower will appear at a branch level.<br /> <br />
+        </p>
+
+        <p>And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end.
+          Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.</p>
 
       </div>
 
+      <h1 className='text-3xl dark:text-white font font-semibold text-center mt-7 '>
+        P5.js Playground:
+      </h1>
 
-      {/* Tree Playground */}
-      <div className='min-w-[360px] pt-10 flex flex-col justify-center'>
+      {/* Intro Container */}
+      <div className='dark:bg-white dark:bg-opacity-100 mx-auto flex flex-col justify-center'>
 
-        <h1 className='text-3xl dark:text-white font font-semibold text-center mt-7 '>
-          P5.js Playground:
-        </h1>
-
-        {/* Tree container */}
-        <div id="treeHolder" className='min-w-[360px] bg-white flex justify-center items-center'></div>
-        <div id="SpiritUnderTree" className='mt-[-1px] flex justify-center items-center bg-white mb-2'>
-          <img src="/SpiritUnderTree.png" alt='under tree picture' className=' w-fit' />
+        <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
+        <div id="underTree" className='mt-[-1px] flex justify-center items-center bg-white'>
+          <img src="/SpiritUnderTree.png" alt='under tree picture' />
         </div>
 
-        {/* Button Container */}
-        <div id="buttonHolder" className=''>
-          {/* Tree Sliders Container */}
+        <div id="buttonHolder" className='mb-10'>
           <div id="sliderHolder"></div>
         </div>
+      </div>  
 
-        <h1 className='text-3xl dark:text-white font font-semibold text-center my-10 '>
-          Create your own tree!
-        </h1>
-
-
-      </div>
-    </div>
+      <h1 className='text-3xl dark:text-white font font-semibold text-center my-10 '>
+        Create your own tree!
+      </h1>
+  </div>      
   );
 }
