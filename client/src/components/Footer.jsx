@@ -20,7 +20,7 @@ export default function FooterCom() {
                     <Footer.Link as={Link} to='/about'> 
                         This Project
                     </Footer.Link>
-                          <Footer.Link href='https://github.com/ShhmonDai/mern-blog' target='_blank' rel='noopener noreferrer'>
+                          <Footer.Link href='https://github.com/ShhmonDai/Bloom-V2---react-MERN' target='_blank' rel='noopener noreferrer'>
                         Source Code
                     </Footer.Link>
                 </Footer.LinkGroup>
