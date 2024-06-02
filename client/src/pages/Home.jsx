@@ -436,8 +436,8 @@ export default function Home() {
  
           <div className='text-md text-center max-w-6xl flex flex-col gap-10 px-3 sm:px-5 text-gray-800 pb-10 '>
 
-              <h1 className='text-3xl lg:text-5xl font-bold text-center mt-7 '>
-                Track, Achieve, Thrive
+              <h1 className='text-3xl lg:text-5xl font-bold text-center mt-7'>
+                Track, Achieve, Thrive:
                 <h1>
                   Bloom your way to success
                 </h1>
@@ -462,20 +462,24 @@ export default function Home() {
 
               <div className='text-left px-5 sm:px-10 text-wrap break-words whitespace-pre-wrap flex flex-col gap-4'>
 
-                <p className='text-lg font-semibold'>
+                <h1 className='text-2xl font-semibold flex flex-col text-center items-center mt-7'>
+                Cultivate Mind, Nourish Body, Ignite Spirit!
+                </h1>
+
+                <p className=' text-center'>
                   In Bloom, we believe in holistic growth, which is why we categorize goals and habits into three distinct 
                   yet interconnected categories: mind, body, and spirit.
 
-                  <p className='text-2xl font-semibold text-center text-gray-600 py-5'> 
-                    Each category has it's own tree which will grow with you as you accomplish the goals and habits under it's category!
-                  </p>
                 </p>
 
-                <div className='flex flex-col md:flex-row max-w-4xl pb-5'> 
-                <img src="/1a.png" alt='mind' className=' md:w-[33%]'/>
-                <img src="/1b.png" alt='body' className=' md:w-[33%]' />
-                <img src="/1c.png" alt='spirit' className=' md:w-[33%]' /> 
+                <div className='flex flex-col md:flex-row max-w-4xl gap-2'> 
+                <img src="/1a.png" alt='mind' className=' md:w-[33%] rounded-lg'/>
+                <img src="/1b.png" alt='body' className=' md:w-[33%] rounded-lg' />
+                <img src="/1c.png" alt='spirit' className=' md:w-[33%] rounded-lg' /> 
                 </div>
+                  <p className='font-semibold text-lg text-center pb-10'> 
+                    Each category has it's own tree which will grow with you as you accomplish the goals and habits under it's category!
+                  </p>
 
                 <p className='flex flex-col'>
                   <span className='flex flex-row items-center justify-center'><FaBrain className='inline'/><b> Mind </b></span> 
