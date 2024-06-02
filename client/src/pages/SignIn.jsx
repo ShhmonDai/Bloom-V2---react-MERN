@@ -55,6 +55,35 @@ export default function SignIn() {
     }
   };
 
+  const handleDemo = async () => {
+
+    try {
+      setErrorMessageAlert(null);
+      dispatch(signInStart());
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({email: 'demo@demo.com', password: 'demo'}),
+      });
+
+      const data = await res.json();
+      if (data.success === false) {
+        setErrorMessageAlert(data.message);
+        dispatch(signInFailure(data.message));
+      }
+
+
+      if (res.ok) {
+        dispatch(signInSuccess(data));
+        navigate('/');
+      }
+
+    } catch (error) {
+      setErrorMessageAlert(error.message);
+      dispatch(signInFailure(error.message));
+    }
+  };
+
  
   return (
     <div className='min-h-screen mt-20'>
@@ -66,8 +95,30 @@ export default function SignIn() {
           <Link to='/' className='text-6xl md:text-7xl text-center font-QwigleyFont'>Sign In</Link>
           <span className='mt-4 text-center italic font-semibold'>Continue Your Journey</span>
           <p className='text-center lg:text-left text-sm mt-5'>
-            You can sign in with your email and password or with Google.
+            You can sign in with your email and password or with Google. Or you can use the demo account below.
           </p>
+
+          <div className="mt-5 text-sm text-center flex flex-col">
+            <p className='text-sm font-bold'>
+              For a preview:
+            </p>
+
+            <Button gradientDuoTone="purpleToBlue" type='submit' disabled={loading} onClick={() => {
+              handleDemo();
+            }} className="my-2">
+              {loading ? (
+                <>
+                  <Spinner size='sm' />
+                  <span className='pl-3'>Loading...</span>
+                </>
+              ) : ('Demo Account Sign In'
+              )}
+            </Button>
+
+
+          </div>
+
+
         </div>
 
 

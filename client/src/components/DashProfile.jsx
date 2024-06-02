@@ -362,10 +362,11 @@ export default function DashProfile() {
               {imageFileUploadError && <Alert color='failure'>{imageFileUploadError}</Alert>}
             
         <Flowbite theme={{ theme: customModalTheme }}>
-            <TextInput color='gray' type='text' id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange} />
-            <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} onChange={handleChange}/>
-            <TextInput type='password' id='password' placeholder='password' autoComplete='password' onChange={handleChange}/>
-            <Button type='submit' gradientDuoTone="pinkToOrange" outline disabled={loading || imageFileUploading}>
+                  <TextInput color='gray' type='text' id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
+                  <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
+            <TextInput type='password' id='password' placeholder='password' autoComplete='password' disabled={currentUser.email == 'demo@demo.com'} /> 
+        
+            <Button type='submit' gradientDuoTone="pinkToOrange" outline disabled={loading || imageFileUploading || currentUser.email == 'demo@demo.com'}>
                 {loading || imageFileUploading ? 'Loading...' : 'Update'}
             </Button>
 
@@ -374,7 +375,9 @@ export default function DashProfile() {
         </Flowbite>
         </form>
         <div className='text-red-500 flex justify-between mt-5'>
+              {currentUser.email == 'demo@demo.com' ? <span className='line-through'>Delete Account</span> :
               <span onClick={()=>setShowModal(true)} className='cursor-pointer'>Delete Account</span>
+            }
               <span onClick={handleSignout}className='cursor-pointer'>Sign Out</span>
         </div>
         {updateUserSuccess && ( <Alert color='success' className='mt-5'>

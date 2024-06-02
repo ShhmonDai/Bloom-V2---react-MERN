@@ -59,6 +59,15 @@ export default function SignUp() {
           <p className='text-center lg:text-left text-sm mt-5'>
             You can sign up with your email and password or with Google.
           </p>
+
+          <p className='text-center lg:text-left text-sm mt-5 font-bold'>
+            For a preview a demo account has already been created. Available at the
+            <span className="px-1"> 
+            <Link to='/sign-in' className='text-blue-500'>
+               Sign In
+            </Link> page.
+            </span>
+          </p>
         </div>
 
 
