@@ -230,11 +230,11 @@ export default function Header() {
     <Flowbite theme={{ theme: customNavTheme }}>
 
 
-      <div className='w-full px-8 pt-3 pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
+      <div className='w-full px-8 pt-3 sm:pt-0  pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
 
         {/* middle */}
         <div className='w-100 flex flex-col justify-start sm:justify-center sm:text-center'>
-          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl sm:text-center font-QwigleyFont'>Bloom</Link>
+          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl lg:text-8xl sm:text-center font-QwigleyFont'>Bloom</Link>
         </div>
 
       </div>

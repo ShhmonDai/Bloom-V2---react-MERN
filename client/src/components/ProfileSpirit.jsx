@@ -104,7 +104,7 @@ export default function ProfileSpirit() {
     //get width of parent div
     let b = document.getElementById("treeHolder");
     let w = 0;
-    b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
+    b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
     let h = 0;
 
 
@@ -113,13 +113,13 @@ export default function ProfileSpirit() {
         h = 330;
       }
 
-      else if (w / 2 <= 800) {
+      else if (w / 2 <= 650) {
         h = w / 1.4;
 
       }
 
-      if (w > 800) {
-        h = 600;
+      if (w > 650) {
+        h = 450;
       }
     }
 
@@ -301,7 +301,7 @@ export default function ProfileSpirit() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
+      b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
@@ -503,7 +503,7 @@ export default function ProfileSpirit() {
 
 
       {/* Main */}
-      <div className=' mx-auto pt-10 flex flex-col justify-center'>
+      <div className=' mx-auto pt-5 flex flex-col justify-center'>
 
         {/* 
         <div className='justify-center items-center text-center'>

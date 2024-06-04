@@ -70,7 +70,7 @@ export default function Home() {
     //get width of parent div
     let b = document.getElementById("treeHolder");
     let w = 0;
-    b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
+    b.clientWidth < 700 ? (w = b.clientWidth) : (w = 700);
     let h = 0;
 
 
@@ -79,13 +79,13 @@ export default function Home() {
         h = 330;
       }
 
-      else if (w / 2 <= 800) {
+      else if (w / 2 <= 700) {
         h = w / 1.4;
 
       }
 
-      if (w > 800) {
-        h = 600;
+      if (w > 700) {
+        h = 500;
       }
     }
 
@@ -280,7 +280,7 @@ export default function Home() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
+      b.clientWidth < 700 ? (w = b.clientWidth) : (w = 700);
       p.getHeight(w);
 
       p.resizeCanvas(w, h);

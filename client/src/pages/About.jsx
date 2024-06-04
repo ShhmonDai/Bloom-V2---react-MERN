@@ -77,7 +77,7 @@ export default function About() {
     //get width of parent div
     let b = document.getElementById("treeHolder");
     let w = 0;
-    b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
+    b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
     let h = 0;
 
     p.getHeight = (w) => {
@@ -85,13 +85,13 @@ export default function About() {
         h = 330;
       }
 
-      else if (w / 2 <= 800) {
+      else if (w / 2 <= 650) {
         h = w / 1.4;
 
       }
 
-      if (w > 800) {
-        h = 600;
+      if (w > 650) {
+        h = 450;
       }
     }
 
@@ -280,7 +280,7 @@ export default function About() {
       rot = ((PI / 2) / 4 - 0.05);
       rotRand = 0.10;
 
-      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
+      b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
 
 
       //Dynamic Values
@@ -308,7 +308,7 @@ export default function About() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      b.clientWidth < 800 ? (w = b.clientWidth) : (w = 800);
+      b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
