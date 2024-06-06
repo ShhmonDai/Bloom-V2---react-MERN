@@ -1,6 +1,7 @@
 import { errorHandler } from '../utils/error.js';
 import Goal from '../models/goal.model.js';
 import Subgoal from '../models/subgoal.model.js';
+import Habit from '../models/habit.model.js';
 
 
 export const getcategoryscore = async (req, res, next) => {
@@ -27,7 +28,58 @@ export const getcategoryscore = async (req, res, next) => {
             accomplished: true,
         });
 
-        res.status(200).json({ totalGoals, totalSubgoals, subgoalScore, goalScore });
+        const mindHabitScore = await Habit.aggregate(
+            [
+                {
+                    $match: { 
+                        category: "mind",
+                        userId: req.params.userId
+                     }
+                },
+                {
+                    $group: {
+                        _id: "$category",
+                        total: { $sum: { $size: "$datescompleted" } }
+                    }
+                }
+            ]
+        );
+
+        const bodyHabitScore = await Habit.aggregate(
+            [
+                {
+                    $match: {
+                        category: "body",
+                        userId: req.params.userId
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$category",
+                        total: { $sum: { $size: "$datescompleted" } }
+                    }
+                }
+            ]
+        );
+
+        const spiritHabitScore = await Habit.aggregate(
+            [
+                {
+                    $match: {
+                        category: "spirit",
+                        userId: req.params.userId
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$category",
+                        total: { $sum: { $size: "$datescompleted" } }
+                    }
+                }
+            ]
+        );
+
+        res.status(200).json({ totalGoals, totalSubgoals, subgoalScore, goalScore, mindHabitScore, spiritHabitScore, bodyHabitScore });
     } catch (error) {
         next(error);
     }

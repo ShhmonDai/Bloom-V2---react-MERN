@@ -24,7 +24,8 @@ export default function ProfileSpirit() {
 
   const [subgoalScore, setSubgoalScore] = useState('');
   const [goalScore, setGoalScore] = useState('');
-  const [habitsScore, setHabitsScore] = useState('');
+  const [habitScore, setHabitScore] = useState('');
+
 
   const [totalScore, setTotalScore] = useState('');
 
@@ -36,6 +37,7 @@ export default function ProfileSpirit() {
         if (res.ok) {
           setSubgoalScore(data.subgoalScore);
           setGoalScore(data.goalScore);
+          setHabitScore(data.spiritHabitScore[0].total);
         }
       } catch (error) {
         console.log(error.message);
@@ -481,9 +483,10 @@ export default function ProfileSpirit() {
 
   useEffect(() => {
 
-    setTotalScore((goalScore * 2) + subgoalScore);
+    setTotalScore((goalScore * 2) + subgoalScore + (habitScore / 2));
+    console.log('habitScore: ' + habitScore);
 
-  }, [goalScore, subgoalScore, habitsScore]);
+  }, [goalScore, subgoalScore, habitScore]);
 
 
   useEffect(() => {

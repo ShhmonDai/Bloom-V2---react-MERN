@@ -26,7 +26,8 @@ export default function ProfileBody() {
 
   const [subgoalScore, setSubgoalScore] = useState('');
   const [goalScore, setGoalScore] = useState('');
-  const [habitsScore, setHabitsScore] = useState('');
+  const [habitScore, setHabitScore] = useState('');
+
 
   const [totalScore, setTotalScore] = useState('');
 
@@ -38,6 +39,7 @@ export default function ProfileBody() {
         if (res.ok) {
           setSubgoalScore(data.subgoalScore);
           setGoalScore(data.goalScore);
+          setHabitScore(data.bodyHabitScore[0].total);
         }
       } catch (error) {
         console.log(error.message);
@@ -485,10 +487,10 @@ export default function ProfileBody() {
 
   useEffect(() => {
 
-    setTotalScore((goalScore * 2) + subgoalScore);
+    setTotalScore((goalScore * 2) + subgoalScore + (habitScore / 2));
+    console.log('habitScore: ' + habitScore);
 
-
-  }, [goalScore, subgoalScore, habitsScore]);
+  }, [goalScore, subgoalScore, habitScore]);
 
 
   useEffect(() => {
