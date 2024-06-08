@@ -262,7 +262,7 @@ export default function Header() {
                 <Dropdown.Item>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
-              <Link to={'/profile?tab=body'}>
+              <Link to={'/profile?tab=body&view=goals'}>
                   <Dropdown.Item>Goals</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
@@ -297,13 +297,13 @@ export default function Header() {
               </Navbar.Link>
               
               <div className="sm:flex sm:flex-row sm:gap-1 md:gap-4 sm:text-md sm:mx-20 md:mx-24">
-                <Navbar.Link className='flex gap-2 items-center' active={path === '/profile?tab=mind'} as={Link} to='/profile?tab=mind'>
+                <Navbar.Link className='flex gap-2 items-center' active={path == '/profile?tab=mind'} as={Link} to='/profile?tab=mind&view=goals'>
                   < FaBrain /> MIND
                 </Navbar.Link>
-                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=body"} as={Link} to='/profile?tab=body'>
+                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=body"} as={Link} to='/profile?tab=body&view=goals'>
                   < FaDumbbell /> BODY
                 </Navbar.Link>
-                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=spirit"} as={Link} to='/profile?tab=spirit'>
+                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=spirit"} as={Link} to='/profile?tab=spirit&view=goals'>
                   < BsYinYang /> SPIRIT
                 </Navbar.Link>    
               </div>
