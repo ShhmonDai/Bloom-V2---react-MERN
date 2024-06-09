@@ -1,5 +1,6 @@
 import { Avatar, Dropdown, Navbar} from "flowbite-react";
 import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { signoutSuccess } from "../redux/user/userSlice";
@@ -204,6 +205,10 @@ const customNavTheme = {
 
 
 export default function Header() {
+
+    const location = useLocation();
+    const urlParams = new URLSearchParams(location.search);
+
     const path = useLocation().pathname;
     const dispatch = useDispatch();
     const {currentUser} = useSelector(state => state.user);
@@ -244,7 +249,7 @@ export default function Header() {
       
 
       {/* Navbar Elements */}
-      <div className='flex gap-6 justify-start'>  
+      <div className='flex gap-6 justify-start items-center'>  
           <Link to='/' className='text-5xl font-QwigleyFont sm:hidden'>Bloom</Link>
 
           <div className='flex gap-2 absolute right-5 '>
@@ -262,9 +267,21 @@ export default function Header() {
                 <Dropdown.Item>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
-              <Link to={'/profile?tab=body&view=goals'}>
-                  <Dropdown.Item>Goals</Dropdown.Item>
+              <Link to={'/profile?tab=mind&view=habits'}>
+                <Dropdown.Item>Habits</Dropdown.Item>
               </Link>
+              <Dropdown.Divider />
+                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 text-sm w-full flex justify-start">Goals</span>} inline>
+                    <Link to={'/profile?tab=mind&view=goals'}>
+                      <Dropdown.Item>Mind</Dropdown.Item>
+                    </Link>
+                    <Link to={'/profile?tab=body&view=goals'}>
+                      <Dropdown.Item>Body</Dropdown.Item>
+                    </Link>
+                    <Link to={'/profile?tab=spirit&view=goals'}>
+                      <Dropdown.Item>Spirit</Dropdown.Item>
+                    </Link>
+                  </Dropdown>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
             </Dropdown>
@@ -297,19 +314,51 @@ export default function Header() {
               </Navbar.Link>
               
               <div className="sm:flex sm:flex-row sm:gap-1 md:gap-4 sm:text-md sm:mx-20 md:mx-24">
-                <Navbar.Link className='flex gap-2 items-center' active={path == '/profile?tab=mind'} as={Link} to='/profile?tab=mind&view=goals'>
+                <Navbar.Link className='flex gap-2 items-center' active={urlParams.get('tab') === 'mind'} as={Link} to='/profile?tab=mind&view=goals'>
                   < FaBrain /> MIND
                 </Navbar.Link>
-                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=body"} as={Link} to='/profile?tab=body&view=goals'>
+                <Navbar.Link className='flex gap-2 items-center' active={urlParams.get('tab') === "body"} as={Link} to='/profile?tab=body&view=goals'>
                   < FaDumbbell /> BODY
                 </Navbar.Link>
-                <Navbar.Link className='flex gap-2 items-center' active={path === "/profile?tab=spirit"} as={Link} to='/profile?tab=spirit&view=goals'>
+                <Navbar.Link className='flex gap-2 items-center' active={urlParams.get('tab') === "spirit"} as={Link} to='/profile?tab=spirit&view=goals'>
                   < BsYinYang /> SPIRIT
                 </Navbar.Link>    
               </div>
 
-              <Navbar.Link className='flex gap-2 items-center' active={path === "/dashboard"} as={Link} to='/dashboard?tab=profile'>
-                PROFILE < CgProfile /> 
+              <Navbar.Link className='flex gap-2 items-center' active={urlParams.get('tab') === "profile"} as={'div'}>
+                <Dropdown className='position:absolute' arrowIcon={false} label='' renderTrigger={() => <span className="flex flex-row items-center gap-2">PROFILE < CgProfile /></span>}>
+                  <Dropdown.Header>
+                    <span className='block text-sm'>@{currentUser.username}</span>
+                    <span className='block text-sm font-medium truncate'>
+                      {currentUser.email}
+                    </span>
+                  </Dropdown.Header>
+                  <Link to={'/profile?tab=profile'}>
+                    <Dropdown.Item>Profile</Dropdown.Item>
+                  </Link>
+                  <Dropdown.Divider />
+                  <Link to={'/profile?tab=journal'}>
+                    <Dropdown.Item>Journal</Dropdown.Item>
+                  </Link>
+                  <Dropdown.Divider />
+                  <Link to={'/profile?tab=mind&view=habits'}>
+                    <Dropdown.Item>Habits</Dropdown.Item>
+                  </Link>
+                  <Dropdown.Divider />
+                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 text-sm w-full flex justify-start">Goals</span>} inline>
+                    <Link to={'/profile?tab=mind&view=goals'}>
+                      <Dropdown.Item>Mind</Dropdown.Item>
+                    </Link>
+                    <Link to={'/profile?tab=body&view=goals'}>
+                      <Dropdown.Item>Body</Dropdown.Item>
+                    </Link>
+                    <Link to={'/profile?tab=spirit&view=goals'}>
+                      <Dropdown.Item>Spirit</Dropdown.Item>
+                    </Link>
+                  </Dropdown>
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+                </Dropdown> 
               </Navbar.Link>           
             </div>
           ) :
