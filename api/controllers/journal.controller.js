@@ -41,3 +41,41 @@ export const getjournals = async (req, res, next) => {
         next(error);
     }
 };
+
+export const deletejournal = async (req, res, next) => {
+    try {
+        const journal = await Journal.findById(req.params.journalId);
+        if (!journal) {
+            return next(errorHandler(404, 'Journal not found'));
+        }
+        if (journal.userId !== req.user.id) {
+            return next(
+                errorHandler(403, 'You are not allowed to delete this journal')
+            );
+        }
+        await Journal.findByIdAndDelete(req.params.journalId);
+        res.status(200).json('Journal has been deleted');
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const editjournal = async (req, res, next) => {
+    if (req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to edit this journal'));
+    }
+    try {
+        const editedJournal = await Journal.findByIdAndUpdate(
+            req.params.journalId,
+            {
+                $set: {
+                    title: req.body.title,
+                    content: req.body.content,
+                },
+            },
+        );
+        res.status(200).json(editedJournal);
+    } catch (error) {
+        next(error);
+    }
+};

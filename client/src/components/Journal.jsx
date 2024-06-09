@@ -25,7 +25,7 @@ export default function Journal() {
 
     const [showModalAddJournal, setShowModalAddJournal] = useState(false);
     const [showModalUpdateJournal, setShowModalUpdateJournal] = useState(false);
-    const [showModalDeleteJournal, setShowModalDeleteNJournal] = useState(false);
+    const [showModalDeleteJournal, setShowModalDeleteJournal] = useState(false);
     
     const [formDataAddJournal, setFormDataAddJournal] = useState({});
     const [formDataUpdateJournal, setFormDataUpdateJournal] = useState({});
@@ -68,6 +68,55 @@ export default function Journal() {
         }
     };
 
+    const handleUpdateJournal = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await fetch(`/api/journal/editjournal/${formDataUpdateJournal._id}/${currentUser._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formDataUpdateJournal),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setPublishError(data.message);
+                return;
+            }
+
+            if (res.ok) {
+                setPublishError(null);
+                setShowModalUpdateJournal(false);
+                reload ? setReload(false) : setReload(true);
+            }
+        } catch (error) {
+            setPublishError('Something went wrong');
+        }
+    };
+
+    const handleDeleteJournal = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await fetch(`/api/journal/deletejournal/${idToDelete._id}/${currentUser._id}`, {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setPublishError(data.message);
+                return;
+            }
+
+            if (res.ok) {
+                setPublishError(null);
+                setShowModalDeleteJournal(false);
+                setPage(1);
+                reload ? setReload(false) : setReload(true);
+            }
+        } catch (error) {
+            setPublishError('Something went wrong');
+        }
+    };
+
     useEffect(() => {
 
         const fetchJournals = async () => {
@@ -97,7 +146,7 @@ export default function Journal() {
         {/* Journal Intro*/}
         <div className='px-5 pt-5 pb-14 sm:px-10 flex flex-col justify-center items-center'>
             <h1 className='font-BrushFont text-8xl sm:text-9xl'>Journal</h1>
-              <p className='text-wrap break-words italic max-w-4xl'>Welcome to the Journal Section of Bloom, where your thoughts find sanctuary and your emotions are understood. 
+              <p className='text-wrap break-words italic max-w-4xl'>Welcome to the Journal, where your thoughts find sanctuary and your emotions are understood. 
                 Here, you have the space to pen down your reflections, dreams, and everyday moments, 
                 knowing that each entry will be more than just words on a page. 
                 With the power of IBM Watson's machine learning, your journal becomes a canvas where sentiments and emotions are analyzed, 
@@ -114,16 +163,35 @@ export default function Journal() {
         </div>
 
         {/* Journal Page Container */}
-          <div className=' min-h-[400px] w-[90%] max-w-5xl rounded-lg bg-gradient-to-b from-white to-white'>
-              <div className='flex flex-col items-center mt-2 mb-10 mx-4 gap-4 p-4'>
+          <div className='w-[90%] max-w-5xl rounded-lg bg-gradient-to-b from-white to-white'>
+              <div className=' min-h-[400px] flex flex-col mt-2 mb-10 mx-4 gap-4 p-4'>
                 <div className='flex justify-center items-center text-center text-wrap break-words font-bold'>
                     {userJournals && userJournals.length ? (<h1>{userJournals[page-1].title}</h1>) : (<h1 className=''>Add a Journal Entry!</h1>)}    
                 </div>
 
-                <div className='text-wrap break-all whitespace-pre-wrap lg:px-10'>
+                <div className='text-wrap break-words whitespace-pre-wrap lg:px-10'>
                     {userJournals && userJournals.length? (<h1>{userJournals[page-1].content}</h1>) : ''}
                 </div>
             </div>    
+
+                <div className='flex flex-row justify-between items-end p-4'>
+                    {userJournals && userJournals.length ? 
+                    ( <>
+                        <span className='text-sm font-light'>Last Updated: {new Date(userJournals[page-1].updatedAt).toLocaleDateString()} </span>
+
+                        <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
+                            <Dropdown.Item onClick={() => {
+                                setShowModalUpdateJournal(true);
+                                setFormDataUpdateJournal({ ...formDataUpdateJournal, _id: userJournals[page - 1]._id, title: userJournals[page - 1].title, content: userJournals[page - 1].content });
+                                }}>Edit</Dropdown.Item>
+                            <Dropdown.Item onClick={() => {
+                                setShowModalDeleteJournal(true);
+                                setIdToDelete({ ...idToDelete, _id: userJournals[page - 1]._id });
+                                }}>Delete</Dropdown.Item>
+                        </Dropdown>
+                    </>) : ''}
+
+                </div>
 
         </div>
 
@@ -133,6 +201,11 @@ export default function Journal() {
               setFormDataAddJournal({ ...formDataAddJournal, userId: currentUser._id});
               setShowModalAddJournal(true);
             }}>Add New Entry</button>
+        </div>
+
+
+        <div className='flex p-5 text-center'>
+            Work In Progress. Here is a placeholder for the IBM Watson analysis of journals emotions.
         </div>
 
           {/* Add Journal Page Modal */}
@@ -179,6 +252,77 @@ export default function Journal() {
                   </div>
               </Modal.Body>
           </Modal>
+
+          {/* Update Journal Modal */}
+          <Modal
+              show={showModalUpdateJournal}
+              onClose={() => setShowModalUpdateJournal(false)}
+              popup
+              size='md'
+          >
+              <Modal.Header />
+              <Modal.Body>
+                  <div className='text-center'>
+                      <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+                          Edit Journal Entry:
+                      </h3>
+                      <form onSubmit={handleUpdateJournal}>
+                          <Label>Title</Label>
+                          <TextInput type='text' placeholder='Title' id='title' value={formDataUpdateJournal.title} onChange={(e) =>
+                              setFormDataUpdateJournal({ ...formDataUpdateJournal, title: e.target.value })
+                          } />
+                          <Label>Content</Label>
+                          <Textarea rows={6} placeholder='Content' id='content' value={formDataUpdateJournal.content} onChange={(e) =>
+                              setFormDataUpdateJournal({ ...formDataUpdateJournal, content: e.target.value })
+                          } />
+
+
+                          <div className='my-5 flex justify-center gap-4'>
+                              <Button color='gray' type='submit'>
+                                  Update
+                              </Button>
+                              <Button color='gray' onClick={() => setShowModalUpdateJournal(false)}>
+                                  Cancel
+                              </Button>
+                          </div>
+
+                      </form>
+
+                      {publishError && (
+                          <Alert className='mt-5' color='failure'>
+                              {publishError}
+                          </Alert>
+                      )}
+
+                  </div>
+              </Modal.Body>
+          </Modal>
+
+          {/* Delete Note Modal */}
+          <Modal
+              show={showModalDeleteJournal}
+              onClose={() => setShowModalDeleteJournal(false)}
+              popup
+              size='md'
+          >
+              <Modal.Header />
+              <Modal.Body>
+                  <div className='text-center'>
+                      <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+                      <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+                          Are you sure you want to delete this journal?
+                      </h3>
+                      <div className='flex justify-center gap-4'>
+                          <Button color='failure' onClick={handleDeleteJournal}>
+                              Yes, Im sure
+                          </Button>
+                          <Button color='gray' onClick={() => setShowModalDeleteJournal(false)}>
+                              No, cancel
+                          </Button>
+                      </div>
+                  </div>
+              </Modal.Body>
+          </Modal> 
 
 
     </div>      
