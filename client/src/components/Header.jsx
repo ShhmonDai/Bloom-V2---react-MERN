@@ -267,6 +267,10 @@ export default function Header() {
                 <Dropdown.Item>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
+              <Link to={'/profile?tab=journal'}>
+                <Dropdown.Item>Journal</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
               <Link to={'/profile?tab=mind&view=habits'}>
                 <Dropdown.Item>Habits</Dropdown.Item>
               </Link>
@@ -326,7 +330,7 @@ export default function Header() {
               </div>
 
               <Navbar.Link className='flex gap-2 items-center' active={urlParams.get('tab') === "profile"} as={'div'}>
-                <Dropdown className='position:absolute' arrowIcon={false} label='' renderTrigger={() => <span className="flex flex-row items-center gap-2">PROFILE < CgProfile /></span>}>
+                <Dropdown className='position:absolute' arrowIcon={false} label='' inline renderTrigger={() => <span className="flex flex-row w-full items-center gap-2 cursor-pointer">PROFILE < CgProfile /></span>}>
                   <Dropdown.Header>
                     <span className='block text-sm'>@{currentUser.username}</span>
                     <span className='block text-sm font-medium truncate'>
