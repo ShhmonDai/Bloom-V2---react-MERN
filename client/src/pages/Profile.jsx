@@ -5,6 +5,7 @@ import DashProfile from '../components/DashProfile';
 import ProfileMind from '../components/ProfileMind';
 import ProfileBody from '../components/ProfileBody';
 import ProfileSpirit from '../components/ProfileSpirit';
+import Journal from '../components/Journal';
 
 
 
@@ -19,7 +20,7 @@ export default function Profile() {
         }
     }, [location.search]);
     return (
-        <div className='min-h-screen flex flex-col md:flex-row'>
+        <div className='min-h-screen'>
 
             {/* profile... */}
             {tab === 'profile' && <DashProfile />}
@@ -29,6 +30,8 @@ export default function Profile() {
             {tab === 'body' && <ProfileBody />}
             {/* spirit */}
             {tab === 'spirit' && <ProfileSpirit />}
+            {/* journal */}
+            {tab === 'journal' && <Journal />}
 
         </div>
     );

@@ -10,6 +10,7 @@ import commentRoutes from './routes/comment.route.js';
 import noteRoutes from './routes/note.route.js';
 import categoryRoutes from './routes/category.route.js';
 import habitRoutes from './routes/habit.route.js';
+import journalRoutes from './routes/journal.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
@@ -45,6 +46,7 @@ app.use('/api/comment', commentRoutes);
 app.use('/api/note', noteRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/habit', habitRoutes);
+app.use('/api/journal', journalRoutes);
 
 app.use(express.static(path.join(__dirname, '/client/dist')));
 
