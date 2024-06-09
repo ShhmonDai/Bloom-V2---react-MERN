@@ -97,9 +97,12 @@ export default function Journal() {
         {/* Journal Intro*/}
         <div className='px-5 pt-5 pb-14 sm:px-10 flex flex-col justify-center items-center'>
             <h1 className='font-BrushFont text-8xl sm:text-9xl'>Journal</h1>
-            <p className='text-wrap break-words italic max-w-4xl'>Welcome to your Journal. You can use it as a personal dairy or well, a journal. 
-                Each entry will be analyzed by Natural Language Understanding machine learning by IBM Watson to analyze your emotions in writing.
-                It'll give you a new understanding of your emotional being during the written events. </p>
+              <p className='text-wrap break-words italic max-w-4xl'>Welcome to the Journal Section of Bloom, where your thoughts find sanctuary and your emotions are understood. 
+                Here, you have the space to pen down your reflections, dreams, and everyday moments, 
+                knowing that each entry will be more than just words on a page. 
+                With the power of IBM Watson's machine learning, your journal becomes a canvas where sentiments and emotions are analyzed, 
+                offering insights into the depth of your experiences. Explore the profound connection between your words and feelings 
+                as you embark on a journey of self-discovery and understanding. </p>
         </div>
         
         {/* Page Controls */}
@@ -142,7 +145,7 @@ export default function Journal() {
               <Modal.Header />
               <Modal.Body>
                   <div className='text-center'>
-                      <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+                      <h3 className='mb-5 text-lg'>
                           New Journal Entry:
                       </h3>
                       <form onSubmit={handleCreateJournal}>
