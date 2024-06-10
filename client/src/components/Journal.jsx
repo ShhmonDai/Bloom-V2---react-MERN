@@ -188,6 +188,7 @@ export default function Journal() {
             <FaAngleDoubleLeft className='text-2xl' onClick={() => previousPage()} />
             <h1>Page:</h1>
             <h1>{page}</h1>
+            <h1> / {journalPages}</h1>
             <FaAngleDoubleRight className='text-2xl' onClick={() => nextPage()} />
         </div>
 
@@ -279,7 +280,7 @@ export default function Journal() {
 
                         <div className='p-4 flex flex-col justify-start text-left'>
                             <h1 className='font-bold'>Emotions:</h1>
-                            <h1 className='font-bold'>(As percentage)</h1>
+                            <h1 className='font-bold'>(Score out of 100)</h1>
                             <span className='font-semibold'>Joy: <span className='font-normal'>{(emotionResult.joy * 100).toFixed(2)}</span></span> 
                             <span className='font-semibold'>Sadness: <span className='font-normal'>{(emotionResult.sadness * 100).toFixed(2)}</span></span> 
                             <span className='font-semibold'>Anger: <span className='font-normal'>{(emotionResult.anger * 100).toFixed(2)}</span></span> 
@@ -292,14 +293,14 @@ export default function Journal() {
                     {classificationResult && classificationResult.length ? (
                         <div className='p-4 flex flex-col justify-start text-left'>
                             <h1 className='font-bold'>Classification:</h1>
-                            <h1 className='font-bold'>(As confidence)</h1>
-                            <span className='font-semibold'> {classificationResult[0].class_name}: <span className='font-normal'>{(classificationResult[0].confidence).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[1].class_name}: <span className='font-normal'>{(classificationResult[1].confidence).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[2].class_name}: <span className='font-normal'>{(classificationResult[2].confidence).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[3].class_name}: <span className='font-normal'>{(classificationResult[3].confidence).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[4].class_name}: <span className='font-normal'>{(classificationResult[4].confidence).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[5].class_name}: <span className='font-normal'>{(classificationResult[5].confidence).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[6].class_name}: <span className='font-normal'>{(classificationResult[6].confidence).toFixed(3)}</span></span>
+                            <h1 className='font-bold'>(Score out of 100)</h1>
+                            <span className='font-semibold'> {classificationResult[0].class_name}: <span className='font-normal'>{(classificationResult[0].confidence * 100).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[1].class_name}: <span className='font-normal'>{(classificationResult[1].confidence * 100).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[2].class_name}: <span className='font-normal'>{(classificationResult[2].confidence * 100).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[3].class_name}: <span className='font-normal'>{(classificationResult[3].confidence * 100).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[4].class_name}: <span className='font-normal'>{(classificationResult[4].confidence * 100).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[5].class_name}: <span className='font-normal'>{(classificationResult[5].confidence * 100).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[6].class_name}: <span className='font-normal'>{(classificationResult[6].confidence * 100).toFixed(3)}</span></span>
                         </div>
                     ) : ''}
 
