@@ -7,6 +7,7 @@ import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 
 export default function Journal() {
 
+
     const { currentUser } = useSelector((state) => state.user);
     const [reload, setReload] = useState(false);
 
@@ -14,14 +15,12 @@ export default function Journal() {
     const [userJournals, setUserJournals] = useState([]);
     const [journalPages, setJournalPages] = useState(0);
     const [page, setPage] = useState(1);
+    const [visibilityRes, setVisibilityRes] = useState(false);
 
-    const nextPage = () => {
-        page < journalPages ? setPage(page + 1) : ''; 
-    }
+    const [emotionResult, setEmotionResult] = useState([]);
+    const [sentimentResult, setSentimentResult] = useState([]);
+    const [classificationResult, setClassificationResult] = useState([]);
 
-    const previousPage = () => {
-        page <= 1 ? '' : setPage(page - 1);
-    }
 
     const [showModalAddJournal, setShowModalAddJournal] = useState(false);
     const [showModalUpdateJournal, setShowModalUpdateJournal] = useState(false);
@@ -29,11 +28,12 @@ export default function Journal() {
     
     const [formDataAddJournal, setFormDataAddJournal] = useState({});
     const [formDataUpdateJournal, setFormDataUpdateJournal] = useState({});
+    const [formDataGoToPage, setFormDataGoToPage] = useState('');
 
     const [idToDelete, setIdToDelete] = useState({});
 
     const [publishError, setPublishError] = useState(null);
-
+    const [pageError, setPageError] = useState(null);
 
 
     const handleCreateJournal = async (e) => {
@@ -67,6 +67,19 @@ export default function Journal() {
             setPublishError('Something went wrong');
         }
     };
+
+    const handleGoToPage = (e) => {
+        e.preventDefault();
+        formDataGoToPage <= journalPages && formDataGoToPage > 0 ? (setPage(Number(formDataGoToPage)), setPageError(null), setVisibilityRes(false)) : setPageError('Page out of bounds') 
+    }
+
+    const nextPage = () => {
+        page < journalPages ? (setPage(page + 1), setVisibilityRes(false)) : '';
+    }
+
+    const previousPage = () => {
+        page <= 1 ? '' : (setPage(page - 1), setVisibilityRes(false));
+    }
 
     const handleUpdateJournal = async (e) => {
         e.preventDefault();
@@ -140,12 +153,28 @@ export default function Journal() {
     }, [currentUser._id, reload]);  
 
 
+    const handleAnalyze = async () => {
+        try {
+            const res = await fetch(`/api/watson/analyze/${userJournals[page - 1].content}`);
+            const data = await res.json();
+            if (res.ok) {
+                setEmotionResult(data.result.emotion.document.emotion);
+                setSentimentResult(data.result.sentiment.document);
+                setClassificationResult(data.result.classifications);
+                setVisibilityRes(true);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+
   return (
-    <div className='flex flex-col min-h-screen items-center bg-gradient-to-b from-white via-indigo-100 to-indigo-50 gap-5 pb-24'>
+    <div className='flex flex-col min-h-screen items-center bg-gradient-to-b from-white via-indigo-100 to-indigo-50 gap-2 pb-24'>
 
         {/* Journal Intro*/}
-        <div className='px-5 pt-5 pb-14 sm:px-10 flex flex-col justify-center items-center'>
-            <h1 className='font-BrushFont text-8xl sm:text-9xl'>Journal</h1>
+        <div className='px-5 pt-10 pb-14 sm:px-10 flex flex-col justify-center items-center'>
+            <h1 className='font-BrushFont text-7xl sm:text-8xl'>Journal</h1>
               <p className='text-wrap break-words italic max-w-4xl'>Welcome to the Journal, where your thoughts find sanctuary and your emotions are understood. 
                 Here, you have the space to pen down your reflections, dreams, and everyday moments, 
                 knowing that each entry will be more than just words on a page. 
@@ -162,11 +191,37 @@ export default function Journal() {
             <FaAngleDoubleRight className='text-2xl' onClick={() => nextPage()} />
         </div>
 
+        <div className='flex flex-row items-center gap-2 mt-2 text-lg'>
+            <h1>Go To:</h1>
+            <form className='flex flex-row gap-2' onSubmit={handleGoToPage}>
+                <TextInput type="number" className='w-10' value={formDataGoToPage} onChange={(e) =>
+                    setFormDataGoToPage(e.target.value)}>
+                </TextInput>
+                <Button color='gray' type='submit'>
+                    Go
+                </Button>
+            </form>
+        </div>
+        <div>
+            {pageError && (
+                <Alert className='' color='failure'>
+                      {pageError}
+                  </Alert>
+            )}
+        </div>           
+   
+
         {/* Journal Page Container */}
-          <div className='w-[90%] max-w-5xl rounded-lg bg-gradient-to-b from-white to-white'>
-              <div className=' min-h-[400px] flex flex-col mt-2 mb-10 mx-4 gap-4 p-4'>
-                <div className='flex justify-center items-center text-center text-wrap break-words font-bold'>
-                    {userJournals && userJournals.length ? (<h1>{userJournals[page-1].title}</h1>) : (<h1 className=''>Add a Journal Entry!</h1>)}    
+          <div className='w-full sm:w-[90%] max-w-5xl rounded-lg bg-gradient-to-b from-white to-white'>
+              <div className=' min-h-[400px] flex flex-col mt-2 mb-10 sm:mx-4 gap-4 p-4'>
+                <div className='flex flex-col justify-center items-center text-center text-wrap break-words font-semibold font-BilboSwash text-3xl'>
+                    {userJournals && userJournals.length ? 
+                    (<>
+                    <h1>{userJournals[page-1].title}</h1>
+                    <span className='text-lg'>{new Date(userJournals[page - 1].createdAt).toLocaleDateString()} </span>
+                    </>
+                        
+                    ) : (<h1 className=''>Add a Journal Entry!</h1>)}    
                 </div>
 
                 <div className='text-wrap break-words whitespace-pre-wrap lg:px-10'>
@@ -196,7 +251,7 @@ export default function Journal() {
         </div>
 
         {/* Add Journal Entry Button */}
-        <div className='flex'>
+        <div className='flex mt-2 mb-5'>
             <button className='text-md text-blue-500' type='button' onClick={() => {
               setFormDataAddJournal({ ...formDataAddJournal, userId: currentUser._id});
               setShowModalAddJournal(true);
@@ -204,9 +259,61 @@ export default function Journal() {
         </div>
 
 
-        <div className='flex p-5 text-center'>
-            Work In Progress. Here is a placeholder for the IBM Watson analysis of journals emotions.
+        <div className='flex flex-col py-5 rounded-xl max-w-5xl w-full text-center items-center gap-4 bg-gradient-to-b from-white to-transparent'>
+            <h1>Click to analyze emotions using IBM Watson:Natural Language Understanding</h1>
+            <h1>Limited to entries in English! </h1>
+            <Button className='w-fit mb-5' gradientDuoTone='cyanToBlue' type='button' onClick={() => handleAnalyze()}>Analyze Emotions!</Button>
+
+            { visibilityRes && (
+            <div className='w-full min-h-10 pb-10 bg-white'>
+
+                {sentimentResult ? (
+                    <div className='p-4 gap-2'>
+                        <h1 className='font-bold'>Sentiment:</h1>
+                        <h1><b>Label: </b>{sentimentResult.label}, <b>Score: </b>{sentimentResult.score} </h1>
+                    </div>) : <h1 className='py-5'>Analyze journal entry to see results</h1>}
+                
+                <div className='flex flex-row justify-around'>
+
+                    {emotionResult ? (
+
+                        <div className='p-4 flex flex-col justify-start text-left'>
+                            <h1 className='font-bold'>Emotions:</h1>
+                            <h1 className='font-bold'>(As percentage)</h1>
+                            <span className='font-semibold'>Joy: <span className='font-normal'>{(emotionResult.joy * 100).toFixed(2)}</span></span> 
+                            <span className='font-semibold'>Sadness: <span className='font-normal'>{(emotionResult.sadness * 100).toFixed(2)}</span></span> 
+                            <span className='font-semibold'>Anger: <span className='font-normal'>{(emotionResult.anger * 100).toFixed(2)}</span></span> 
+                            <span className='font-semibold'>Disgust: <span className='font-normal'>{(emotionResult.disgust * 100).toFixed(2)}</span></span> 
+                            <span className='font-semibold'>Fear: <span className='font-normal'>{(emotionResult.fear * 100).toFixed(2)}</span></span> 
+                        </div>
+                    
+                    ) : ''}
+
+                    {classificationResult && classificationResult.length ? (
+                        <div className='p-4 flex flex-col justify-start text-left'>
+                            <h1 className='font-bold'>Classification:</h1>
+                            <h1 className='font-bold'>(As confidence)</h1>
+                            <span className='font-semibold'> {classificationResult[0].class_name}: <span className='font-normal'>{(classificationResult[0].confidence).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[1].class_name}: <span className='font-normal'>{(classificationResult[1].confidence).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[2].class_name}: <span className='font-normal'>{(classificationResult[2].confidence).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[3].class_name}: <span className='font-normal'>{(classificationResult[3].confidence).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[4].class_name}: <span className='font-normal'>{(classificationResult[4].confidence).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[5].class_name}: <span className='font-normal'>{(classificationResult[5].confidence).toFixed(3)}</span></span>
+                            <span className='font-semibold'> {classificationResult[6].class_name}: <span className='font-normal'>{(classificationResult[6].confidence).toFixed(3)}</span></span>
+                        </div>
+                    ) : ''}
+
+                </div>
+            </div>
+            )}
+
+
         </div>
+
+
+
+
+
 
           {/* Add Journal Page Modal */}
           <Modal
@@ -320,6 +427,13 @@ export default function Journal() {
                               No, cancel
                           </Button>
                       </div>
+
+                      {publishError && (
+                          <Alert className='mt-5' color='failure'>
+                              {publishError}
+                          </Alert>
+                      )}
+
                   </div>
               </Modal.Body>
           </Modal> 
