@@ -22,13 +22,15 @@
   }
 
   @font-face {
-    font-family: "Grandiflora";
-    src: url("/font/GrandifloraOne-Regular.woff") format('woff'),
-    url("/font/GrandifloraOne-Regular.woff2") format('woff2'),
-    url("/font/GrandifloraOne-Regular.ttf") format('ttf');
+    font-family: 'BilboSwash';
+    src: url('/font/BilboSwashCaps-Regular.ttf') format('ttf'),
+      url('/font/BilboSwashCaps-Regular.woff2') format('woff2'),
+      url('/font/BilboSwashCaps-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
   }
+
+
 
 body {
     height: 100vh;

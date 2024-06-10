@@ -14,7 +14,7 @@ export default {
       fontFamily: {
         'BrushFont': ["brushesregular", "sans-serif"],
         'QwigleyFont': ["Qwigley", "sans-serif"],
-        'Grandiflora': ["Grandiflora", "sans-serif"],
+        'BilboSwash': ["BilboSwash", "sans-serif"],
       },
     },
   },
