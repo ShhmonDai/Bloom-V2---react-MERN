@@ -271,7 +271,7 @@ export default function Header() {
                 <Dropdown.Item>Journal</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
-              <Link to={'/profile?tab=mind&view=habits'}>
+              <Link to={'/profile?tab=habits'}>
                 <Dropdown.Item>Habits</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
@@ -345,11 +345,11 @@ export default function Header() {
                     <Dropdown.Item>Journal</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
-                  <Link to={'/profile?tab=mind&view=habits'}>
+                  <Link to={'/profile?tab=habits'}>
                     <Dropdown.Item>Habits</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
-                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 text-sm w-full flex justify-start">Goals</span>} inline>
+                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 text-sm w-full flex justify-start cursor-pointer">Goals</span>} inline>
                     <Link to={'/profile?tab=mind&view=goals'}>
                       <Dropdown.Item>Mind</Dropdown.Item>
                     </Link>

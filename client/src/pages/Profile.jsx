@@ -6,6 +6,7 @@ import ProfileMind from '../components/ProfileMind';
 import ProfileBody from '../components/ProfileBody';
 import ProfileSpirit from '../components/ProfileSpirit';
 import Journal from '../components/Journal';
+import Habits from '../components/Habits';
 
 
 
@@ -32,6 +33,8 @@ export default function Profile() {
             {tab === 'spirit' && <ProfileSpirit />}
             {/* journal */}
             {tab === 'journal' && <Journal />}
+            {/* habits */}
+            {tab === 'habits' && <Habits />}
 
         </div>
     );
