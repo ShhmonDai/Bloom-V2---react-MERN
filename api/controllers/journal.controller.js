@@ -89,8 +89,8 @@ export const editemotions = async (req, res, next) => {
         const editedJournal = await Journal.findByIdAndUpdate(
             req.params.journalId,
             {
-                $addToSet: {
-                    emotions: req.body.emotions
+                $set: {
+                    emotions: req.body
                 },
             },
         );

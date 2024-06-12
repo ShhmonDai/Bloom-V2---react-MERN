@@ -4,6 +4,8 @@ import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea } from "flow
 import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
+import GaugeComponent from 'react-gauge-component';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
 export default function Journal() {
 
@@ -13,13 +15,14 @@ export default function Journal() {
 
 
     const [userJournals, setUserJournals] = useState([]);
+    const [journalEmotions, setJournalEmotions] = useState([]);
     const [journalPages, setJournalPages] = useState(0);
     const [page, setPage] = useState(1);
     const [visibilityRes, setVisibilityRes] = useState(false);
 
-    const [emotionResult, setEmotionResult] = useState([]);
-    const [sentimentResult, setSentimentResult] = useState([]);
-    const [classificationResult, setClassificationResult] = useState([]);
+    //const [emotionResult, setEmotionResult] = useState([]);
+    //const [sentimentResult, setSentimentResult] = useState([]);
+    //const [classificationResult, setClassificationResult] = useState([]);
 
 
     const [showModalAddJournal, setShowModalAddJournal] = useState(false);
@@ -27,6 +30,7 @@ export default function Journal() {
     const [showModalDeleteJournal, setShowModalDeleteJournal] = useState(false);
     
     const [formDataAddJournal, setFormDataAddJournal] = useState({});
+    const [formDataEmotions, setFormDataEmotions] = useState([]);
     const [formDataUpdateJournal, setFormDataUpdateJournal] = useState({});
     const [formDataGoToPage, setFormDataGoToPage] = useState('');
 
@@ -34,6 +38,22 @@ export default function Journal() {
 
     const [publishError, setPublishError] = useState(null);
     const [pageError, setPageError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#E8BDFF'];
+
+    const RADIAN = Math.PI / 180;
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+            <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                {`${(percent * 100).toFixed(0)}%`}
+            </text>
+        );
+    };
 
 
     const handleCreateJournal = async (e) => {
@@ -139,6 +159,7 @@ export default function Journal() {
                 if (res.ok) {
                     setUserJournals(data.journals);
                     setJournalPages(data.maxpages);
+                    
 
                 }
             } catch (error) {
@@ -153,15 +174,69 @@ export default function Journal() {
     }, [currentUser._id, reload]);  
 
 
+    useEffect(() => {
+        journalEmotions && journalEmotions.length ? (setVisibilityRes(true)) : (setVisibilityRes(false))
+    }, [journalEmotions]); 
+
+    useEffect(() => {
+        userJournals.length ? (setJournalEmotions(userJournals[page-1].emotions)) : ''
+    }, [userJournals, page]); 
+
+    useEffect(() => {
+        formDataEmotions && formDataEmotions.length ? (handleSaveEmotions()) : ''
+    }, [formDataEmotions]); 
+
+    const handleSaveEmotions = async () => {
+        try {
+            const res = await fetch(`/api/journal/editemotions/${userJournals[page - 1]._id}/${currentUser._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formDataEmotions),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setPublishError(data.message);
+                return;
+            }
+
+            if (res.ok) {
+                setPublishError(null);
+                setLoading(false);
+                setFormDataEmotions([]);
+                reload ? setReload(false) : setReload(true);
+            }
+        } catch (error) {
+            setPublishError('Something went wrong');
+        }
+    };
+
     const handleAnalyze = async () => {
         try {
             const res = await fetch(`/api/watson/analyze/${userJournals[page - 1].content}`);
             const data = await res.json();
             if (res.ok) {
-                setEmotionResult(data.result.emotion.document.emotion);
-                setSentimentResult(data.result.sentiment.document);
-                setClassificationResult(data.result.classifications);
-                setVisibilityRes(true);
+                //setEmotionResult(data.result.emotion.document.emotion);
+                //setSentimentResult(data.result.sentiment.document);
+                //setClassificationResult(data.result.classifications);
+
+                setFormDataEmotions(formDataEmotions => [...formDataEmotions, { label: data.result.sentiment.document.label, score: (data.result.sentiment.document.score * 100).toFixed(3) },
+                    { label: 'joy', score: (data.result.emotion.document.emotion.joy * 100).toFixed(2) },
+                    { label: 'sadness', score: (data.result.emotion.document.emotion.sadness * 100).toFixed(2) },
+                    { label: 'anger', score: (data.result.emotion.document.emotion.anger * 100).toFixed(2) },
+                    { label: 'disgust', score: (data.result.emotion.document.emotion.disgust * 100).toFixed(2) },
+                    { label: 'fear', score: (data.result.emotion.document.emotion.fear * 100).toFixed(2) },
+                    { label: data.result.classifications[0].class_name, score: (data.result.classifications[0].confidence * 100).toFixed(2) },
+                    { label: data.result.classifications[1].class_name, score: (data.result.classifications[1].confidence * 100).toFixed(2) },
+                    { label: data.result.classifications[2].class_name, score: (data.result.classifications[2].confidence * 100).toFixed(2) },
+                    { label: data.result.classifications[3].class_name, score: (data.result.classifications[3].confidence * 100).toFixed(2) },
+                    { label: data.result.classifications[4].class_name, score: (data.result.classifications[4].confidence * 100).toFixed(2) },
+                    { label: data.result.classifications[5].class_name, score: (data.result.classifications[5].confidence * 100).toFixed(2) },
+                    { label: data.result.classifications[6].class_name, score: (data.result.classifications[6].confidence * 100).toFixed(2) },
+                    
+                ]);
+
             }
         } catch (error) {
             console.log(error.message);
@@ -195,7 +270,7 @@ export default function Journal() {
         <div className='flex flex-row items-center gap-2 mt-2 text-lg'>
             <h1>Go To:</h1>
             <form className='flex flex-row gap-2' onSubmit={handleGoToPage}>
-                <TextInput type="number" className='w-10' value={formDataGoToPage} onChange={(e) =>
+                <TextInput type="number" className='w-14 sm:w-20' value={formDataGoToPage} onChange={(e) =>
                     setFormDataGoToPage(e.target.value)}>
                 </TextInput>
                 <Button color='gray' type='submit'>
@@ -263,47 +338,95 @@ export default function Journal() {
         <div className='flex flex-col py-5 rounded-xl max-w-5xl w-full text-center items-center gap-4 bg-gradient-to-b from-white to-transparent'>
             <h1>Click to analyze emotions using IBM Watson:Natural Language Understanding</h1>
             <h1>Limited to entries in English! </h1>
-            <Button className='w-fit mb-5' gradientDuoTone='cyanToBlue' type='button' onClick={() => handleAnalyze()}>Analyze Emotions!</Button>
+              <Button className='w-fit mb-5' gradientDuoTone='cyanToBlue' type='button' disabled={loading} onClick={() => {setLoading(true); handleAnalyze();}}>{loading ? 'Loading...' : 'Analyze Emotions!'}</Button>
 
             { visibilityRes && (
             <div className='w-full min-h-10 pb-10 bg-white'>
 
-                {sentimentResult ? (
-                    <div className='p-4 gap-2'>
-                        <h1 className='font-bold'>Sentiment:</h1>
-                        <h1><b>Label: </b>{sentimentResult.label}, <b>Score: </b>{sentimentResult.score} </h1>
-                    </div>) : <h1 className='py-5'>Analyze journal entry to see results</h1>}
+                <div className='flex flex-row justify-center items-center pt-4'>
+                    <GaugeComponent
+                    type="semicircle"
+                    arc={{
+                        width: 0.3,
+                        padding: 0.005,
+                        cornerRadius: 1,
+                        gradient: true,
+                        subArcs: [
+                            {
+                                limit: -50,
+                                color: '#ff5f6c',
+                                showTick: true
+                            },
+                            {
+                                limit: 0,
+                                color: '#F5CD19',
+                                showTick: true
+                            },
+                            {
+                                limit: 10,
+                                color: '#5fff8f',
+                                showTick: true
+                            },
+                            
+                        ]
+                    }}
+                    pointer={{
+                        type: 'arrow',
+                        baseColor: '#464A4F',
+                        length: 1,
+                        width: 10,
+                        elastic: true,
+                        animate: true,
+                    }}
+
+                    labels={{
+                        valueLabel: { formatTextValue: value => value, matchColorWithArc: true, style: { fontSize: "40px", textShadow: "white 0px 0px 1em" } },
+                        tickLabels: {
+                        type: 'outer',
+                        valueConfig: { formatTextValue: value => value, fontSize: 15 },
+                        ticks: [
+                            { value: -50 },
+                            { value: 0 },
+                            { value: 50 }
+                        ],
+                        }
+                    }}
+                        value={journalEmotions[0].score}
+                    minValue={-100}
+                    maxValue={100}
+                    />
+                </div>
+
+                <div className='pb-4 gap-2'>
+                    <h1 className='capitalize'><b>Sentiment: </b>{journalEmotions[0].label}, <b>Score: </b>{journalEmotions[0].score} </h1>
+                </div>
                 
                 <div className='flex flex-row justify-around'>
-
-                    {emotionResult ? (
 
                         <div className='p-4 flex flex-col justify-start text-left'>
                             <h1 className='font-bold'>Emotions:</h1>
                             <h1 className='font-bold'>(Score out of 100)</h1>
-                            <span className='font-semibold'>Joy: <span className='font-normal'>{(emotionResult.joy * 100).toFixed(2)}</span></span> 
-                            <span className='font-semibold'>Sadness: <span className='font-normal'>{(emotionResult.sadness * 100).toFixed(2)}</span></span> 
-                            <span className='font-semibold'>Anger: <span className='font-normal'>{(emotionResult.anger * 100).toFixed(2)}</span></span> 
-                            <span className='font-semibold'>Disgust: <span className='font-normal'>{(emotionResult.disgust * 100).toFixed(2)}</span></span> 
-                            <span className='font-semibold'>Fear: <span className='font-normal'>{(emotionResult.fear * 100).toFixed(2)}</span></span> 
+                              <span className='font-semibold capitalize'>{journalEmotions[1].label}: <span className='font-normal'>{journalEmotions[1].score}</span></span> 
+                              <span className='font-semibold capitalize'>{journalEmotions[2].label}: <span className='font-normal'>{journalEmotions[2].score}</span></span> 
+                              <span className='font-semibold capitalize'>{journalEmotions[3].label}: <span className='font-normal'>{journalEmotions[3].score}</span></span> 
+                              <span className='font-semibold capitalize'>{journalEmotions[4].label}: <span className='font-normal'>{journalEmotions[4].score}</span></span> 
+                              <span className='font-semibold capitalize'>{journalEmotions[5].label}: <span className='font-normal'>{journalEmotions[5].score}</span></span> 
                         </div>
                     
-                    ) : ''}
 
-                    {classificationResult && classificationResult.length ? (
+                    
                         <div className='p-4 flex flex-col justify-start text-left'>
-                            <h1 className='font-bold'>Classification:</h1>
+                            <h1 className='font-bold'>Classifications:</h1>
                             <h1 className='font-bold'>(Score out of 100)</h1>
-                            <span className='font-semibold'> {classificationResult[0].class_name}: <span className='font-normal'>{(classificationResult[0].confidence * 100).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[1].class_name}: <span className='font-normal'>{(classificationResult[1].confidence * 100).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[2].class_name}: <span className='font-normal'>{(classificationResult[2].confidence * 100).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[3].class_name}: <span className='font-normal'>{(classificationResult[3].confidence * 100).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[4].class_name}: <span className='font-normal'>{(classificationResult[4].confidence * 100).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[5].class_name}: <span className='font-normal'>{(classificationResult[5].confidence * 100).toFixed(3)}</span></span>
-                            <span className='font-semibold'> {classificationResult[6].class_name}: <span className='font-normal'>{(classificationResult[6].confidence * 100).toFixed(3)}</span></span>
+                              <span className='font-semibold capitalize'> {journalEmotions[6].label}: <span className='font-normal'>{journalEmotions[6].score}</span></span>
+                              <span className='font-semibold capitalize'> {journalEmotions[7].label}: <span className='font-normal'>{journalEmotions[7].score}</span></span>
+                              <span className='font-semibold capitalize'> {journalEmotions[8].label}: <span className='font-normal'>{journalEmotions[8].score}</span></span>
+                              <span className='font-semibold capitalize'> {journalEmotions[9].label}: <span className='font-normal'>{journalEmotions[9].score}</span></span>
+                              <span className='font-semibold capitalize'> {journalEmotions[10].label}: <span className='font-normal'>{journalEmotions[10].score}</span></span>
+                              <span className='font-semibold capitalize'> {journalEmotions[11].label}: <span className='font-normal'>{journalEmotions[11].score}</span></span>
+                              <span className='font-semibold capitalize'> {journalEmotions[12].label}: <span className='font-normal'>{journalEmotions[12].score}</span></span>
                         </div>
-                    ) : ''}
-
+                    
                 </div>
             </div>
             )}
@@ -321,10 +444,10 @@ export default function Journal() {
               show={showModalAddJournal}
               onClose={() => setShowModalAddJournal(false)}
               popup
-              size='md'
+              size='xl'
           >
               <Modal.Header />
-              <Modal.Body>
+              <Modal.Body className='px-2 sm:p-6'>
                   <div className='text-center'>
                       <h3 className='mb-5 text-lg'>
                           New Journal Entry:
@@ -335,7 +458,7 @@ export default function Journal() {
                               setFormDataAddJournal({ ...formDataAddJournal, title: e.target.value })
                           } />
                           <Label>Content</Label>
-                          <Textarea required rows={6} placeholder='Content' id='content' value={formDataAddJournal.content} onChange={(e) =>
+                          <Textarea required rows={14} placeholder='Content' id='content' value={formDataAddJournal.content} onChange={(e) =>
                               setFormDataAddJournal({ ...formDataAddJournal, content: e.target.value })
                           } />
 
@@ -366,10 +489,10 @@ export default function Journal() {
               show={showModalUpdateJournal}
               onClose={() => setShowModalUpdateJournal(false)}
               popup
-              size='md'
+              size='xl'
           >
               <Modal.Header />
-              <Modal.Body>
+              <Modal.Body className='px-2 sm:p-6'>
                   <div className='text-center'>
                       <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
                           Edit Journal Entry:
@@ -380,7 +503,7 @@ export default function Journal() {
                               setFormDataUpdateJournal({ ...formDataUpdateJournal, title: e.target.value })
                           } />
                           <Label>Content</Label>
-                          <Textarea rows={6} placeholder='Content' id='content' value={formDataUpdateJournal.content} onChange={(e) =>
+                          <Textarea rows={14} placeholder='Content' id='content' value={formDataUpdateJournal.content} onChange={(e) =>
                               setFormDataUpdateJournal({ ...formDataUpdateJournal, content: e.target.value })
                           } />
 
@@ -442,4 +565,4 @@ export default function Journal() {
 
     </div>      
   )
-}
+}                
