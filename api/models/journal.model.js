@@ -14,6 +14,13 @@ const journalSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        emotions: {
+            type: [{
+                label: String,
+                score: String
+            }],
+            default: undefined
+        }
     },
     { timestamps: true }
 );

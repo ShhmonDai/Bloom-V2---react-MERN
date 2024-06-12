@@ -3,7 +3,7 @@ import Journal from '../models/journal.model.js';
 
 export const createjournal = async (req, res, next) => {
     try {
-        const { userId, title, content } = req.body;
+        const { userId, title, content, emotions } = req.body;
 
         if (userId !== req.user.id) {
             return next(
@@ -15,6 +15,7 @@ export const createjournal = async (req, res, next) => {
             userId,
             title,
             content,
+            emotions,
         });
         await newJournal.save();
 
@@ -71,6 +72,25 @@ export const editjournal = async (req, res, next) => {
                 $set: {
                     title: req.body.title,
                     content: req.body.content,
+                },
+            },
+        );
+        res.status(200).json(editedJournal);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const editemotions = async (req, res, next) => {
+    if (req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to edit this journal'));
+    }
+    try {
+        const editedJournal = await Journal.findByIdAndUpdate(
+            req.params.journalId,
+            {
+                $addToSet: {
+                    emotions: req.body.emotions
                 },
             },
         );
