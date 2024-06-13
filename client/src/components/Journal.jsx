@@ -24,6 +24,7 @@ export default function Journal() {
     //const [sentimentResult, setSentimentResult] = useState([]);
     //const [classificationResult, setClassificationResult] = useState([]);
 
+    
 
     const [showModalAddJournal, setShowModalAddJournal] = useState(false);
     const [showModalUpdateJournal, setShowModalUpdateJournal] = useState(false);
@@ -40,9 +41,13 @@ export default function Journal() {
     const [pageError, setPageError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#E8BDFF'];
+    // Joy - Sadness - Anger - Disgust - Fear
+    const COLORS = ['#f9c74f', '#5390d9', '#f07167', '#955ec9', '#9a8c98'];
+    const [graphData, setGraphData] = useState([]);
+    
 
     const RADIAN = Math.PI / 180;
+    
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -150,6 +155,14 @@ export default function Journal() {
         }
     };
 
+    const handleGraphData = () => {
+        const arr = journalEmotions.slice(1, 6);
+        const result = arr.map((item) => ({name: item.label, value: Number(item.score) }));
+
+        setGraphData(result);
+        console.log(graphData[1]);
+    };
+
     useEffect(() => {
 
         const fetchJournals = async () => {
@@ -175,7 +188,7 @@ export default function Journal() {
 
 
     useEffect(() => {
-        journalEmotions && journalEmotions.length ? (setVisibilityRes(true)) : (setVisibilityRes(false))
+        journalEmotions && journalEmotions.length ? (setVisibilityRes(true), handleGraphData()) : (setVisibilityRes(false))
     }, [journalEmotions]); 
 
     useEffect(() => {
@@ -227,13 +240,13 @@ export default function Journal() {
                     { label: 'anger', score: (data.result.emotion.document.emotion.anger * 100).toFixed(2) },
                     { label: 'disgust', score: (data.result.emotion.document.emotion.disgust * 100).toFixed(2) },
                     { label: 'fear', score: (data.result.emotion.document.emotion.fear * 100).toFixed(2) },
-                    { label: data.result.classifications[0].class_name, score: (data.result.classifications[0].confidence * 100).toFixed(2) },
-                    { label: data.result.classifications[1].class_name, score: (data.result.classifications[1].confidence * 100).toFixed(2) },
-                    { label: data.result.classifications[2].class_name, score: (data.result.classifications[2].confidence * 100).toFixed(2) },
-                    { label: data.result.classifications[3].class_name, score: (data.result.classifications[3].confidence * 100).toFixed(2) },
-                    { label: data.result.classifications[4].class_name, score: (data.result.classifications[4].confidence * 100).toFixed(2) },
-                    { label: data.result.classifications[5].class_name, score: (data.result.classifications[5].confidence * 100).toFixed(2) },
-                    { label: data.result.classifications[6].class_name, score: (data.result.classifications[6].confidence * 100).toFixed(2) },
+                    { label: (data.result.classifications[0].class_name), score: (data.result.classifications[0].confidence * 100).toFixed(2) },
+                    { label: (data.result.classifications[1].class_name), score: (data.result.classifications[1].confidence * 100).toFixed(2) },
+                    { label: (data.result.classifications[2].class_name), score: (data.result.classifications[2].confidence * 100).toFixed(2) },
+                    { label: (data.result.classifications[3].class_name), score: (data.result.classifications[3].confidence * 100).toFixed(2) },
+                    { label: (data.result.classifications[4].class_name), score: (data.result.classifications[4].confidence * 100).toFixed(2) },
+                    { label: (data.result.classifications[5].class_name), score: (data.result.classifications[5].confidence * 100).toFixed(2) },
+                    { label: (data.result.classifications[6].class_name), score: (data.result.classifications[6].confidence * 100).toFixed(2) },
                     
                 ]);
 
@@ -308,7 +321,10 @@ export default function Journal() {
                 <div className='flex flex-row justify-between items-end p-4'>
                     {userJournals && userJournals.length ? 
                     ( <>
-                        <span className='text-sm font-light'>Last Updated: {new Date(userJournals[page-1].updatedAt).toLocaleDateString()} </span>
+                        <div className='flex gap-5'>
+                            <span className='text-sm font-light'>Last Updated: {new Date(userJournals[page - 1].updatedAt).toLocaleDateString()} </span>
+                            <span className='text-sm font-light'>Characters used: {(userJournals[page - 1].content.length)} </span>
+                        </div>
 
                         <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
                             <Dropdown.Item onClick={() => {
@@ -335,13 +351,14 @@ export default function Journal() {
         </div>
 
 
-        <div className='flex flex-col py-5 rounded-xl max-w-5xl w-full text-center items-center gap-4 bg-gradient-to-b from-white to-transparent'>
+        <div className='flex flex-col py-5 rounded-xl max-w-5xl w-full text-center items-center gap-4 bg-gradient-to-b from-white to-indigo-50'>
             <h1>Click to analyze emotions using IBM Watson:Natural Language Understanding</h1>
-            <h1>Limited to entries in English! </h1>
+              <h1>Limited to entries in English! </h1>
+              <h1>Max Characters: 2000 </h1>
               <Button className='w-fit mb-5' gradientDuoTone='cyanToBlue' type='button' disabled={loading} onClick={() => {setLoading(true); handleAnalyze();}}>{loading ? 'Loading...' : 'Analyze Emotions!'}</Button>
 
             { visibilityRes && (
-            <div className='w-full min-h-10 pb-10 bg-white'>
+                  <div className='w-full min-h-10 pb-10 bg-gradient-to-b from-transparent rounded-b-3xl via-indigo-100 to-indigo-200'>
 
                 <div className='flex flex-row justify-center items-center pt-4'>
                     <GaugeComponent
@@ -406,11 +423,11 @@ export default function Journal() {
                         <div className='p-4 flex flex-col justify-start text-left'>
                             <h1 className='font-bold'>Emotions:</h1>
                             <h1 className='font-bold'>(Score out of 100)</h1>
-                              <span className='font-semibold capitalize'>{journalEmotions[1].label}: <span className='font-normal'>{journalEmotions[1].score}</span></span> 
-                              <span className='font-semibold capitalize'>{journalEmotions[2].label}: <span className='font-normal'>{journalEmotions[2].score}</span></span> 
-                              <span className='font-semibold capitalize'>{journalEmotions[3].label}: <span className='font-normal'>{journalEmotions[3].score}</span></span> 
-                              <span className='font-semibold capitalize'>{journalEmotions[4].label}: <span className='font-normal'>{journalEmotions[4].score}</span></span> 
-                              <span className='font-semibold capitalize'>{journalEmotions[5].label}: <span className='font-normal'>{journalEmotions[5].score}</span></span> 
+                              <span className='font-semibold text-[#f9c74f] capitalize'>{journalEmotions[1].label}: <span className='font-normal text-gray-800'>{journalEmotions[1].score}</span></span> 
+                              <span className='font-semibold text-[#5390d9] capitalize'>{journalEmotions[2].label}: <span className='font-normal text-gray-800'>{journalEmotions[2].score}</span></span> 
+                              <span className='font-semibold text-[#f07167] capitalize'>{journalEmotions[3].label}: <span className='font-normal text-gray-800'>{journalEmotions[3].score}</span></span> 
+                              <span className='font-semibold text-[#955ec9] capitalize'>{journalEmotions[4].label}: <span className='font-normal text-gray-800'>{journalEmotions[4].score}</span></span> 
+                              <span className='font-semibold text-[#9a8c98] capitalize'>{journalEmotions[5].label}: <span className='font-normal text-gray-800'>{journalEmotions[5].score}</span></span> 
                         </div>
                     
 
@@ -428,6 +445,32 @@ export default function Journal() {
                         </div>
                     
                 </div>
+                    
+                {graphData ? 
+                
+                <div className='mt-10 flex flex-col justify-center items-center'>
+                    <h1 className='font-bold'>Emotions Chart:</h1>
+                    <ResponsiveContainer width='100%' height={250}>
+                          <PieChart>
+                              <Pie
+                                data={graphData}
+
+                                  cy={90}
+                                  labelLine={false}
+                                  label={renderCustomizedLabel}
+                                  outerRadius={80}
+                                  fill="#8884d8"
+                                  dataKey="value"
+                              >
+                                  {graphData.map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                  ))}
+                              </Pie>
+                          </PieChart>
+                        </ResponsiveContainer>
+                </div> : ''
+                }
+
             </div>
             )}
 
@@ -458,7 +501,7 @@ export default function Journal() {
                               setFormDataAddJournal({ ...formDataAddJournal, title: e.target.value })
                           } />
                           <Label>Content</Label>
-                          <Textarea required rows={14} placeholder='Content' id='content' value={formDataAddJournal.content} onChange={(e) =>
+                          <Textarea required rows={14} maxLength="2000" placeholder='Content' id='content' value={formDataAddJournal.content} onChange={(e) =>
                               setFormDataAddJournal({ ...formDataAddJournal, content: e.target.value })
                           } />
 
@@ -503,7 +546,7 @@ export default function Journal() {
                               setFormDataUpdateJournal({ ...formDataUpdateJournal, title: e.target.value })
                           } />
                           <Label>Content</Label>
-                          <Textarea rows={14} placeholder='Content' id='content' value={formDataUpdateJournal.content} onChange={(e) =>
+                          <Textarea rows={14} maxLength="2000" placeholder='Content' id='content' value={formDataUpdateJournal.content} onChange={(e) =>
                               setFormDataUpdateJournal({ ...formDataUpdateJournal, content: e.target.value })
                           } />
 
