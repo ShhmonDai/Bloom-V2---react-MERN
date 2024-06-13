@@ -5,8 +5,13 @@ import { RiTreeFill } from "react-icons/ri";
 import { MdOutlineChecklist } from "react-icons/md";
 import { FaBrain, FaDumbbell } from "react-icons/fa";
 import { BsYinYang } from "react-icons/bs";
-import { MdOutlineArtTrack } from "react-icons/md";
+import { MdOutlineArtTrack } from "react-icons/md"; 
+import { IoIosJournal } from "react-icons/io";
+import { GiArtificialIntelligence } from "react-icons/gi";
+
+
 import { Link } from 'react-router-dom';
+
 
 export default function Home() {
 
@@ -580,7 +585,35 @@ export default function Home() {
             </div>
 
           </div>
-            <div className='flex flex-col max-w-4xl items-center px-5 sm:px-10 gap-4 mt-7 '>
+
+          <div className='flex flex-col max-w-5xl items-center py-10 sm:px-10 gap-6 mt-7 rounded-xl bg-gradient-to-b from-blue-200 via-[#ceecfa] to-transparent '>
+
+            <div className='flex flex-row text-4xl text-blue-500 items-center gap-2'>
+              <IoIosJournal className='text-4xl text-blue-500' /> + <GiArtificialIntelligence className='text-4xl text-blue-500' />
+            </div>
+
+            <h1 className='text-3xl font-semibold text-center'>
+              Emotion-Driven Insights:
+              <br />Unveiling Your Story with Bloom's Journal
+            </h1>
+
+
+            <p className='text-left px-5 sm:px-0'>
+              With the power of <b>IBM Watson's machine learning</b>, your journal becomes a canvas where sentiments and emotions are analyzed, 
+              offering insights into the depth of your experiences. Explore the profound connection between your words and feelings as you embark
+               on a journey of self-discovery and understanding.
+            </p>
+
+            <div className='flex flex-col gap-10 px-2 py-10'>
+              <img className='border-4 border-white rounded-lg shadow-lg' src="/4a.png" alt='journal' />
+              <img className='border-4 border-white rounded-lg shadow-lg' src="/4b.png" alt='journal' />
+            </div>
+
+            
+
+          </div>
+
+          <div className='flex flex-col max-w-4xl items-center px-5 sm:px-10 gap-4 mt-7 '>
 
                 <RiTreeFill className='text-6xl text-blue-500'/>
 
@@ -597,7 +630,7 @@ export default function Home() {
 
               <Link to='/sign-up'><button type='button' className='bg-blue-500 text-white rounded px-4 py-2'>Try Bloom for Free</button></Link>
 
-            </div>
+          </div>
 
 
         </div>
