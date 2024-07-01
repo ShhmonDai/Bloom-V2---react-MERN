@@ -7,7 +7,7 @@
 &nbsp;
 
 <h3 align='center'> See the live website at: 
-<a href="https://bloomv2.onrender.com/">Bloom</a>
+<a href="https://bloomhabits.com/">Bloom</a>
 </h3>
 
 &nbsp;
