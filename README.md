@@ -1,4 +1,5 @@
-<h1 align='center'>Welcome to Bloom<br> A goal tracking website meant to help you visualize and see your progress! </h1>
+<h1 align='center'>Welcome to Bloom </h1>
+<h2 align='center'>A goal tracking website meant to help you visualize and see your progress!</h2>
 
 &nbsp;
 
@@ -30,5 +31,10 @@
 ![2b](https://github.com/ShhmonDai/Bloom-V2---react-MERN/assets/109430011/8292a18c-a7e9-4879-98d4-337797a4b917)
 ![2c](https://github.com/ShhmonDai/Bloom-V2---react-MERN/assets/109430011/18010a9c-5f86-4789-b636-edb7334e2079)
 ![2d](https://github.com/ShhmonDai/Bloom-V2---react-MERN/assets/109430011/7c8be232-04b4-4676-919d-160119cbfaef)
+
+![4a](https://github.com/ShhmonDai/Bloom-V2---react-MERN/assets/109430011/0e47ac53-d43f-4717-aac0-eea7f678cd26)
+![4b](https://github.com/ShhmonDai/Bloom-V2---react-MERN/assets/109430011/4e5097e7-e5c8-4501-b065-2b06c9f0f696)
+
+
 
 </h1>
