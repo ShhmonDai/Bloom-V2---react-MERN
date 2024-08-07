@@ -137,7 +137,7 @@ const customModalTheme = {
 };
 
 
-export default function DashProfile() {
+export default function UserProfile() {
     const {currentUser, error, loading} = useSelector(state => state.user);
     const [imageFile, setImageFile] = useState(null);
     const [imageFileUrl, setImageFileUrl] = useState(null);

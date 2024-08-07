@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProfileSidebar from '../components/ProfileSidebar';
-import DashProfile from '../components/DashProfile';
+import UserProfile from '../components/UserProfile';
+import Dashboard from '../components/ProfileDash';
 import ProfileMind from '../components/ProfileMind';
 import ProfileBody from '../components/ProfileBody';
 import ProfileSpirit from '../components/ProfileSpirit';
@@ -23,8 +23,10 @@ export default function Profile() {
     return (
         <div className='min-h-screen'>
 
+            {/* dashboard... */}
+            {tab === 'dashboard' && <Dashboard />}
             {/* profile... */}
-            {tab === 'profile' && <DashProfile />}
+            {tab === 'profile' && <UserProfile />}
             {/* mind */}
             {tab === 'mind' && <ProfileMind />}
             {/* body */}
