@@ -121,7 +121,74 @@ export const getstatistics = async (req, res, next) => {
             ]
         );
 
-        res.status(200).json({ mindHabitScore, spiritHabitScore, bodyHabitScore });
+        const latestMindSubgoals = await Subgoal.find({
+            userId: req.params.userId,
+            category: "mind",
+            accomplished: "false",
+        }).sort({
+            createdAt: -1,
+        }).limit(3);
+
+        const oldestMindSubgoals = await Subgoal.find({
+            userId: req.params.userId,
+            category: "mind",
+            accomplished: "false",
+        }).sort({
+            createdAt: 1,
+        }).limit(3);
+
+        const latestBodySubgoals = await Subgoal.find({
+            userId: req.params.userId,
+            category: "body",
+            accomplished: "false",
+        }).sort({
+            createdAt: -1,
+        }).limit(3);
+
+        const oldestBodySubgoals = await Subgoal.find({
+            userId: req.params.userId,
+            category: "body",
+            accomplished: "false",
+        }).sort({
+            createdAt: 1,
+        }).limit(3);
+
+        const latestSpiritSubgoals = await Subgoal.find({
+            userId: req.params.userId,
+            category: "spirit",
+            accomplished: "false",
+        }).sort({
+            createdAt: -1,
+        }).limit(3);
+
+        const oldestSpiritSubgoals = await Subgoal.find({
+            userId: req.params.userId,
+            category: "spirit",
+            accomplished: "false",
+        }).sort({
+            createdAt: 1,
+        }).limit(3);
+
+        const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const date = new Date();
+        const todaysDay = weekday[date.getDay()];
+
+        const timelineHabits = await Habit.find({
+            userId: req.params.userId,
+            daysofweek: todaysDay,
+        }).sort({
+            timeofday: 1,
+        });
+
+
+        res.status(200).json({ totalMindSubgoals, totalMindGoals, completedMindGoals, completedMindSubgoals, 
+            totalBodySubgoals, totalBodyGoals, completedBodyGoals, completedBodySubgoals,
+            totalSpiritSubgoals, totalSpiritGoals, completedSpiritGoals, completedSpiritSubgoals,
+            latestMindSubgoals, oldestMindSubgoals,
+            latestBodySubgoals, oldestBodySubgoals,
+            latestSpiritSubgoals, oldestSpiritSubgoals,
+            timelineHabits,
+            mindHabitScore, spiritHabitScore, bodyHabitScore });
     } catch (error) {
         next(error);
     }

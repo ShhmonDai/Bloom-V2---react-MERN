@@ -9,6 +9,7 @@ import subgoalRoutes from './routes/subgoal.route.js';
 import commentRoutes from './routes/comment.route.js';
 import noteRoutes from './routes/note.route.js';
 import categoryRoutes from './routes/category.route.js';
+import dashboardRoutes from './routes/dashboard.route.js';
 import habitRoutes from './routes/habit.route.js';
 import journalRoutes from './routes/journal.route.js';
 import watsonRoutes from './routes/watson.route.js';
@@ -49,6 +50,7 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/habit', habitRoutes);
 app.use('/api/journal', journalRoutes);
 app.use('/api/watson', watsonRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 
 app.use(express.static(path.join(__dirname, '/client/dist')));
