@@ -41,7 +41,7 @@ export default function Profile() {
             
             <div className='flex flex-col min-h-screen items-center bg-gradient-to-b from-white via-indigo-100 to-indigo-50 gap-2 pb-24'>
                     {/* Habits Intro*/}
-                    <div className='px-5 pt-10 pb-14 sm:px-10 flex flex-col justify-center items-center'>
+                    <div className='px-5 pt-10 sm:px-10 flex flex-col justify-center items-center'>
                         <h1 className='font-BrushFont text-7xl sm:text-8xl'>Habits</h1>
                         <p className='text-wrap break-words italic max-w-4xl'>Welcome to the Habits, where transformation begins with small, 
                             consistent actions. Here, you can cultivate a lifestyle of growth by creating recurring habits that nurture your mind, body, and spirit. 
