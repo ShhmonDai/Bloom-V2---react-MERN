@@ -7,6 +7,9 @@ import { Label, Button, Modal, Alert} from "flowbite-react";
 import { BsYinYang } from "react-icons/bs";
 import { FaBrain, FaDumbbell } from 'react-icons/fa';
 
+import { HiArrowNarrowUp } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
+
 
 import { summary } from 'date-streaks';
 import Calendar from 'react-calendar'
@@ -180,19 +183,25 @@ export default function ProfileDash() {
       </div>
 
       {/* Main Container */}
-      <div className='min-h-screen flex flex-col 2xl:flex-row items-center 2xl:items-start 2xl:justify-center mx-2 sm:mx-5'>
+      <div className='min-h-screen flex flex-col items-center mx-2 sm:mx-5 mb-10'>
 
-        {/* Left Side Container */}
+        {/* Stats Container */}
         <div className='p-2 mt-10 flex flex-col gap-10 max-w-5xl'>
 
         {/* Habits Timeline */ }
         <Timeline tasks={timelineHabits} />
 
         {/* Habits Table Container */}
-        <div className='min-h-16 flex flex-col bg-white rounded-xl gap-1'>
+        <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
 
           {/* Description */}
-          <span className='text-center text-md font-semibold text-gray-500 py-6 '>Todays Tasks</span>
+
+          <div className='flex justify-between p-3 font-semibold'>
+            <h1 className='text-center text-md p-2 text-gray-500'>Todays Habit Tasks</h1>
+            <Button outline gradientDuoTone='purpleToPink'>
+              <Link to={"/profile?tab=habits"}>See all</Link>
+            </Button>
+          </div>
 
           <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
             <span>Time</span>
@@ -231,151 +240,160 @@ export default function ProfileDash() {
             </>
           ))}
 
-          {/* See Habits page button */}
-          <div className='flex flex-row justify-center py-6' >
-            <button className='font-normal text-blue-500' type='button' >Go to full Habits page</button>
-          </div>   
-
         </div>
-        {/* End ofHabits Table Container */}
+        {/* End of Habits Table Container */}
+        
 
-        </div>
-        {/* End of Left Container */}
+          {/* Habits Statistics Container */}
+          <div className='flex flex-col bg-white rounded-md '>
+            <span className='text-md font-semibold text-gray-500 p-4 text-center'>Total Number of Habit Tasks Completed</span>
+          
+            <div className='flex-wrap flex gap-4 justify-center p-4'>
+            
 
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
+                <div className='flex justify-between'>
+                  <div className=''>
+                    <p className='text-2xl'>{completedMindHabits}</p>
+                  </div>
+                  <FaBrain className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    0
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
+                </div>
+              </div>
 
-        {/* Right Side Container */}
-        <div className='flex flex-col p-2 2xl:mt-10 mb-10 justify-center items-center'>
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
+                <div className='flex justify-between'>
+                  <div className=''>
+                    <p className='text-2xl'>{completedBodyHabits}</p>
+                  </div>
+                  <FaDumbbell className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    0
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
+                </div>
+              </div>
 
-          {/* Habit Statistics */}
-          <div className='flex flex-col bg-white rounded-xl py-2 px-4 max-w-4xl w-full'>
-            <span className='font-bold text-xl text-gray-600 text-center 2xl:mb-5'>Number of completed Habits:</span>
-            <div className='flex flex-row 2xl:flex-wrap gap-6 2xl:items-center justify-center'>
-              <span className='font-bold text-2xl  text-teal-500 flex flex-row items-center'> <FaBrain /> <span className='pl-1 text-gray-600'>: {completedMindHabits}</span> </span>
-              <span className='font-bold text-2xl text-orange-300 flex flex-row items-center'> <FaDumbbell /> <span className='pl-1 text-gray-600'>: {completedBodyHabits}</span> </span>
-              <span className='font-bold text-2xl text-sky-500 flex flex-row items-center'> <BsYinYang /> <span className='pl-1 text-gray-600'>: {completedSpiritHabits}</span> </span>
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
+                <div className='flex justify-between'>
+                  <div className=''>
+                    <p className='text-2xl'>{completedSpiritHabits}</p>
+                  </div>
+                  <BsYinYang className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    0
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
+                </div>
+              </div>
+
             </div>
           </div>
+          {/* End of Habits Statistics Container */}  
 
-          {/* Goal/Task Statistics */}
-          <div className='flex flex-wrap gap-4 justify-center 2xl:flex-col 2xl:gap-0 2xl:w-full'>
 
-          {/* Mind Statistics */}
-          <div className='flex flex-wrap justify-center 2xl:flex-col gap-10 2xl:gap-2 bg-white rounded-xl py-2 px-4 mt-5'>
+          {/* Main Goal/Task Statistics */}
+          <div className='flex flex-col bg-white rounded-md'>
+
+            <span className='text-md font-semibold text-gray-500 p-4 text-center'>Total Number of Goal Tasks Completed</span>  
+
+            {/* Goal Tasks Statistics */}
+            <div className='flex flex-wrap justify-center gap-4 p-4'>
           
-            <div className='flex flex-col'>
-              {/* Mind Goals */}
-              <span className='text-xl text-teal-500 text-center'>Mind Goals:</span>
-              <div className='flex flex-row gap-6 2xl:items-center justify-center text-lg'>
-                <span className='text-green-500 flex flex-row items-center'> Completed: <span className='pl-1 font-bold text-gray-600'>{completedMindGoals}</span> </span>
-                <span className='text-blue-500 flex flex-row items-center'> Total: <span className='pl-1 font-bold text-gray-600'>{totalMindGoals}</span> </span>
-              </div>
-              {/* Mind Goals Loading Bar */}
-              <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
-                  <div className='mx-2 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                    <div style={totalMindGoals !== 0 ? { width: `${Math.trunc((completedMindGoals / totalMindGoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+            
+              {/* Mind SubGoals */}
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white'>
+                <div className='flex justify-between items-center'>
+                  <div className='w-8/12'>
+                    <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> </h3>
+                    {/* Mind Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
+                      <div className='mx-1 w-full border-y-2 border-blue-500 bg-indigo-50'>
+                        <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                        </div>
+                      </div>
                     </div>
                   </div>
-              </div>
-            </div>  
-
-            <div className='flex flex-col'>
-              {/* Mind SubGoals */}
-              <span className='text-xl text-teal-500 text-center 2xl:mt-5'>Mind Tasks:</span>
-              <div className='text-lg flex flex-row gap-6 2xl:items-center justify-center'>
-                <span className='text-green-500 flex flex-row items-center'> Completed: <span className='pl-1 font-bold text-gray-600'>{completedMindSubgoals}</span> </span>
-                <span className='text-blue-500 flex flex-row items-center'> Total: <span className='pl-1 font-bold text-gray-600'>{totalMindSubgoals}</span> </span>
-              </div>
-              {/* Mind SubGoals Loading Bar */}
-              <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
-                <div className='mx-2 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                  <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                  </div>
+                  <FaBrain className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    0
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
                 </div>
               </div>
-            </div>
 
-          </div>
-          {/* End of Mind Statistics */}
-
-          {/* Body Statistics */}
-            <div className='flex flex-wrap justify-center 2xl:flex-col gap-10 2xl:gap-2 bg-white rounded-xl py-2 px-4 mt-5'>
-
-            <div className='flex flex-col'>
-              {/* Body Goals */}
-              <span className='text-xl text-orange-300 font-Grandiflora text-center'>Body Goals:</span>
-              <div className='text-lg flex flex-row gap-6 2xl:items-center justify-center'>
-                <span className='text-green-500 font-Grandiflora flex flex-row items-center'> Completed: <span className='pl-1 font-bold text-gray-600'>{completedBodyGoals}</span> </span>
-                <span className='text-blue-500 font-Grandiflora flex flex-row items-center'> Total: <span className='pl-1 font-bold text-gray-600'>{totalBodyGoals}</span> </span>
-              </div>
-              {/* Body Goals Loading Bar */}
-              <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
-                <div className='mx-2 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                  <div style={totalBodyGoals !== 0 ? { width: `${Math.trunc((completedBodyGoals / totalBodyGoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className='flex flex-col'>
               {/* Body SubGoals */}
-              <span className='text-xl text-orange-300 font-Grandiflora text-center 2xl:mt-5'>Body Tasks:</span>
-              <div className='text-lg flex flex-row gap-6 2xl:items-center justify-center'>
-                <span className='text-green-500 font-Grandiflora flex flex-row items-center'> Completed: <span className='pl-1 font-bold text-gray-600'>{completedBodySubgoals}</span> </span>
-                <span className='text-blue-500 font-Grandiflora flex flex-row items-center'> Total: <span className='pl-1 font-bold text-gray-600'>{totalBodySubgoals}</span> </span>
-              </div>
-              {/* Body SubGoals Loading Bar */}
-              <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
-                <div className='mx-2 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                  <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white'>
+                <div className='flex justify-between items-center'>
+                  <div className='w-8/12'>
+                    <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> </h3>
+                    {/* Body Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
+                      <div className='mx-1 w-full border-y-2 border-blue-500 bg-indigo-50'>
+                        <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  <FaDumbbell className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    0
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
                 </div>
               </div>
-            </div>
 
-          </div>
-          {/* End of Body Statistics */}
 
-          {/* Spirit Statistics */}
-            <div className='flex flex-wrap justify-center 2xl:flex-col gap-10 2xl:gap-2 bg-white rounded-xl py-2 px-4 mt-5'>
-
-            <div className='flex flex-col'>
-              {/* Spirit Goals */}
-              <span className='text-xl text-sky-500 font-Grandiflora text-center'>Spirit Goals:</span>
-              <div className='text-lg flex flex-row gap-6 2xl:items-center justify-center'>
-                <span className='text-green-500 font-Grandiflora flex flex-row items-center'> Completed: <span className='pl-1 font-bold text-gray-600'>{completedSpiritGoals}</span> </span>
-                <span className='text-blue-500 font-Grandiflora flex flex-row items-center'> Total: <span className='pl-1 font-bold text-gray-600'>{totalSpiritGoals}</span> </span>
-              </div>
-              {/* Spirit Goals Loading Bar */}
-              <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
-                <div className='mx-2 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                  <div style={totalSpiritGoals !== 0 ? { width: `${Math.trunc((completedSpiritGoals / totalSpiritGoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className='flex flex-col'>
               {/* Spirit SubGoals */}
-              <span className='text-xl text-sky-500 font-Grandiflora text-center 2xl:mt-5'>Spirit Tasks:</span>
-              <div className='text-lg flex flex-row gap-6 2xl:items-center justify-center'>
-                <span className='text-green-500 font-Grandiflora flex flex-row items-center'> Completed: <span className='pl-1 font-bold text-gray-600'>{completedSpiritSubgoals}</span> </span>
-                <span className='text-blue-500 font-Grandiflora flex flex-row items-center'> Total: <span className='pl-1 font-bold text-gray-600'>{totalSpiritSubgoals}</span> </span>
-              </div>
-              {/* Spirit SubGoals Loading Bar */}
-              <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
-                <div className='mx-2 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                  <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white'>
+                <div className='flex justify-between items-center'>
+                  <div className='w-8/12'>
+                    <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> </h3>
+                    {/* Spirit Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-500`}>
+                      <div className='mx-1 w-full border-y-2 border-blue-500 bg-indigo-50'>
+                        <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  <BsYinYang className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    0
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
                 </div>
               </div>
-            </div>
 
+            </div>
+            {/* End of Goal Tasks Statistics */}
+    
           </div>
-          {/* End of Spirit Statistics */}
-          </div>
+          {/* End of Main Goal Tasks Statistics */}
 
         </div>
-        {/* End of Right Side Container */}
+        {/* End of Stats Container */}
 
       </div>    
 
