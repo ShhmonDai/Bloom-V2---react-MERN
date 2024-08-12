@@ -115,6 +115,7 @@ export default function ProfileDash() {
           setTimelineHabits(data.timelineHabits);
 
           setLatestSubgoals(data.latestSubgoals);
+          setOldestSubgoals(data.oldestSubgoals);
 
           setTotalMindSubgoals(data.totalMindSubgoals);
           setTotalBodySubgoals(data.totalBodySubgoals);
@@ -290,16 +291,107 @@ export default function ProfileDash() {
           </div>
           {/* End of Habits Statistics Container */}  
 
+          {/* Latest Subgoals Table Container */}
+          <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
+
+            {/* Description */}
+
+            <div className='flex justify-between p-3 font-semibold'>
+              <h1 className='text-center text-md p-2 text-gray-500'>Latest Goal Tasks To Do</h1>
+              <Button outline gradientDuoTone='purpleToPink'>
+                <Link to={"/profile?tab=habits"}>See all</Link>
+              </Button>
+            </div>
+
+            <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+              <span>Category</span>
+              <span className='justify-self-center'>Task Title</span>
+            </div>
+
+          {/* Map of Latest Subgoals */}
+          {latestSubgoals.map((subgoal) => (
+            <>
+              <div className='group/item' key={subgoal._id}>
+
+                <div className='grid grid-cols-[25%_auto] sm:grid-cols-[20%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+
+                  {/* Category - Subgoal Name */}
+
+                  <div className={``}> {subgoal.category}</div>
+
+                  <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0'>
+                    {subgoal.title}
+                  </div>
+
+                  <div className='flex justify-self-end items-center justify-center'>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </>
+          ))}
+
+        </div>
+        {/* End of Latest Subgoals Table Container */}
+
+
+          {/* Oldest Subgoals Table Container */}
+          <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
+
+            {/* Description */}
+
+            <div className='flex justify-between p-3 font-semibold'>
+              <h1 className='text-center text-md p-2 text-gray-500'>Oldest Goal Tasks To Do</h1>
+              <Button outline gradientDuoTone='purpleToPink'>
+                <Link to={"/profile?tab=habits"}>See all</Link>
+              </Button>
+            </div>
+
+            <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+              <span>Category</span>
+              <span className='justify-self-center'>Task Title</span>
+            </div>
+
+            {/* Map of Latest Subgoals */}
+            {oldestSubgoals.map((subgoal) => (
+              <>
+                <div className='group/item' key={subgoal._id}>
+
+                  <div className='grid grid-cols-[25%_auto] sm:grid-cols-[20%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+
+                    {/* Category - Subgoal Name */}
+
+                    <div className={``}> {subgoal.category}</div>
+
+                    <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0'>
+                      {subgoal.title}
+                    </div>
+
+                    <div className='flex justify-self-end items-center justify-center'>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </>
+            ))}
+
+          </div>
+          {/* End of Oldest Subgoals Table Container */}
+
 
           {/* Main Goal/Task Statistics */}
           <div className='flex flex-col bg-white rounded-md'>
 
-            <span className='text-md font-semibold text-gray-500 p-4 text-center'>Total Number of Goal Tasks Completed</span>  
+            <span className='text-md font-semibold text-gray-500 p-4 text-center'>Total Number of Goal Tasks Completed</span>
 
             {/* Goal Tasks Statistics */}
             <div className='flex flex-wrap justify-center gap-4 p-4'>
-          
-            
+
+
               {/* Mind SubGoals */}
               <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white'>
                 <div className='flex justify-between items-center'>
@@ -375,9 +467,12 @@ export default function ProfileDash() {
 
             </div>
             {/* End of Goal Tasks Statistics */}
-    
+
           </div>
           {/* End of Main Goal Tasks Statistics */}
+
+
+
 
         </div>
         {/* End of Stats Container */}
