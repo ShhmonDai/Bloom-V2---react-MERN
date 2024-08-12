@@ -10,10 +10,13 @@ export const getstatistics = async (req, res, next) => {
             userId: req.params.userId,
             category: "mind",
         });
+
+        /*
         const totalMindGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "mind",
         });
+        */
 
         const completedMindSubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
@@ -21,20 +24,25 @@ export const getstatistics = async (req, res, next) => {
             accomplished: true,
         });
 
+        /*
         const completedMindGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "mind",
             accomplished: true,
         });
+        */
 
         const totalBodySubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
             category: "body",
         });
+
+        /*
         const totalBodyGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "body",
         });
+        */
 
         const completedBodySubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
@@ -42,20 +50,25 @@ export const getstatistics = async (req, res, next) => {
             accomplished: true,
         });
 
+        /*
         const completedBodyGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "body",
             accomplished: true,
         });
+        */
 
         const totalSpiritSubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
             category: "spirit",
         });
+
+        /*
         const totalSpiritGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "spirit",
         });
+        */
 
         const completedSpiritSubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
@@ -63,12 +76,13 @@ export const getstatistics = async (req, res, next) => {
             accomplished: true,
         });
 
+        /*
         const completedSpiritGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "spirit",
             accomplished: true,
         });
-
+        */
 
         const mindHabitScore = await Habit.aggregate(
             [
@@ -121,57 +135,108 @@ export const getstatistics = async (req, res, next) => {
             ]
         );
 
-        const latestMindSubgoals = await Subgoal.find({
+        const now = new Date();
+        const oneMonthAgo = new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        );
+
+
+
+        const mindHabitsLastMonth = await Habit.aggregate(
+            [
+                {
+                    $match: {
+                        category: "mind",
+                        userId: req.params.userId,
+                        updatedAt: { $gte: oneMonthAgo }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$category",
+                        total: { $sum: 1 }
+                    }
+                }
+            ]
+        );
+
+        const bodyHabitsLastMonth = await Habit.aggregate(
+            [
+                {
+                    $match: {
+                        category: "body",
+                        userId: req.params.userId,
+                        updatedAt: { $gte: oneMonthAgo }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$category",
+                        total: { $sum: 1 }
+                    }
+                }
+            ]
+        );
+
+        const spiritHabitsLastMonth = await Habit.aggregate(
+            [
+                {
+                    $match: {
+                        category: "spirit",
+                        userId: req.params.userId,
+                        updatedAt: { $gte: oneMonthAgo }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$category",
+                        total: { $sum: 1 }
+                    }
+                }
+            ]
+        );
+
+        const mindSubgoalsLastMonth = await Subgoal.countDocuments({
             userId: req.params.userId,
+            updatedAt: { $gte: oneMonthAgo },
             category: "mind",
-            accomplished: "false",
-        }).sort({
-            createdAt: -1,
-        }).limit(3);
+            accomplished: true,
+        });
 
-        const oldestMindSubgoals = await Subgoal.find({
+        const bodySubgoalsLastMonth = await Subgoal.countDocuments({
             userId: req.params.userId,
-            category: "mind",
-            accomplished: "false",
-        }).sort({
-            createdAt: 1,
-        }).limit(3);
-
-        const latestBodySubgoals = await Subgoal.find({
-            userId: req.params.userId,
+            updatedAt: { $gte: oneMonthAgo },
             category: "body",
+            accomplished: true,
+        });
+
+        const spiritSubgoalsLastMonth = await Subgoal.countDocuments({
+            userId: req.params.userId,
+            updatedAt: { $gte: oneMonthAgo },
+            category: "spirit",
+            accomplished: true,
+        });
+
+
+        const latestSubgoals = await Subgoal.find({
+            userId: req.params.userId,
             accomplished: "false",
         }).sort({
             createdAt: -1,
         }).limit(3);
 
-        const oldestBodySubgoals = await Subgoal.find({
+        const oldestSubgoals = await Subgoal.find({
             userId: req.params.userId,
-            category: "body",
             accomplished: "false",
         }).sort({
             createdAt: 1,
         }).limit(3);
 
-        const latestSpiritSubgoals = await Subgoal.find({
-            userId: req.params.userId,
-            category: "spirit",
-            accomplished: "false",
-        }).sort({
-            createdAt: -1,
-        }).limit(3);
-
-        const oldestSpiritSubgoals = await Subgoal.find({
-            userId: req.params.userId,
-            category: "spirit",
-            accomplished: "false",
-        }).sort({
-            createdAt: 1,
-        }).limit(3);
-
+    
         const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-        const date = new Date();
-        const todaysDay = weekday[date.getDay()];
+        const todaysDay = weekday[now.getDay()];
 
         const timelineHabits = await Habit.find({
             userId: req.params.userId,
@@ -181,14 +246,17 @@ export const getstatistics = async (req, res, next) => {
         });
 
 
-        res.status(200).json({ totalMindSubgoals, totalMindGoals, completedMindGoals, completedMindSubgoals, 
-            totalBodySubgoals, totalBodyGoals, completedBodyGoals, completedBodySubgoals,
-            totalSpiritSubgoals, totalSpiritGoals, completedSpiritGoals, completedSpiritSubgoals,
-            latestMindSubgoals, oldestMindSubgoals,
-            latestBodySubgoals, oldestBodySubgoals,
-            latestSpiritSubgoals, oldestSpiritSubgoals,
+
+
+        res.status(200).json({ totalMindSubgoals, completedMindSubgoals, 
+            totalBodySubgoals, completedBodySubgoals,
+            totalSpiritSubgoals, completedSpiritSubgoals,
+            latestSubgoals, oldestSubgoals,
+            mindHabitsLastMonth, bodyHabitsLastMonth, spiritHabitsLastMonth,
+            mindSubgoalsLastMonth, bodySubgoalsLastMonth, spiritSubgoalsLastMonth,
             timelineHabits,
             mindHabitScore, spiritHabitScore, bodyHabitScore });
+
     } catch (error) {
         next(error);
     }

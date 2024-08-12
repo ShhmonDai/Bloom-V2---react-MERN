@@ -24,33 +24,30 @@ export default function ProfileDash() {
 
   const [timelineHabits, setTimelineHabits] = useState([]);
 
-  const [latestMindSubgoals, setLatestMindSubgoals] = useState([]);
-  const [latestBodySubgoals, setLatestBodySubgoals] = useState([]);
-  const [latestSpiritSubgoals, setLatestSpiritSubgoals] = useState([]);
+  const [latestSubgoals, setLatestSubgoals] = useState([]);
+  const [oldestSubgoals, setOldestSubgoals] = useState([]);
 
-  const [oldestMindSubgoals, setOldestMindSubgoals] = useState([]);
-  const [oldestBodySubgoals, setOldestBodySubgoals] = useState([]);
-  const [oldestSpiritSubgoals, setOldestSpiritSubgoals] = useState([]);
 
   const [totalMindSubgoals, setTotalMindSubgoals] = useState(0);
-  const [totalMindGoals, setTotalMindGoals] = useState(0);
-  const [completedMindGoals, setCompletedMindGoals] = useState(0);
   const [completedMindSubgoals, setCompletedMindSubgoals] = useState(0);
 
   const [totalBodySubgoals, setTotalBodySubgoals] = useState(0);
-  const [totalBodyGoals, setTotalBodyGoals] = useState(0);
-  const [completedBodyGoals, setCompletedBodyGoals] = useState(0);
   const [completedBodySubgoals, setCompletedBodySubgoals] = useState(0);
 
   const [totalSpiritSubgoals, setTotalSpiritSubgoals] = useState(0);
-  const [totalSpiritGoals, setTotalSpiritGoals] = useState(0);
-  const [completedSpiritGoals, setCompletedSpiritGoals] = useState(0);
   const [completedSpiritSubgoals, setCompletedSpiritSubgoals] = useState(0);
 
   const [completedMindHabits, setCompletedMindHabits] = useState(0);
   const [completedBodyHabits, setCompletedBodyHabits] = useState(0);
   const [completedSpiritHabits, setCompletedSpiritHabits] = useState(0);
 
+  const [mindHabitsLastMonth, setMindHabitsLastMonth] = useState(0);
+  const [bodyHabitsLastMonth, setBodyHabitsLastMonth] = useState(0);
+  const [spiritHabitsLastMonth, setSpiritHabitsLastMonth] = useState(0);
+
+  const [mindSubgoalsLastMonth, setMindSubgoalsLastMonth] = useState(0);
+  const [bodySubgoalsLastMonth, setBodySubgoalsLastMonth] = useState(0);
+  const [spiritSubgoalsLastMonth, setSpiritSubgoalsLastMonth] = useState(0);
 
 
   const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -117,37 +114,27 @@ export default function ProfileDash() {
 
           setTimelineHabits(data.timelineHabits);
 
-          setLatestMindSubgoals(data.latestMindSubgoals);
-          setLatestBodySubgoals(data.latestBodySubgoals);
-          setLatestSpiritSubgoals(data.latestSpiritSubgoals);
+          setLatestSubgoals(data.latestSubgoals);
 
-          setOldestMindSubgoals(data.oldestMindSubgoals);
-          setOldestBodySubgoals(data.oldestBodySubgoals);
-          setOldestSpiritSubgoals(data.oldestSpiritSubgoals);
-
-          setTotalMindGoals(data.totalMindGoals);
           setTotalMindSubgoals(data.totalMindSubgoals);
-
-          setTotalBodyGoals(data.totalBodyGoals);
           setTotalBodySubgoals(data.totalBodySubgoals);
-
-          setTotalSpiritGoals(data.totalSpiritGoals);
           setTotalSpiritSubgoals(data.totalSpiritSubgoals);
 
-          setCompletedMindGoals(data.completedMindGoals);
           setCompletedMindSubgoals(data.completedMindSubgoals);
-
-          setCompletedBodyGoals(data.completedBodyGoals);
           setCompletedBodySubgoals(data.completedBodySubgoals);
-
-          setCompletedSpiritGoals(data.completedSpiritGoals);
           setCompletedSpiritSubgoals(data.completedSpiritSubgoals);
 
           setCompletedMindHabits(data.mindHabitScore[0].total);
           setCompletedBodyHabits(data.bodyHabitScore[0].total);
           setCompletedSpiritHabits(data.spiritHabitScore[0].total);
 
+          setMindHabitsLastMonth(data.mindHabitsLastMonth[0].total);
+          setBodyHabitsLastMonth(data.bodyHabitsLastMonth[0].total);
+          setSpiritHabitsLastMonth(data.spiritHabitsLastMonth[0].total);
 
+          setMindSubgoalsLastMonth(data.mindSubgoalsLastMonth);
+          setBodySubgoalsLastMonth(data.bodySubgoalsLastMonth);
+          setSpiritSubgoalsLastMonth(data.spiritSubgoalsLastMonth);
 
         }
       } catch (error) {
@@ -256,14 +243,14 @@ export default function ProfileDash() {
                   <div className=''>
                     <p className='text-2xl'>{completedMindHabits}</p>
                   </div>
-                  <FaBrain className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    0
+                    {mindHabitsLastMonth}
                   </span>
-                  <div className='text-gray-500'>Last month</div>
+                  <div className='text-gray-500'>Updated within last month</div>
                 </div>
               </div>
 
@@ -272,14 +259,14 @@ export default function ProfileDash() {
                   <div className=''>
                     <p className='text-2xl'>{completedBodyHabits}</p>
                   </div>
-                  <FaDumbbell className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    0
+                    {bodyHabitsLastMonth}
                   </span>
-                  <div className='text-gray-500'>Last month</div>
+                  <div className='text-gray-500'>Updated within last month</div>
                 </div>
               </div>
 
@@ -288,14 +275,14 @@ export default function ProfileDash() {
                   <div className=''>
                     <p className='text-2xl'>{completedSpiritHabits}</p>
                   </div>
-                  <BsYinYang className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    0
+                    {spiritHabitsLastMonth}
                   </span>
-                  <div className='text-gray-500'>Last month</div>
+                  <div className='text-gray-500'>Updated within last month</div>
                 </div>
               </div>
 
@@ -326,12 +313,12 @@ export default function ProfileDash() {
                       </div>
                     </div>
                   </div>
-                  <FaBrain className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    0
+                    {mindSubgoalsLastMonth}
                   </span>
                   <div className='text-gray-500'>Last month</div>
                 </div>
@@ -350,12 +337,12 @@ export default function ProfileDash() {
                       </div>
                     </div>
                   </div>
-                  <FaDumbbell className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    0
+                    {bodySubgoalsLastMonth}
                   </span>
                   <div className='text-gray-500'>Last month</div>
                 </div>
@@ -375,12 +362,12 @@ export default function ProfileDash() {
                       </div>
                     </div>
                   </div>
-                  <BsYinYang className='bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    0
+                    {spiritSubgoalsLastMonth}
                   </span>
                   <div className='text-gray-500'>Last month</div>
                 </div>
