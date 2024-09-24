@@ -53,7 +53,8 @@ export default function ProfileDash() {
   const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const date = new Date();
   const [todaysDay, setTodaysDay] = useState(weekday[date.getDay()]);
-  const [todaysDate, setTodaysDate] = useState(moment().format('MMMM Do YYYY'));
+  const [todaysDateFull, setTodaysDateFull] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'));
+
 
   const [showModalOverview, setShowModalOverview] = useState(false);
   const [formDataOverview, setFormDataOverview] = useState({});
@@ -103,6 +104,17 @@ export default function ProfileDash() {
     'body': 'text-orange-300',
     'spirit': 'text-sky-500',
   };
+
+  //Refresh the time every second
+  useEffect(() => {
+    const timer = setInterval(() => { 
+      setTodaysDateFull(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    }, 1000);
+    return () => {
+      clearInterval(timer); 
+    }
+
+  }, []);
 
   useEffect(() => {
 
@@ -161,7 +173,7 @@ export default function ProfileDash() {
       {/* Welcome text */}
       <div className='px-5 pt-10 pb-10 sm:px-10 flex flex-col justify-center items-center'>
         <h1 className='font-BrushFont text-8xl'><span className=''>{todaysDay}</span></h1>
-        <p className='text-wrap break-words italic text-lg font-medium max-w-4xl'>{todaysDate}</p>
+        <p className='text-wrap break-words italic text-lg font-medium max-w-4xl'>{todaysDateFull}</p>
       </div>
 
       {/* Todays Day
@@ -177,68 +189,268 @@ export default function ProfileDash() {
         {/* Stats Container */}
         <div className='p-2 mt-10 flex flex-col gap-10 max-w-5xl'>
 
-        {/* Habits Timeline */ }
-        <Timeline tasks={timelineHabits} />
+          {/* Habits Timeline */ }
+          <Timeline tasks={timelineHabits} />
 
-        {/* Habits Table Container */}
-        <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
+          {/* Habits Table Container */}
+          <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
 
-          {/* Description */}
+            {/* Description */}
 
-          <div className='flex justify-between p-3 font-semibold'>
-            <h1 className='text-center text-md p-2 text-gray-500'>Todays Habit Tasks</h1>
-            <Button outline gradientDuoTone='cyanToBlue'>
-              <Link to={"/profile?tab=habits"}>See all</Link>
-            </Button>
-          </div>
+            <div className='flex justify-between p-3 font-semibold'>
+              <h1 className='text-center text-md p-2 text-gray-500'>Todays Habit Tasks</h1>
+              <Button outline gradientDuoTone='cyanToBlue'>
+                <Link to={"/profile?tab=habits"}>See all</Link>
+              </Button>
+            </div>
 
-          <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
-            <span>Time</span>
-            <span className='justify-self-center'>Task</span>
-          </div>
+            <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+              <span>Time</span>
+              <span className='justify-self-center'>Task</span>
+            </div>
 
-          {/* Map of Habits */}
-          {timelineHabits.map((habit) => (
-            <>
-              <div className='group/item' key={habit._id}>
+            {/* Map of Habits */}
+            {timelineHabits.map((habit) => (
+              <>
+                <div className='group/item' key={habit._id}>
 
-                <div className='grid grid-cols-[25%_10%_auto] sm:grid-cols-[20%_5%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                  <div className='grid grid-cols-[25%_10%_auto] sm:grid-cols-[20%_5%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
-                  {/* Time - Icon - Task */}
+                    {/* Time - Icon - Task */}
 
-                  <div className={``}> {habit.timeofday}</div>
+                    <div className={``}> {habit.timeofday}</div>
 
-                  <div className={``}>{habit.icon}</div>
+                    <div className={``}>{habit.icon}</div>
 
-                  <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0' onClick={() => {
-                    setShowModalOverview(true);
-                    setFormDataDays(habit.daysofweek);
-                    setFormDataCompleted(habit.datescompleted);
-                    setFormDataOverview({ title: habit.title, category: habit.category, icon: habit.icon, timeofday: habit.timeofday, daysofweek: habit.daysofweek, datescompleted: habit.datescompleted });
-                  }}>
-                    {habit.title}
-                  </div>
+                    <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0' onClick={() => {
+                      setShowModalOverview(true);
+                      setFormDataDays(habit.daysofweek);
+                      setFormDataCompleted(habit.datescompleted);
+                      setFormDataOverview({ title: habit.title, category: habit.category, icon: habit.icon, timeofday: habit.timeofday, daysofweek: habit.daysofweek, datescompleted: habit.datescompleted });
+                    }}>
+                      {habit.title}
+                    </div>
 
-                  <div className='flex justify-self-end items-center justify-center'>
+                    <div className='flex justify-self-end items-center justify-center'>
+
+                    </div>
 
                   </div>
 
                 </div>
+              </>
+            ))}
+
+          </div>
+          {/* End of Habits Table Container */}
+          
+          {/* Newest/Oldest Tasks Container */}
+          <div>
+
+              {/* Latest Subgoals Table Container */}
+              <div className='min-h-16 pb-8 flex flex-col bg-white rounded-t-md gap-1'>
+
+                {/* Description */}
+
+                <div className='flex justify-between p-3 font-semibold'>
+                  <h1 className='text-center text-md p-2 text-gray-500'>Tasks</h1>
+
+                    <Dropdown label="" renderTrigger={() => <Button outline gradientDuoTone='cyanToBlue' >See all</Button>} inline>
+                    <Link to={'/profile?tab=mind&view=goals'}>
+                      <Dropdown.Item>Mind</Dropdown.Item>
+                    </Link>
+                    <Link to={'/profile?tab=body&view=goals'}>
+                      <Dropdown.Item>Body</Dropdown.Item>
+                    </Link>
+                    <Link to={'/profile?tab=spirit&view=goals'}>
+                      <Dropdown.Item>Spirit</Dropdown.Item>
+                    </Link>
+                  </Dropdown>
+
+                </div>
+
+                <div className='flex justify-start mx-2 sm:mx-4 font-semibold'>
+                  <h1 className='flex items-center text-md p-2 text-green-500'>Most recent tasks <HiArrowNarrowUp className='' /></h1>
+                </div>
+
+                <div className='grid grid-cols-[auto_auto_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+                  <span className='justify-self-start'>Category</span>
+                  <span className='justify-self-center'>Task Title</span>
+                  <span className='justify-self-end'>Created On</span>
+
+                </div>
+
+              {/* Map of Latest Subgoals */}
+              {latestSubgoals.map((subgoal) => (
+                <>
+                  <div className='group/item' key={subgoal._id}>
+
+                    <div className='grid grid-cols-[25%_auto_23%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+
+                      {/* Category - Subgoal Name */}
+
+                      <div className='text-sm sm:text-base'>
+                        {subgoal.category}
+                      </div>
+
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center'>
+                        {subgoal.title}
+                      </div>
+
+                      <div className='justify-self-end text-sm sm:text-base text-end'>
+                        {moment(subgoal.createdAt).format('MMM DD YYYY')}
+                      </div>
+
+                    </div>
+
+                  </div>
+                </>
+              ))}
+
+            </div>
+            {/* End of Latest Subgoals Table Container */}
+
+
+            {/* Oldest Subgoals Table Container */}
+            <div className='min-h-16 pb-8 flex flex-col bg-white rounded-b-md gap-1'>
+
+              {/* Description */}
+
+                <div className='flex justify-start mx-2 sm:mx-4 font-semibold'>
+                  <h1 className='flex items-center text-md p-2 text-red-500'>Oldest tasks <HiArrowNarrowDown className=''/></h1>
+              </div>
+
+              <div className='grid grid-cols-[auto_auto_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+                <span className='justify-self-start'>Category</span>
+                <span className='justify-self-center'>Task Title</span>
+                <span className='justify-self-end'>Created On</span>
+              </div>
+
+              {/* Map of Oldest Subgoals */}
+              {oldestSubgoals.map((subgoal) => (
+                <>
+                  <div className='group/item' key={subgoal._id}>
+
+                    <div className='grid grid-cols-[25%_auto_23%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+
+                      {/* Category - Subgoal Name - Date */}
+
+                      <div className='text-sm sm:text-base'>
+                        {subgoal.category}
+                      </div>
+
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center '>
+                        {subgoal.title}
+                      </div>
+
+                      <div className='justify-self-end text-sm sm:text-base text-end'>
+                        {moment(subgoal.createdAt).format('MMM DD YYYY')}
+                      </div>
+
+                    </div>
+
+                  </div>
+                </>
+              ))}
+
+            </div>
+            {/* End of Oldest Subgoals Table Container */}
+          </div>
+
+
+          {/* Task Statistics Container */}
+          <div className='flex flex-col bg-transparent rounded-md'>
+
+              <span className='text-md font-semibold text-gray-600 text-center py-2'>Completed Goal Tasks</span>
+
+              {/* Goal Tasks Statistics */}
+              <div className='flex flex-wrap justify-center gap-4 p-4'>
+
+
+                {/* Mind SubGoals Card */}
+                <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                  <div className='flex justify-between items-center'>
+                    <div className='w-8/12'>
+                      <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> </h3>
+                      {/* Mind Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
+                        <div className='mx-1 my-[2px] w-full bg-indigo-50'>
+                          <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  </div>
+                  <div className='flex gap-2 text-sm'>
+                    <span className='text-green-500 flex items-center'>
+                      <HiArrowNarrowUp />
+                      {mindSubgoalsLastMonth}
+                    </span>
+                    <div className='text-gray-500'>Last month</div>
+                  </div>
+                </div>
+
+                {/* Body SubGoals Card */}
+                <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                  <div className='flex justify-between items-center'>
+                    <div className='w-8/12'>
+                      <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> </h3>
+                      {/* Body Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
+                        <div className='mx-1 my-[2px] w-full bg-indigo-50'>
+                            <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  </div>
+                  <div className='flex gap-2 text-sm'>
+                    <span className='text-green-500 flex items-center'>
+                      <HiArrowNarrowUp />
+                      {bodySubgoalsLastMonth}
+                    </span>
+                    <div className='text-gray-500'>Last month</div>
+                  </div>
+                </div>
+
+
+                {/* Spirit SubGoals Card */}
+                <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                  <div className='flex justify-between items-center'>
+                    <div className='w-8/12'>
+                      <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> </h3>
+                      {/* Spirit Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
+                        <div className='mx-1 my-[2px] w-full bg-indigo-50'>
+                          <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                  </div>
+                  <div className='flex gap-2 text-sm'>
+                    <span className='text-green-500 flex items-center'>
+                      <HiArrowNarrowUp />
+                      {spiritSubgoalsLastMonth}
+                    </span>
+                    <div className='text-gray-500'>Last month</div>
+                  </div>
+                </div>
 
               </div>
-            </>
-          ))}
 
-        </div>
-        {/* End of Habits Table Container */}
-        
+
+          </div>
 
           {/* Habits Statistics Container */}
           <div className='flex flex-col bg-transparent rounded-md '>
             <span className='text-md font-semibold text-gray-600 text-center py-2'>Completed Habit Tasks</span>
-          
+
             <div className='flex-wrap flex gap-4 justify-center p-4'>
-            
+
               {/* Mind Card */}
               <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                 <div className='flex justify-between'>
@@ -292,215 +504,12 @@ export default function ProfileDash() {
 
             </div>
           </div>
-          {/* End of Habits Statistics Container */}  
-
-          {/* Newest/Oldest Tasks Container */}
-          <div>
-
-            {/* Latest Subgoals Table Container */}
-            <div className='min-h-16 pb-8 flex flex-col bg-white rounded-t-md gap-1'>
-
-              {/* Description */}
-
-              <div className='flex justify-between p-3 font-semibold'>
-                <h1 className='text-center text-md p-2 text-gray-500'>Tasks</h1>
-
-                  <Dropdown label="" renderTrigger={() => <Button outline gradientDuoTone='cyanToBlue' >See all</Button>} inline>
-                  <Link to={'/profile?tab=mind&view=goals'}>
-                    <Dropdown.Item>Mind</Dropdown.Item>
-                  </Link>
-                  <Link to={'/profile?tab=body&view=goals'}>
-                    <Dropdown.Item>Body</Dropdown.Item>
-                  </Link>
-                  <Link to={'/profile?tab=spirit&view=goals'}>
-                    <Dropdown.Item>Spirit</Dropdown.Item>
-                  </Link>
-                </Dropdown>
-
-              </div>
-
-              <div className='flex justify-start mx-2 sm:mx-4 font-semibold'>
-                <h1 className='flex items-center text-md p-2 text-green-500'>Most recent tasks <HiArrowNarrowUp className='' /></h1>
-              </div>
-
-              <div className='grid grid-cols-[auto_auto_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
-                <span className='justify-self-start'>Category</span>
-                <span className='justify-self-center'>Task Title</span>
-                <span className='justify-self-end'>Created On</span>
-
-              </div>
-
-            {/* Map of Latest Subgoals */}
-            {latestSubgoals.map((subgoal) => (
-              <>
-                <div className='group/item' key={subgoal._id}>
-
-                  <div className='grid grid-cols-[25%_auto_23%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
-
-                    {/* Category - Subgoal Name */}
-
-                    <div className='text-sm sm:text-base'>
-                      {subgoal.category}
-                    </div>
-
-                    <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center'>
-                      {subgoal.title}
-                    </div>
-
-                    <div className='justify-self-end text-sm sm:text-base text-end'>
-                      {moment(subgoal.createdAt).format('MMM DD YYYY')}
-                    </div>
-
-                  </div>
-
-                </div>
-              </>
-            ))}
-
-          </div>
-          {/* End of Latest Subgoals Table Container */}
-
-
-          {/* Oldest Subgoals Table Container */}
-          <div className='min-h-16 pb-8 flex flex-col bg-white rounded-b-md gap-1'>
-
-            {/* Description */}
-
-              <div className='flex justify-start mx-2 sm:mx-4 font-semibold'>
-                <h1 className='flex items-center text-md p-2 text-red-500'>Oldest tasks <HiArrowNarrowDown className=''/></h1>
-            </div>
-
-            <div className='grid grid-cols-[auto_auto_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
-              <span className='justify-self-start'>Category</span>
-              <span className='justify-self-center'>Task Title</span>
-              <span className='justify-self-end'>Created On</span>
-            </div>
-
-            {/* Map of Oldest Subgoals */}
-            {oldestSubgoals.map((subgoal) => (
-              <>
-                <div className='group/item' key={subgoal._id}>
-
-                  <div className='grid grid-cols-[25%_auto_23%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
-
-                    {/* Category - Subgoal Name - Date */}
-
-                    <div className='text-sm sm:text-base'>
-                      {subgoal.category}
-                    </div>
-
-                    <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center '>
-                      {subgoal.title}
-                    </div>
-
-                    <div className='justify-self-end text-sm sm:text-base text-end'>
-                      {moment(subgoal.createdAt).format('MMM DD YYYY')}
-                    </div>
-
-                  </div>
-
-                </div>
-              </>
-            ))}
-
-          </div>
-          {/* End of Oldest Subgoals Table Container */}
-          </div>
-          {/* End of Newest/Oldest Tasks Container */}
-
-          {/* Main Goal/Task Statistics */}
-          <div className='flex flex-col bg-transparent rounded-md'>
-
-            <span className='text-md font-semibold text-gray-600 text-center py-2'>Completed Goal Tasks</span>
-
-            {/* Goal Tasks Statistics */}
-            <div className='flex flex-wrap justify-center gap-4 p-4'>
-
-
-              {/* Mind SubGoals Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between items-center'>
-                  <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> </h3>
-                    {/* Mind Goals Loading Bar */}
-                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-blue-500`}>
-                      <div className='mx-1 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                        <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {mindSubgoalsLastMonth}
-                  </span>
-                  <div className='text-gray-500'>Last month</div>
-                </div>
-              </div>
-
-              {/* Body SubGoals Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between items-center'>
-                  <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> </h3>
-                    {/* Body Goals Loading Bar */}
-                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-blue-500`}>
-                      <div className='mx-1 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                        <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {bodySubgoalsLastMonth}
-                  </span>
-                  <div className='text-gray-500'>Last month</div>
-                </div>
-              </div>
-
-
-              {/* Spirit SubGoals Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between items-center'>
-                  <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> </h3>
-                    {/* Spirit Goals Loading Bar */}
-                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-blue-500`}>
-                      <div className='mx-1 w-full border-y-2 border-blue-500 bg-indigo-50'>
-                        <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {spiritSubgoalsLastMonth}
-                  </span>
-                  <div className='text-gray-500'>Last month</div>
-                </div>
-              </div>
-
-            </div>
-            {/* End of Goal Tasks Statistics */}
-
-          </div>
-          {/* End of Main Goal Tasks Statistics */}
-
 
         </div>
         {/* End of Stats Container */}
 
       </div>    
+      {/* End of Main Container */}
 
       {/* OVERVIEW Habit Modal */}
       <Modal

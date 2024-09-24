@@ -51,6 +51,7 @@ export default function Habits( {category, sendDataToCategory2}) {
   const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const date = new Date();
   const [todaysDay, setTodaysDay] = useState(weekday[date.getDay()]);
+  const [todaysDateFull, setTodaysDateFull] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'));
   const [todaysDate, setTodaysDate] = useState(moment().format('MMM-DD-YYYY'));
 
   const [selectDay, setSelectDay] = useState('1');
@@ -172,6 +173,17 @@ export default function Habits( {category, sendDataToCategory2}) {
     setSummaryData(summary(formDataCompleted));
     
   }, [formDataCompleted])
+
+  //Refresh the time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTodaysDateFull(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    }
+
+  }, []);
 
   const handleCreateHabit = async (e) => {
     e.preventDefault();
@@ -319,7 +331,7 @@ export default function Habits( {category, sendDataToCategory2}) {
         <div className='text-center flex flex-col'>
           <span className='text-md font-semibold text-gray-500 font-Grandiflora'>Welcome To Habits</span>
           <span className='font-bold text-2xl text-gray-600 font-Grandiflora'>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
-          <span className='text-md font-medium text-gray-500'> {todaysDate} </span>
+          <span className='text-md font-medium text-gray-500'> {todaysDateFull} </span>
         </div>
 
 
