@@ -526,7 +526,7 @@ export default function ProfileMind() {
 
   useEffect(() => {
 
-    if (totalScore !== '') {
+    if (goalScore !== '' && subgoalScore !== '' && habitScore !== '' && totalScore !== '') {
 
       console.log('totalScore: ' + totalScore);
       const myP5 = new p5(Sketch);
