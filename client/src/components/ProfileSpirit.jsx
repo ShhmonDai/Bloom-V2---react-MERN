@@ -112,16 +112,16 @@ export default function ProfileSpirit() {
 
     p.getHeight = (w) => {
       if (w <= 400) {
-        h = 330;
+        h = 400;
       }
 
       else if (w / 2 <= 650) {
-        h = w / 1.4;
+        h = w / 1.1;
 
       }
 
       if (w > 650) {
-        h = 450;
+        h = 720;
       }
     }
 
@@ -130,8 +130,8 @@ export default function ProfileSpirit() {
     let treeScale = 1;
 
     p.getScale = (h) => {
-      if (h < 580) {
-        treeScale = (h / 580 - 0.1);
+      if (h < 720) {
+        treeScale = (h / 720 - 0.1);
       }
 
     }
@@ -140,7 +140,7 @@ export default function ProfileSpirit() {
 
     const Y_AXIS = 1;
 
-    var backgroundImage = p.loadImage('SpiritTreeBackground.png');
+    var backgroundImage = p.loadImage('spiritBG.png');
 
     let growthScore = totalScore;
 
@@ -327,7 +327,7 @@ export default function ProfileSpirit() {
       //p.stroke('#2b4e46');
 
 
-      p.translate(w / 2, h);
+      p.translate(w / 2, h / 1.27);
 
 
 
@@ -516,9 +516,7 @@ export default function ProfileSpirit() {
 
         {/* Tree container */}
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="SpiritUnderTree" className='mt-[-1px] flex justify-center items-center bg-white mb-2'>
-          <img src="/SpiritUnderTree.png" alt='under tree picture' className=' w-fit' />
-        </div>
+
 
         {/* Button Container */}
         <div id="buttonHolder" className='hidden'>
