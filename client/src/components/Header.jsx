@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signoutSuccess } from "../redux/user/userSlice";
 import { Flowbite } from 'flowbite-react';
 
-import { FaToriiGate, FaBrain, FaDumbbell } from "react-icons/fa";
+import { FaToriiGate, FaBrain, FaDumbbell, FaAngleDown } from "react-icons/fa";
 import { BsYinYang } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
+import { HiLogout, HiUser, HiViewGrid, HiChartBar } from "react-icons/hi";
+import { FaBook } from "react-icons/fa6";
 
 
 
@@ -264,34 +266,34 @@ export default function Header() {
                 </span>
               </Dropdown.Header>
               <Link to={'/profile?tab=profile'}>
-                <Dropdown.Item>Profile</Dropdown.Item>
+                <Dropdown.Item icon={HiUser}>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
               <Link to={'/profile?tab=dashboard'}>
-                <Dropdown.Item>Dashboard</Dropdown.Item>
+                  <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
               <Link to={'/profile?tab=journal'}>
-                <Dropdown.Item>Journal</Dropdown.Item>
+                <Dropdown.Item icon={FaBook}> Journal</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
               <Link to={'/profile?tab=habits'}>
-                <Dropdown.Item>Habits</Dropdown.Item>
+                  <Dropdown.Item icon={HiChartBar}>Habits</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
-                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 text-sm w-full flex justify-start">Goals</span>} inline>
+                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 text-sm w-full flex justify-start items-center gap-2"> <FaAngleDown /> Goals</span>} inline>
                     <Link to={'/profile?tab=mind&view=goals'}>
-                      <Dropdown.Item>Mind</Dropdown.Item>
+                      <Dropdown.Item icon={FaBrain}>Mind</Dropdown.Item>
                     </Link>
                     <Link to={'/profile?tab=body&view=goals'}>
-                      <Dropdown.Item>Body</Dropdown.Item>
+                      <Dropdown.Item icon={FaDumbbell}>Body</Dropdown.Item>
                     </Link>
                     <Link to={'/profile?tab=spirit&view=goals'}>
-                      <Dropdown.Item>Spirit</Dropdown.Item>
+                      <Dropdown.Item icon={BsYinYang}>Spirit</Dropdown.Item>
                     </Link>
                   </Dropdown>
               <Dropdown.Divider />
-              <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+                  <Dropdown.Item onClick={handleSignout} icon={HiLogout}>Sign out</Dropdown.Item>
             </Dropdown>
 
             ) :
@@ -342,30 +344,30 @@ export default function Header() {
                     </span>
                   </Dropdown.Header>
                   <Link to={'/profile?tab=profile'}>
-                    <Dropdown.Item>Profile</Dropdown.Item>
+                    <Dropdown.Item icon={HiUser}>Profile</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
                   <Link to={'/profile?tab=dashboard'}>
-                    <Dropdown.Item>Dashboard</Dropdown.Item>
+                    <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
                   <Link to={'/profile?tab=journal'}>
-                    <Dropdown.Item>Journal</Dropdown.Item>
+                    <Dropdown.Item icon={FaBook}>Journal</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
                   <Link to={'/profile?tab=habits'}>
-                    <Dropdown.Item>Habits</Dropdown.Item>
+                    <Dropdown.Item icon={HiChartBar}>Habits</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
-                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 text-sm w-full flex justify-start cursor-pointer">Goals</span>} inline>
+                  <Dropdown label="" renderTrigger={() => <span className="py-2 px-4 gap-2 text-sm w-full flex justify-start items-center cursor-pointer"> <FaAngleDown />Goals</span>} inline>
                     <Link to={'/profile?tab=mind&view=goals'}>
-                      <Dropdown.Item>Mind</Dropdown.Item>
+                      <Dropdown.Item icon={FaBrain}>Mind</Dropdown.Item>
                     </Link>
                     <Link to={'/profile?tab=body&view=goals'}>
-                      <Dropdown.Item>Body</Dropdown.Item>
+                      <Dropdown.Item icon={FaDumbbell}>Body</Dropdown.Item>
                     </Link>
                     <Link to={'/profile?tab=spirit&view=goals'}>
-                      <Dropdown.Item>Spirit</Dropdown.Item>
+                      <Dropdown.Item icon={BsYinYang}>Spirit</Dropdown.Item>
                     </Link>
                   </Dropdown>
                   <Dropdown.Divider />
