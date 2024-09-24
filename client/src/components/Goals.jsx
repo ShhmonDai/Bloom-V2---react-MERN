@@ -75,6 +75,7 @@ export default function Goals( {category, sendDataToCategory} ) {
   const date = new Date();
   const [todaysDay, setTodaysDay] = useState(weekday[date.getDay()]);
   const [todaysDate, setTodaysDate] = useState(moment().format('MMM-DD-YYYY'));
+  const [todaysDateFull, setTodaysDateFull] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'));
 
   const goalColor = {
     'mind': ' bg-gradient-to-b from-teal-500 to-cyan-800',
@@ -235,6 +236,17 @@ export default function Goals( {category, sendDataToCategory} ) {
     }
   };
 
+  //Refresh the time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTodaysDateFull(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    }
+
+  }, []);
+
 
 
   return (
@@ -248,7 +260,7 @@ export default function Goals( {category, sendDataToCategory} ) {
         <div className='text-center flex flex-col mt-20'>
           <span className='text-md font-semibold text-gray-500 font-Grandiflora'>Welcome To Goals</span>
           <span className='font-bold text-2xl text-gray-600 font-Grandiflora'>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
-          <span className='text-md font-medium text-gray-500 '> {todaysDate} </span>
+          <span className='text-md font-medium text-gray-500 '> {todaysDateFull} </span>
         </div>
 
         <div className='text-center flex flex-col'>
