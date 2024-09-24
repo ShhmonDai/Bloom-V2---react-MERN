@@ -15,6 +15,7 @@ export default {
         'BrushFont': ["brushesregular", "sans-serif"],
         'QwigleyFont': ["Qwigley", "sans-serif"],
         'BilboSwash': ["BilboSwash", "sans-serif"],
+        'Grandiflora': ["Grandiflora", "sans-serif"],
       },
     },
   },

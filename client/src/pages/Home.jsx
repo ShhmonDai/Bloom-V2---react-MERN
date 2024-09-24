@@ -81,16 +81,16 @@ export default function Home() {
 
     p.getHeight = (w) => {
       if (w <= 400) {
-        h = 330;
+        h = 470;
       }
 
       else if (w / 2 <= 700) {
-        h = w / 1.4;
+        h = w * 1.1;
 
       }
 
       if (w > 700) {
-        h = 500;
+        h = 870;
       }
     }
 
@@ -99,8 +99,8 @@ export default function Home() {
     let treeScale = 1;
 
     p.getScale = (h) => {
-      if (h < 580) {
-        treeScale = (h / 580 - 0.1);
+      if (h < 870) {
+        treeScale = (h / 870 - 0.1);
       }
 
     }
@@ -108,7 +108,7 @@ export default function Home() {
     p.getScale(h);
 
 
-    var bg = p.loadImage('MainTreeBackground.png');
+    var bg = p.loadImage('MainTreeFullBG.png');
 
     const Y_AXIS = 1;
     //var b1, b2;
@@ -304,7 +304,7 @@ export default function Home() {
       p.stroke('#2b4e46');
 
       // background(33, 66, 62);
-      p.translate(w / 2, h);
+      p.translate(w / 2, h / 1.55);
 
 
 
@@ -312,7 +312,7 @@ export default function Home() {
 
       //console.log('Tree Scale: ' + treeScale);
 
-      p.translate(0, 0);
+
 
       p.branch(1, randSeed);
 
@@ -429,9 +429,7 @@ export default function Home() {
       <div className='mx-auto flex flex-col justify-center'>
 
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="underTree" className='mt-[-1px] flex justify-center items-center bg-white'>
-          <img src="/MainUnderTree.png" alt='under tree picture' />
-        </div>
+
 
         <div id="buttonHolder" className='mb-20'> 
           <div id="sliderHolder"></div>

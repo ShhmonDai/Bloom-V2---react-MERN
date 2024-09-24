@@ -30,6 +30,15 @@
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'Grandiflora';
+    src: url('/font/GrandifloraOne-Regular.ttf') format('ttf'),
+      url('/font/GrandifloraOne-Regular.woff2') format('woff2'),
+      url('/font/GrandifloraOne-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
 
 
 body {
@@ -58,7 +67,7 @@ body {
 }
 
 #buttonHolder button {
-  font-family: 'Julius Sans One', sans-serif;
+  font-family: 'sans-serif', sans-serif;
   font-weight: bold;
   color: var(--color-primary);
   position: absolute;
