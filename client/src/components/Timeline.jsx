@@ -14,7 +14,7 @@ export default function Timeline( {tasks, category}) {
   return (
     <div className='pt-2 bg-white flex flex-col rounded-xl'>
     
-        <span className='text-md font-semibold text-gray-500 py-2 text-center'>Todays Timeline</span>
+        <span className='text-md font-semibold text-gray-500 pt-2 pb-6 text-center'>Todays Timeline</span>
 
           <div className=' flex flex-row justify-center text-xs sm:text-lg'>
         
