@@ -46,7 +46,7 @@ export default function SignIn() {
 
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate('/');
+        navigate('/profile?tab=dashboard');
       }
 
     } catch (error) {
@@ -75,7 +75,7 @@ export default function SignIn() {
 
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate('/');
+        navigate('/profile?tab=dashboard');
       }
 
     } catch (error) {

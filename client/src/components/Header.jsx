@@ -56,7 +56,7 @@ const customNavTheme = {
     }
     },
     "toggle": {
-      "base": "inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700 sm:hidden",
+      "base": "inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700 hidden",
       "icon": "h-5 w-5 shrink-0"
   },
   
@@ -267,6 +267,10 @@ export default function Header() {
                 <Dropdown.Item>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
+              <Link to={'/profile?tab=dashboard'}>
+                <Dropdown.Item>Dashboard</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
               <Link to={'/profile?tab=journal'}>
                 <Dropdown.Item>Journal</Dropdown.Item>
               </Link>
@@ -339,6 +343,10 @@ export default function Header() {
                   </Dropdown.Header>
                   <Link to={'/profile?tab=profile'}>
                     <Dropdown.Item>Profile</Dropdown.Item>
+                  </Link>
+                  <Dropdown.Divider />
+                  <Link to={'/profile?tab=dashboard'}>
+                    <Dropdown.Item>Dashboard</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
                   <Link to={'/profile?tab=journal'}>
