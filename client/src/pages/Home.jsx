@@ -107,8 +107,11 @@ export default function Home() {
 
     p.getScale(h);
 
+    var bg;
 
-    var bg = p.loadImage('MainTreeFullBG.png');
+    p.preload = () => {
+      bg = p.loadImage('MainTreeFullBG.png');
+    }
 
     const Y_AXIS = 1;
     //var b1, b2;
@@ -428,7 +431,7 @@ export default function Home() {
       {/* Intro Container */}
       <div className='mx-auto flex flex-col justify-center'>
 
-        <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
+        <div id="treeHolder" className='min-h-[470px] sm:min-h-[650px] lg:min-h-[770px] bg-white flex justify-center items-center'></div>
 
 
         <div id="buttonHolder" className='mb-20'> 

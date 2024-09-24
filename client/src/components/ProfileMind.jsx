@@ -144,10 +144,13 @@ export default function ProfileMind() {
 
     const Y_AXIS = 1;
 
-    var backgroundImage = p.loadImage('mindBG.png');
-
     let growthScore = totalScore;
     
+    var backgroundImage;
+    p.preload = () => {
+      backgroundImage = p.loadImage('mindBG.png');
+    }
+
     p.setup = () => {
 
       //console.log('width: ' + w);
@@ -551,7 +554,7 @@ export default function ProfileMind() {
         */}
         
         {/* Tree container */}
-        <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
+        <div id="treeHolder" className='min-h-[400px] sm:min-h-[540px] lg:min-h-[590px] bg-white flex justify-center items-center'></div>
 
         {/* Button Container */}
         <div id="buttonHolder" className='hidden'>

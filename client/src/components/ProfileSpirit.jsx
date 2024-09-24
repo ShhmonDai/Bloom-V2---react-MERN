@@ -140,10 +140,12 @@ export default function ProfileSpirit() {
 
     const Y_AXIS = 1;
 
-    var backgroundImage = p.loadImage('spiritBG.png');
-
     let growthScore = totalScore;
 
+    var backgroundImage;
+    p.preload = () => {
+      backgroundImage = p.loadImage('spiritBG.png');
+    }
 
     p.setup = () => {
 
@@ -515,7 +517,7 @@ export default function ProfileSpirit() {
         */}
 
         {/* Tree container */}
-        <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
+        <div id="treeHolder" className='min-h-[400px] sm:min-h-[540px] lg:min-h-[590px] bg-white flex justify-center items-center'></div>
 
 
         {/* Button Container */}
