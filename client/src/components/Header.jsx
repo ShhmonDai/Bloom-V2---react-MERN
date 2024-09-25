@@ -9,7 +9,7 @@ import { Flowbite } from 'flowbite-react';
 import { FaToriiGate, FaBrain, FaDumbbell, FaAngleDown } from "react-icons/fa";
 import { BsYinYang } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { HiLogout, HiUser, HiViewGrid, HiChartBar } from "react-icons/hi";
+import { HiLogout, HiUser, HiViewGrid, HiChartBar, HiCog } from "react-icons/hi";
 import { FaBook } from "react-icons/fa6";
 
 
@@ -237,11 +237,11 @@ export default function Header() {
     <Flowbite theme={{ theme: customNavTheme }}>
 
 
-      <div className='w-full px-8 pt-3 sm:pt-0  pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.4)]'>
+      <div className='w-full px-8 pt-3 sm:pt-0  pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.2)]'>
 
         {/* middle */}
         <div className='w-100 flex flex-col justify-start sm:justify-center sm:text-center'>
-          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl lg:text-8xl sm:text-center font-QwigleyFont'>Bloom</Link>
+          <Link to='/' className='text-6xl sm:text-7xl md:text-8xl lg:text-8xl sm:text-center font-QwigleyFont dark:text-gray-200'>Bloom</Link>
         </div>
 
       </div>
@@ -269,6 +269,14 @@ export default function Header() {
                 <Dropdown.Item icon={HiUser}>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
+              {currentUser.isAdmin && (
+              <>
+              <Link to={'/dashboard?tab=dash'}>
+                  <Dropdown.Item icon={HiCog}>Admin</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
+              </>
+              )}
               <Link to={'/profile?tab=dashboard'}>
                   <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
               </Link>
@@ -347,6 +355,14 @@ export default function Header() {
                     <Dropdown.Item icon={HiUser}>Profile</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
+                  {currentUser.isAdmin && (
+                    <>
+                      <Link to={'/dashboard?tab=dash'}>
+                        <Dropdown.Item icon={HiCog}>Admin</Dropdown.Item>
+                      </Link>
+                      <Dropdown.Divider />
+                    </>
+                  )}
                   <Link to={'/profile?tab=dashboard'}>
                     <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
                   </Link>
