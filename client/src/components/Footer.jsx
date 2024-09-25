@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 
 export default function FooterCom() {
   return (
-      <Footer container className='border-t-2 dark:border-gray-700 bg-[rgba(0,0,0,0.0)] dark:bg-[rgba(0,0,0,0.4)] transition-colors duration-500'>
+      <Footer container className='border-t-2 dark:border-gray-700 bg-[rgba(0,0,0,0.0)] dark:bg-[rgba(0,0,0,0.2)] transition-colors duration-500'>
           <div className='w-full mx-auto max-w-7xl'>
 
         <div className='grid-cols-2 w-full flex justify-around flex-wrap'>
 
 
             <div className='items-center justify-left hidden sm:flex'>
-                <Link to='/' className='text-6xl font-QwigleyFont'>Bloom</Link>    
+                      <Link to='/' className='text-6xl font-QwigleyFont dark:text-gray-200'>Bloom</Link>    
             </div>
             
             <div className='mt-3'>
