@@ -3,6 +3,7 @@ import { useLocation, useSearchParams, Link } from 'react-router-dom';
 import Goals from './Goals';
 import HabitsComp from './Habits';
 import { PiFlowerLotusDuotone} from "react-icons/pi";
+import { IoArrowUndo, IoArrowRedo } from "react-icons/io5";
 
 
 
@@ -76,7 +77,20 @@ export default function GoalHolder({ category, sendDataToCategory, sendDataToCat
     <div className='flex flex-col justify-center '>
 
       <div className='px-5 pt-5 pb-28 sm:px-10 flex flex-col justify-center items-center bg-gradient-to-b from-white via-indigo-100 to-indigo-50'>
-        <h1 className='font-BrushFont text-8xl sm:text-9xl'>{category}</h1>
+        
+        <div className='flex flex-row justify-center items-baseline gap-6 sm:gap-16'>
+
+          {category === 'mind' && <Link to='/profile?tab=spirit&view=goals' className=''><IoArrowUndo className='text-2xl sm:text-3xl text-slate-600 font-bold' /></Link>}
+          {category === 'body' && <Link to='/profile?tab=mind&view=goals' className=''><IoArrowUndo className='text-2xl sm:text-3xl text-slate-600 font-bold' /></Link>}
+          {category === 'spirit' && <Link to='/profile?tab=body&view=goals' className=''><IoArrowUndo className='text-2xl sm:text-3xl text-slate-600 font-bold' /></Link>}
+
+          <h1 className='font-BrushFont text-8xl sm:text-9xl'>{category}</h1>
+
+          {category === 'mind' && <Link to='/profile?tab=body&view=goals' className=''><IoArrowRedo className='text-2xl sm:text-3xl text-slate-600 font-bold' /></Link>}
+          {category === 'body' && <Link to='/profile?tab=spirit&view=goals' className=''><IoArrowRedo className='text-2xl sm:text-3xl text-slate-600 font-bold' /></Link>}
+          {category === 'spirit' && <Link to='/profile?tab=mind&view=goals' className=''><IoArrowRedo className='text-2xl sm:text-3xl text-slate-600 font-bold' /></Link>}
+
+        </div>
         <p className='text-wrap break-words italic max-w-4xl'> {categoryDescription[category]}</p>
       </div>
 
