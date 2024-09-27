@@ -137,13 +137,29 @@ export default function ProfileDash() {
           setCompletedBodySubgoals(data.completedBodySubgoals);
           setCompletedSpiritSubgoals(data.completedSpiritSubgoals);
 
-          setCompletedMindHabits(data.mindHabitScore[0].total);
-          setCompletedBodyHabits(data.bodyHabitScore[0].total);
-          setCompletedSpiritHabits(data.spiritHabitScore[0].total);
+          if (data.mindHabitScore.length > 0) {
+            setCompletedMindHabits(data.mindHabitScore[0].total);
+          }
 
-          setMindHabitsLastMonth(data.mindHabitsLastMonth[0].total);
-          setBodyHabitsLastMonth(data.bodyHabitsLastMonth[0].total);
-          setSpiritHabitsLastMonth(data.spiritHabitsLastMonth[0].total);
+          if (data.bodyHabitScore.length > 0){
+            setCompletedBodyHabits(data.bodyHabitScore[0].total);
+          }
+
+          if (data.spiritHabitScore.length > 0) {
+            setCompletedSpiritHabits(data.spiritHabitScore[0].total);
+          }
+
+          if (data.mindHabitsLastMonth.length > 0) {
+            setMindHabitsLastMonth(data.mindHabitsLastMonth[0].total);
+          }
+
+          if (data.bodyHabitsLastMonth.length > 0) {
+            setBodyHabitsLastMonth(data.bodyHabitsLastMonth[0].total);
+          }
+
+          if (data.spiritHabitsLastMonth.length > 0) {
+            setSpiritHabitsLastMonth(data.spiritHabitsLastMonth[0].total);
+          }
 
           setMindSubgoalsLastMonth(data.mindSubgoalsLastMonth);
           setBodySubgoalsLastMonth(data.bodySubgoalsLastMonth);
@@ -172,8 +188,8 @@ export default function ProfileDash() {
       
       {/* Welcome text */}
       <div className='px-5 pt-10 pb-10 sm:px-10 flex flex-col justify-center items-center'>
-        <h1 className='font-BrushFont text-8xl'><span className=''>{todaysDay}</span></h1>
-        <p className='text-wrap break-words italic text-lg font-medium max-w-4xl'>{todaysDateFull}</p>
+        <h1 className='font-BrushFont text-7xl sm:text-8xl'><span className=''>{todaysDay}</span></h1>
+        <p className='text-wrap text-gray-500 break-words italic text-lg font-medium max-w-4xl'>{todaysDateFull}</p>
       </div>
 
       {/* Todays Day
@@ -285,12 +301,12 @@ export default function ProfileDash() {
                 <>
                   <div className='group/item' key={subgoal._id}>
 
-                    <div className='grid grid-cols-[25%_auto_23%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                    <div className='grid grid-cols-[12%_auto_24%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                       {/* Category - Subgoal Name */}
 
-                      <div className='text-sm sm:text-base'>
-                        {subgoal.category}
+                      <div className={`text-sm sm:text-base ${categoryText[subgoal.category]}`}>
+                        {categoryIcon[subgoal.category]}
                       </div>
 
                       <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center'>
@@ -331,12 +347,12 @@ export default function ProfileDash() {
                 <>
                   <div className='group/item' key={subgoal._id}>
 
-                    <div className='grid grid-cols-[25%_auto_23%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                    <div className='grid grid-cols-[12%_auto_24%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                       {/* Category - Subgoal Name - Date */}
 
-                      <div className='text-sm sm:text-base'>
-                        {subgoal.category}
+                      <div className={`text-sm sm:text-base ${categoryText[subgoal.category]}`}>
+                        {categoryIcon[subgoal.category]}
                       </div>
 
                       <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center '>
@@ -371,7 +387,7 @@ export default function ProfileDash() {
                 <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                   <div className='flex justify-between items-center'>
                     <div className='w-8/12'>
-                      <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> </h3>
+                      <h3 className='text-gray-500 text-lg font-semibold uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> </h3>
                       {/* Mind Goals Loading Bar */}
                     <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
                         <div className='mx-1 my-[2px] w-full bg-indigo-50'>
@@ -395,7 +411,7 @@ export default function ProfileDash() {
                 <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                   <div className='flex justify-between items-center'>
                     <div className='w-8/12'>
-                      <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> </h3>
+                    <h3 className='text-gray-500 text-lg font-semibold uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> </h3>
                       {/* Body Goals Loading Bar */}
                     <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
                         <div className='mx-1 my-[2px] w-full bg-indigo-50'>
@@ -420,7 +436,7 @@ export default function ProfileDash() {
                 <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                   <div className='flex justify-between items-center'>
                     <div className='w-8/12'>
-                      <h3 className='text-gray-500 text-lg uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> </h3>
+                    <h3 className='text-gray-500 text-lg font-semibold uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> </h3>
                       {/* Spirit Goals Loading Bar */}
                     <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
                         <div className='mx-1 my-[2px] w-full bg-indigo-50'>

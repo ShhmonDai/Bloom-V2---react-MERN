@@ -24,12 +24,12 @@ export default function ProfileBody() {
 
 
 
-  const [subgoalScore, setSubgoalScore] = useState('');
-  const [goalScore, setGoalScore] = useState('');
-  const [habitScore, setHabitScore] = useState('');
+  const [subgoalScore, setSubgoalScore] = useState('0');
+  const [goalScore, setGoalScore] = useState('0');
+  const [habitScore, setHabitScore] = useState('0');
 
 
-  const [totalScore, setTotalScore] = useState('');
+  const [totalScore, setTotalScore] = useState('0');
 
   useEffect(() => {
     const fetchCategoryScore = async () => {
@@ -39,7 +39,9 @@ export default function ProfileBody() {
         if (res.ok) {
           setSubgoalScore(data.subgoalScore);
           setGoalScore(data.goalScore);
-          setHabitScore(data.bodyHabitScore[0].total);
+          if (data.bodyHabitScore > 0){
+            setHabitScore(data.bodyHabitScore[0].total);
+          }
         }
       } catch (error) {
         console.log(error.message);
