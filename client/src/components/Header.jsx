@@ -252,7 +252,7 @@ export default function Header() {
 
       {/* Navbar Elements */}
       <div className='flex gap-6 justify-start items-center'>  
-          <Link to='/' className='text-5xl font-QwigleyFont sm:hidden'>Bloom</Link>
+          <Link to='/' className='text-5xl font-QwigleyFont sm:hidden dark:text-gray-200'>Bloom</Link>
 
           <div className='flex gap-2 absolute right-5 '>
 
