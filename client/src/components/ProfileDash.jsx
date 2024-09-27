@@ -215,9 +215,9 @@ export default function ProfileDash() {
 
             <div className='flex justify-between p-3 font-semibold'>
               <h1 className='text-center text-md p-2 text-gray-500'>Todays Habit Tasks</h1>
-              <Button outline gradientDuoTone='cyanToBlue'>
-                <Link to={"/profile?tab=habits"}>See all</Link>
-              </Button>
+              
+              <Link to={"/profile?tab=habits"}><Button outline gradientDuoTone='cyanToBlue'>See all</Button></Link>
+              
             </div>
 
             <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
@@ -309,7 +309,7 @@ export default function ProfileDash() {
                         {categoryIcon[subgoal.category]}
                       </div>
 
-                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center'>
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start lg:justify-self-center'>
                         {subgoal.title}
                       </div>
 
@@ -355,7 +355,7 @@ export default function ProfileDash() {
                         {categoryIcon[subgoal.category]}
                       </div>
 
-                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start sm:justify-self-center '>
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start lg:justify-self-center'>
                         {subgoal.title}
                       </div>
 
