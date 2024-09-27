@@ -24,11 +24,11 @@ export default function ProfileMind() {
   }
 
 
-  const [subgoalScore, setSubgoalScore] = useState('0');
-  const [goalScore, setGoalScore] = useState('0');
-  const [habitScore, setHabitScore] = useState('0');
+  const [subgoalScore, setSubgoalScore] = useState('');
+  const [goalScore, setGoalScore] = useState('');
+  const [habitScore, setHabitScore] = useState('');
 
-  const [totalScore, setTotalScore] = useState('0');
+  const [totalScore, setTotalScore] = useState('');
 
 
   useEffect(() => {
@@ -41,6 +41,9 @@ export default function ProfileMind() {
           setGoalScore(data.goalScore);
           if (data.mindHabitScore > 0) {
             setHabitScore(data.mindHabitScore[0].total);
+          }
+          else {
+            setHabitScore(0);
           }
         }
       } catch (error) {

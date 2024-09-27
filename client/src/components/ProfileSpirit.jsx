@@ -22,12 +22,12 @@ export default function ProfileSpirit() {
     setSpiritHabitsScore(data);
   }
 
-  const [subgoalScore, setSubgoalScore] = useState('0');
-  const [goalScore, setGoalScore] = useState('0');
-  const [habitScore, setHabitScore] = useState('0');
+  const [subgoalScore, setSubgoalScore] = useState('');
+  const [goalScore, setGoalScore] = useState('');
+  const [habitScore, setHabitScore] = useState('');
 
 
-  const [totalScore, setTotalScore] = useState('0');
+  const [totalScore, setTotalScore] = useState('');
 
   useEffect(() => {
     const fetchCategoryScore = async () => {
@@ -39,7 +39,10 @@ export default function ProfileSpirit() {
           setGoalScore(data.goalScore);
           if (data.spiritHabitScore > 0) {
             setHabitScore(data.spiritHabitScore[0].total);
+          } else {
+            setHabitScore(0);
           }
+
         }
       } catch (error) {
         console.log(error.message);
