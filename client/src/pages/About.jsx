@@ -56,6 +56,7 @@ export default function About() {
       branchProb,
       rotRand,
       leafProb,
+      leafProb2 = 0.01,
       randSeed;
       
     let colLeft;
@@ -244,6 +245,9 @@ export default function About() {
       button_hide.id('hideButton');
       button_hide.mousePressed(p.buttonHide = () => { p.showHide() });
 
+      let task_done = false;
+      let last_done = 0;
+
 
       p.readInputs(false);
       p.startGrow();
@@ -282,6 +286,8 @@ export default function About() {
 
       b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
 
+      
+
 
       //Dynamic Values
       //completedCount = slider_Count.value();
@@ -299,6 +305,7 @@ export default function About() {
       glow = slider_glow.value();
 
       if (updateTree && !growing) {
+        leafProb2 = leafProb;
         prog = maxLevel + 1;
         p.loop();
       }
@@ -382,7 +389,9 @@ export default function About() {
       var doBranch1 = p.rand() < branchProb;
       var doBranch2 = p.rand() < branchProb;
 
-      var doLeaves = p.rand() < leafProb;
+      var doLeaves = p.rand() < leafProb2;
+      
+
 
       if (level < maxLevel) {
 
@@ -417,17 +426,27 @@ export default function About() {
           p.rotate(2 * PI / 8);
         }
       }
+
+
     }
 
     p.startGrow = () => {
       growing = true;
+      leafProb2 = 0.01;
       prog = 1;
       p.grow();
     }
 
+    p.drawLeaves = () => {
+      if (leafProb2 < leafProb) {
+        leafProb2 = leafProb2 + 0.01;
+      }
+    }
+
     p.grow = () => {
-      if (prog > (maxLevel + 3)) {
-        prog = maxLevel + 3;
+      if (prog > (maxLevel + 16)) {
+        prog = maxLevel + 16;
+        
         p.loop();
         growing = false;
         return;
@@ -437,8 +456,9 @@ export default function About() {
       p.loop();
       var diff = p.millis() - startTime;
 
-      prog += maxLevel / 8 * Math.max(diff, 20) / 200;
+      prog += maxLevel / 16 * Math.max(diff, 20) / 100;
       setTimeout(p.grow, Math.max(1, 20 - diff));
+      setTimeout(p.drawLeaves, 1700);
     }
 
     p.randBark = () => {

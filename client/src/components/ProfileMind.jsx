@@ -97,7 +97,8 @@ export default function ProfileMind() {
       lenRand,
       branchProb,
       rotRand,
-      leafProb;
+      leafProb,
+      leafProb2 = 0.01;
 
     var hide = true,
       prog = 1,
@@ -380,9 +381,9 @@ export default function ProfileMind() {
       
       let shadowCol = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 10, 0, 10);
 
-      let col = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 9, 70, 10);
-      let colM = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 9, 80, 20);
-      let colR= p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 9, 90, 30);
+      let col = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 1)), 1, 9, 70, 10);
+      let colM = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 1)), 1, 9, 80, 20);
+      let colR= p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 1)), 1, 9, 90, 30);
 
       let barkColor = 82;
       let colMiddle = col + 20;
@@ -399,8 +400,10 @@ export default function ProfileMind() {
       
 
       //Middle
-      p.drawingContext.shadowBlur = 5;
-      p.drawingContext.shadowColor = p.color(shadowCol, shadowCol, shadowCol);      
+      //p.drawingContext.shadowBlur = 5;
+      //p.drawingContext.shadowColor = p.color(shadowCol, shadowCol, shadowCol);
+      
+
 
       p.strokeWeight(14 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
       p.stroke(col + 5, colM + 5, colR + 5, 255)
@@ -408,7 +411,7 @@ export default function ProfileMind() {
       
 
       //Right
-      p.drawingContext.shadowBlur = 0;
+      //p.drawingContext.shadowBlur = 0;
 
       p.strokeWeight(12 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
       p.stroke(col +15, colM + 15, colR + 15, 255)
@@ -421,7 +424,7 @@ export default function ProfileMind() {
       var doBranch1 = p.rand() < branchProb;
       var doBranch2 = p.rand() < branchProb;
 
-      var doLeaves = p.rand() < leafProb;
+      var doLeaves = p.rand() < leafProb2;
 
       if (level < maxLevel) {
 
@@ -448,7 +451,7 @@ export default function ProfileMind() {
         var flowerSize = (size / 100) * cunt * (1 / 6) * (len / level);
 
         p.strokeWeight(4);
-        p.stroke(240 + 10 * p.rand2(), 190 + 10 * p.rand2(), 125 + 10 * p.rand2());
+        p.stroke(240 + 50 * p.rand(), 190 + 30 * p.rand2(), 125 + 20 * p.rand());
 
         p.rotate(-PI);
         for (var i = 0; i <= 8; i++) {
@@ -461,12 +464,20 @@ export default function ProfileMind() {
     p.startGrow = () => {
       growing = true;
       prog = 1;
+      leafProb2 = 0.01;
       p.grow();
     }
 
+    p.drawLeaves = () => {
+      if (leafProb2 < leafProb) {
+        leafProb2 = leafProb2 + 0.01;
+      }
+    }
+
     p.grow = () => {
-      if (prog > (maxLevel + 3)) {
-        prog = maxLevel + 3;
+      if (prog > (maxLevel + 24)) {
+        prog = maxLevel + 24;
+
         p.loop();
         growing = false;
         return;
@@ -476,8 +487,9 @@ export default function ProfileMind() {
       p.loop();
       var diff = p.millis() - startTime;
 
-      prog += maxLevel / 8 * Math.max(diff, 20) / 200;
+      prog += maxLevel / 16 * Math.max(diff, 20) / 100;
       setTimeout(p.grow, Math.max(1, 20 - diff));
+      setTimeout(p.drawLeaves, 1700);
     }
 
     p.randBark = () => {
