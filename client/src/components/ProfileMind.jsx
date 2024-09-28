@@ -408,7 +408,7 @@ export default function ProfileMind() {
         p.drawingContext.shadowBlur = 5;
       }
       else if (level > 3 && level < 8) {
-        p.drawingContext.shadowBlur = 5;
+        p.drawingContext.shadowBlur = 2;
       }
       else {
         p.drawingContext.shadowBlur = 0;
