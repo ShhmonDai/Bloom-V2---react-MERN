@@ -401,7 +401,18 @@ export default function ProfileMind() {
 
       //Middle
       //p.drawingContext.shadowBlur = 5;
-      //p.drawingContext.shadowColor = p.color(shadowCol, shadowCol, shadowCol);
+
+      p.drawingContext.shadowColor = p.color(shadowCol, shadowCol, shadowCol, 255);
+
+      if (level <= 3) {
+        p.drawingContext.shadowBlur = 5;
+      }
+      else if (level > 3 && level < 8) {
+        p.drawingContext.shadowBlur = 5;
+      }
+      else {
+        p.drawingContext.shadowBlur = 0;
+      }
       
 
 
@@ -411,7 +422,7 @@ export default function ProfileMind() {
       
 
       //Right
-      //p.drawingContext.shadowBlur = 0;
+      p.drawingContext.shadowBlur = 0;
 
       p.strokeWeight(12 * Math.pow((maxLevel - level + 1) / maxLevel, 2));
       p.stroke(col +15, colM + 15, colR + 15, 255)

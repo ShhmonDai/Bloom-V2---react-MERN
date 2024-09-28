@@ -95,7 +95,8 @@ export default function ProfileSpirit() {
       lenRand,
       branchProb,
       rotRand,
-      leafProb;
+      leafProb,
+      leafProb2 = 0.01;
 
     var hide = true,
       prog = 1,
@@ -371,8 +372,15 @@ export default function ProfileSpirit() {
       let colMiddle = 150;
       let colRight = 255;
 
-
-      p.drawingContext.shadowBlur = p.map((10 * Math.pow((maxLevel - level + 1) / maxLevel, 2)), 1, 10, 0, 20);
+      if (level <= 3) {
+        p.drawingContext.shadowBlur = 15;
+      }
+      else if (level > 3 && level < 8) {
+        p.drawingContext.shadowBlur = 10;
+      }
+      else {
+        p.drawingContext.shadowBlur = 0;
+      }
       p.drawingContext.shadowColor = p.color(colLeft, col, colRight);
 
 
@@ -388,7 +396,7 @@ export default function ProfileSpirit() {
       var doBranch1 = p.rand() < branchProb;
       var doBranch2 = p.rand() < branchProb;
 
-      var doLeaves = p.rand() < leafProb;
+      var doLeaves = p.rand() < leafProb2;
 
       if (level < maxLevel) {
 
@@ -428,12 +436,20 @@ export default function ProfileSpirit() {
     p.startGrow = () => {
       growing = true;
       prog = 1;
+      leafProb2 = 0.01;
       p.grow();
     }
 
+    p.drawLeaves = () => {
+      if (leafProb2 < leafProb) {
+        leafProb2 = leafProb2 + 0.01;
+      }
+    }
+
     p.grow = () => {
-      if (prog > (maxLevel + 3)) {
-        prog = maxLevel + 3;
+      if (prog > (maxLevel + 16)) {
+        prog = maxLevel + 16;
+
         p.loop();
         growing = false;
         return;
@@ -443,8 +459,9 @@ export default function ProfileSpirit() {
       p.loop();
       var diff = p.millis() - startTime;
 
-      prog += maxLevel / 8 * Math.max(diff, 20) / 200;
+      prog += maxLevel / 16 * Math.max(diff, 20) / 100;
       setTimeout(p.grow, Math.max(1, 20 - diff));
+      setTimeout(p.drawLeaves, 1700);
     }
 
     p.randBark = () => {
