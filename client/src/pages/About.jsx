@@ -581,7 +581,7 @@ export default function About() {
           Behind the tech
         </h1>
 
-        <h2 className='text-xl dark:text-white text-center '>Bloom's Trees are created recursively using P5.JS canvas. The shape is made up of many variables such as: </h2>
+        <h2 className='text-xl dark:text-white '>Bloom's Trees are created recursively using P5.JS canvas. The shape is made up of many variables such as: </h2>
 
         <p className='text-xl py-5 text-gray-600 text-left px-5'>
           <b>Size</b> - the general scale of tree while keeping proportions, <br />
@@ -594,14 +594,14 @@ export default function About() {
         <h2 className='text-xl dark:text-white '>And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end.
           Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.</h2>
 
-      </div>
+        <h1 className='text-3xl dark:text-white font font-semibold text-center mt-20 '>
+          Try out the Tree Creator:
+        </h1>
+        <h2 className='text-xl dark:text-white mb-10'>
+          Click on Variables to open options. Click grow to see the tree grow in real time.
+        </h2>
 
-      <h1 className='text-3xl dark:text-white font font-semibold text-center mt-20 '>
-        Try out the Tree creator:
-      </h1>
-      <h2 className='text-xl dark:text-white text-center mb-10'>
-        Click on Variables to open options. Click grow to see the tree grow in real time.
-      </h2>
+      </div>
 
       {/* Intro Container */}
       <div className='dark:bg-white dark:bg-opacity-100 mx-auto flex flex-col justify-center'>
