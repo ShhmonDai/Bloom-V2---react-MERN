@@ -61,6 +61,7 @@ export default function Home() {
       lenRand,
       branchProb,
       rotRand,
+      leafProb2 = 0.01,
       leafProb;
 
     var hide = true,
@@ -279,6 +280,7 @@ export default function Home() {
       leafProb = slider_leafProb.value();
 
       if (updateTree && !growing) {
+        leafProb2 = leafProb;
         prog = maxLevel + 1;
         p.loop();
       }
@@ -344,7 +346,7 @@ export default function Home() {
       var doBranch1 = p.rand() < branchProb;
       var doBranch2 = p.rand() < branchProb;
 
-      var doLeaves = p.rand() < leafProb;
+      var doLeaves = p.rand() < leafProb2;
 
       if (level < maxLevel) {
 
@@ -384,12 +386,20 @@ export default function Home() {
     p.startGrow = () => {
       growing = true;
       prog = 1;
+      leafProb2 = 0.01;
       p.grow();
     }
 
+    p.drawLeaves = () => {
+      if (leafProb2 < leafProb) {
+        leafProb2 = leafProb2 + 0.01;
+      }
+    }
+
     p.grow = () => {
-      if (prog > (maxLevel + 3)) {
-        prog = maxLevel + 3;
+      if (prog > (maxLevel + 24)) {
+        prog = maxLevel + 24;
+
         p.loop();
         growing = false;
         return;
@@ -399,8 +409,9 @@ export default function Home() {
       p.loop();
       var diff = p.millis() - startTime;
 
-      prog += maxLevel / 8 * Math.max(diff, 20) / 200;
+      prog += maxLevel / 16 * Math.max(diff, 20) / 100;
       setTimeout(p.grow, Math.max(1, 20 - diff));
+      setTimeout(p.drawLeaves, 1700);
     }
 
 
