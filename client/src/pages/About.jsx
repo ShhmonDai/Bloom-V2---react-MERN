@@ -22,11 +22,12 @@ export default function About() {
       slider_glow,
       slider_left,
       slider_middle,
-      slider_right;
+      slider_right,
+      slider_BG;
 
     var button_seed,
       button_hide,
-      button_newSeed,
+      button_nextSeed,
       button_randomParams,
       button_change;
 
@@ -43,6 +44,7 @@ export default function About() {
       label_colRight,
       label_colMiddle,
       label_glow,
+      label_BG,
       label_Count;
 
     var div_inputs;
@@ -57,12 +59,17 @@ export default function About() {
       rotRand,
       leafProb,
       leafProb2 = 0.01,
+      bgSliderValue,
       randSeed;
       
     let colLeft;
     let colMiddle;
     let colRight;
     let glow;
+
+    let backgroundImage1,
+    backgroundImage2,
+    backgroundImage3;
 
     var hide = true,
       prog = 1,
@@ -83,16 +90,16 @@ export default function About() {
 
     p.getHeight = (w) => {
       if (w <= 400) {
-        h = 330;
+        h = 400;
       }
 
       else if (w / 2 <= 650) {
-        h = w / 1.4;
+        h = w / 1.1;
 
       }
 
       if (w > 650) {
-        h = 450;
+        h = 720;
       }
     }
 
@@ -101,8 +108,8 @@ export default function About() {
     let treeScale = 1;
 
     p.getScale = (h) => {
-      if (h < 580) {
-        treeScale = (h / 580 - 0.1);
+      if (h < 720) {
+        treeScale = (h / 720 - 0.1);
       }
 
     }
@@ -111,8 +118,12 @@ export default function About() {
 
     const Y_AXIS = 1;
 
-    var backgroundImage = p.loadImage('SpiritTreeBackground.png');
-
+    p.preload = () => {
+      backgroundImage1 = p.loadImage('mindBG.png');
+      backgroundImage2 = p.loadImage('bodyBG.png');
+      backgroundImage3 = p.loadImage('spiritBG.png');
+      
+    }
 
     p.setup = () => {
 
@@ -177,7 +188,7 @@ export default function About() {
       label_leafProb.parent("div_Settings");
 
       //Seed slider. Usable seeds: 80, 398
-      slider_seed = p.createSlider(80, 398, 80, 1);
+      slider_seed = p.createSlider(80, 1600, 192, 1);
       slider_seed.position();
       slider_seed.id('slidersIndex');
       slider_seed.parent("div_Settings");
@@ -185,8 +196,17 @@ export default function About() {
       label_seed.position();
       label_seed.parent("div_Settings");
 
+      button_nextSeed = p.createButton('Next Seed');
+      button_nextSeed.position(110);
+      button_nextSeed.parent("div_Settings");
+      button_nextSeed.id('nextSeedButton');
+      button_nextSeed.mousePressed(p.buttonNext = () => { slider_seed.value(slider_seed.value() + 1);
+        p.readInputs(true);
+       });
+      
 
-      //Seed slider. Usable seeds: 80, 398
+
+      //Color sliders in RGB format. Left=R, Middle=G, Right=B
       slider_left = p.createSlider(1, 255, 235, 1);
       slider_left.position();
       slider_left.id('slidersIndex');
@@ -219,6 +239,14 @@ export default function About() {
       label_glow.position();
       label_glow.parent("div_Settings");
 
+      slider_BG = p.createSlider(1, 3, 3, 1);
+      slider_BG.position();
+      slider_BG.id('slidersIndex');
+      slider_BG.parent("div_Settings");
+      label_BG = p.createSpan('Background');
+      label_BG.position();
+      label_BG.parent("div_Settings");
+
       //Read inputs of sliders initial values ? 
       slider_size.input(p.getInputs = () => { p.readInputs(true) });
       slider_level.input(p.getInputs = () => { p.readInputs(true) });
@@ -231,6 +259,7 @@ export default function About() {
       slider_middle.input(p.getInputs = () => { p.readInputs(true) });
       slider_right.input(p.getInputs = () => { p.readInputs(true) });
       slider_glow.input(p.getInputs = () => { p.readInputs(true) });
+      slider_BG.input(p.getInputs = () => { p.readInputs(true) });
 
 
       button_seed = p.createButton('Grow');
@@ -244,10 +273,6 @@ export default function About() {
       button_hide.parent("buttonHolder");
       button_hide.id('hideButton');
       button_hide.mousePressed(p.buttonHide = () => { p.showHide() });
-
-      let task_done = false;
-      let last_done = 0;
-
 
       p.readInputs(false);
       p.startGrow();
@@ -302,6 +327,10 @@ export default function About() {
       colMiddle = slider_middle.value();
       colRight = slider_right.value();
 
+      bgSliderValue = slider_BG.value();
+
+      console.log('randSeed:' + randSeed);
+
       glow = slider_glow.value();
 
       if (updateTree && !growing) {
@@ -331,7 +360,19 @@ export default function About() {
       p.clear();
       //p.background(220, 0);
 
-      p.background(backgroundImage);
+      if (bgSliderValue === 1) {
+        p.background(backgroundImage1);
+      } 
+
+      if (bgSliderValue === 2) {
+        p.background(backgroundImage2);
+      } 
+
+      if (bgSliderValue === 3) {
+        p.background(backgroundImage3);
+      } 
+
+
       //p.background('#ffffff');
       //p.setGradient(0, 0, w, h, colorTop, colorBottom, Y_AXIS);
 
@@ -339,7 +380,7 @@ export default function About() {
       //p.stroke('#2b4e46');
 
 
-      p.translate(w / 2, h);
+      p.translate(w / 2, h / 1.27);
 
 
 
@@ -359,6 +400,8 @@ export default function About() {
         return;
 
       p.randomSeed(seed);
+
+
 
       var seed1 = p.random(1000),
         seed2 = p.random(1000);
@@ -517,57 +560,59 @@ export default function About() {
   return (
     <div className='w-full min-h-screen dark:bg-white pb-20'>
 
-      <div className='text-md flex flex-col items-center justify-center mx-auto gap-6 max-w-5xl px-5 sm:px-10 text-left text-gray-900 dark:text-gray-400 dark:bg-black dark:bg-opacity-40'>
+      <div className='text-md flex flex-col items-center justify-center mx-auto gap-2 max-w-5xl px-5 sm:px-10 text-left text-gray-900 dark:text-gray-400 dark:bg-black dark:bg-opacity-40'>
 
-        <h1 className='text-3xl dark:text-white font-semibold text-center mt-7 '>
-          Welcome to Bloom!
+        <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
+          What is Bloom?
         </h1>
 
-        <h1 className='text-3xl dark:text-white font-semibold text-center mb-7 '>
-          A goal tracking website meant to help you visualize and see your progress!
-        </h1>
-        <p>
-          The purpose of Bloom is to provide a way to visualy track your progress within three separate life categories: Mental, Physical and Spiritual,
-          since we often cannot see our individual progress until we step back and take a look at the bigger picture. The reason for the three categories
-          is to provide us a way to compare our progress between them in order to help us become a well-rounded person. Our method of visualization is a little
-          tree that grows with you as you accomplish your goals and habits
+        <h2 className='text-2xl dark:text-white text-center '>
+          Bloom is a goal, habits and journal tracking website meant to help you visualize and see your progress!
+        </h2>
+
+        <p className='text-xl text-gray-600 mt-7'>
+          Let Bloom be your personal growth companion! Watch your aspirations take root and flourish into reality
+          as each goal accomplished adds a vibrant leaf
+          to your thriving tree of progress. With Bloom, cultivate habits, track goals,
+          and witness your journey towards success unfold in a visually captivating way.
         </p>
 
-        <p className='font-bold'>Bloom's Trees are created using P5.JS canvas. The shape is made up of many variables such as: <br /> <br /></p>
+        <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
+          Behind the tech
+        </h1>
 
-        <p className='text-left px-5 sm:px-10'>
+        <h2 className='text-xl dark:text-white text-center '>Bloom's Trees are created recursively using P5.JS canvas. The shape is made up of many variables such as: </h2>
+
+        <p className='text-xl py-5 text-gray-600 text-left px-5'>
           <b>Size</b> - the general scale of tree while keeping proportions, <br />
           <b>Recursion Level</b> - the number of branch levels, <br />
           <b>Length Variation</b> - the variation in length of branches, <br />
           <b>Split Probability</b> - probability that a branch will split into multiple branches, <br />
-          <b>Flower Probabilty</b> - probability that a flower will appear at a branch level.<br /> <br />
+          <b>Flower Probabilty</b> - probability that a flower will appear at a branch level.<br />
         </p>
 
-        <p>And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end.
-          Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.</p>
+        <h2 className='text-xl dark:text-white '>And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end.
+          Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.</h2>
 
       </div>
 
-      <h1 className='text-3xl dark:text-white font font-semibold text-center mt-7 '>
-        P5.js Playground:
+      <h1 className='text-3xl dark:text-white font font-semibold text-center mt-20 '>
+        Try out the Tree creator:
       </h1>
+      <h2 className='text-xl dark:text-white text-center mb-10'>
+        Click on Variables to open options. Click grow to see the tree grow in real time.
+      </h2>
 
       {/* Intro Container */}
       <div className='dark:bg-white dark:bg-opacity-100 mx-auto flex flex-col justify-center'>
 
         <div id="treeHolder" className='bg-white flex justify-center items-center'></div>
-        <div id="underTree" className='mt-[-1px] flex justify-center items-center bg-white'>
-          <img src="/SpiritUnderTree.png" alt='under tree picture' />
-        </div>
 
         <div id="buttonHolder" className='mb-10'>
           <div id="sliderHolder"></div>
         </div>
       </div>  
 
-      <h1 className='text-3xl dark:text-white font font-semibold text-center my-10 '>
-        Create your own tree!
-      </h1>
   </div>      
   );
 }
