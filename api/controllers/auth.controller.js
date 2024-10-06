@@ -105,3 +105,14 @@ export const google = async (req, res, next) => {
         next(error);
     }
 };
+
+export const authenticateToken = (req, res, next) => {
+    if (!req.user) {
+        return next(errorHandler(401, 'Unauthorized'));
+    }
+    if (req.user) {
+        res.status(200).json(req.user);
+    } else {
+        next(error);
+    }
+};
