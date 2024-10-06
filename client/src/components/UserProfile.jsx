@@ -309,14 +309,29 @@ export default function UserProfile() {
               {imageFileUploadError && <Alert color='failure'>{imageFileUploadError}</Alert>}
             
         <Flowbite theme={{ theme: customModalTheme }}>
-                  <TextInput color='gray' type='text' id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
-                  <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
+            {currentUser.email == 'demo@demo.com' ?
+            <>
+            <TextInput color='gray' type='text' id='username' placeholder='username' defaultValue={currentUser.username} disabled={currentUser.email == 'demo@demo.com'} />
+            <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} disabled={currentUser.email == 'demo@demo.com'} />
             <TextInput type='password' id='password' placeholder='password' autoComplete='password' disabled={currentUser.email == 'demo@demo.com'} /> 
-        
+            </>
+            :
+            <> 
+            <TextInput color='gray' type='text' id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
+            <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
+            <TextInput type='password' id='password' placeholder='password' autoComplete='password' disabled={currentUser.email == 'demo@demo.com'} /> 
+            </>
+            }
+            
+            {currentUser.email == 'demo@demo.com' ?
+            <Button type='button' gradientDuoTone="pinkToOrange" outline disabled={loading || imageFileUploading || currentUser.email == 'demo@demo.com'}>
+                {loading || imageFileUploading ? 'Loading...' : 'Update'}
+            </Button>
+            :
             <Button type='submit' gradientDuoTone="pinkToOrange" outline disabled={loading || imageFileUploading || currentUser.email == 'demo@demo.com'}>
                 {loading || imageFileUploading ? 'Loading...' : 'Update'}
             </Button>
-
+            }
 
 
         </Flowbite>
