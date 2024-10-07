@@ -26,6 +26,10 @@ const goalSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        hideDone: {
+            type: String,
+            default: 'visible',
+        },
         createdOn: { 
             type: Date, 
             default: Date.now,

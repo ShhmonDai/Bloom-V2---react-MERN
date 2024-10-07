@@ -115,6 +115,25 @@ export const editgoal = async (req, res, next) => {
     }
 };
 
+export const hideDone = async (req, res, next) => {
+    if (req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to edit this goal'));
+    }
+    try {
+        const editedGoal = await Goal.findByIdAndUpdate(
+            req.params.goalId,
+            {
+                $set: {
+                    hideDone: req.body.hideDone,
+                },
+            },
+            { new: true }
+        );
+        res.status(200).json(editedGoal);
+    } catch (error) {
+        next(error);
+    }
+};
 
 
 export const deletegoal = async (req, res, next) => {

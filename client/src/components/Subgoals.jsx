@@ -34,6 +34,7 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
     const [formDataUpdateSubgoal, setFormDataUpdateSubgoal] = useState({});
     const [formDataAccomplishSubgoal, setFormDataAccomplishSubgoal] = useState({});
 
+    const [hideCompleted, setHideCompleted] = useState('visible');
 
     const [idToDelete, setIdToDelete] = useState({});
 
@@ -49,6 +50,9 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                 if (resSub.ok) {
                     setUserSubGoals(dataSub.subgoals);
                     setTotalSubgoals(dataSub.totalSubgoals);
+                    if (dataSub.goalInfo.hideDone == "hidden") {
+                        setHideCompleted('hidden');
+                    }   
                     setFinishedSubgoals(dataSub.finishedSubgoals);
                     sendDataToParent(dataSub.categoryScore);
                 }
@@ -58,7 +62,6 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
         };
 
         if (currentUser) {
-
             fetchSubGoals();
         }
     }, [currentUser._id, category, reload]); 
@@ -209,11 +212,34 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
         'spirit': ' bg-gradient-to-b from-sky-500 to-teal-500',
     };
 
-    const [hideCompleted, setHideCompleted] = useState('false');
 
-    const handleHide = () => {
-        {hideCompleted == 'false' ? setHideCompleted('hidden') : setHideCompleted('false') }
-    }  
+    const hideDone = async (hideDoneForm) => {
+
+        try {
+            const res = await fetch(`/api/goal/hideDone/${goalId}/${currentUser._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(hideDoneForm),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setPublishError(data.message);
+                return;
+            }
+
+            if (res.ok) {
+                setPublishError(null);
+                hideCompleted == 'hidden' ? setHideCompleted('visible') : setHideCompleted('hidden');
+                setFormDataUpdateSubgoal({});
+            }
+        } catch (error) {
+            setPublishError('Something went wrong');
+        }
+
+
+    };
 
 
   
@@ -239,13 +265,17 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                 </div>
             </div>
 
-            {totalSubgoals >= 10 ? (
+            {totalSubgoals >= 5 ? (
                 <div className='flex flex-row justify-center gap-16'>
-                <button type='button' className='text-green-500 font-bold' onClick={handleHide} >Hide Done</button>
+                    {hideCompleted == 'hidden' ?
+                            <button type='button' className='text-green-500 font-bold' onClick={() => hideDone({ hideDone: "visible" })} >Show Done</button>
+                        :
+                            <button type='button' className='text-green-500 font-bold' onClick={() => hideDone({ hideDone: "hidden" })} >Hide Done</button>
+                    }
                     <button type='button' className='text-blue-500 font-bold' onClick={() => {
                         setFormDataAddSubgoal({ ...formDataAddSubgoal, goalId: goalId, userId: currentUser._id, category: category, priority: 2 });
                         setShowModalAddSubgoal(true);
-                    }}>Add new</button>
+                    }}>Add Task</button>
             </div>
             ) : (<></>) }
 

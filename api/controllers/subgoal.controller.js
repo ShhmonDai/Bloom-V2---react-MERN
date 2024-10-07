@@ -1,5 +1,7 @@
 import { errorHandler } from '../utils/error.js';
 import Subgoal from '../models/subgoal.model.js';
+import Goal from '../models/goal.model.js';
+
 
 export const createsubgoal = async (req, res, next) => {
     try {
@@ -74,7 +76,9 @@ export const getgoalsubgoals = async (req, res, next) => {
             accomplished: true,
         });
 
-        res.status(200).json({subgoals, finishedSubgoals, totalSubgoals, categoryScore});
+        const goalInfo = await Goal.findById(req.params.goalId);
+
+        res.status(200).json({subgoals, finishedSubgoals, totalSubgoals, categoryScore, goalInfo});
     } catch (error) {
         next(error);
     }
