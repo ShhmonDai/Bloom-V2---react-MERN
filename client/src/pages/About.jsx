@@ -524,208 +524,701 @@ export default function About() {
     
     let cordsArray = [
       [
-        241,
-        170
+        185,
+        305
       ],
       [
-        220,
-        181
+        176,
+        304
       ],
       [
-        204,
-        192
+        168,
+        300
       ],
       [
-        190,
-        199
+        160,
+        300
       ],
       [
-        187,
-        213
-      ],
-      [
-        183,
-        241
-      ],
-      [
-        175,
-        274
-      ],
-      [
-        171,
-        286
-      ],
-      [
-        166,
+        153,
         302
       ],
       [
-        162,
-        314
+        144,
+        307
       ],
       [
-        148,
-        339
+        139,
+        310
       ],
       [
         127,
-        356
+        307
       ],
       [
-        113,
-        369
+        116,
+        306
       ],
       [
-        99,
-        409
+        109,
+        308
       ],
       [
-        118,
-        423
+        102,
+        303
       ],
       [
-        195,
-        430
+        98,
+        305
       ],
       [
-        242,
-        433
+        90,
+        304
       ],
       [
-        303,
-        435
+        84,
+        305
       ],
       [
-        365,
-        435
+        77,
+        300
       ],
       [
-        412,
-        429
+        67,
+        288
       ],
       [
-        445,
-        429
+        68,
+        279
       ],
       [
-        459,
-        411
+        71,
+        271
       ],
       [
-        430,
-        375
+        75,
+        267
       ],
       [
-        420,
-        362
+        66,
+        267
       ],
       [
-        407,
-        340
+        61,
+        262
       ],
       [
-        399,
-        327
+        58,
+        255
       ],
       [
-        388,
-        312
+        58,
+        250
       ],
       [
-        385,
-        292
-      ],
-      [
-        381,
-        273
-      ],
-      [
-        376,
+        63,
         256
       ],
       [
-        372,
-        235
+        68,
+        260
       ],
       [
-        367,
-        207
+        71,
+        252
       ],
       [
-        364,
-        200
+        71,
+        247
       ],
       [
-        355,
+        65,
+        247
+      ],
+      [
+        61,
+        246
+      ],
+      [
+        64,
+        241
+      ],
+      [
+        67,
+        241
+      ],
+      [
+        72,
+        243
+      ],
+      [
+        79,
+        243
+      ],
+      [
+        86,
+        243
+      ],
+      [
+        89,
+        244
+      ],
+      [
+        99,
+        237
+      ],
+      [
+        99,
+        232
+      ],
+      [
+        103,
+        228
+      ],
+      [
+        110,
+        223
+      ],
+      [
+        108,
+        218
+      ],
+      [
+        113,
+        215
+      ],
+      [
+        113,
+        204
+      ],
+      [
+        119,
         186
       ],
       [
-        344,
-        175
+        123,
+        176
       ],
       [
-        334,
-        172
+        126,
+        155
       ],
       [
-        316,
-        163
+        130,
+        141
       ],
       [
-        309,
-        159
+        139,
+        132
       ],
       [
-        308,
-        159
+        152,
+        126
       ],
       [
-        310,
-        95
+        164,
+        120
       ],
       [
-        302,
+        169,
+        116
+      ],
+      [
+        171,
+        100
+      ],
+      [
+        166,
+        93
+      ],
+      [
+        165,
+        83
+      ],
+      [
+        167,
         81
       ],
       [
-        274,
-        74
+        165,
+        76
       ],
       [
-        260,
-        75
+        166,
+        67
       ],
       [
-        238,
-        87
+        171,
+        58
       ],
       [
-        236,
-        97
+        179,
+        51
       ],
       [
-        237,
-        124
+        183,
+        49
       ],
       [
-        246,
-        157
+        179,
+        41
       ],
       [
-        247,
+        181,
+        37
+      ],
+      [
+        186,
+        31
+      ],
+      [
+        187,
+        31
+      ]
+    ];
+    let cordsArray1 = [
+      [
+        187,
+        302
+      ],
+      [
+        190,
+        302
+      ],
+      [
+        197,
+        301
+      ],
+      [
+        205,
+        303
+      ],
+      [
+        211,
+        302
+      ],
+      [
+        221,
+        306
+      ],
+      [
+        233,
+        305
+      ],
+      [
+        243,
+        304
+      ],
+      [
+        249,
+        308
+      ],
+      [
+        261,
+        305
+      ],
+      [
+        275,
+        305
+      ],
+      [
+        287,
+        306
+      ],
+      [
+        300,
+        299
+      ],
+      [
+        305,
+        285
+      ],
+      [
+        305,
+        273
+      ],
+      [
+        298,
+        265
+      ],
+      [
+        294,
+        260
+      ],
+      [
+        302,
+        258
+      ],
+      [
+        305,
+        259
+      ],
+      [
+        315,
+        253
+      ],
+      [
+        316,
+        239
+      ],
+      [
+        312,
+        244
+      ],
+      [
+        310,
+        250
+      ],
+      [
+        307,
+        246
+      ],
+      [
+        305,
+        241
+      ],
+      [
+        307,
+        237
+      ],
+      [
+        313,
+        237
+      ],
+      [
+        310,
+        233
+      ],
+      [
+        304,
+        233
+      ],
+      [
+        302,
+        235
+      ],
+      [
+        295,
+        236
+      ],
+      [
+        290,
+        236
+      ],
+      [
+        287,
+        238
+      ],
+      [
+        279,
+        237
+      ],
+      [
+        272,
+        229
+      ],
+      [
+        269,
+        222
+      ],
+      [
+        263,
+        217
+      ],
+      [
+        263,
+        211
+      ],
+      [
+        263,
+        202
+      ],
+      [
+        256,
+        192
+      ],
+      [
+        254,
+        179
+      ],
+      [
+        255,
         166
       ],
       [
-        238,
-        169
+        246,
+        143
+      ],
+      [
+        242,
+        135
+      ],
+      [
+        226,
+        127
+      ],
+      [
+        208,
+        117
+      ],
+      [
+        207,
+        101
+      ],
+      [
+        210,
+        92
+      ],
+      [
+        213,
+        85
+      ],
+      [
+        209,
+        83
+      ],
+      [
+        211,
+        72
+      ],
+      [
+        208,
+        61
+      ],
+      [
+        201,
+        51
+      ],
+      [
+        196,
+        47
+      ],
+      [
+        197,
+        40
+      ],
+      [
+        195,
+        34
+      ],
+      [
+        188,
+        30
       ]
     ]
 ;
-    let cordsArray1 = [];
-    let cordsArray2 = [];
-    let cordsArray3 = [];
-    let cordsArray4 = [];
-    let cordsArray5 = [];
+    let cordsArray2 = [
+      [
+        169,
+        115
+      ],
+      [
+        171,
+        136
+      ],
+      [
+        177,
+        157
+      ],
+      [
+        189,
+        183
+      ],
+      [
+        199,
+        158
+      ],
+      [
+        204,
+        131
+      ],
+      [
+        207,
+        117
+      ]
+    ]
+;
+    let cordsArray3 = [
+      [
+        151,
+        162
+      ],
+      [
+        151,
+        175
+      ],
+      [
+        149,
+        195
+      ],
+      [
+        149,
+        213
+      ],
+      [
+        152,
+        229
+      ],
+      [
+        155,
+        233
+      ],
+      [
+        155,
+        233
+      ],
+      [
+        149,
+        243
+      ],
+      [
+        142,
+        251
+      ],
+      [
+        135,
+        254
+      ],
+      [
+        125,
+        253
+      ],
+      [
+        147,
+        254
+      ],
+      [
+        163,
+        257
+      ],
+      [
+        173,
+        259
+      ],
+      [
+        181,
+        262
+      ],
+      [
+        195,
+        253
+      ],
+      [
+        205,
+        248
+      ],
+      [
+        215,
+        250
+      ],
+      [
+        229,
+        248
+      ],
+      [
+        239,
+        248
+      ],
+      [
+        243,
+        251
+      ],
+      [
+        230,
+        241
+      ],
+      [
+        222,
+        232
+      ],
+      [
+        222,
+        225
+      ],
+      [
+        227,
+        220
+      ],
+      [
+        230,
+        209
+      ],
+      [
+        229,
+        193
+      ],
+      [
+        231,
+        171
+      ],
+      [
+        233,
+        164
+      ]
+    ]
+;
+    let cordsArray4 = [
+      [
+        170,
+        83
+      ],
+      [
+        174,
+        104
+      ],
+      [
+        184,
+        117
+      ],
+      [
+        191,
+        117
+      ],
+      [
+        201,
+        106
+      ],
+      [
+        205,
+        82
+      ]
+    ]
+;
+    let cordsArray5 = [
+      [
+        184,
+        282
+      ],
+      [
+        193,
+        274
+      ],
+      [
+        194,
+        268
+      ],
+      [
+        205,
+        264
+      ],
+      [
+        222,
+        259
+      ],
+      [
+        245,
+        257
+      ],
+      [
+        253,
+        255
+      ],
+      [
+        260,
+        253
+      ]
+    ]
+;
 
     let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5];
     let selectedArray = 0;
@@ -733,21 +1226,15 @@ export default function About() {
     //get width of parent div
     let b = document.getElementById("treeHolder2");
     let w = 0;
-    b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
+    b.clientWidth < 375 ? (w = b.clientWidth) : (w = 375);
     let h = 0;
 
     p.getHeight = (w) => {
-      if (w <= 400) {
-        h = 400;
+      if (w < 375) {
+        h = w-25;
       }
-
-      else if (w / 2 <= 650) {
-        h = w / 1.1;
-
-      }
-
-      if (w > 650) {
-        h = 720;
+      if (w >= 375) {
+        h = 350;
       }
     }
 
@@ -756,21 +1243,16 @@ export default function About() {
     let heightScale = 1;
     let widthScale = 1;
 
-
     p.getScale = (h, w) => {
-      if (h < 590) {
-        heightScale = (h / 590);
+      if (h < 350) {
+        heightScale = (h / 350);
       }
-      if (w < 650) {
-        widthScale = (w / 650);
+      if (w < 400) {
+        widthScale = (w / 400);
       }
     }
 
  
-
-
-
-
     p.preload = () => {
       backgroundImage1 = p.loadImage('meditationBG.png');
     }
@@ -794,29 +1276,31 @@ export default function About() {
       button3.mousePressed(p.nextArray);
     }
 
+    
     p.windowResized = () => {
       b = document.getElementById("treeHolder2");
-      b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
+      b.clientWidth < 375 ? (w = b.clientWidth) : (w = 375);
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
       p.getScale(h, w);
-
-      
-
     }
-
+    
+   
     p.draw = () => {
       p.clear();
       p.drawingContext.shadowBlur = 0;
+      //p.scale(1);
       p.background(backgroundImage1);
+      p.strokeWeight(1);
+      p.stroke(p.color(255, 255, 255, 50));
       p.line(w/2,0, w/2, h);
 
       
-      p.fill(255, 60, 100);
-      p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
-      p.stroke(p.color(255,255,255,50));
-      p.strokeWeight(1);
+      //p.fill(255, 60, 100);
+      //p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
+      //p.stroke(p.color(255,255,255,50));
+      //p.strokeWeight(1);
       
       p.textSize(15);
       p.fill(255);
@@ -825,7 +1309,9 @@ export default function About() {
       p.textAlign(p.CENTER, p.CENTER);
       p.text("Line selected: " + selectedArray, w/2, 50);
       
-      p.scale(widthScale + 0.17, heightScale + 0.17);
+      if (w < 375){
+        p.scale(widthScale + 0.05, heightScale + 0.02);
+      }
 
       p.drawPoints(0);
       p.drawPoints(1);
@@ -840,8 +1326,10 @@ export default function About() {
 
     p.drawPoints = (selectedArray) => {
 
+
       for (let i = 0; i < arrayOfArrays[selectedArray].length; i++) {
 
+        
         p.stroke('white');
         p.strokeWeight(3);
         
@@ -978,15 +1466,18 @@ export default function About() {
 
       </div>  
 
-      <div className='dark:bg-white dark:bg-opacity-100 mx-auto max-w-5xl px-5 sm:px-10  flex flex-col justify-center mt-10'> 
+      <div className='dark:bg-white dark:bg-opacity-100 mx-auto max-w-5xl sm:px-10 gap-2 flex flex-col justify-center mt-10'> 
 
         <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
-          Point Coordinate Creator
+          Constellation Coordinates Creator
         </h1>
 
-        <h2 className='text-xl dark:text-white text-center mb-10'>Tool I've made for generating coordinates for the progressively drawn dashboard category statistics pictures  </h2>
+        <h2 className='text-xl dark:text-white text-center mb-5'>Tool I've made for generating coordinates for the progressively drawn dashboard category statistics pictures.
+          You can click on the picture to trace lines and save the lines' coordinates to PC as a JSON file, which can later be exported to the drawings.  </h2>
 
-        <div id="treeHolder2" className='mt-5 bg-white flex justify-center items-center'></div>
+        <h2 className='text-xl dark:text-white text-center mb-10'>In the future this lineart will be progressively drawn over the picture based on users progress in its category </h2>
+
+        <div id="treeHolder2" className='mt-5 bg-white flex justify-center flex-wrap'></div>
         <div id="buttonHolder2" className='mb-10 flex justify-center'></div>
 
       </div>
