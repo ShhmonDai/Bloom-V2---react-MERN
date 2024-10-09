@@ -382,13 +382,7 @@ export default function About() {
 
       p.translate(w / 2, h / 1.27);
 
-
-
       p.scale(treeScale, -treeScale);
-
-      //console.log('Tree Scale: ' + treeScale);
-
-      p.translate(0, 0);
 
       p.branch(1, randSeed);
 
@@ -520,27 +514,383 @@ export default function About() {
       return p.rand2() + randBias;
     }
 
-    p.setGradient = (x, y, w, h, c1, c2, axis) => {
-      p.noFill();
 
-      if (axis === Y_AXIS) {
-        // Top to bottom gradient
-        for (let i = y; i <= y + h; i++) {
-          let inter = p.map(i, y, y + h, 0, 1);
-          let c = p.lerpColor(c1, c2, inter);
-          p.stroke(c);
-          p.line(x, i, x + w, i);
-        }
-      } else if (axis === X_AXIS) {
-        // Left to right gradient
-        for (let i = x; i <= x + w; i++) {
-          let inter = p.map(i, x, x + w, 0, 1);
-          let c = p.lerpColor(c1, c2, inter);
-          p.stroke(c);
-          p.line(i, y, i, y + h);
-        }
+  }
+
+  const SketchPoints = (p) => {
+
+    let backgroundImage1;
+
+    
+    let cordsArray = [
+      [
+        241,
+        170
+      ],
+      [
+        220,
+        181
+      ],
+      [
+        204,
+        192
+      ],
+      [
+        190,
+        199
+      ],
+      [
+        187,
+        213
+      ],
+      [
+        183,
+        241
+      ],
+      [
+        175,
+        274
+      ],
+      [
+        171,
+        286
+      ],
+      [
+        166,
+        302
+      ],
+      [
+        162,
+        314
+      ],
+      [
+        148,
+        339
+      ],
+      [
+        127,
+        356
+      ],
+      [
+        113,
+        369
+      ],
+      [
+        99,
+        409
+      ],
+      [
+        118,
+        423
+      ],
+      [
+        195,
+        430
+      ],
+      [
+        242,
+        433
+      ],
+      [
+        303,
+        435
+      ],
+      [
+        365,
+        435
+      ],
+      [
+        412,
+        429
+      ],
+      [
+        445,
+        429
+      ],
+      [
+        459,
+        411
+      ],
+      [
+        430,
+        375
+      ],
+      [
+        420,
+        362
+      ],
+      [
+        407,
+        340
+      ],
+      [
+        399,
+        327
+      ],
+      [
+        388,
+        312
+      ],
+      [
+        385,
+        292
+      ],
+      [
+        381,
+        273
+      ],
+      [
+        376,
+        256
+      ],
+      [
+        372,
+        235
+      ],
+      [
+        367,
+        207
+      ],
+      [
+        364,
+        200
+      ],
+      [
+        355,
+        186
+      ],
+      [
+        344,
+        175
+      ],
+      [
+        334,
+        172
+      ],
+      [
+        316,
+        163
+      ],
+      [
+        309,
+        159
+      ],
+      [
+        308,
+        159
+      ],
+      [
+        310,
+        95
+      ],
+      [
+        302,
+        81
+      ],
+      [
+        274,
+        74
+      ],
+      [
+        260,
+        75
+      ],
+      [
+        238,
+        87
+      ],
+      [
+        236,
+        97
+      ],
+      [
+        237,
+        124
+      ],
+      [
+        246,
+        157
+      ],
+      [
+        247,
+        166
+      ],
+      [
+        238,
+        169
+      ]
+    ]
+;
+    let cordsArray1 = [];
+    let cordsArray2 = [];
+    let cordsArray3 = [];
+    let cordsArray4 = [];
+    let cordsArray5 = [];
+
+    let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5];
+    let selectedArray = 0;
+
+    //get width of parent div
+    let b = document.getElementById("treeHolder2");
+    let w = 0;
+    b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
+    let h = 0;
+
+    p.getHeight = (w) => {
+      if (w <= 400) {
+        h = 400;
+      }
+
+      else if (w / 2 <= 650) {
+        h = w / 1.1;
+
+      }
+
+      if (w > 650) {
+        h = 720;
       }
     }
+
+    p.getHeight(w);
+
+    let heightScale = 1;
+    let widthScale = 1;
+
+
+    p.getScale = (h, w) => {
+      if (h < 590) {
+        heightScale = (h / 590);
+      }
+      if (w < 650) {
+        widthScale = (w / 650);
+      }
+    }
+
+ 
+
+
+
+
+    p.preload = () => {
+      backgroundImage1 = p.loadImage('meditationBG.png');
+    }
+
+    p.setup = () => {
+      //create a canvas instance
+      p.createCanvas(w, h).parent("treeHolder2");
+
+      p.getScale(h, w);
+
+      let button = p.createButton('Save Line to PC').parent("buttonHolder2");
+      button.position(-20, 0, 'relative');
+      button.mousePressed(p.buttonClicked);
+
+      let button2 = p.createButton('Undo Point').parent("buttonHolder2");
+      button2.position(0, 0, 'relative');
+      button2.mousePressed(p.undo);
+
+      let button3 = p.createButton('Next Line').parent("buttonHolder2");
+      button3.position(20, 0, 'relative');
+      button3.mousePressed(p.nextArray);
+    }
+
+    p.windowResized = () => {
+      b = document.getElementById("treeHolder2");
+      b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
+      p.getHeight(w);
+
+      p.resizeCanvas(w, h);
+      p.getScale(h, w);
+
+      
+
+    }
+
+    p.draw = () => {
+      p.clear();
+      p.drawingContext.shadowBlur = 0;
+      p.background(backgroundImage1);
+      p.line(w/2,0, w/2, h);
+
+      
+      p.fill(255, 60, 100);
+      p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
+      p.stroke(p.color(255,255,255,50));
+      p.strokeWeight(1);
+      
+      p.textSize(15);
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(4);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.text("Line selected: " + selectedArray, w/2, 50);
+      
+      p.scale(widthScale + 0.17, heightScale + 0.17);
+
+      p.drawPoints(0);
+      p.drawPoints(1);
+      p.drawPoints(2);
+      p.drawPoints(3);
+      p.drawPoints(4);
+      p.drawPoints(5);
+
+
+
+    }
+
+    p.drawPoints = (selectedArray) => {
+
+      for (let i = 0; i < arrayOfArrays[selectedArray].length; i++) {
+
+        p.stroke('white');
+        p.strokeWeight(3);
+        
+        p.glow(p.color(130, 184, 255, 255), 10);
+
+        var dot = p.createVector(arrayOfArrays[selectedArray][i][0], arrayOfArrays[selectedArray][i][1]);
+        p.point(dot);
+        p.point(dot);
+
+        p.strokeWeight(1);
+        p.stroke(p.color(255, 255, 255, 150));
+
+        if(i >= 1) {
+          p.line(arrayOfArrays[selectedArray][i - 1][0], arrayOfArrays[selectedArray][i - 1][1], arrayOfArrays[selectedArray][i][0], arrayOfArrays[selectedArray][i][1]);
+        }
+
+      }
+    }
+
+     p.glow = (glowColor, blurriness) => {
+      p.drawingContext.shadowColor = glowColor;
+      p.drawingContext.shadowBlur = blurriness;
+    }
+
+    p.mousePressed = () => {
+      if (p.mouseX > 0 && p.mouseX < w && p.mouseY > 0 && p.mouseY < h) {
+        var cords = [p.round(p.mouseX), p.round(p.mouseY)]; 
+        arrayOfArrays[selectedArray].push(cords);
+      }
+    }
+
+    p.undo = () => {
+        arrayOfArrays[selectedArray].pop();
+    }
+
+    p.buttonClicked = () => {
+      p.saveJSON(arrayOfArrays[selectedArray], `numbers${selectedArray}.json`);
+    }
+
+    p.nextArray = () => {
+      if (selectedArray != 5) {
+        selectedArray = selectedArray + 1;
+      }
+      else {
+        selectedArray = 0;
+      }
+    }
+
+
 
   }
 
@@ -549,7 +899,10 @@ export default function About() {
 
     const myP5 = new p5(Sketch);
 
-    return () => myP5.remove();
+    const pointsP5 = new p5(SketchPoints);
+
+    return () => {myP5.remove(), pointsP5.remove();}
+
 
   }, [currentUser]);
 
@@ -562,20 +915,29 @@ export default function About() {
 
       <div className='text-md flex flex-col items-center justify-center mx-auto gap-2 max-w-5xl px-5 sm:px-10 text-left text-gray-900 dark:text-gray-400 dark:bg-black dark:bg-opacity-40'>
 
+        <h1 className='text-3xl lg:text-5xl font-bold text-center mt-7'>
+          Track, Achieve, Thrive:
+          <h1>
+            Bloom your way to success
+          </h1>
+        </h1>
+
+        <h1 className='text-xl text-center text-gray-600 sm:px-10'>
+          Welcome to Bloom, your personal growth companion! Watch your aspirations take root and flourish into reality
+          as each goal accomplished adds a vibrant leaf
+          to your thriving tree of progress. With Bloom, cultivate habits, track goals,
+          and witness your journey towards success unfold in a visually captivating way.
+        </h1>
+
+
         <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
           What is Bloom?
         </h1>
 
-        <h2 className='text-2xl dark:text-white text-center '>
+        <h2 className='text-xl dark:text-white text-center '>
           Bloom is a goal, habits and journal tracking website meant to help you visualize and see your progress!
         </h2>
 
-        <p className='text-xl text-gray-600 mt-7'>
-          Let Bloom be your personal growth companion! Watch your aspirations take root and flourish into reality
-          as each goal accomplished adds a vibrant leaf
-          to your thriving tree of progress. With Bloom, cultivate habits, track goals,
-          and witness your journey towards success unfold in a visually captivating way.
-        </p>
 
         <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
           Behind the tech
@@ -595,10 +957,10 @@ export default function About() {
           Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.</h2>
 
         <h1 className='text-3xl dark:text-white font font-semibold text-center mt-20 '>
-          Try out the Tree Creator:
+          Try out the Tree Creator
         </h1>
         <h2 className='text-xl dark:text-white mb-10'>
-          Click on Variables to open options. Click grow to see the tree grow in real time.
+          Click on Variables to open options. Click on Grow to see the tree grow in real time.
         </h2>
 
       </div>
@@ -611,7 +973,24 @@ export default function About() {
         <div id="buttonHolder" className='mb-10'>
           <div id="sliderHolder"></div>
         </div>
+
+
+
       </div>  
+
+      <div className='dark:bg-white dark:bg-opacity-100 mx-auto max-w-5xl px-5 sm:px-10  flex flex-col justify-center mt-10'> 
+
+        <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
+          Point Coordinate Creator
+        </h1>
+
+        <h2 className='text-xl dark:text-white text-center mb-10'>Tool I've made for generating coordinates for the progressively drawn dashboard category statistics pictures  </h2>
+
+        <div id="treeHolder2" className='mt-5 bg-white flex justify-center items-center'></div>
+        <div id="buttonHolder2" className='mb-10 flex justify-center'></div>
+
+      </div>
+        
 
   </div>      
   );
