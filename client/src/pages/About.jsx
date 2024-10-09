@@ -1220,7 +1220,14 @@ export default function About() {
     ]
 ;
 
-    let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5];
+    let cordsArray6 = [];
+    let cordsArray7 = [];
+    let cordsArray8 = [];
+    let cordsArray9 = [];
+    let cordsArray10 = [];
+
+
+    let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5, cordsArray6, cordsArray7, cordsArray8, cordsArray9, cordsArray10];
     let selectedArray = 0;
 
     //get width of parent div
@@ -1271,9 +1278,14 @@ export default function About() {
       button2.position(0, 0, 'relative');
       button2.mousePressed(p.undo);
 
+      let button4 = p.createButton('Prev Line').parent("buttonHolder2");
+      button4.position(20, 0, 'relative');
+      button4.mousePressed(p.prevArray);
+
       let button3 = p.createButton('Next Line').parent("buttonHolder2");
-      button3.position(20, 0, 'relative');
+      button3.position(40, 0, 'relative');
       button3.mousePressed(p.nextArray);
+
     }
 
     
@@ -1319,7 +1331,11 @@ export default function About() {
       p.drawPoints(3);
       p.drawPoints(4);
       p.drawPoints(5);
-
+      p.drawPoints(6);
+      p.drawPoints(7);
+      p.drawPoints(8);
+      p.drawPoints(9);
+      p.drawPoints(10);
 
 
     }
@@ -1370,11 +1386,20 @@ export default function About() {
     }
 
     p.nextArray = () => {
-      if (selectedArray != 5) {
+      if (selectedArray != 10) {
         selectedArray = selectedArray + 1;
       }
       else {
         selectedArray = 0;
+      }
+    }
+
+    p.prevArray = () => {
+      if (selectedArray != 0) {
+        selectedArray = selectedArray - 1;
+      }
+      else {
+        selectedArray = 10;
       }
     }
 
