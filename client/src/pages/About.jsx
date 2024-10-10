@@ -1230,6 +1230,12 @@ export default function About() {
     let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5, cordsArray6, cordsArray7, cordsArray8, cordsArray9, cordsArray10];
     let selectedArray = 0;
 
+    let prog = 1,
+    maxLevel = 100,
+    growing = false;
+
+    var selected = 0;
+
     //get width of parent div
     let b = document.getElementById("treeHolder2");
     let w = 0;
@@ -1286,6 +1292,12 @@ export default function About() {
       button3.position(40, 0, 'relative');
       button3.mousePressed(p.nextArray);
 
+      let button5 = p.createButton('Grow').parent("buttonHolder2");
+      button5.position(0, 50, 'relative');
+      button5.mousePressed(p.startGrow);
+
+      p.startGrow();
+
     }
 
     
@@ -1325,49 +1337,68 @@ export default function About() {
         p.scale(widthScale + 0.05, heightScale + 0.02);
       }
 
-      p.drawPoints(0);
-      p.drawPoints(1);
-      p.drawPoints(2);
-      p.drawPoints(3);
-      p.drawPoints(4);
-      p.drawPoints(5);
-      p.drawPoints(6);
-      p.drawPoints(7);
-      p.drawPoints(8);
-      p.drawPoints(9);
-      p.drawPoints(10);
 
-
-    }
-
-    p.drawPoints = (selectedArray) => {
-
-
-      for (let i = 0; i < arrayOfArrays[selectedArray].length; i++) {
-
-        
-        p.stroke('white');
-        p.strokeWeight(3);
-        
-        p.glow(p.color(130, 184, 255, 255), 10);
-
-        var dot = p.createVector(arrayOfArrays[selectedArray][i][0], arrayOfArrays[selectedArray][i][1]);
-        p.point(dot);
-        p.point(dot);
-
-        p.strokeWeight(1);
-        p.stroke(p.color(255, 255, 255, 150));
-
-        if(i >= 1) {
-          p.line(arrayOfArrays[selectedArray][i - 1][0], arrayOfArrays[selectedArray][i - 1][1], arrayOfArrays[selectedArray][i][0], arrayOfArrays[selectedArray][i][1]);
-        }
+      for(var j = 0; j <= 10; j++){
+        p.drawPoints(0, j);
 
       }
-    }
 
-     p.glow = (glowColor, blurriness) => {
-      p.drawingContext.shadowColor = glowColor;
-      p.drawingContext.shadowBlur = blurriness;
+      /*var counter = 0;
+
+      var looper = setInterval(function () {
+        counter++;
+        console.log("Counter is: " + counter);
+
+        if (counter >= 5) {
+          clearInterval(looper);
+        }
+
+      }, 3000);
+
+      */
+
+      p.noLoop();
+    }
+    
+
+    p.drawPoints = (level, array) => {
+
+      var i=array;
+
+        if (prog < level)
+          return;
+        
+        if (level < maxLevel) {
+          
+          p.stroke('white');
+          p.strokeWeight(3);
+          
+          p.glow(p.color(130, 184, 255, 255), 10);
+          
+          if (level < arrayOfArrays[i].length){
+            var dot = p.createVector(arrayOfArrays[i][level][0], arrayOfArrays[i][level][1]);
+            p.point(dot);
+            p.point(dot);
+          }
+          
+
+          p.strokeWeight(1);
+          p.stroke(p.color(255, 255, 255, 150));
+          
+          if (level >= 1 && level < arrayOfArrays[i].length) {
+            p.line(arrayOfArrays[i][level - 1][0], arrayOfArrays[i][level - 1][1], arrayOfArrays[i][level][0], arrayOfArrays[i][level][1]);
+          }
+          
+          p.push();
+          p.drawPoints(level +1, array);
+          p.pop();
+        }
+          
+    }
+      
+      p.glow = (glowColor, blurriness) => {
+        p.drawingContext.shadowColor = glowColor;
+        p.drawingContext.shadowBlur = blurriness;
     }
 
     p.mousePressed = () => {
@@ -1401,6 +1432,33 @@ export default function About() {
       else {
         selectedArray = 10;
       }
+    }
+
+    p.startGrow = () => {
+      growing = true;
+      prog = 1;
+      p.grow();
+    }
+
+    p.grow = () => {
+      if (prog > (maxLevel + 2)) {
+        prog = maxLevel + 2;
+
+        p.loop();
+        growing = false;
+        return;
+      }
+
+      var startTime = p.millis();
+      p.loop();
+      var diff = p.millis() - startTime;
+
+      prog += maxLevel / 2 * Math.max(diff, 20) / 700;
+      setTimeout(p.grow, Math.max(1, 20 - diff));
+    }
+
+    p.rand2 = () => {
+      return p.random(2000) / 1000 - 1;
     }
 
 
