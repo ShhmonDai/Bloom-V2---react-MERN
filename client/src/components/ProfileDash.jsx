@@ -41,9 +41,15 @@ export default function ProfileDash() {
   const [completedBodyHabits, setCompletedBodyHabits] = useState(0);
   const [completedSpiritHabits, setCompletedSpiritHabits] = useState(0);
 
-  const [mindHabitsLastMonth, setMindHabitsLastMonth] = useState(0);
-  const [bodyHabitsLastMonth, setBodyHabitsLastMonth] = useState(0);
-  const [spiritHabitsLastMonth, setSpiritHabitsLastMonth] = useState(0);
+  const [totalmindHabits, settotalMindHabits] = useState(0);
+  const [totalbodyHabits, settotalBodyHabits] = useState(0);
+  const [totalspiritHabits, settotalSpiritHabits] = useState(0);
+
+
+
+  const [mindHabitsLastWeek, setMindHabitsLastWeek] = useState(0);
+  const [bodyHabitsLastWeek, setBodyHabitsLastWeek] = useState(0);
+  const [spiritHabitsLastWeek, setSpiritHabitsLastWeek] = useState(0);
 
   const [mindSubgoalsLastMonth, setMindSubgoalsLastMonth] = useState(0);
   const [bodySubgoalsLastMonth, setBodySubgoalsLastMonth] = useState(0);
@@ -133,6 +139,10 @@ export default function ProfileDash() {
           setTotalBodySubgoals(data.totalBodySubgoals);
           setTotalSpiritSubgoals(data.totalSpiritSubgoals);
 
+          settotalMindHabits(data.totalMindHabits);
+          settotalBodyHabits(data.totalBodyHabits);
+          settotalSpiritHabits(data.totalSpiritHabits);
+
           setCompletedMindSubgoals(data.completedMindSubgoals);
           setCompletedBodySubgoals(data.completedBodySubgoals);
           setCompletedSpiritSubgoals(data.completedSpiritSubgoals);
@@ -149,16 +159,16 @@ export default function ProfileDash() {
             setCompletedSpiritHabits(data.spiritHabitScore[0].total);
           }
 
-          if (data.mindHabitsLastMonth.length > 0) {
-            setMindHabitsLastMonth(data.mindHabitsLastMonth[0].total);
+          if (data.mindHabitsLastWeek.length > 0) {
+            setMindHabitsLastWeek(data.mindHabitsLastWeek[0].total);
           }
 
-          if (data.bodyHabitsLastMonth.length > 0) {
-            setBodyHabitsLastMonth(data.bodyHabitsLastMonth[0].total);
+          if (data.bodyHabitsLastWeek.length > 0) {
+            setBodyHabitsLastWeek(data.bodyHabitsLastWeek[0].total);
           }
 
-          if (data.spiritHabitsLastMonth.length > 0) {
-            setSpiritHabitsLastMonth(data.spiritHabitsLastMonth[0].total);
+          if (data.spiritHabitsLastWeek.length > 0) {
+            setSpiritHabitsLastWeek(data.spiritHabitsLastWeek[0].total);
           }
 
           setMindSubgoalsLastMonth(data.mindSubgoalsLastMonth);
@@ -387,7 +397,7 @@ export default function ProfileDash() {
                 <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                   <div className='flex justify-between items-center'>
                     <div className='w-8/12'>
-                      <h3 className='text-gray-500 text-lg font-semibold uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> </h3>
+                      <h3 className='text-gray-500 text-lg font-semibold'><span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> tasks</h3>
                       {/* Mind Goals Loading Bar */}
                     <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
                         <div className='mx-1 my-[2px] w-full bg-indigo-50'>
@@ -411,7 +421,7 @@ export default function ProfileDash() {
                 <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                   <div className='flex justify-between items-center'>
                     <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg font-semibold uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> </h3>
+                    <h3 className='text-gray-500 text-lg font-semibold'><span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> tasks</h3>
                       {/* Body Goals Loading Bar */}
                     <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
                         <div className='mx-1 my-[2px] w-full bg-indigo-50'>
@@ -436,7 +446,7 @@ export default function ProfileDash() {
                 <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                   <div className='flex justify-between items-center'>
                     <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg font-semibold uppercase'>Tasks: <span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> </h3>
+                    <h3 className='text-gray-500 text-lg font-semibold'><span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> tasks</h3>
                       {/* Spirit Goals Loading Bar */}
                     <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
                         <div className='mx-1 my-[2px] w-full bg-indigo-50'>
@@ -471,16 +481,16 @@ export default function ProfileDash() {
               <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                 <div className='flex justify-between'>
                   <div className=''>
-                    <p className='text-2xl'>{completedMindHabits}</p>
+                    <h3 className='text-lg'><span className='text-2xl'>{completedMindHabits}</span> habits</h3>
                   </div>
                   <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    {mindHabitsLastMonth}
+                    {mindHabitsLastWeek} / {totalmindHabits}
                   </span>
-                  <div className='text-gray-500'>Updated within last month</div>
+                  <div className='text-gray-500'>Updated within past 7 days</div>
                 </div>
               </div>
 
@@ -488,16 +498,16 @@ export default function ProfileDash() {
               <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                 <div className='flex justify-between'>
                   <div className=''>
-                    <p className='text-2xl'>{completedBodyHabits}</p>
+                    <h3 className='text-lg'><span className='text-2xl'>{completedBodyHabits}</span> habits</h3>
                   </div>
                   <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    {bodyHabitsLastMonth}
+                    {bodyHabitsLastWeek} / {totalbodyHabits}
                   </span>
-                  <div className='text-gray-500'>Updated within last month</div>
+                  <div className='text-gray-500'>Updated within past 7 days</div>
                 </div>
               </div>
 
@@ -505,16 +515,16 @@ export default function ProfileDash() {
               <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
                 <div className='flex justify-between'>
                   <div className=''>
-                    <p className='text-2xl'>{completedSpiritHabits}</p>
+                    <h3 className='text-lg'><span className='text-2xl'>{completedSpiritHabits}</span> habits</h3>
                   </div>
                   <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
                 </div>
                 <div className='flex gap-2 text-sm'>
                   <span className='text-green-500 flex items-center'>
                     <HiArrowNarrowUp />
-                    {spiritHabitsLastMonth}
+                    {spiritHabitsLastWeek} / {totalspiritHabits}
                   </span>
-                  <div className='text-gray-500'>Updated within last month</div>
+                  <div className='text-gray-500'>Updated within past 7 days</div>
                 </div>
               </div>
 

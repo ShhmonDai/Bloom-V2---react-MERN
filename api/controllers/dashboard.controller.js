@@ -44,6 +44,7 @@ export const getstatistics = async (req, res, next) => {
         });
         */
 
+
         const completedBodySubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
             category: "body",
@@ -83,6 +84,21 @@ export const getstatistics = async (req, res, next) => {
             accomplished: true,
         });
         */
+
+        const totalMindHabits = await Habit.countDocuments({
+            userId: req.params.userId,
+            category: "mind",
+        });
+
+        const totalBodyHabits = await Habit.countDocuments({
+            userId: req.params.userId,
+            category: "body",
+        });
+
+        const totalSpiritHabits = await Habit.countDocuments({
+            userId: req.params.userId,
+            category: "spirit",
+        });
 
         const mindHabitScore = await Habit.aggregate(
             [
@@ -142,15 +158,19 @@ export const getstatistics = async (req, res, next) => {
             now.getDate()
         );
 
+        const oneWeekAgo = new Date(
+            now.getDate() - 7
+        );
 
 
-        const mindHabitsLastMonth = await Habit.aggregate(
+
+        const mindHabitsLastWeek = await Habit.aggregate(
             [
                 {
                     $match: {
                         category: "mind",
                         userId: req.params.userId,
-                        updatedAt: { $gte: oneMonthAgo }
+                        updatedAt: { $gte: oneWeekAgo }
                     }
                 },
                 {
@@ -162,13 +182,13 @@ export const getstatistics = async (req, res, next) => {
             ]
         );
 
-        const bodyHabitsLastMonth = await Habit.aggregate(
+        const bodyHabitsLastWeek = await Habit.aggregate(
             [
                 {
                     $match: {
                         category: "body",
                         userId: req.params.userId,
-                        updatedAt: { $gte: oneMonthAgo }
+                        updatedAt: { $gte: oneWeekAgo }
                     }
                 },
                 {
@@ -180,13 +200,13 @@ export const getstatistics = async (req, res, next) => {
             ]
         );
 
-        const spiritHabitsLastMonth = await Habit.aggregate(
+        const spiritHabitsLastWeek = await Habit.aggregate(
             [
                 {
                     $match: {
                         category: "spirit",
                         userId: req.params.userId,
-                        updatedAt: { $gte: oneMonthAgo }
+                        updatedAt: { $gte: oneWeekAgo }
                     }
                 },
                 {
@@ -251,8 +271,9 @@ export const getstatistics = async (req, res, next) => {
         res.status(200).json({ totalMindSubgoals, completedMindSubgoals, 
             totalBodySubgoals, completedBodySubgoals,
             totalSpiritSubgoals, completedSpiritSubgoals,
+            totalMindHabits, totalBodyHabits, totalSpiritHabits,
             latestSubgoals, oldestSubgoals,
-            mindHabitsLastMonth, bodyHabitsLastMonth, spiritHabitsLastMonth,
+            mindHabitsLastWeek, bodyHabitsLastWeek, spiritHabitsLastWeek,
             mindSubgoalsLastMonth, bodySubgoalsLastMonth, spiritSubgoalsLastMonth,
             timelineHabits,
             mindHabitScore, spiritHabitScore, bodyHabitScore });
