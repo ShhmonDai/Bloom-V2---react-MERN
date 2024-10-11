@@ -1119,42 +1119,7 @@ export default function About() {
         239,
         248
       ],
-      [
-        243,
-        251
-      ],
-      [
-        230,
-        241
-      ],
-      [
-        222,
-        232
-      ],
-      [
-        222,
-        225
-      ],
-      [
-        227,
-        220
-      ],
-      [
-        230,
-        209
-      ],
-      [
-        229,
-        193
-      ],
-      [
-        231,
-        171
-      ],
-      [
-        233,
-        164
-      ]
+
     ]
 ;
     let cordsArray4 = [
@@ -1234,8 +1199,6 @@ export default function About() {
     maxLevel = 100,
     growing = false;
 
-    var selected = 0;
-
     //get width of parent div
     let b = document.getElementById("treeHolder2");
     let w = 0;
@@ -1296,8 +1259,16 @@ export default function About() {
       button5.position(0, 50, 'relative');
       button5.mousePressed(p.startGrow);
 
-      p.startGrow();
+      setTimeout(p.startGrow, 1000);
 
+    }
+
+    p.readInputs = (updateTree) => {
+
+      if (updateTree && !growing) {
+        prog = maxLevel + 1;
+        p.loop();
+      }
     }
 
     
@@ -1312,6 +1283,7 @@ export default function About() {
     
    
     p.draw = () => {
+      //console.log('draw called');
       p.clear();
       p.drawingContext.shadowBlur = 0;
       //p.scale(1);
@@ -1330,18 +1302,17 @@ export default function About() {
       p.fill(255);
       p.stroke(0);
       p.strokeWeight(4);
-      p.textAlign(p.CENTER, p.CENTER);
-      p.text("Line selected: " + selectedArray, w/2, 50);
+      p.textAlign(p.CENTER, p.TOP);
+      p.text("Line selected: " + selectedArray, w/2, 20);
+
       
       if (w < 375){
         p.scale(widthScale + 0.05, heightScale + 0.02);
       }
 
 
-      for(var j = 0; j <= 10; j++){
-        p.drawPoints(0, j);
-
-      }
+      p.drawPoints(0, 0);
+      p.drawPoints(0, 1);
 
       /*var counter = 0;
 
@@ -1363,7 +1334,7 @@ export default function About() {
 
     p.drawPoints = (level, array) => {
 
-      var i=array;
+     
 
         if (prog < level)
           return;
@@ -1375,8 +1346,8 @@ export default function About() {
           
           p.glow(p.color(130, 184, 255, 255), 10);
           
-          if (level < arrayOfArrays[i].length){
-            var dot = p.createVector(arrayOfArrays[i][level][0], arrayOfArrays[i][level][1]);
+          if (level < arrayOfArrays[array].length){
+            var dot = p.createVector(arrayOfArrays[array][level][0], arrayOfArrays[array][level][1]);
             p.point(dot);
             p.point(dot);
           }
@@ -1385,13 +1356,32 @@ export default function About() {
           p.strokeWeight(1);
           p.stroke(p.color(255, 255, 255, 150));
           
-          if (level >= 1 && level < arrayOfArrays[i].length) {
-            p.line(arrayOfArrays[i][level - 1][0], arrayOfArrays[i][level - 1][1], arrayOfArrays[i][level][0], arrayOfArrays[i][level][1]);
+          if (level >= 1 && level < arrayOfArrays[array].length) {
+            p.line(arrayOfArrays[array][level - 1][0], arrayOfArrays[array][level - 1][1], arrayOfArrays[array][level][0], arrayOfArrays[array][level][1]);
           }
           
           p.push();
           p.drawPoints(level +1, array);
           p.pop();
+
+        }
+
+        if (array == 1 && level == arrayOfArrays[1].length){
+          p.drawPoints(0, 2);
+        }
+
+        if (array == 2 && level == arrayOfArrays[2].length){
+          p.drawPoints(0, 3);
+        }
+
+        if (array == 3 && level == arrayOfArrays[3].length) {
+          p.drawPoints(0, 4);
+  4     }
+
+        if (array == 4 && level == arrayOfArrays[4].length) {
+          for (var i = 5; i <= 10; i++){
+            p.drawPoints(0, i);
+          }
         }
           
     }
@@ -1405,11 +1395,13 @@ export default function About() {
       if (p.mouseX > 0 && p.mouseX < w && p.mouseY > 0 && p.mouseY < h) {
         var cords = [p.round(p.mouseX), p.round(p.mouseY)]; 
         arrayOfArrays[selectedArray].push(cords);
+        p.readInputs(true);
       }
     }
 
     p.undo = () => {
         arrayOfArrays[selectedArray].pop();
+        p.readInputs(true);
     }
 
     p.buttonClicked = () => {
@@ -1423,6 +1415,7 @@ export default function About() {
       else {
         selectedArray = 0;
       }
+      p.readInputs(true);
     }
 
     p.prevArray = () => {
@@ -1432,6 +1425,7 @@ export default function About() {
       else {
         selectedArray = 10;
       }
+      p.readInputs(true);
     }
 
     p.startGrow = () => {
@@ -1441,8 +1435,8 @@ export default function About() {
     }
 
     p.grow = () => {
-      if (prog > (maxLevel + 2)) {
-        prog = maxLevel + 2;
+      if (prog > (maxLevel)) {
+        prog = maxLevel;
 
         p.loop();
         growing = false;
@@ -1453,7 +1447,7 @@ export default function About() {
       p.loop();
       var diff = p.millis() - startTime;
 
-      prog += maxLevel / 2 * Math.max(diff, 20) / 700;
+      prog += maxLevel / 2 * Math.max(diff, 20) / 1500;
       setTimeout(p.grow, Math.max(1, 20 - diff));
     }
 
