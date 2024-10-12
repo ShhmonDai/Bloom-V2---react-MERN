@@ -281,15 +281,15 @@ export default function ProfileDash() {
                 <div className='flex justify-between p-3 font-semibold'>
                   <h1 className='text-center text-md p-2 text-gray-500'>Tasks</h1>
 
-                    <Dropdown label="" renderTrigger={() => <Button outline gradientDuoTone='cyanToBlue' >See all</Button>} inline>
+                    <Dropdown label="" renderTrigger={() => <Button outline gradientDuoTone='cyanToBlue' >See all</Button>} center>
                     <Link to={'/profile?tab=mind&view=goals'}>
-                      <Dropdown.Item>Mind</Dropdown.Item>
+                    <Dropdown.Item icon={FaBrain}>Mind</Dropdown.Item>
                     </Link>
                     <Link to={'/profile?tab=body&view=goals'}>
-                      <Dropdown.Item>Body</Dropdown.Item>
+                    <Dropdown.Item icon={FaDumbbell}>Body</Dropdown.Item>
                     </Link>
                     <Link to={'/profile?tab=spirit&view=goals'}>
-                      <Dropdown.Item>Spirit</Dropdown.Item>
+                    <Dropdown.Item icon={BsYinYang}>Spirit</Dropdown.Item>
                     </Link>
                   </Dropdown>
 
