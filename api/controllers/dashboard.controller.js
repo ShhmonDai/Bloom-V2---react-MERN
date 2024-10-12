@@ -158,9 +158,10 @@ export const getstatistics = async (req, res, next) => {
             now.getDate()
         );
 
-        const oneWeekAgo = new Date(
-            now.getDate() - 7
-        );
+        const oneWeekAgo = new Date(now);
+        oneWeekAgo.setDate(now.getDate()-7);
+
+        console.log(oneWeekAgo);
 
 
 
