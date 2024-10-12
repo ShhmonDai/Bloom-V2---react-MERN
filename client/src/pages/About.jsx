@@ -1196,7 +1196,7 @@ export default function About() {
     let selectedArray = 0;
 
     let prog = 1,
-    maxLevel = 100,
+    maxLevel =  200,
     growing = false;
 
     //get width of parent div
@@ -1313,20 +1313,8 @@ export default function About() {
 
       p.drawPoints(0, 0);
       p.drawPoints(0, 1);
+      
 
-      /*var counter = 0;
-
-      var looper = setInterval(function () {
-        counter++;
-        console.log("Counter is: " + counter);
-
-        if (counter >= 5) {
-          clearInterval(looper);
-        }
-
-      }, 3000);
-
-      */
 
       p.noLoop();
     }
@@ -1447,7 +1435,7 @@ export default function About() {
       p.loop();
       var diff = p.millis() - startTime;
 
-      prog += maxLevel / 2 * Math.max(diff, 20) / 1500;
+      prog += 130 / 2 * Math.max(diff, 20) / 1500;
       setTimeout(p.grow, Math.max(1, 20 - diff));
     }
 
