@@ -161,9 +161,6 @@ export const getstatistics = async (req, res, next) => {
         const oneWeekAgo = new Date(now);
         oneWeekAgo.setDate(now.getDate()-7);
 
-        console.log(oneWeekAgo);
-
-
 
         const mindHabitsLastWeek = await Habit.aggregate(
             [
