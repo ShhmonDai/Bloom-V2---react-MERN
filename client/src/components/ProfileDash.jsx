@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { isSameDay } from "date-fns";
 
-import { Label, Button, Modal, Alert, Dropdown} from "flowbite-react";
+import { Label, Button, Modal, Alert, Dropdown, Popover} from "flowbite-react";
 import { BsYinYang } from "react-icons/bs";
 import { FaBrain, FaDumbbell } from 'react-icons/fa';
 
@@ -570,23 +570,43 @@ export default function ProfileDash() {
                 <Calendar value={value} tileClassName={tileClassName} />
               </div>
 
-              <span className='font-semibold'>Dates Completed: </span>
-              <div className='flex flex-wrap justify-center gap-2 mt-1 mb-4'>
-                {formDataCompleted.map((dateCompleted, index) => (
-                  <div key={index} >
-                    {dateCompleted}
-                  </div>
-                ))}
-              </div>
-
               <span className='font-semibold'>Days To Complete On: </span>
               <div className='flex flex-wrap justify-center gap-2 mt-1 mb-4'>
-                {formDataDays.map((day, index) => (
-                  <div key={index}>
-                    {day}
-                  </div>
-                ))}
+                {formDataDays.length == 7 ?
+                  <span>
+                    Everyday
+                  </span>
+                  :
+                  <>
+                    {formDataDays.map((day, index) => (
+                      <div key={index}>
+                        {day}
+                      </div>
+                    ))}
+                  </>
+                }
               </div>
+
+              <Popover
+                aria-labelledby="default-popover"
+                content={
+                  <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                    <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                      <h3 id="default-popover" className="font-semibold text-gray-900 dark:text-white">Completed On:</h3>
+                    </div>
+                    <div className='flex flex-wrap justify-center gap-2 mx-2 my-4'>
+                      {formDataCompleted.map((dateCompleted, index) => (
+                        <div key={index} >
+                          {dateCompleted}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                }
+                placement="top"
+              >
+                <span className='font-semibold py-1 px-2 border rounded-md cursor-pointer text-gray-500'>See all dates completed </span>
+              </Popover>
 
             </div>
 
