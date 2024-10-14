@@ -375,7 +375,7 @@ export default function Habits( {category, sendDataToCategory2}) {
                     {todayshabit.title}
                   </div>
 
-                  <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 flex justify-self-end items-center justify-center'>
+                  <div className='xl:opacity-0 group-hover:opacity-100 transition-all duration-300 flex justify-self-end items-center justify-center'>
                     <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button" className='text-xl'><BsThreeDots /></button>}>
                       <Dropdown.Item onClick={() => {
                         setShowModalOverview(true);
@@ -626,7 +626,7 @@ export default function Habits( {category, sendDataToCategory2}) {
                 </span>
               </div>
 
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 bg-gray-200 rounded-xl p-4'>
                 <span className='flex flex-col font-semibold'> 
                   Settings Preview:
                 </span> 
@@ -635,13 +635,24 @@ export default function Habits( {category, sendDataToCategory2}) {
                 <span>Category: <span className={`${categoryText[formDataAddHabit.category]} font-bold`}>{formDataAddHabit.category}</span> </span>
                 <span>Deadline: {formDataAddHabit.timeofday}</span>
               
-                <div>
-                    <span className='font-semibold'>Days To Complete On: </span>
-                    {formDataDays.map((day, index) => (
-                      <div key={index}>
-                        {day}
-                      </div>
-                    ))}
+                <span className='font-semibold'>Days To Complete On: </span>
+                  <div className='flex flex-wrap justify-center gap-2'>
+
+                    {formDataDays.length == 7 ?
+                      <span>
+                        Everyday
+                      </span>
+                      :
+                      <>
+                        {formDataDays.map((day, index) => (
+                          <div key={index}>
+                            {day}
+                          </div>
+                        ))}
+                      </>
+                    }  
+
+
                 </div>
               </div>
 
