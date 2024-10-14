@@ -1447,14 +1447,950 @@ export default function About() {
 
   }
 
+  const SketchPoints2 = (p) => {
+
+    let backgroundImage1;
+
+
+    let cordsArray = [
+      [
+        157,
+        341
+      ],
+      [
+        160,
+        328
+      ],
+      [
+        158,
+        314
+      ],
+      [
+        157,
+        303
+      ],
+      [
+        149,
+        284
+      ],
+      [
+        146,
+        264
+      ],
+      [
+        149,
+        243
+      ],
+      [
+        153,
+        225
+      ],
+      [
+        152,
+        217
+      ],
+      [
+        153,
+        207
+      ],
+      [
+        157,
+        195
+      ],
+      [
+        156,
+        186
+      ],
+      [
+        157,
+        174
+      ],
+      [
+        154,
+        165
+      ],
+      [
+        148,
+        155
+      ],
+      [
+        139,
+        165
+      ],
+      [
+        132,
+        175
+      ],
+      [
+        126,
+        185
+      ],
+      [
+        110,
+        192
+      ],
+      [
+        90,
+        199
+      ],
+      [
+        85,
+        202
+      ],
+      [
+        82,
+        207
+      ],
+      [
+        74,
+        206
+      ],
+      [
+        67,
+        210
+      ],
+      [
+        59,
+        208
+      ],
+      [
+        51,
+        211
+      ],
+      [
+        47,
+        209
+      ],
+      [
+        44,
+        207
+      ],
+      [
+        42,
+        206
+      ],
+      [
+        46,
+        202
+      ],
+      [
+        53,
+        198
+      ],
+      [
+        59,
+        193
+      ],
+      [
+        62,
+        188
+      ],
+      [
+        64,
+        186
+      ],
+      [
+        60,
+        182
+      ],
+      [
+        57,
+        181
+      ],
+      [
+        55,
+        176
+      ],
+      [
+        58,
+        176
+      ],
+      [
+        68,
+        179
+      ],
+      [
+        73,
+        183
+      ],
+      [
+        79,
+        187
+      ],
+      [
+        93,
+        180
+      ],
+      [
+        102,
+        168
+      ],
+      [
+        108,
+        162
+      ],
+      [
+        118,
+        158
+      ],
+      [
+        123,
+        146
+      ],
+      [
+        130,
+        136
+      ],
+      [
+        129,
+        125
+      ],
+      [
+        131,
+        113
+      ],
+      [
+        138,
+        106
+      ],
+      [
+        153,
+        99
+      ],
+      [
+        161,
+        94
+      ],
+      [
+        173,
+        86
+      ],
+      [
+        176,
+        76
+      ],
+      [
+        172,
+        71
+      ],
+      [
+        173,
+        64
+      ],
+      [
+        175,
+        59
+      ],
+      [
+        176,
+        52
+      ],
+      [
+        178,
+        43
+      ],
+      [
+        182,
+        39
+      ],
+      [
+        187,
+        34
+      ]
+    
+];
+    let cordsArray1 = [
+      [
+        221,
+        340
+      ],
+      [
+        219,
+        326
+      ],
+      [
+        220,
+        312
+      ],
+      [
+        220,
+        303
+      ],
+      [
+        229,
+        282
+      ],
+      [
+        229,
+        260
+      ],
+      [
+        226,
+        236
+      ],
+      [
+        223,
+        220
+      ],
+      [
+        224,
+        212
+      ],
+      [
+        222,
+        204
+      ],
+      [
+        222,
+        194
+      ],
+      [
+        223,
+        186
+      ],
+      [
+        222,
+        176
+      ],
+      [
+        222,
+        168
+      ],
+      [
+        229,
+        161
+      ],
+      [
+        233,
+        152
+      ],
+      [
+        239,
+        162
+      ],
+      [
+        247,
+        167
+      ],
+      [
+        253,
+        180
+      ],
+      [
+        265,
+        189
+      ],
+      [
+        286,
+        198
+      ],
+      [
+        291,
+        205
+      ],
+      [
+        297,
+        210
+      ],
+      [
+        302,
+        213
+      ],
+      [
+        307,
+        213
+      ],
+      [
+        312,
+        215
+      ],
+      [
+        318,
+        213
+      ],
+      [
+        323,
+        215
+      ],
+      [
+        326,
+        215
+      ],
+      [
+        330,
+        214
+      ],
+      [
+        334,
+        212
+      ],
+      [
+        328,
+        206
+      ],
+      [
+        322,
+        202
+      ],
+      [
+        315,
+        192
+      ],
+      [
+        320,
+        189
+      ],
+      [
+        325,
+        187
+      ],
+      [
+        327,
+        182
+      ],
+      [
+        316,
+        183
+      ],
+      [
+        310,
+        186
+      ],
+      [
+        299,
+        190
+      ],
+      [
+        285,
+        179
+      ],
+      [
+        279,
+        167
+      ],
+      [
+        264,
+        158
+      ],
+      [
+        258,
+        146
+      ],
+      [
+        251,
+        135
+      ],
+      [
+        251,
+        121
+      ],
+      [
+        245,
+        109
+      ],
+      [
+        235,
+        102
+      ],
+      [
+        226,
+        99
+      ],
+      [
+        207,
+        86
+      ],
+      [
+        207,
+        76
+      ],
+      [
+        211,
+        73
+      ],
+      [
+        210,
+        67
+      ],
+      [
+        209,
+        61
+      ],
+      [
+        209,
+        51
+      ],
+      [
+        205,
+        41
+      ],
+      [
+        199,
+        35
+      ],
+      [
+        188,
+        33
+      ]
+  
+];
+    let cordsArray2 = [
+      [
+        147,
+        133
+      ],
+      [
+        161,
+        141
+      ],
+      [
+        177,
+        141
+      ],
+      [
+        189,
+        135
+      ],
+      [
+        190,
+        114
+      ],
+      [
+        190,
+        135
+      ],
+      [
+        205,
+        140
+      ],
+      [
+        219,
+        139
+      ],
+      [
+        234,
+        130
+      ]];
+    let cordsArray3 = [
+      [
+        188,
+        154
+      ],
+      [
+        186,
+        164
+      ],
+      [
+        179,
+        168
+      ],
+      [
+        170,
+        167
+      ]
+    ];
+    let cordsArray4 = [
+      [
+        187,
+        174
+      ],
+      [
+        187,
+        180
+      ],
+      [
+        181,
+        185
+      ],
+      [
+        173,
+        185
+      ]
+    ];
+    let cordsArray5 = [
+      [
+      193,
+      164
+    ],
+      [
+        203,
+        166
+      ]];
+
+    let cordsArray6 = [
+      [
+        194,
+        180
+      ],
+      [
+        201,
+        183
+      ]
+    ];
+    let cordsArray7 = [
+      [
+        166,
+        201
+      ],
+      [
+        180,
+        222
+      ]
+    ];
+    let cordsArray8 = [
+      [
+        210,
+        202
+      ],
+      [
+        198,
+        221
+      ]
+    ];
+    let cordsArray9 = [
+      [
+        180,
+        71
+      ],
+      [
+        190,
+        67
+      ],
+      [
+        197,
+        68
+      ],
+      [
+        203,
+        71
+      ]
+    ];
+    let cordsArray10 = [
+      [
+        181,
+        339
+      ],
+      [
+        181,
+        326
+      ],
+      [
+        183,
+        317
+      ],
+      [
+        184,
+        300
+      ],
+      [
+        182,
+        287
+      ],
+      [
+        186,
+        271
+      ],
+      [
+        189,
+        264
+      ],
+      [
+        194,
+        275
+      ],
+      [
+        194,
+        293
+      ],
+      [
+        195,
+        301
+      ],
+      [
+        197,
+        310
+      ],
+      [
+        198,
+        324
+      ],
+      [
+        200,
+        333
+      ],
+      [
+        199,
+        340
+      ]
+    ];
+
+
+    let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5, cordsArray6, cordsArray7, cordsArray8, cordsArray9, cordsArray10];
+    let selectedArray = 0;
+
+    let prog = 1,
+      maxLevel = 200,
+      growing = false;
+
+    //get width of parent div
+    let b = document.getElementById("treeHolder3");
+    let w = 0;
+    b.clientWidth < 375 ? (w = b.clientWidth) : (w = 375);
+    let h = 0;
+
+    p.getHeight = (w) => {
+      if (w < 375) {
+        h = w - 25;
+      }
+      if (w >= 375) {
+        h = 350;
+      }
+    }
+
+    p.getHeight(w);
+
+    let heightScale = 1;
+    let widthScale = 1;
+
+    p.getScale = (h, w) => {
+      if (h < 350) {
+        heightScale = (h / 350);
+      }
+      if (w < 400) {
+        widthScale = (w / 400);
+      }
+    }
+
+
+    p.preload = () => {
+      backgroundImage1 = p.loadImage('strengthBG.png');
+    }
+
+    p.setup = () => {
+      //create a canvas instance
+      p.createCanvas(w, h).parent("treeHolder3");
+
+      p.getScale(h, w);
+
+      let button = p.createButton('Save Line to PC').parent("buttonHolder3");
+      button.position(-20, 0, 'relative');
+      button.mousePressed(p.buttonClicked);
+
+      let button2 = p.createButton('Undo Point').parent("buttonHolder3");
+      button2.position(0, 0, 'relative');
+      button2.mousePressed(p.undo);
+
+      let button4 = p.createButton('Prev Line').parent("buttonHolder3");
+      button4.position(20, 0, 'relative');
+      button4.mousePressed(p.prevArray);
+
+      let button3 = p.createButton('Next Line').parent("buttonHolder3");
+      button3.position(40, 0, 'relative');
+      button3.mousePressed(p.nextArray);
+
+      let button5 = p.createButton('Grow').parent("buttonHolder3");
+      button5.position(0, 50, 'relative');
+      button5.mousePressed(p.startGrow);
+
+      setTimeout(p.startGrow, 1000);
+
+    }
+
+    p.readInputs = (updateTree) => {
+
+      if (updateTree && !growing) {
+        prog = maxLevel + 1;
+        p.loop();
+      }
+    }
+
+
+    p.windowResized = () => {
+      b = document.getElementById("treeHolder2");
+      b.clientWidth < 375 ? (w = b.clientWidth) : (w = 375);
+      p.getHeight(w);
+
+      p.resizeCanvas(w, h);
+      p.getScale(h, w);
+    }
+
+
+    p.draw = () => {
+      //console.log('draw called');
+      p.clear();
+      p.drawingContext.shadowBlur = 0;
+      //p.scale(1);
+      p.background(backgroundImage1);
+      p.strokeWeight(1);
+      p.stroke(p.color(255, 255, 255, 50));
+      p.line(w / 2, 0, w / 2, h);
+
+
+      //p.fill(255, 60, 100);
+      //p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
+      //p.stroke(p.color(255,255,255,50));
+      //p.strokeWeight(1);
+
+      p.textSize(15);
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(4);
+      p.textAlign(p.CENTER, p.TOP);
+      p.text("Line selected: " + selectedArray, w / 2, 20);
+
+
+      if (w < 375) {
+        p.scale(widthScale + 0.05, heightScale + 0.02);
+      }
+
+
+      p.drawPoints(0, 0);
+      p.drawPoints(0, 1);
+
+
+
+      p.noLoop();
+    }
+
+
+    p.drawPoints = (level, array) => {
+
+
+
+      if (prog < level)
+        return;
+
+      if (level < maxLevel) {
+
+        p.stroke('white');
+        p.strokeWeight(3);
+
+        p.glow(p.color(130, 184, 255, 255), 10);
+
+        if (level < arrayOfArrays[array].length) {
+          var dot = p.createVector(arrayOfArrays[array][level][0], arrayOfArrays[array][level][1]);
+          p.point(dot);
+          p.point(dot);
+        }
+
+
+        p.strokeWeight(1);
+        p.stroke(p.color(255, 255, 255, 150));
+
+        if (level >= 1 && level < arrayOfArrays[array].length) {
+          p.line(arrayOfArrays[array][level - 1][0], arrayOfArrays[array][level - 1][1], arrayOfArrays[array][level][0], arrayOfArrays[array][level][1]);
+        }
+
+        p.push();
+        p.drawPoints(level + 1, array);
+        p.pop();
+
+      }
+
+      if (array == 1 && level == arrayOfArrays[1].length) {
+        p.drawPoints(0, 2);
+      }
+
+      if (array == 2 && level == arrayOfArrays[2].length) {
+        p.drawPoints(0, 3);
+      }
+
+      if (array == 3 && level == arrayOfArrays[3].length) {
+        p.drawPoints(0, 4);
+        4
+      }
+
+      if (array == 4 && level == arrayOfArrays[4].length) {
+        for (var i = 5; i <= 10; i++) {
+          p.drawPoints(0, i);
+        }
+      }
+
+    }
+
+    p.glow = (glowColor, blurriness) => {
+      p.drawingContext.shadowColor = glowColor;
+      p.drawingContext.shadowBlur = blurriness;
+    }
+
+    p.mousePressed = () => {
+      if (p.mouseX > 0 && p.mouseX < w && p.mouseY > 0 && p.mouseY < h) {
+        var cords = [p.round(p.mouseX), p.round(p.mouseY)];
+        arrayOfArrays[selectedArray].push(cords);
+        p.readInputs(true);
+      }
+    }
+
+    p.undo = () => {
+      arrayOfArrays[selectedArray].pop();
+      p.readInputs(true);
+    }
+
+    p.buttonClicked = () => {
+      p.saveJSON(arrayOfArrays[selectedArray], `numbers${selectedArray}.json`);
+    }
+
+    p.nextArray = () => {
+      if (selectedArray != 10) {
+        selectedArray = selectedArray + 1;
+      }
+      else {
+        selectedArray = 0;
+      }
+      p.readInputs(true);
+    }
+
+    p.prevArray = () => {
+      if (selectedArray != 0) {
+        selectedArray = selectedArray - 1;
+      }
+      else {
+        selectedArray = 10;
+      }
+      p.readInputs(true);
+    }
+
+    p.startGrow = () => {
+      growing = true;
+      prog = 1;
+      p.grow();
+    }
+
+    p.grow = () => {
+      if (prog > (maxLevel)) {
+        prog = maxLevel;
+
+        p.loop();
+        growing = false;
+        return;
+      }
+
+      var startTime = p.millis();
+      p.loop();
+      var diff = p.millis() - startTime;
+
+      prog += 130 / 2 * Math.max(diff, 20) / 1500;
+      setTimeout(p.grow, Math.max(1, 20 - diff));
+    }
+
+    p.rand2 = () => {
+      return p.random(2000) / 1000 - 1;
+    }
+
+
+
+  }
+
+
 
   useEffect(() => {
 
     const myP5 = new p5(Sketch);
 
     const pointsP5 = new p5(SketchPoints);
+    const pointsP52 = new p5(SketchPoints2);
 
-    return () => {myP5.remove(), pointsP5.remove();}
+    return () => { myP5.remove(), pointsP5.remove(), pointsP52.remove(); }
 
 
   }, [currentUser]);
@@ -1544,6 +2480,9 @@ export default function About() {
 
         <div id="treeHolder2" className='mt-5 bg-white flex justify-center flex-wrap'></div>
         <div id="buttonHolder2" className='mb-10 flex justify-center'></div>
+
+        <div id="treeHolder3" className='mt-5 bg-white flex justify-center flex-wrap'></div>
+        <div id="buttonHolder3" className='mb-10 flex justify-center'></div>
 
       </div>
         
