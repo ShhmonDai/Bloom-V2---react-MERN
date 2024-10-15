@@ -2206,7 +2206,7 @@ export default function About() {
 
 
     p.windowResized = () => {
-      b = document.getElementById("treeHolder2");
+      b = document.getElementById("treeHolder3");
       b.clientWidth < 375 ? (w = b.clientWidth) : (w = 375);
       p.getHeight(w);
 
@@ -2377,10 +2377,650 @@ export default function About() {
       return p.random(2000) / 1000 - 1;
     }
 
-
-
   }
 
+
+  const SketchPoints3 = (p) => {
+
+    let backgroundImage1;
+
+
+    let cordsArray = [[
+      187,
+      306
+    ],
+      [
+        173,
+        305
+      ],
+      [
+        167,
+        301
+      ],
+      [
+        156,
+        296
+      ],
+      [
+        132,
+        297
+      ],
+      [
+        105,
+        302
+      ],
+      [
+        78,
+        304
+      ],
+      [
+        45,
+        303
+      ],
+      [
+        81,
+        274
+      ],
+      [
+        109,
+        244
+      ],
+      [
+        132,
+        241
+      ],
+      [
+        151,
+        235
+      ],
+      [
+        170,
+        236
+      ],
+      [
+        181,
+        244
+      ],
+      [
+        186,
+        252
+      ],
+      [
+        192,
+        241
+      ],
+      [
+        213,
+        233
+      ],
+      [
+        229,
+        238
+      ],
+      [
+        257,
+        244
+      ],
+      [
+        296,
+        280
+      ],
+      [
+        323,
+        306
+      ],
+      [
+        281,
+        304
+      ],
+      [
+        250,
+        298
+      ],
+      [
+        223,
+        295
+      ],
+      [
+        204,
+        298
+      ],
+      [
+        198,
+        304
+      ],
+      [
+        187,
+        305
+      ]];
+    let cordsArray1 = [[
+      185,
+      202
+    ],
+      [
+        181,
+        200
+      ],
+      [
+        178,
+        196
+      ],
+      [
+        174,
+        194
+      ],
+      [
+        171,
+        189
+      ],
+      [
+        173,
+        186
+      ],
+      [
+        171,
+        183
+      ],
+      [
+        173,
+        179
+      ],
+      [
+        171,
+        174
+      ],
+      [
+        172,
+        171
+      ],
+      [
+        168,
+        166
+      ],
+      [
+        169,
+        154
+      ],
+      [
+        164,
+        145
+      ],
+      [
+        158,
+        137
+      ],
+      [
+        154,
+        127
+      ],
+      [
+        153,
+        116
+      ],
+      [
+        155,
+        108
+      ],
+      [
+        160,
+        100
+      ],
+      [
+        168,
+        91
+      ],
+      [
+        178,
+        86
+      ],
+      [
+        188,
+        86
+      ],
+      [
+        199,
+        90
+      ],
+      [
+        207,
+        97
+      ],
+      [
+        213,
+        105
+      ],
+      [
+        215,
+        116
+      ],
+      [
+        215,
+        127
+      ],
+      [
+        212,
+        134
+      ],
+      [
+        205,
+        144
+      ],
+      [
+        201,
+        154
+      ],
+      [
+        201,
+        167
+      ],
+      [
+        197,
+        171
+      ],
+      [
+        198,
+        175
+      ],
+      [
+        196,
+        178
+      ],
+      [
+        198,
+        181
+      ],
+      [
+        196,
+        184
+      ],
+      [
+        198,
+        188
+      ],
+      [
+        196,
+        191
+      ],
+      [
+        196,
+        194
+      ],
+      [
+        192,
+        195
+      ],
+      [
+        191,
+        198
+      ],
+      [
+        186,
+        201
+      ]];
+    let cordsArray2 = [[
+      216,
+      83
+    ],
+      [
+        230,
+        65
+      ]];
+    let cordsArray3 = [[
+      45,
+      302
+    ],
+      [
+        79,
+        282
+      ],
+      [
+        105,
+        277
+      ],
+      [
+        131,
+        271
+      ],
+      [
+        155,
+        269
+      ],
+      [
+        173,
+        275
+      ],
+      [
+        185,
+        291
+      ],
+      [
+        201,
+        271
+      ],
+      [
+        219,
+        268
+      ],
+      [
+        245,
+        275
+      ],
+      [
+        270,
+        282
+      ],
+      [
+        294,
+        286
+      ],
+      [
+        320,
+        305
+      ]];
+    let cordsArray4 = [[
+      151,
+      84
+    ],
+      [
+        133,
+        67
+      ]];
+    let cordsArray5 = [[
+      231,
+      105
+    ],
+      [
+        267,
+        91
+      ]];
+    let cordsArray6 = [[
+      141,
+      104
+    ],
+      [
+        101,
+        87
+      ]];
+    let cordsArray7 = [[
+      137,
+      133
+    ],
+      [
+        97,
+        152
+      ]];
+    let cordsArray8 = [[
+      228,
+      133
+    ],
+      [
+        271,
+        148
+      ]];
+    let cordsArray9 = [];
+    let cordsArray10 = [[
+      184,
+      69
+    ],
+      [
+        185,
+        39
+      ]];
+
+
+    let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5, cordsArray6, cordsArray7, cordsArray8, cordsArray9, cordsArray10];
+    let selectedArray = 0;
+
+    let prog = 1,
+      maxLevel = 200,
+      growing = false;
+
+    //get width of parent div
+    let b = document.getElementById("treeHolder4");
+    let w = 0;
+    b.clientWidth < 375 ? (w = b.clientWidth) : (w = 375);
+    let h = 0;
+
+    p.getHeight = (w) => {
+      if (w < 375) {
+        h = w - 25;
+      }
+      if (w >= 375) {
+        h = 350;
+      }
+    }
+
+    p.getHeight(w);
+
+    let heightScale = 1;
+    let widthScale = 1;
+
+    p.getScale = (h, w) => {
+      if (h < 350) {
+        heightScale = (h / 350);
+      }
+      if (w < 400) {
+        widthScale = (w / 400);
+      }
+    }
+
+
+    p.preload = () => {
+      backgroundImage1 = p.loadImage('knowledgeBG.png');
+    }
+
+    p.setup = () => {
+      //create a canvas instance
+      p.createCanvas(w, h).parent("treeHolder4");
+
+      p.getScale(h, w);
+
+      let button = p.createButton('Save Line to PC').parent("buttonHolder4");
+      button.position(-20, 0, 'relative');
+      button.mousePressed(p.buttonClicked);
+
+      let button2 = p.createButton('Undo Point').parent("buttonHolder4");
+      button2.position(0, 0, 'relative');
+      button2.mousePressed(p.undo);
+
+      let button4 = p.createButton('Prev Line').parent("buttonHolder4");
+      button4.position(20, 0, 'relative');
+      button4.mousePressed(p.prevArray);
+
+      let button3 = p.createButton('Next Line').parent("buttonHolder4");
+      button3.position(40, 0, 'relative');
+      button3.mousePressed(p.nextArray);
+
+      let button5 = p.createButton('Grow').parent("buttonHolder4");
+      button5.position(0, 50, 'relative');
+      button5.mousePressed(p.startGrow);
+
+      setTimeout(p.startGrow, 1000);
+
+    }
+
+    p.readInputs = (updateTree) => {
+
+      if (updateTree && !growing) {
+        prog = maxLevel + 1;
+        p.loop();
+      }
+    }
+
+
+    p.windowResized = () => {
+      b = document.getElementById("treeHolder4");
+      b.clientWidth < 375 ? (w = b.clientWidth) : (w = 375);
+      p.getHeight(w);
+
+      p.resizeCanvas(w, h);
+      p.getScale(h, w);
+    }
+
+
+    p.draw = () => {
+      //console.log('draw called');
+      p.clear();
+      p.drawingContext.shadowBlur = 0;
+      //p.scale(1);
+      p.background(backgroundImage1);
+      p.strokeWeight(1);
+      p.stroke(p.color(255, 255, 255, 50));
+      p.line(w / 2, 0, w / 2, h);
+
+
+      //p.fill(255, 60, 100);
+      //p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
+      //p.stroke(p.color(255,255,255,50));
+      //p.strokeWeight(1);
+
+      p.textSize(15);
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(4);
+      p.textAlign(p.CENTER, p.TOP);
+      p.text("Line selected: " + selectedArray, w / 2, 20);
+
+
+      if (w < 375) {
+        p.scale(widthScale + 0.05, heightScale + 0.02);
+      }
+
+
+      p.drawPoints(0, 0);
+      p.drawPoints(0, 1);
+
+
+
+      p.noLoop();
+    }
+
+
+    p.drawPoints = (level, array) => {
+
+
+
+      if (prog < level)
+        return;
+
+      if (level < maxLevel) {
+
+        p.stroke('white');
+        p.strokeWeight(3);
+
+        p.glow(p.color(130, 184, 255, 255), 10);
+
+        if (level < arrayOfArrays[array].length) {
+          var dot = p.createVector(arrayOfArrays[array][level][0], arrayOfArrays[array][level][1]);
+          p.point(dot);
+          p.point(dot);
+        }
+
+
+        p.strokeWeight(1);
+        p.stroke(p.color(255, 255, 255, 150));
+
+        if (level >= 1 && level < arrayOfArrays[array].length) {
+          p.line(arrayOfArrays[array][level - 1][0], arrayOfArrays[array][level - 1][1], arrayOfArrays[array][level][0], arrayOfArrays[array][level][1]);
+        }
+
+        p.push();
+        p.drawPoints(level + 1, array);
+        p.pop();
+
+      }
+
+      if (array == 1 && level == arrayOfArrays[1].length) {
+        p.drawPoints(0, 2);
+      }
+
+      if (array == 2 && level == arrayOfArrays[2].length) {
+        p.drawPoints(0, 3);
+      }
+
+      if (array == 3 && level == arrayOfArrays[3].length) {
+        p.drawPoints(0, 4);
+        4
+      }
+
+      if (array == 4 && level == arrayOfArrays[4].length) {
+        for (var i = 5; i <= 10; i++) {
+          p.drawPoints(0, i);
+        }
+      }
+
+    }
+
+    p.glow = (glowColor, blurriness) => {
+      p.drawingContext.shadowColor = glowColor;
+      p.drawingContext.shadowBlur = blurriness;
+    }
+
+    p.mousePressed = () => {
+      if (p.mouseX > 0 && p.mouseX < w && p.mouseY > 0 && p.mouseY < h) {
+        var cords = [p.round(p.mouseX), p.round(p.mouseY)];
+        arrayOfArrays[selectedArray].push(cords);
+        p.readInputs(true);
+      }
+    }
+
+    p.undo = () => {
+      arrayOfArrays[selectedArray].pop();
+      p.readInputs(true);
+    }
+
+    p.buttonClicked = () => {
+      p.saveJSON(arrayOfArrays[selectedArray], `numbers${selectedArray}.json`);
+    }
+
+    p.nextArray = () => {
+      if (selectedArray != 10) {
+        selectedArray = selectedArray + 1;
+      }
+      else {
+        selectedArray = 0;
+      }
+      p.readInputs(true);
+    }
+
+    p.prevArray = () => {
+      if (selectedArray != 0) {
+        selectedArray = selectedArray - 1;
+      }
+      else {
+        selectedArray = 10;
+      }
+      p.readInputs(true);
+    }
+
+    p.startGrow = () => {
+      growing = true;
+      prog = 1;
+      p.grow();
+    }
+
+    p.grow = () => {
+      if (prog > (maxLevel)) {
+        prog = maxLevel;
+
+        p.loop();
+        growing = false;
+        return;
+      }
+
+      var startTime = p.millis();
+      p.loop();
+      var diff = p.millis() - startTime;
+
+      prog += 130 / 2 * Math.max(diff, 20) / 1500;
+      setTimeout(p.grow, Math.max(1, 20 - diff));
+    }
+
+    p.rand2 = () => {
+      return p.random(2000) / 1000 - 1;
+    }
+
+  }
 
 
   useEffect(() => {
@@ -2389,8 +3029,9 @@ export default function About() {
 
     const pointsP5 = new p5(SketchPoints);
     const pointsP52 = new p5(SketchPoints2);
+    const pointsP53 = new p5(SketchPoints3);
 
-    return () => { myP5.remove(), pointsP5.remove(), pointsP52.remove(); }
+    return () => { myP5.remove(), pointsP5.remove(), pointsP52.remove(), pointsP53.remove(); }
 
 
   }, [currentUser]);
@@ -2483,6 +3124,9 @@ export default function About() {
 
         <div id="treeHolder3" className='mt-5 bg-white flex justify-center flex-wrap'></div>
         <div id="buttonHolder3" className='mb-10 flex justify-center'></div>
+
+        <div id="treeHolder4" className='mt-5 bg-white flex justify-center flex-wrap'></div>
+        <div id="buttonHolder4" className='mb-10 flex justify-center'></div>
 
       </div>
         
