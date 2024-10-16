@@ -47,8 +47,6 @@ export default function ProfileDash() {
   const [totalbodyHabits, settotalBodyHabits] = useState(0);
   const [totalspiritHabits, settotalSpiritHabits] = useState(0);
 
-
-
   const [mindHabitsLastWeek, setMindHabitsLastWeek] = useState(0);
   const [bodyHabitsLastWeek, setBodyHabitsLastWeek] = useState(0);
   const [spiritHabitsLastWeek, setSpiritHabitsLastWeek] = useState(0);
@@ -56,6 +54,10 @@ export default function ProfileDash() {
   const [mindSubgoalsLastMonth, setMindSubgoalsLastMonth] = useState(0);
   const [bodySubgoalsLastMonth, setBodySubgoalsLastMonth] = useState(0);
   const [spiritSubgoalsLastMonth, setSpiritSubgoalsLastMonth] = useState(0);
+
+  const [totalMindScore, setTotalMindScore] = useState('');
+  const [totalBodyScore, setTotalBodyScore] = useState('');
+  const [totalSpiritScore, setTotalSpiritScore] = useState('');
 
 
   const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -193,8 +195,19 @@ export default function ProfileDash() {
   useEffect(() => {
     setSummaryData(summary(formDataCompleted));
 
-  }, [formDataCompleted])
+  }, [formDataCompleted]);
 
+  useEffect(() => {
+
+    setTotalMindScore(completedMindSubgoals + completedMindHabits);
+    setTotalBodyScore(completedBodySubgoals + completedBodyHabits);
+    setTotalSpiritScore(completedSpiritSubgoals + completedSpiritHabits);
+
+
+  }, [completedMindSubgoals, completedMindHabits, completedBodySubgoals, completedBodyHabits, completedSpiritSubgoals, completedSpiritHabits]);
+
+
+  //Spirit Sketch
   const SketchPoints = (p) => {
 
     let backgroundImage1;
@@ -871,10 +884,9 @@ export default function ProfileDash() {
 
 
     let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5, cordsArray6, cordsArray7, cordsArray8, cordsArray9, cordsArray10];
-    let selectedArray = 0;
 
     let prog = 1,
-      maxLevel = 200,
+      maxLevel = totalSpiritScore,
       growing = false;
 
     //get width of parent div
@@ -917,28 +929,6 @@ export default function ProfileDash() {
 
       p.getScale(h, w);
 
-      /*
-      let button = p.createButton('Save Line to PC').parent("buttonHolder2");
-      button.position(-20, 0, 'relative');
-      button.mousePressed(p.buttonClicked);
-
-      let button2 = p.createButton('Undo Point').parent("buttonHolder2");
-      button2.position(0, 0, 'relative');
-      button2.mousePressed(p.undo);
-
-      let button4 = p.createButton('Prev Line').parent("buttonHolder2");
-      button4.position(20, 0, 'relative');
-      button4.mousePressed(p.prevArray);
-
-      let button3 = p.createButton('Next Line').parent("buttonHolder2");
-      button3.position(40, 0, 'relative');
-      button3.mousePressed(p.nextArray);
-
-      let button5 = p.createButton('Grow').parent("buttonHolder2");
-      button5.position(0, 50, 'relative');
-      button5.mousePressed(p.startGrow);
-      */
-
       setTimeout(p.startGrow, 1000);
 
     }
@@ -963,38 +953,27 @@ export default function ProfileDash() {
 
 
     p.draw = () => {
-      //console.log('draw called');
+
       p.clear();
+
       p.drawingContext.shadowBlur = 0;
-      //p.scale(1);
       p.background(backgroundImage1);
-      //p.strokeWeight(1);
-      //p.stroke(p.color(255, 255, 255, 50));
-      //p.line(w / 2, 0, w / 2, h);
 
-
-      //p.fill(255, 60, 100);
-      //p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
-      //p.stroke(p.color(255,255,255,50));
-      //p.strokeWeight(1);
-
-      //p.textSize(15);
-      //p.fill(255);
-      //p.stroke(0);
-      //p.strokeWeight(4);
-      //p.textAlign(p.CENTER, p.TOP);
-      //p.text("Line selected: " + selectedArray, w / 2, 20);
+      p.textSize(12);
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(0);
+      p.textAlign(p.CENTER, p.BOTTOM);
+      p.text("Spirit Score: " + totalSpiritScore, w / 2, 265);
 
 
       if (w < 375) {
-        p.scale(widthScale + 0.05, heightScale + 0.02);
+        p.scale(widthScale + 0.05, heightScale);
       }
 
 
       p.drawPoints(0, 0);
       p.drawPoints(0, 1);
-
-
 
       p.noLoop();
     }
@@ -1060,43 +1039,6 @@ export default function ProfileDash() {
       p.drawingContext.shadowBlur = blurriness;
     }
 
-    p.mousePressed = () => {
-      if (p.mouseX > 0 && p.mouseX < w && p.mouseY > 0 && p.mouseY < h) {
-        var cords = [p.round(p.mouseX), p.round(p.mouseY)];
-        arrayOfArrays[selectedArray].push(cords);
-        p.readInputs(true);
-      }
-    }
-
-    p.undo = () => {
-      arrayOfArrays[selectedArray].pop();
-      p.readInputs(true);
-    }
-
-    p.buttonClicked = () => {
-      p.saveJSON(arrayOfArrays[selectedArray], `numbers${selectedArray}.json`);
-    }
-
-    p.nextArray = () => {
-      if (selectedArray != 10) {
-        selectedArray = selectedArray + 1;
-      }
-      else {
-        selectedArray = 0;
-      }
-      p.readInputs(true);
-    }
-
-    p.prevArray = () => {
-      if (selectedArray != 0) {
-        selectedArray = selectedArray - 1;
-      }
-      else {
-        selectedArray = 10;
-      }
-      p.readInputs(true);
-    }
-
     p.startGrow = () => {
       growing = true;
       prog = 1;
@@ -1124,10 +1066,9 @@ export default function ProfileDash() {
       return p.random(2000) / 1000 - 1;
     }
 
-
-
   }
 
+  //Body Sketch
   const SketchPoints2 = (p) => {
 
     let backgroundImage1;
@@ -1807,10 +1748,9 @@ export default function ProfileDash() {
 
 
     let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5, cordsArray6, cordsArray7, cordsArray8, cordsArray9, cordsArray10];
-    let selectedArray = 0;
-
+  
     let prog = 1,
-      maxLevel = 200,
+      maxLevel = totalBodyScore,
       growing = false;
 
     //get width of parent div
@@ -1853,27 +1793,6 @@ export default function ProfileDash() {
 
       p.getScale(h, w);
 
-      /*let button = p.createButton('Save Line to PC').parent("buttonHolder3");
-      button.position(-20, 0, 'relative');
-      button.mousePressed(p.buttonClicked);
-
-      let button2 = p.createButton('Undo Point').parent("buttonHolder3");
-      button2.position(0, 0, 'relative');
-      button2.mousePressed(p.undo);
-
-      let button4 = p.createButton('Prev Line').parent("buttonHolder3");
-      button4.position(20, 0, 'relative');
-      button4.mousePressed(p.prevArray);
-
-      let button3 = p.createButton('Next Line').parent("buttonHolder3");
-      button3.position(40, 0, 'relative');
-      button3.mousePressed(p.nextArray);
-
-      let button5 = p.createButton('Grow').parent("buttonHolder3");
-      button5.position(0, 50, 'relative');
-      button5.mousePressed(p.startGrow);
-      */
-
       setTimeout(p.startGrow, 1000);
 
     }
@@ -1901,28 +1820,17 @@ export default function ProfileDash() {
       //console.log('draw called');
       p.clear();
       p.drawingContext.shadowBlur = 0;
-      //p.scale(1);
       p.background(backgroundImage1);
-      //p.strokeWeight(1);
-      //p.stroke(p.color(255, 255, 255, 50));
-      //p.line(w / 2, 0, w / 2, h);
 
-
-      //p.fill(255, 60, 100);
-      //p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
-      //p.stroke(p.color(255,255,255,50));
-      //p.strokeWeight(1);
-
-      //p.textSize(15);
-      //p.fill(255);
-      //p.stroke(0);
-      //p.strokeWeight(4);
-      //p.textAlign(p.CENTER, p.TOP);
-      //p.text("Line selected: " + selectedArray, w / 2, 20);
-
+      p.textSize(12);
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(0);
+      p.textAlign(p.CENTER, p.BOTTOM);
+      p.text("Body Score: " + totalBodyScore, w / 2, 265);
 
       if (w < 375) {
-        p.scale(widthScale + 0.05, heightScale + 0.02);
+        p.scale(widthScale + 0.05, heightScale);
       }
 
 
@@ -1995,43 +1903,6 @@ export default function ProfileDash() {
       p.drawingContext.shadowBlur = blurriness;
     }
 
-    p.mousePressed = () => {
-      if (p.mouseX > 0 && p.mouseX < w && p.mouseY > 0 && p.mouseY < h) {
-        var cords = [p.round(p.mouseX), p.round(p.mouseY)];
-        arrayOfArrays[selectedArray].push(cords);
-        p.readInputs(true);
-      }
-    }
-
-    p.undo = () => {
-      arrayOfArrays[selectedArray].pop();
-      p.readInputs(true);
-    }
-
-    p.buttonClicked = () => {
-      p.saveJSON(arrayOfArrays[selectedArray], `numbers${selectedArray}.json`);
-    }
-
-    p.nextArray = () => {
-      if (selectedArray != 10) {
-        selectedArray = selectedArray + 1;
-      }
-      else {
-        selectedArray = 0;
-      }
-      p.readInputs(true);
-    }
-
-    p.prevArray = () => {
-      if (selectedArray != 0) {
-        selectedArray = selectedArray - 1;
-      }
-      else {
-        selectedArray = 10;
-      }
-      p.readInputs(true);
-    }
-
     p.startGrow = () => {
       growing = true;
       prog = 1;
@@ -2061,6 +1932,7 @@ export default function ProfileDash() {
 
   }
  
+  //Mind Sketch
   const SketchPoints3 = (p) => {
 
     let backgroundImage1;
@@ -2450,10 +2322,9 @@ export default function ProfileDash() {
 
 
     let arrayOfArrays = [cordsArray, cordsArray1, cordsArray2, cordsArray3, cordsArray4, cordsArray5, cordsArray6, cordsArray7, cordsArray8, cordsArray9, cordsArray10];
-    let selectedArray = 0;
 
     let prog = 1,
-      maxLevel = 200,
+      maxLevel = totalMindScore,
       growing = false;
 
     //get width of parent div
@@ -2495,27 +2366,6 @@ export default function ProfileDash() {
       p.createCanvas(w, h).parent("constellationMind");
 
       p.getScale(h, w);
-
-      //let button = p.createButton('Save Line to PC').parent("buttonHolder4");
-      //button.position(-20, 0, 'relative');
-      //button.mousePressed(p.buttonClicked);
-
-      //let button2 = p.createButton('Undo Point').parent("buttonHolder4");
-      //button2.position(0, 0, 'relative');
-      //button2.mousePressed(p.undo);
-
-      //let button4 = p.createButton('Prev Line').parent("buttonHolder4");
-      //button4.position(20, 0, 'relative');
-      //button4.mousePressed(p.prevArray);
-
-      //let button3 = p.createButton('Next Line').parent("buttonHolder4");
-      //button3.position(40, 0, 'relative');
-      //button3.mousePressed(p.nextArray);
-
-      //let button5 = p.createButton('Grow').parent("buttonHolder4");
-      //button5.position(0, 50, 'relative');
-      //button5.mousePressed(p.startGrow);
-
       setTimeout(p.startGrow, 1000);
 
     }
@@ -2543,44 +2393,27 @@ export default function ProfileDash() {
       //console.log('draw called');
       p.clear();
       p.drawingContext.shadowBlur = 0;
-      //p.scale(1);
       p.background(backgroundImage1);
 
-      //p.strokeWeight(1);
-      //p.stroke(p.color(255, 255, 255, 50));
-      //p.line(w / 2, 0, w / 2, h);
-
-
-      //p.fill(255, 60, 100);
-      //p.text("(" + p.round(p.mouseX) + ", " + p.round(p.mouseY) + ")", p.mouseX, p.mouseY);
-      //p.stroke(p.color(255,255,255,50));
-      //p.strokeWeight(1);
-
-      //p.textSize(15);
-      //p.fill(255);
-      //p.stroke(0);
-      //p.strokeWeight(4);
-      //p.textAlign(p.CENTER, p.TOP);
-      //p.text("Line selected: " + selectedArray, w / 2, 20);
-
+      p.textSize(12);
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(0);
+      p.textAlign(p.CENTER, p.BOTTOM);
+      p.text("Mind Score: " + totalMindScore, w / 2, 265);
 
       if (w < 375) {
-        p.scale(widthScale + 0.05, heightScale + 0.02);
+        p.scale(widthScale + 0.05, heightScale );
       }
-
 
       p.drawPoints(0, 0);
       p.drawPoints(0, 1);
-
-
 
       p.noLoop();
     }
 
 
     p.drawPoints = (level, array) => {
-
-
 
       if (prog < level)
         return;
@@ -2638,42 +2471,6 @@ export default function ProfileDash() {
       p.drawingContext.shadowBlur = blurriness;
     }
 
-    p.mousePressed = () => {
-      if (p.mouseX > 0 && p.mouseX < w && p.mouseY > 0 && p.mouseY < h) {
-        var cords = [p.round(p.mouseX), p.round(p.mouseY)];
-        arrayOfArrays[selectedArray].push(cords);
-        p.readInputs(true);
-      }
-    }
-
-    p.undo = () => {
-      arrayOfArrays[selectedArray].pop();
-      p.readInputs(true);
-    }
-
-    p.buttonClicked = () => {
-      p.saveJSON(arrayOfArrays[selectedArray], `numbers${selectedArray}.json`);
-    }
-
-    p.nextArray = () => {
-      if (selectedArray != 10) {
-        selectedArray = selectedArray + 1;
-      }
-      else {
-        selectedArray = 0;
-      }
-      p.readInputs(true);
-    }
-
-    p.prevArray = () => {
-      if (selectedArray != 0) {
-        selectedArray = selectedArray - 1;
-      }
-      else {
-        selectedArray = 10;
-      }
-      p.readInputs(true);
-    }
 
     p.startGrow = () => {
       growing = true;
@@ -2707,16 +2504,20 @@ export default function ProfileDash() {
 
   useEffect(() => {
 
-    const pointsP5 = new p5(SketchPoints);
-    const pointsP52 = new p5(SketchPoints2);
-    const pointsP53 = new p5(SketchPoints3);
+    if (totalMindScore !== '' && totalBodyScore !== '' && totalSpiritScore !== ''){
+ 
+      const pointsP5 = new p5(SketchPoints);
+      const pointsP52 = new p5(SketchPoints2);
+      const pointsP53 = new p5(SketchPoints3);
+      
+      return () => { pointsP5.remove(), 
+        pointsP52.remove(), 
+        pointsP53.remove(); 
+      }
+      
+    }
 
-    return () => { pointsP5.remove(), 
-      pointsP52.remove(), 
-      pointsP53.remove(); }
-
-
-  }, [currentUser]);
+  }, [totalMindScore, totalBodyScore, totalSpiritScore]);
 
 
 
@@ -2729,12 +2530,6 @@ export default function ProfileDash() {
         <p className='text-wrap text-gray-500 break-words italic text-lg font-medium max-w-4xl'>{todaysDateFull}</p>
       </div>
 
-      {/* Todays Day
-      <div className='text-center flex flex-col'>
-        <span className='font-bold text-2xl text-gray-600 font-Grandiflora'>TODAY IS <span className='uppercase tracking-widest'>{todaysDay}</span> </span>
-        <span className='text-md font-medium text-gray-500'> {todaysDate} </span>
-      </div>
-       */}
 
       {/* Main Container */}
       <div className='min-h-screen flex flex-col items-center mx-2 sm:mx-5 mb-10'>
@@ -2744,6 +2539,151 @@ export default function ProfileDash() {
 
           {/* Habits Timeline */ }
           <Timeline tasks={timelineHabits} />
+
+                    {/* Constellation and Task/Habit Statistics container */}
+          <div id="constellationHolder" className='w-full flex justify-center sm:justify-around flex-wrap'>
+
+            <div id="constellationSpirit" className='my-5 min-w-[300px] flex flex-col-reverse items-center gap-5'>
+
+              {/* Spirit Card */}
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                <div className='flex justify-between'>
+                  <div className=''>
+                    <h3 className='text-lg'><span className='text-2xl font-semibold'>{completedSpiritHabits}</span> habits</h3>
+                  </div>
+                  <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    {spiritHabitsLastWeek} / {totalspiritHabits}
+                  </span>
+                  <div className='text-gray-500'>Updated within past 7 days</div>
+                </div>
+              </div>
+
+              {/* Spirit SubGoals Card */}
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                <div className='flex justify-between items-center'>
+                  <div className='w-8/12'>
+                    <h3 className='text-lg'><span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> tasks</h3>
+                    {/* Spirit Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
+                      <div className='mx-1 my-[2px] w-full bg-indigo-50'>
+                        <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    {spiritSubgoalsLastMonth}
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div id="constellationBody" className='my-5 min-w-[300px] flex flex-col-reverse items-center gap-5'>
+              
+              {/* Body Card */}
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                <div className='flex justify-between'>
+                  <div className=''>
+                    <h3 className='text-lg'><span className='text-2xl font-semibold'>{completedBodyHabits}</span> habits</h3>
+                  </div>
+                  <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    {bodyHabitsLastWeek} / {totalbodyHabits}
+                  </span>
+                  <div className='text-gray-500'>Updated within past 7 days</div>
+                </div>
+              </div>
+
+              {/* Body SubGoals Card */}
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                <div className='flex justify-between items-center'>
+                  <div className='w-8/12'>
+                    <h3 className='text-lg'><span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> tasks</h3>
+                    {/* Body Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
+                      <div className='mx-1 my-[2px] w-full bg-indigo-50'>
+                        <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    {bodySubgoalsLastMonth}
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
+                </div>
+              </div>
+
+
+
+
+            </div>
+
+            <div id="constellationMind" className='my-5 min-w-[300px] flex flex-col-reverse items-center gap-5'>
+
+              {/* Mind Card */}
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                <div className='flex justify-between'>
+                  <div className=''>
+                    <h3 className='text-lg'><span className='text-2xl font-semibold'>{completedMindHabits}</span> habits</h3>
+                  </div>
+                  <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    {mindHabitsLastWeek} / {totalmindHabits}
+                  </span>
+                  <div className='text-gray-500'>Updated within past 7 days</div>
+                </div>
+              </div>
+
+
+              {/* Mind SubGoals Card */}
+              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                <div className='flex justify-between items-center'>
+                  <div className='w-8/12'>
+                    <h3 className=' text-lg'><span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> tasks</h3>
+                    {/* Mind Goals Loading Bar */}
+                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
+                      <div className='mx-1 my-[2px] w-full bg-indigo-50'>
+                        <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className='flex gap-2 text-sm'>
+                  <span className='text-green-500 flex items-center'>
+                    <HiArrowNarrowUp />
+                    {mindSubgoalsLastMonth}
+                  </span>
+                  <div className='text-gray-500'>Last month</div>
+                </div>
+              </div>
+
+
+            </div>
+            
+          </div>
 
           {/* Habits Table Container */}
           <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
@@ -2795,7 +2735,7 @@ export default function ProfileDash() {
             ))}
 
           </div>
-          {/* End of Habits Table Container */}
+
           
           {/* Newest/Oldest Tasks Container */}
           <div>
@@ -2911,148 +2851,7 @@ export default function ProfileDash() {
           </div>
 
 
-          {/* Constellation and Task/Habit Statistics container */}
-          <div id="constellationHolder" className='w-full flex justify-center sm:justify-around flex-wrap'>
-            <div id="constellationMind" className='my-5 min-w-[300px] flex flex-col-reverse items-center gap-5'>
 
-              {/* Mind Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between'>
-                  <div className=''>
-                    <h3 className='text-lg'><span className='text-2xl'>{completedMindHabits}</span> habits</h3>
-                  </div>
-                  <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {mindHabitsLastWeek} / {totalmindHabits}
-                  </span>
-                  <div className='text-gray-500'>Updated within past 7 days</div>
-                </div>
-              </div>
-
-
-              {/* Mind SubGoals Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between items-center'>
-                  <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg font-semibold'><span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> tasks</h3>
-                    {/* Mind Goals Loading Bar */}
-                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
-                      <div className='mx-1 my-[2px] w-full bg-indigo-50'>
-                        <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {mindSubgoalsLastMonth}
-                  </span>
-                  <div className='text-gray-500'>Last month</div>
-                </div>
-              </div>
-
-
-            </div>
-
-            <div id="constellationBody" className='my-5 min-w-[300px] flex flex-col-reverse items-center gap-5'>
-              
-              {/* Body Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between'>
-                  <div className=''>
-                    <h3 className='text-lg'><span className='text-2xl'>{completedBodyHabits}</span> habits</h3>
-                  </div>
-                  <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {bodyHabitsLastWeek} / {totalbodyHabits}
-                  </span>
-                  <div className='text-gray-500'>Updated within past 7 days</div>
-                </div>
-              </div>
-
-              {/* Body SubGoals Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between items-center'>
-                  <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg font-semibold'><span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> tasks</h3>
-                    {/* Body Goals Loading Bar */}
-                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
-                      <div className='mx-1 my-[2px] w-full bg-indigo-50'>
-                        <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {bodySubgoalsLastMonth}
-                  </span>
-                  <div className='text-gray-500'>Last month</div>
-                </div>
-              </div>
-
-
-
-
-            </div>
-
-            <div id="constellationSpirit" className='my-5 min-w-[300px] flex flex-col-reverse items-center gap-5'>
-
-              {/* Spirit Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between'>
-                  <div className=''>
-                    <h3 className='text-lg'><span className='text-2xl'>{completedSpiritHabits}</span> habits</h3>
-                  </div>
-                  <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {spiritHabitsLastWeek} / {totalspiritHabits}
-                  </span>
-                  <div className='text-gray-500'>Updated within past 7 days</div>
-                </div>
-              </div>
-
-              {/* Spirit SubGoals Card */}
-              <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
-                <div className='flex justify-between items-center'>
-                  <div className='w-8/12'>
-                    <h3 className='text-gray-500 text-lg font-semibold'><span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> tasks</h3>
-                    {/* Spirit Goals Loading Bar */}
-                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
-                      <div className='mx-1 my-[2px] w-full bg-indigo-50'>
-                        <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
-                </div>
-                <div className='flex gap-2 text-sm'>
-                  <span className='text-green-500 flex items-center'>
-                    <HiArrowNarrowUp />
-                    {spiritSubgoalsLastMonth}
-                  </span>
-                  <div className='text-gray-500'>Last month</div>
-                </div>
-              </div>
-
-            </div>
-          </div>
 
 
         </div>
