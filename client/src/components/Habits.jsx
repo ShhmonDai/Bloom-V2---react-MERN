@@ -404,6 +404,7 @@ export default function Habits( {category, sendDataToCategory2}) {
           {/* Add New Task Button */}
           <div className='flex flex-row justify-center py-8' >
             <button className='font-normal text-blue-500' type='button' onClick={() => {
+              setFormDataDays([]);
               setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
               setShowModalAddHabit(true);
             }}>Add new Task</button>
@@ -503,6 +504,7 @@ export default function Habits( {category, sendDataToCategory2}) {
               {/* Add Habit Input */}
               <div className='flex flex-row justify-center pt-8' >
                 <button className='font-normal text-blue-500' type='button' onClick={() => {
+                  setFormDataDays([]);
                   setFormDataAddHabit({ ...formDataAddHabit, userId: currentUser._id, daysofweek: formDataDays, category: 'mind', timeofday: 'Any' });
                   setShowModalAddHabit(true);
                 }}>Add new Task</button>
@@ -651,7 +653,6 @@ export default function Habits( {category, sendDataToCategory2}) {
                         ))}
                       </>
                     }  
-
 
                 </div>
               </div>
@@ -808,7 +809,7 @@ export default function Habits( {category, sendDataToCategory2}) {
                   </span>
                 </div>
 
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 bg-gray-200 rounded-xl p-4'>
                   <span className='flex flex-col font-semibold'>
                     Settings Preview:
                   </span>
@@ -819,11 +820,23 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                   <div>
                     <span className='font-semibold'>Days To Complete On: </span>
-                    {formDataDays.map((day, index) => (
-                      <div key={index}>
-                        {day}
-                      </div>
-                    ))}
+                    <div className='flex flex-wrap justify-center gap-2'>
+
+                      {formDataDays.length == 7 ?
+                        <span>
+                          Everyday
+                        </span>
+                        :
+                        <>
+                          {formDataDays.map((day, index) => (
+                            <div key={index}>
+                              {day}
+                            </div>
+                          ))}
+                        </>
+                      }
+
+                    </div>
                   </div>
                 </div>
 
