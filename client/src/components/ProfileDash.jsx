@@ -58,6 +58,7 @@ export default function ProfileDash() {
   const [totalMindScore, setTotalMindScore] = useState('');
   const [totalBodyScore, setTotalBodyScore] = useState('');
   const [totalSpiritScore, setTotalSpiritScore] = useState('');
+  const [renderConstellations, setRenderConstellations] = useState('');
 
 
   const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -202,6 +203,10 @@ export default function ProfileDash() {
     setTotalMindScore(completedMindSubgoals + completedMindHabits);
     setTotalBodyScore(completedBodySubgoals + completedBodyHabits);
     setTotalSpiritScore(completedSpiritSubgoals + completedSpiritHabits);
+
+    if (totalMindScore !== '' && totalBodyScore !== '' && totalSpiritScore !== '') {
+      setRenderConstellations('true');
+    }
 
 
   }, [completedMindSubgoals, completedMindHabits, completedBodySubgoals, completedBodyHabits, completedSpiritSubgoals, completedSpiritHabits]);
@@ -2504,20 +2509,16 @@ export default function ProfileDash() {
 
   useEffect(() => {
 
-    if (totalMindScore !== '' && totalBodyScore !== '' && totalSpiritScore !== ''){
- 
+    if (renderConstellations !== '') {
+
       const pointsP5 = new p5(SketchPoints);
       const pointsP52 = new p5(SketchPoints2);
       const pointsP53 = new p5(SketchPoints3);
       
-      return () => { pointsP5.remove(), 
-        pointsP52.remove(), 
-        pointsP53.remove(); 
-      }
-      
+      return () => { pointsP5.remove(), pointsP52.remove(), pointsP53.remove(); }
     }
 
-  }, [totalMindScore, totalBodyScore, totalSpiritScore]);
+  }, [renderConstellations]);
 
 
 
