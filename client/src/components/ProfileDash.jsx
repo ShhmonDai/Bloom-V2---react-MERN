@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { isSameDay } from "date-fns";
@@ -59,6 +59,7 @@ export default function ProfileDash() {
   const [totalBodyScore, setTotalBodyScore] = useState('');
   const [totalSpiritScore, setTotalSpiritScore] = useState('');
   const [renderConstellations, setRenderConstellations] = useState('');
+  const [regrow, setRegrow] = useState(false);
 
 
   const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -934,8 +935,39 @@ export default function ProfileDash() {
 
       p.getScale(h, w);
 
-      setTimeout(p.startGrow, 1000);
+      //setTimeout(p.startGrow, 1000);
 
+
+      // Intersection Observer Options
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      };
+
+      const callback = (entries, observer) => {
+        entries.forEach((entry) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Canvas is visible
+              onCanvasVisible();
+            }
+          });
+        });
+      };
+
+      // Create an Intersection Observer
+      const observer = new IntersectionObserver(callback, options);
+
+      // Observe the canvas element
+      observer.observe(document.getElementById('constellationSpirit'));
+
+    }
+
+    function onCanvasVisible() {
+      console.log("Spirit Canvas is visible!");
+      p.startGrow();
+      // Perform actions when the canvas becomes visible
     }
 
     p.readInputs = (updateTree) => {
@@ -1798,8 +1830,39 @@ export default function ProfileDash() {
 
       p.getScale(h, w);
 
-      setTimeout(p.startGrow, 1000);
+      //setTimeout(p.startGrow, 1000);
 
+      // Intersection Observer Options
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      };
+
+      const callback = (entries, observer) => {
+        entries.forEach((entry) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Canvas is visible
+              onCanvasVisible();
+            }
+          });
+        });
+      };
+
+      // Create an Intersection Observer
+      const observer = new IntersectionObserver(callback, options);
+
+      // Observe the canvas element
+      observer.observe(document.getElementById('constellationBody'));
+
+
+    }
+
+    function onCanvasVisible() {
+      console.log("Body Canvas is visible!");
+      p.startGrow();
+      // Perform actions when the canvas becomes visible
     }
 
     p.readInputs = (updateTree) => {
@@ -2332,6 +2395,7 @@ export default function ProfileDash() {
       maxLevel = totalMindScore,
       growing = false;
 
+
     //get width of parent div
     let b = document.getElementById("constellationMind");
     let w = 0;
@@ -2371,8 +2435,41 @@ export default function ProfileDash() {
       p.createCanvas(w, h).parent("constellationMind");
 
       p.getScale(h, w);
-      setTimeout(p.startGrow, 1000);
 
+
+      // Intersection Observer Options
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      };
+
+      
+
+      const callback = (entries, observer) => {
+        entries.forEach((entry) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Canvas is visible
+              onCanvasVisible();
+            }
+          });
+        });
+      };
+
+      // Create an Intersection Observer
+      const observer = new IntersectionObserver(callback, options);
+
+      // Observe the canvas element
+
+      observer.observe(document.getElementById('constellationMind'));
+
+    }
+
+    function onCanvasVisible() {
+      console.log("Mind Canvas is visible!");
+      p.startGrow();
+      // Perform actions when the canvas becomes visible
     }
 
     p.readInputs = (updateTree) => {
@@ -2413,6 +2510,7 @@ export default function ProfileDash() {
 
       p.drawPoints(0, 0);
       p.drawPoints(0, 1);
+      
 
       p.noLoop();
     }
@@ -2514,12 +2612,11 @@ export default function ProfileDash() {
       const pointsP5 = new p5(SketchPoints);
       const pointsP52 = new p5(SketchPoints2);
       const pointsP53 = new p5(SketchPoints3);
-      
+
       return () => { pointsP5.remove(), pointsP52.remove(), pointsP53.remove(); }
     }
 
   }, [renderConstellations]);
-
 
 
   return (
