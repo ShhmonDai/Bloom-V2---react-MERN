@@ -941,7 +941,7 @@ export default function ProfileDash() {
       // Intersection Observer Options
       const options = {
         root: null,
-        rootMargin: "0px",
+        rootMargin: "0px 0px 20% 0px",
         threshold: 1.0,
       };
 
@@ -1835,7 +1835,7 @@ export default function ProfileDash() {
       // Intersection Observer Options
       const options = {
         root: null,
-        rootMargin: "0px",
+        rootMargin: "0px 0px 20% 0px",
         threshold: 1.0,
       };
 
@@ -2440,7 +2440,7 @@ export default function ProfileDash() {
       // Intersection Observer Options
       const options = {
         root: null,
-        rootMargin: "0px",
+        rootMargin: "0px 0px 20% 0px",
         threshold: 1.0,
       };
 
@@ -2623,7 +2623,7 @@ export default function ProfileDash() {
     <div className='w-full min-h-screen pb-20 bg-gradient-to-b from-white via-blue-200 to-[#ceecfa] flex flex-col items-center'>
       
       {/* Welcome text */}
-      <div className='px-5 pt-10 pb-10 sm:px-10 flex flex-col justify-center items-center'>
+      <div className='px-5 pt-10 pb-2 sm:px-10 flex flex-col justify-center items-center'>
         <h1 className='font-BrushFont text-7xl sm:text-8xl'><span className=''>{todaysDay}</span></h1>
         <p className='text-wrap text-gray-500 break-words italic text-lg font-medium max-w-4xl'>{todaysDateFull}</p>
       </div>
@@ -2633,7 +2633,7 @@ export default function ProfileDash() {
       <div className='min-h-screen flex flex-col items-center mx-2 sm:mx-5 mb-10'>
 
         {/* Stats Container */}
-        <div className='p-2 mt-10 flex flex-col gap-10 max-w-5xl'>
+        <div className='p-2 mt-2 flex flex-col gap-10 max-w-5xl'>
 
           {/* Habits Timeline */ }
           <Timeline tasks={timelineHabits} />
