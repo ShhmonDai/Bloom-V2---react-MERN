@@ -751,6 +751,7 @@ export default function Habits( {category, sendDataToCategory2}) {
                 <Label className='mt-4'>Habit Category</Label>
                 <Select id="category" required onChange={(e) =>
                   setFormDataUpdateHabit({ ...formDataUpdateHabit, category: e.target.value })}>
+                  <option selected value={formDataUpdateHabit.category}>Choose a category</option>
                   <option value='mind'>Mind</option>
                   <option value='body'>Body</option>
                   <option value='spirit'>Spirit</option>

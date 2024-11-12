@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea } from "flowbite-react";
+import { Dropdown, Label, TextInput, Button, Modal, Alert, Textarea, Select } from "flowbite-react";
 import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { TfiAngleDoubleDown } from "react-icons/tfi";
@@ -289,7 +289,7 @@ export default function Goals( {category, sendDataToCategory} ) {
                   <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
                     <Dropdown.Item onClick={() => {
                       setShowModalUpdateGoal(true);
-                      setFormDataUpdateGoal({ ...formDataUpdateGoal, _id: goal._id, title: goal.title, content: goal.content});
+                      setFormDataUpdateGoal({ ...formDataUpdateGoal, _id: goal._id, title: goal.title, content: goal.content, category: goal.category});
                     }}>Edit</Dropdown.Item>
                     <Dropdown.Item onClick={() => {
                       setShowModalDeleteGoal(true);
@@ -545,6 +545,14 @@ export default function Goals( {category, sendDataToCategory} ) {
               <Textarea rows={6} placeholder='Description' id='content' value={formDataUpdateGoal.content} onChange={(e) =>
                 setFormDataUpdateGoal({ ...formDataUpdateGoal, content: e.target.value })
               } />
+              <Label className='mt-4'>Goal Category</Label>
+              <Select id="category" required onChange={(e) =>
+                setFormDataUpdateGoal({ ...formDataUpdateGoal, category: e.target.value })}>
+                <option selected value={formDataUpdateGoal.category}>Choose a category</option>
+                <option value='mind'>Mind</option>
+                <option value='body'>Body</option>
+                <option value='spirit'>Spirit</option>
+              </Select>
 
 
               <div className='my-5 flex justify-center gap-4'>
