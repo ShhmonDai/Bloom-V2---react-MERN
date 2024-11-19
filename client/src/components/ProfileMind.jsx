@@ -114,7 +114,23 @@ export default function ProfileMind() {
     //get width of parent div
     let b = document.getElementById("treeHolder");
     let w = 0;
-    b.clientWidth < 650 ? ( w = b.clientWidth ) : ( w = 650);
+
+    if (b.clientWidth > 1024) {
+      w = 600;
+    }
+
+    if (b.clientWidth >= 769 && b.clientWidth <= 1024) {
+      w = 600;
+    }
+
+    if (b.clientWidth >= 481 && b.clientWidth <= 768) {
+      w = p.max((p.min(b.clientWidth - 100, 600), 480));
+    }
+
+    if (b.clientWidth < 481) {
+      w = b.clientWidth;
+    }
+
     let h = 0;
 
 
@@ -325,7 +341,23 @@ export default function ProfileMind() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      b.clientWidth < 650 ? (w = b.clientWidth) : (w = 650);
+
+      if (b.clientWidth > 1024) {
+        w = 600;
+      }
+
+      if (b.clientWidth >= 769 && b.clientWidth <= 1024) {
+        w = 600;
+      }
+
+      if (b.clientWidth >= 481 && b.clientWidth <= 768) {
+        w = p.max((p.min(b.clientWidth - 100, 600), 480));
+      }
+
+      if (b.clientWidth < 481) {
+        w = b.clientWidth;
+      }
+
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
@@ -582,7 +614,7 @@ export default function ProfileMind() {
         */}
         
         {/* Tree container */}
-        <div id="treeHolder" className='min-h-[400px] sm:min-h-[540px] lg:min-h-[590px] bg-white flex justify-center items-center'></div>
+        <div id="treeHolder" className='min-h-[400px] sm:min-h-[440px] md:min-h-540 xl:min-h-[545px] bg-white flex justify-center items-center'></div>
 
         {/* Button Container */}
         <div id="buttonHolder" className='hidden'>

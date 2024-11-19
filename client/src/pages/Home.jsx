@@ -76,7 +76,24 @@ export default function Home() {
     //get width of parent div
     let b = document.getElementById("treeHolder");
     let w = 0;
-    b.clientWidth < 700 ? (w = b.clientWidth) : (w = 700);
+
+    if (b.clientWidth > 1024) {
+      w = 600;
+    }
+
+    if ( b.clientWidth >= 769 && b.clientWidth <= 1024 ) {
+      w = 600;
+    }
+
+    if (b.clientWidth >= 481 && b.clientWidth <= 768) {
+      w = p.max((p.min(b.clientWidth - 100, 600), 480));
+    }
+
+    if (b.clientWidth < 481) {
+      w = b.clientWidth;
+    }
+
+
     let h = 0;
 
 
@@ -290,7 +307,23 @@ export default function Home() {
 
     p.windowResized = () => {
       b = document.getElementById("treeHolder");
-      b.clientWidth < 700 ? (w = b.clientWidth) : (w = 700);
+
+      if (b.clientWidth > 1024) {
+        w = 600;
+      }
+
+      if (b.clientWidth >= 769 && b.clientWidth <= 1024) {
+        w = 600;
+      }
+
+      if (b.clientWidth >= 481 && b.clientWidth <= 768) {
+        w = p.max((p.min(b.clientWidth - 100, 600), 480));
+      }
+
+      if (b.clientWidth < 481) {
+        w = b.clientWidth;
+      }
+      
       p.getHeight(w);
 
       p.resizeCanvas(w, h);
@@ -442,7 +475,7 @@ export default function Home() {
       {/* Intro Container */}
       <div className='mx-auto flex flex-col justify-center'>
 
-        <div id="treeHolder" className='min-h-[470px] sm:min-h-[650px] lg:min-h-[770px] bg-white flex justify-center items-center'></div>
+        <div id="treeHolder" className='min-h-[470px] sm:min-h-[600px] lg:min-h-[660px] bg-white flex justify-center items-center'></div>
 
 
         <div id="buttonHolder" className='mb-20'> 
