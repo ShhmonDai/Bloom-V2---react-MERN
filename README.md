@@ -3,7 +3,7 @@
 
 &nbsp;
 
-<p>The purpose of Bloom is to provide a way to visualy track your progress within three separate life categories: Mental, Physical and Spiritual, since we often cannot see our individual progress until we step back and take a look at the bigger picture. The reason for the three categories is to provide us a way to compare our progress between them in order to help us become a well-rounded person. Our method of visualization is a little tree that grows with you as you accomplish your goals and habits</p>
+<p>Welcome to Bloom, your personal growth companion! Watch your aspirations take root and flourish into reality as each goal accomplished adds a vibrant leaf to your thriving tree of progress. With Bloom, cultivate habits, track goals, analyze your journal with Machine Learning and witness your journey towards success unfold in a visually captivating way.</p>
            
 &nbsp;
 
@@ -13,12 +13,42 @@
 
 &nbsp;
 
-&nbsp;
 
 <h1 align='center'>
            
 ![mockup](https://github.com/ShhmonDai/Bloom-V2---react-MERN/assets/109430011/dae66f86-5899-4d4b-9d0a-8caf9794e3c3)
 
+## 🎯 Top Features
+- Visualization of progress through dynamically grown trees based on the number of completed Goals, Subgoals and Habits
+- Journal emotion analysis using IBM Machine Learning AI API
+
+## 📦 Technologies
+- `React.JS`
+- `Node.JS`
+- `MongoDB`
+- `P5.JS`
+- `Firebase`
+- `Express.JS`
+- `JWT & Bcrypt`
+- `Tailwind`
+- `IBM Machine Learning API`
+
+## 🎨 Full Features
+- Create goals within 3 different categories; Mind, Body, Spirit
+- Actionable Subgoals aka steps towards the goal
+- Note taking within each goal
+- Recurring Habits, either daily or on specifc days of week
+- Visible daily habit timeline
+- Completed Habits streak tracker
+- Growing Trees for each category based on number of completed Goals, Subgoals and Habits
+- Dashboard with user statistics
+- Journal entries
+- Option to analyze journal entry content to calculate emotions using Machine Learning AI 
+- Accomplished Goals/Subgoals archives
+- Artistic UI
+
+# 🍿 Bloom Screenshots
+Note: Some Screenshots are from earlier builds and the UI has been updated since then. I encourage you to check out Blooms demo account on the Bloom website to see the actual product
 ![Categories](https://github.com/ShhmonDai/Bloom-V2---react-MERN/assets/109430011/375a3b4c-2180-43e2-bb6c-a3717a36cb0a)
 
 
