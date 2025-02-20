@@ -11,6 +11,8 @@ import { BsYinYang } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { HiLogout, HiUser, HiViewGrid, HiChartBar, HiCog } from "react-icons/hi";
 import { FaBook } from "react-icons/fa6";
+import { setDesktop, setWallpaper, toggleWallpaper } from "../redux/wallpaperEngine/wallpaperSlice";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 
 
@@ -208,12 +210,31 @@ const customNavTheme = {
 
 export default function Header() {
 
-    const location = useLocation();
-    const urlParams = new URLSearchParams(location.search);
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
 
-    const path = useLocation().pathname;
-    const dispatch = useDispatch();
-    const {currentUser} = useSelector(state => state.user);
+  const path = useLocation().pathname;
+
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector(state => state.user);
+
+  {/* For use for the Wallpaper Engine page, if URL contains wallpaper=true the navbar will be hidden*/ }
+  const [wallpaper, setWallpaperVisibility] = useState('');
+  useEffect(() => {
+    const weFromUrl = urlParams.get('wallpaper');
+    if (weFromUrl) {
+      setWallpaperVisibility(weFromUrl);
+      dispatch(setWallpaper());
+    } else {
+      dispatch(setDesktop());
+      setWallpaperVisibility('');
+    }
+  }, [location.search, wallpaper]);
+
+  const showWallpaper = {
+    '': '',
+    'true': 'hidden',
+  };
 
   const handleSignout = async () => {
     try {
@@ -237,7 +258,7 @@ export default function Header() {
     <Flowbite theme={{ theme: customNavTheme }}>
 
 
-      <div className='w-full px-8 pt-3 sm:pt-0  pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.2)]'>
+      <div className={`w-full px-8 pt-3 sm:pt-0  pb-12 sm:pb-2 hidden sm:flex sm:text-center sm:justify-center dark:bg-[rgba(0,0,0,0.2)] sm:${showWallpaper[wallpaper]}`}>
 
         {/* middle */}
         <div className='w-100 flex flex-col justify-start sm:justify-center sm:text-center'>
@@ -247,7 +268,7 @@ export default function Header() {
       </div>
 
 
-      <Navbar className='border-y-[1px] sm:sticky top-0 z-10 sm:backdrop-blur transition-all duration-500 bg-white dark:bg-[rgba(0,0,0,0.4)]'>
+      <Navbar className={`border-y-[1px] sm:sticky top-0 z-10 sm:backdrop-blur transition-all duration-500 bg-white dark:bg-[rgba(0,0,0,0.4)] ${showWallpaper[wallpaper]}`}>
       
 
       {/* Navbar Elements */}
