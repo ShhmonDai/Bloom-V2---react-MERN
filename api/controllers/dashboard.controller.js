@@ -24,13 +24,13 @@ export const getstatistics = async (req, res, next) => {
             accomplished: true,
         });
 
-        /*
+        
         const completedMindGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "mind",
             accomplished: true,
         });
-        */
+        
 
         const totalBodySubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
@@ -51,13 +51,13 @@ export const getstatistics = async (req, res, next) => {
             accomplished: true,
         });
 
-        /*
+        
         const completedBodyGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "body",
             accomplished: true,
         });
-        */
+        
 
         const totalSpiritSubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
@@ -77,13 +77,13 @@ export const getstatistics = async (req, res, next) => {
             accomplished: true,
         });
 
-        /*
+        
         const completedSpiritGoals = await Goal.countDocuments({
             userId: req.params.userId,
             category: "spirit",
             accomplished: true,
         });
-        */
+
 
         const totalMindHabits = await Habit.countDocuments({
             userId: req.params.userId,
@@ -252,6 +252,13 @@ export const getstatistics = async (req, res, next) => {
             createdAt: 1,
         }).limit(3);
 
+        const prioritySubgoals = await Subgoal.find({
+            userId: req.params.userId,
+            accomplished: "false",
+        }).sort({
+            priority: -1,
+        }).limit(5);
+
     
         const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         const todaysDay = weekday[now.getDay()];
@@ -266,11 +273,11 @@ export const getstatistics = async (req, res, next) => {
 
 
 
-        res.status(200).json({ totalMindSubgoals, completedMindSubgoals, 
-            totalBodySubgoals, completedBodySubgoals,
-            totalSpiritSubgoals, completedSpiritSubgoals,
+        res.status(200).json({ totalMindSubgoals, completedMindSubgoals, completedMindGoals,
+            totalBodySubgoals, completedBodySubgoals, completedBodyGoals,
+            totalSpiritSubgoals, completedSpiritSubgoals, completedSpiritGoals,
             totalMindHabits, totalBodyHabits, totalSpiritHabits,
-            latestSubgoals, oldestSubgoals,
+            latestSubgoals, oldestSubgoals, prioritySubgoals,
             mindHabitsLastWeek, bodyHabitsLastWeek, spiritHabitsLastWeek,
             mindSubgoalsLastMonth, bodySubgoalsLastMonth, spiritSubgoalsLastMonth,
             timelineHabits,

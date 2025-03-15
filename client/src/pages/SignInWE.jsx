@@ -79,7 +79,7 @@ export default function SignInWE() {
       {/* Change Navigate Destination on Sign In to the WE Main page  */ }
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate('/wallpaper-engine?wallpaper=true&tab=mind');
+        navigate('/wallpaper-engine?wallpaper=true');
       }
 
     } catch (error) {
