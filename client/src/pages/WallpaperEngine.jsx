@@ -4204,7 +4204,8 @@ export default function WallpaperEngine() {
 
 
     return (
-        <div className='min-h-screen bg-gradient-to-b from-white via-blue-200 to-[#ceecfa] flex flex-row'>
+        <div className='bg-gradient-to-tl from-sky-900 to-gray-800'>
+        <div className='min-h-screen bg-[url("/bggrid.png")] text-gray-100 flex flex-row'>
 
             {/* Left Container */}
             <div className='h-screen p-3 xl:p-5 flex flex-col w-[25%] 2xl:w-[20%] justify-center gap-10'>
@@ -4569,6 +4570,7 @@ export default function WallpaperEngine() {
                 </Modal.Body>
             </Modal>
 
+        </div>
         </div>
 
     )
