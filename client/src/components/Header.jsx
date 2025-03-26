@@ -279,7 +279,7 @@ export default function Header() {
 
           <div className='sm:hidden'>
           {currentUser ? (
-            <Dropdown className='position:absolute' arrowIcon={false} inline label={<Avatar alt='user' img={currentUser.profilePicture} color="light" rounded />}>
+            <Dropdown className='position:absolute z-20' arrowIcon={false} inline label={<Avatar alt='user' img={currentUser.profilePicture} color="light" rounded />}>
               <Dropdown.Header>
                 <span className='block text-sm'>@{currentUser.username}</span>
                 <span className='block text-sm font-medium truncate'>

@@ -24,7 +24,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('05:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -35,7 +35,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('06:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -46,7 +46,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('07:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 -mb-3 z-10 p-[2px] rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 sm:-mb-3 -mb-1 z-10 p-[2px] rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -57,7 +57,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('08:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -68,7 +68,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('09:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -79,7 +79,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('10:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -90,7 +90,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('11:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -101,7 +101,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('12:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -112,7 +112,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('13:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -122,7 +122,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('14:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -133,7 +133,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('15:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -144,7 +144,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('16:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -155,7 +155,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('17:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -166,7 +166,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('18:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -177,7 +177,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('19:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                                   <div className={`min-h-3 sm:min-h-6 border-r-2 ${categoryBorder[timelinehabit.category]}`}> </div>
                               </div>
                           </>
@@ -189,7 +189,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('20:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -200,7 +200,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('21:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                                   <div className={`min-h-3 sm:min-h-6 border-r-2 ${categoryBorder[timelinehabit.category]}`}> </div>
                               </div>
                           </>
@@ -212,7 +212,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('22:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
 
                               </div>
                           </>
@@ -224,7 +224,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('23:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -235,7 +235,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('Any')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -246,7 +246,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('00:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -257,7 +257,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('01:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -268,7 +268,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('02:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -279,7 +279,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('03:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
@@ -290,7 +290,7 @@ export default function Timeline( {tasks, category}) {
                       {timelineTasks.filter(habit => habit.timeofday.includes('04:')).map((timelinehabit) => (
                           <>
                               <div key={timelinehabit._id} className='flex flex-col items-center'>
-                                  <div className={`border-2 sm:p-1 p-[2px] -mb-3 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
+                                  <div className={`border-2 sm:p-1 p-[2px] sm:-mb-3 -mb-1 z-10 rounded-full bg-white ${categoryBorder[timelinehabit.category]} `}> {timelinehabit.icon} </div>
                               </div>
                           </>
                       ))}
