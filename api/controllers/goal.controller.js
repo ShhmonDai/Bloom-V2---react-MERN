@@ -1,5 +1,6 @@
 import { errorHandler } from '../utils/error.js';
 import Goal from '../models/goal.model.js';
+import Subgoal from '../models/subgoal.model.js';
 
 export const creategoal = async (req, res, next) => {
     try {
@@ -99,6 +100,17 @@ export const editgoal = async (req, res, next) => {
         return next(errorHandler(403, 'You are not allowed to edit this goal'));
     }
     try {
+
+        const goal = await Goal.findById(req.params.goalId);
+        if (goal.category !== req.body.category) {
+            const editedSubgoals = await Subgoal.updateMany({ goalId: req.params.goalId },
+                {
+                    $set: { category: req.body.category },
+                }
+            );
+        }
+
+
         const editedGoal = await Goal.findByIdAndUpdate(
             req.params.goalId,
             {
@@ -110,6 +122,8 @@ export const editgoal = async (req, res, next) => {
             },
             { new: true }
         );
+        
+
         res.status(200).json(editedGoal);
     } catch (error) {
         next(error);
