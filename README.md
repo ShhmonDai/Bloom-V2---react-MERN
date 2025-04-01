@@ -21,6 +21,8 @@
 ## 🎯 Top Features
 - Visualization of progress through dynamically grown trees based on the number of completed Goals, Subgoals and Habits
 - Journal emotion analysis using IBM Machine Learning AI API
+- Recurring Habits with Streak tracking
+- Daily Habit Timeline
 
 ## 📦 Technologies
 - `React.JS`
@@ -34,18 +36,30 @@
 - `IBM Machine Learning API`
 
 ## 🎨 Full Features
+General:
+- Growing Trees for each category based on number of completed Goals, Subgoals and Habits
+- Trees recursively grown in real time 
+- Dashboard with user statistics
+- Within Dashboard: custom recursively drawn constellation drawings of category progress for each category
+- Premade demo account with 1 click login
+
+Goals:
 - Create goals within 3 different categories; Mind, Body, Spirit
-- Actionable Subgoals aka steps towards the goal
+- Actionable Subgoals/Tasks, aka steps towards the goal with selectable levels of priority
+- Option to hide completed Subgoals within specific goals
+- Accomplished Goals archive
 - Note taking within each goal
+
+Habits:
 - Recurring Habits, either daily or on specifc days of week
 - Visible daily habit timeline
 - Completed Habits streak tracker
-- Growing Trees for each category based on number of completed Goals, Subgoals and Habits
-- Dashboard with user statistics
+- Weekly planner for habits
+  
+Journal:
 - Journal entries
 - Option to analyze journal entry content to calculate emotions using Machine Learning AI 
-- Accomplished Goals/Subgoals archives
-- Artistic UI
+- Cached analysis report under each entry
 
 # 🍿 Bloom Screenshots
 Note: Some Screenshots are from earlier builds and the UI has been updated since then. I encourage you to check out Blooms demo account on the Bloom website to see the actual product
