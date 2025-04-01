@@ -12,7 +12,7 @@ export default function WallpaperTimeline( {tasks, category}) {
     const timelineTasks = tasks;
 
   return (
-    <div className=' bg-transparent shadow-2xl border-x border-b border-teal-700 flex flex-col rounded-xl'>
+    <div className=' bg-transparent shadow-2xl border-x-2 border-b border-slate-700 flex flex-col rounded-xl'>
     
         <span className='text-sm mt-1 mb-2 font-semibold text-gray-500 text-center'>Todays Timeline</span>
 
@@ -300,7 +300,7 @@ export default function WallpaperTimeline( {tasks, category}) {
             </div>
         </div>
                   
-          <div className='flex justify-between text-slate-700 text-sm sm:text-md bg-gradient-to-r rounded-b-xl from-fuchsia-200 via-40% via-orange-200 to-100% to-sky-700 opacity-50'>
+          <div className='flex justify-between px-3 text-slate-700 text-sm sm:text-md bg-gradient-to-r rounded-b-xl from-fuchsia-200 via-40% via-orange-200 to-100% to-sky-700 opacity-50'>
             <span className='font-semibold '>5am</span>
             <span className='font-semibold '>4pm - 6pm</span>  
             <span className='font-semibold text-white'>4am</span>    

@@ -89,8 +89,8 @@ export default function SignInWE() {
 
  
   return (
-    <div className='min-h-screen mt-20'>
-
+    <div className='min-h-screen pt-20 bg-gradient-to-tl from-sky-900 to-gray-800'>
+      <div className='min-h-screen bg-[url("/bggrid.png")] text-slate-100'>
       <div className='flex p-3 max-w-4xl mx-auto flex-col lg:flex-row md:items-top sm:gap-10 md:gap-15 lg:gap-20 md:px-14'>
         {/* left side */}
         
@@ -130,11 +130,11 @@ export default function SignInWE() {
           <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           
             <div className=''>
-              <Label value='Your email' />
+              <Label className="text-slate-100" value='Your email' />
               <TextInput type='email' placeholder='name@company.com' id='email' onChange={handleChange} />
             </div>
             <div className=''>
-              <Label value='Your passsword' />
+              <Label className="text-slate-100" value='Your passsword' />
               <TextInput type='password' placeholder='********' id='password' onChange={handleChange} />
             </div>
             <Button gradientDuoTone='purpleToPink' type='submit' disabled={loading}>
@@ -162,6 +162,7 @@ export default function SignInWE() {
           }
         </div>
 
+      </div>
       </div>
     </div>
   

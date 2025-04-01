@@ -2934,6 +2934,7 @@ export default function WallpaperEngine() {
             //p.background(220, 0);
 
             p.background(backgroundImage);
+
             //p.background('#ffffff');
             //p.setGradient(0, 0, w, h, colorTop, colorBottom, Y_AXIS);
 
@@ -2954,6 +2955,7 @@ export default function WallpaperEngine() {
             p.branch(1, randSeed);
 
             p.noLoop();
+            p.tint(100, 150);
         }
 
         p.branch = (level, seed) => {
@@ -3466,6 +3468,7 @@ export default function WallpaperEngine() {
             p.branch(1, randSeed);
 
             p.noLoop();
+            p.tint(250, 100);
         }
 
         p.branch = (level, seed) => {
@@ -3954,6 +3957,7 @@ export default function WallpaperEngine() {
             p.branch(1, randSeed);
 
             p.noLoop();
+            p.tint(255, 150);
         }
 
         p.branch = (level, seed) => {
