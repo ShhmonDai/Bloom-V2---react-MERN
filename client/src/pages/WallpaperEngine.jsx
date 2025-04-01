@@ -4205,15 +4205,15 @@ export default function WallpaperEngine() {
 
     return (
         <div className='bg-gradient-to-tl from-sky-900 to-gray-800'>
-        <div className='min-h-screen bg-[url("/bggrid.png")] text-gray-100 flex flex-row'>
+        <div className='min-h-screen bg-[url("/bggrid.png")] text-slate-100 flex flex-row'>
 
             {/* Left Container */}
             <div className='h-screen p-3 xl:p-5 flex flex-col w-[25%] 2xl:w-[20%] justify-center gap-10'>
 
                 {/* Icon Holder */}
-                <div className='h-full border border-gray-700 rounded-md'>
+                <div className='h-full border -ml-5 -mt-5 border-gray-800 rounded-md flex flex-col justify-end shadow-lg'>
                     <div className='xl:mx-2'>
-                        <h1 className='flex flex-row items-center justify-center text-md font-semibold xl:p-2 text-gray-500'>Icons</h1>
+                        <h1 className='flex flex-row items-center justify-center text-sm font-semibold xl:p-2 text-gray-600 '>Icons</h1>
                     </div>
                 </div>
 
@@ -4223,22 +4223,22 @@ export default function WallpaperEngine() {
                     <div id="Mind" className=' flex flex-col items-center'>
 
                         {/* Mind SubGoals Card */}
-                        <div className='flex flex-col p-2 2xl:p-3 2xl:gap-2 w-full  rounded-md shadow-md bg-white border-2 border-gray-100'>
+                        <div className='flex flex-col p-2 2xl:p-3 2xl:gap-2 w-full  rounded-md shadow-2xl bg-transparent '>
                             <div className='flex justify-between items-center'>
                                 <div className='w-8/12'>
-                                    <h3 className='2xl:text-lg'><span className='text-green-500 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalMindSubgoals}</span> tasks</h3>
+                                    <h3 className='2xl:text-lg'><span className='text-teal-400 font-bold'>{completedMindSubgoals}</span> / <span className='text-gray-300 font-bold'>{totalMindSubgoals}</span> tasks</h3>
                                     {/* Mind Goals Loading Bar */}
-                                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
-                                        <div className='mx-1 my-[2px] w-full bg-indigo-50'>
-                                            <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-teal-500 to-teal-700`}>
+                                        <div className='mx-1 my-[2px] w-full bg-slate-900 opacity-70'>
+                                            <div style={totalMindSubgoals !== 0 ? { width: `${Math.trunc((completedMindSubgoals / totalMindSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-teal-800 transition-all duration-500 ease-in`}>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <FaBrain className='bg-teal-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                                <FaBrain className='bg-teal-700 text-white rounded-full text-5xl p-3 shadow-lg' />
                             </div>
                             <div className='flex gap-2 text-sm'>
-                                <span className='text-green-500 flex items-center'>
+                                <span className='text-teal-400 flex items-center'>
                                     <HiArrowNarrowUp />
                                     {mindSubgoalsLastMonth}
                                 </span>
@@ -4252,14 +4252,14 @@ export default function WallpaperEngine() {
                     <div id="Body" className='flex flex-col items-center'>
 
                         {/* Body SubGoals Card */}
-                        <div className='flex flex-col p-2 2xl:p-3 2xl:gap-2 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                        <div className='flex flex-col p-2 2xl:p-3 2xl:gap-2 w-full rounded-md shadow-2xl bg-transparent'>
                             <div className='flex justify-between items-center'>
                                 <div className='w-8/12'>
-                                    <h3 className='2xl:text-lg'><span className='text-green-500 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-600 font-bold'>{totalBodySubgoals}</span> tasks</h3>
+                                    <h3 className='2xl:text-lg'><span className='text-teal-400 font-bold'>{completedBodySubgoals}</span> / <span className='text-gray-300 font-bold'>{totalBodySubgoals}</span> tasks</h3>
                                     {/* Body Goals Loading Bar */}
-                                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
-                                        <div className='mx-1 my-[2px] w-full bg-indigo-50'>
-                                            <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-teal-500 to-teal-700`}>
+                                        <div className='mx-1 my-[2px] w-full bg-slate-900 opacity-70'>
+                                            <div style={totalBodySubgoals !== 0 ? { width: `${Math.trunc((completedBodySubgoals / totalBodySubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-teal-800 transition-all duration-500 ease-in`}>
                                             </div>
                                         </div>
                                     </div>
@@ -4267,38 +4267,34 @@ export default function WallpaperEngine() {
                                 <FaDumbbell className='bg-orange-300 text-white rounded-full text-5xl p-3 shadow-lg' />
                             </div>
                             <div className='flex gap-2 text-sm'>
-                                <span className='text-green-500 flex items-center'>
+                                <span className='text-teal-400 flex items-center'>
                                     <HiArrowNarrowUp />
                                     {bodySubgoalsLastMonth}
                                 </span>
                                 <div className='text-gray-500'>Last month</div>
                             </div>
                         </div>
-
-
-
-
                     </div>
 
                     <div id="Spirit" className='flex flex-col items-center'>
 
                         {/* Spirit SubGoals Card */}
-                        <div className='flex flex-col p-2 2xl:p-3 2xl:gap-2 w-full rounded-md shadow-md bg-white border-2 border-gray-100'>
+                        <div className='flex flex-col p-2 2xl:p-3 2xl:gap-2 w-full rounded-md shadow-2xl bg-transparent'>
                             <div className='flex justify-between items-center'>
                                 <div className='w-8/12'>
-                                    <h3 className='2xl:text-lg'><span className='text-green-500 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-600 font-bold'>{totalSpiritSubgoals}</span> tasks</h3>
+                                    <h3 className='2xl:text-lg'><span className='text-teal-400 font-bold'>{completedSpiritSubgoals}</span> / <span className='text-gray-300 font-bold'>{totalSpiritSubgoals}</span> tasks</h3>
                                     {/* Spirit Goals Loading Bar */}
-                                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-green-500 to-blue-400`}>
-                                        <div className='mx-1 my-[2px] w-full bg-indigo-50'>
-                                            <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-green-300 transition-all duration-500 ease-in`}>
+                                    <div className={`w-full mb-2 flex justify-center items-center rounded-md shadow-md bg-gradient-to-r from-teal-500 to-teal-700`}>
+                                        <div className='mx-1 my-[2px] w-full bg-slate-900 opacity-70'>
+                                            <div style={totalSpiritSubgoals !== 0 ? { width: `${Math.trunc((completedSpiritSubgoals / totalSpiritSubgoals) * 100)}%` } : { width: `0%` }} className={` h-5 bg-teal-800 transition-all duration-500 ease-in`}>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <BsYinYang className='bg-sky-500 text-white rounded-full text-5xl p-3 shadow-lg' />
+                                <BsYinYang className='bg-sky-700 text-white rounded-full text-5xl p-3 shadow-lg' />
                             </div>
                             <div className='flex gap-2 text-sm'>
-                                <span className='text-green-500 flex items-center'>
+                                <span className='text-teal-400 flex items-center'>
                                     <HiArrowNarrowUp />
                                     {spiritSubgoalsLastMonth}
                                 </span>
@@ -4323,7 +4319,7 @@ export default function WallpaperEngine() {
                     {/* Welcome text */}
                     <div className='px-5 lg:py-4 4xl:py-10 sm:px-10 flex flex-col justify-center items-center'>
                         <p className='font-BrushFont text-7xl 2xl:text-8xl text-wrapbreak-words italic max-w-4xl'>{todaysTime}</p>
-                        <h1 className='text-lg font-medium text-gray-500 '><span className=''>{todaysDay}, {todaysDate}</span></h1>
+                        <h1 className='text-lg -mt-3 font-medium text-slate-400 '><span className=''>{todaysDay}, {todaysDate}</span></h1>
                     </div>
                     
                     {/* Habits Timeline */}
@@ -4343,15 +4339,15 @@ export default function WallpaperEngine() {
 
                     <div className='flex flex-row justify-center items-baseline gap-6 sm:gap-16'>
                     
-                        {category === 'mind' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-600 font-bold cursor-pointer' onClick={() => setCategory('spirit')} />}
-                        {category === 'body' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-600 font-bold cursor-pointer' onClick={() => setCategory('mind')} />}
-                        {category === 'spirit' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-600 font-bold cursor-pointer' onClick={() => setCategory('body')} />}
+                        {category === 'mind' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('spirit')} />}
+                        {category === 'body' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('mind')} />}
+                        {category === 'spirit' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('body')} />}
                     
-                        <h1 className='font-BrushFont text-7xl'>{category}</h1>
+                        <h1 className='font-BrushFont text-slate-300 text-7xl'>{category}</h1>
                     
-                        {category === 'mind' && <IoArrowRedo className='text-2xl sm:text-3xl text-slate-600 font-bold cursor-pointer' onClick={() => setCategory('body')} />}
-                        {category === 'body' && <IoArrowRedo className='text-2xl sm:text-3xl text-slate-600 font-bold cursor-pointer' onClick={() => setCategory('spirit')} />}
-                        {category === 'spirit' && <IoArrowRedo className='text-2xl sm:text-3xl text-slate-600 font-bold cursor-pointer' onClick={() => setCategory('mind')} />}
+                        {category === 'mind' && <IoArrowRedo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('body')} />}
+                        {category === 'body' && <IoArrowRedo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('spirit')} />}
+                        {category === 'spirit' && <IoArrowRedo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('mind')} />}
                     
                     </div>
                 </div>
@@ -4362,18 +4358,18 @@ export default function WallpaperEngine() {
             {/* End of Middle Main Container */}
 
             {/* Right Container */}
-            <div className='h-screen p-3 xl:p-5 flex flex-col w-[25%] 2xl:w-[20%] justify-around gap-10'>
+            <div className='h-screen px-3 xl:px-5 flex flex-col w-[25%] 2xl:w-[20%] justify-around gap-10'>
 
 
                 {/* Habits Table Container */}
-                <div className='pb-4 py-2 flex flex-col bg-white rounded-md gap-1'>
+                <div className='pb-4 py-2 flex flex-col bg-transparent shadow-2xl rounded-md gap-1'>
 
                     {/* Description */}
                     <div className='xl:mx-2'>
                         <h1 className='flex flex-row items-center justify-center text-md font-semibold xl:p-2 text-gray-500'>Todays Habit Tasks</h1>
                     </div>
 
-                    <div className='grid grid-cols-[10%_15%_auto] md:grid-cols-[12%_7%_auto] 2xl:grid-cols-[10%_7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+                    <div className='grid grid-cols-[10%_15%_auto] md:grid-cols-[12%_7%_auto] 2xl:grid-cols-[10%_7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 text-gray-200 bg-gray-900 bg-opacity-60'>
                         <span className='justify-self-start'><FaCheck /> </span>
                         <span>Time</span>
                         <span className='justify-self-center'>Task</span>
@@ -4384,7 +4380,7 @@ export default function WallpaperEngine() {
                         <>
                             <div className='group/item' key={habit._id}>
 
-                                <div className='flex flex-row gap-2 items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                                <div className='flex flex-row gap-2 items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-gray-900 bg-opacity-30 text-gray-100'>
 
                                     {/* Checkmark - Time - Icon - Task */}
 
@@ -4421,7 +4417,7 @@ export default function WallpaperEngine() {
                 <div>
 
                     {/* Urgent Subgoals Table Container */}
-                    <div className='flex flex-col bg-white rounded-t-md gap-1 py-2 pb-4'>
+                    <div className='flex flex-col bg-transparent shadow-2xl rounded-t-md gap-1 py-2 pb-4'>
 
                         {/* Description */}
 
@@ -4429,7 +4425,7 @@ export default function WallpaperEngine() {
                             <h1 className='flex flex-row items-center justify-center text-md font-semibold xl:p-2 text-gray-500'>Urgent Tasks <HiArrowNarrowUp className='' /></h1>
                         </div>
 
-                        <div className='flex flex-row justify-between font-bold gap-2 xl:items-center rounded-t-md mx-1 p-1 xl:mx-4 bg-indigo-200'>
+                            <div className='flex flex-row justify-between font-bold gap-2 xl:items-center rounded-t-md mx-1 p-1 xl:mx-4 text-gray-200 bg-gray-900 bg-opacity-60'>
                             <span className='justify-self-start'><FaToriiGate/></span>
                             <span className='justify-self-center'>Title</span>
                             <span className='justify-self-end'>Created On</span>
@@ -4441,7 +4437,7 @@ export default function WallpaperEngine() {
                             <>
                                 <div className='group/item' key={subgoal._id}>
 
-                                    <div className='flex flex-row justify-between gap-2 items-center rounded-md mx-1 p-1 xl:mx-4 bg-indigo-50'>
+                                    <div className='flex flex-row justify-between gap-2 items-center rounded-md mx-1 p-1 xl:mx-4 bg-gray-900 bg-opacity-30 text-gray-100'>
 
                                         {/* Category - Subgoal Name */}
 
@@ -4528,7 +4524,7 @@ export default function WallpaperEngine() {
                                 aria-labelledby="default-popover"
                                 content={
                                     <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                                        <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                                        <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-slate-900 opacity-70">
                                             <h3 id="default-popover" className="font-semibold text-gray-900 dark:text-white">Completed On:</h3>
                                         </div>
                                         <div className='flex flex-wrap justify-center gap-2 mx-2 my-4'>
