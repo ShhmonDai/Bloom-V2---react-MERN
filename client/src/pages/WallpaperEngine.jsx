@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { signoutSuccess } from "../redux/user/userSlice";
 import moment from 'moment';
 import { isSameDay } from "date-fns";
 
@@ -9,8 +10,9 @@ import { Button, Modal, Alert, Dropdown, Popover } from "flowbite-react";
 import { BsYinYang } from "react-icons/bs";
 import { FaToriiGate, FaCheck, FaBrain, FaDumbbell } from 'react-icons/fa';
 
-import { HiArrowNarrowUp, HiArrowNarrowDown } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { HiArrowNarrowUp, HiArrowNarrowDown, HiCog } from 'react-icons/hi';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 
 import { summary } from 'date-streaks';
@@ -25,6 +27,8 @@ export default function WallpaperEngine() {
 
     const { currentUser } = useSelector((state) => state.user);
     const [publishError, setPublishError] = useState(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [timelineHabits, setTimelineHabits] = useState([]);
 
@@ -2681,11 +2685,11 @@ export default function WallpaperEngine() {
         }
 
         if (b.clientWidth >= 769 && b.clientWidth < 1024) {
-            w = 600;
+            w = 550;
         }
 
         if (b.clientWidth >= 481 && b.clientWidth <= 768) {
-            w = p.max((p.min(b.clientWidth - 100, 600), 480));
+            w = p.max((p.min(b.clientWidth - 100, 600), 450));
         }
 
         if (b.clientWidth < 481) {
@@ -3201,11 +3205,11 @@ export default function WallpaperEngine() {
         }
 
         if (b.clientWidth >= 769 && b.clientWidth < 1024) {
-            w = 600;
+            w = 550;
         }
 
         if (b.clientWidth >= 481 && b.clientWidth <= 768) {
-            w = p.max((p.min(b.clientWidth - 100, 600), 480));
+            w = p.max((p.min(b.clientWidth - 100, 600), 450));
         }
 
         if (b.clientWidth < 481) {
@@ -3694,11 +3698,11 @@ export default function WallpaperEngine() {
         }
 
         if (b.clientWidth >= 769 && b.clientWidth < 1024) {
-            w = 600;
+            w = 550;
         }
 
         if (b.clientWidth >= 481 && b.clientWidth <= 768) {
-            w = p.max((p.min(b.clientWidth - 100, 600), 480));
+            w = p.max((p.min(b.clientWidth - 100, 600), 450));
         }
 
         if (b.clientWidth < 481) {
@@ -4206,23 +4210,42 @@ export default function WallpaperEngine() {
         }
     };
 
+      const handleSignout = async () => {
+        try {
+          const res = await fetch('/api/user/signout', {
+            method: 'POST',
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            console.log(data.message);
+          } else {
+            dispatch(signoutSuccess());
+            navigate('/sign-in-we?wallpaper=true');
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+    
+
 
     return (
         <div className='bg-gradient-to-tl from-sky-900 to-gray-800'>
-        <div className='min-h-screen bg-[url("/bggrid.png")] text-slate-100 flex flex-row'>
+        <div className='min-h-screen bg-[url("/bggrid.png")] text-slate-100 flex flex-row mb-10'>
 
             {/* Left Container */}
-            <div className='h-screen p-3 xl:p-5 flex flex-col w-[25%] 2xl:w-[20%] justify-center gap-10'>
+                <div className='h-screen pb-10 p-3 xl:p-5 xl:pb-16 flex flex-col w-[25%] 2xl:w-[20%] justify-center gap-[5%]'>
 
                 {/* Icon Holder */}
-                <div className='h-full border -ml-5 -mt-5 border-gray-800 rounded-md flex flex-col justify-end shadow-lg'>
+                <div className='h-full border-b -ml-5 -mt-5 border-gray-800 rounded-md flex flex-col justify-end shadow-2xl'>
                     <div className='xl:mx-2'>
                         <h1 className='flex flex-row items-center justify-center text-sm font-semibold xl:p-2 text-gray-600 '>Icons</h1>
                     </div>
                 </div>
 
                 {/* Statistics container */}
-                <div className='w-full flex flex-col gap-2 2xl:gap-5'>
+                <div className='w-full flex flex-col gap-2 2xl:gap-5 2xl:pb-[15%]'>
+                    
 
                     <div id="Mind" className=' flex flex-col items-center'>
 
@@ -4316,12 +4339,12 @@ export default function WallpaperEngine() {
             {/* End of Left Container */}
 
             {/* Middle Main Container */}
-            <div className='h-screen flex flex-col lg:justify-around 2xl:justify-around items-center w-[50%] 2xl:w-[60%] '>
+            <div className='h-screen pb-10 2xl:pb-16 flex flex-col lg:justify-around 2xl:justify-around items-center w-[50%] 2xl:w-[60%] '>
 
                 {/* Middle Top Container */}
-                <div>
+                <div className='h-full flex flex-col justify-around'>
                     {/* Welcome text */}
-                    <div className='px-5 lg:py-4 4xl:py-10 sm:px-10 flex flex-col justify-center items-center'>
+                    <div className='px-5 lg:py-4 sm:px-10 flex flex-col justify-center items-center'>
                         <p className='font-BrushFont text-7xl 2xl:text-8xl text-wrapbreak-words italic max-w-4xl'>{todaysTime}</p>
                         <h1 className='text-lg -mt-3 font-medium text-slate-400 '><span className=''>{todaysDay}, {todaysDate}</span></h1>
                     </div>
@@ -4333,7 +4356,7 @@ export default function WallpaperEngine() {
                 {/* Middle Bottom Container */}
                 <div className='w-full'> 
                     {/* Tree container */}
-                    <div id="treeHolder" className='w-full md:min-h-[400px] 2xl:min-h-[500px] flex justify-center items-center 2xl:mt-5'></div>
+                    <div id="treeHolder" className='w-full md:min-h-[400px] 2xl:min-h-[440px] flex justify-center items-center 2xl:mt-5'></div>
 
                     {/* Button Container */}
                     <div id="buttonHolder" className='hidden'>
@@ -4341,7 +4364,7 @@ export default function WallpaperEngine() {
                         <div id="sliderHolder"></div>
                     </div>
 
-                    <div className='flex flex-row justify-center items-baseline gap-6 sm:gap-16'>
+                    <div className='flex flex-row 2xl:mt-5 justify-center items-baseline gap-6 sm:gap-16'>
                     
                         {category === 'mind' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('spirit')} />}
                         {category === 'body' && <IoArrowUndo className='text-2xl sm:text-3xl text-slate-400 font-bold cursor-pointer' onClick={() => setCategory('mind')} />}
@@ -4362,8 +4385,21 @@ export default function WallpaperEngine() {
             {/* End of Middle Main Container */}
 
             {/* Right Container */}
-            <div className='h-screen px-3 xl:px-5 flex flex-col w-[25%] 2xl:w-[20%] justify-around gap-10'>
-
+            <div className='static h-screen pb-10 px-3 xl:px-5 xl:pb-16 flex flex-col w-[25%] 2xl:w-[20%] justify-around gap-10'>
+                
+                {/* Settings */}
+                <div className='absolute top-5 right-5'>
+                                    <Dropdown className='position:absolute' arrowIcon={false} label='' inline renderTrigger={() => <span className="flex flex-row w-full items-center gap-2 cursor-pointer">< HiCog /></span>}>
+                                      <Dropdown.Header>
+                                        <span className='block text-sm'>@{currentUser.username}</span>
+                                        <span className='block text-sm font-medium truncate'>
+                                          {currentUser.email}
+                                        </span>
+                                      </Dropdown.Header>
+                                      <Dropdown.Divider />
+                                      <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+                                    </Dropdown> 
+                </div>
 
                 {/* Habits Table Container */}
                 <div className='pb-4 py-2 flex flex-col bg-transparent shadow-2xl rounded-md gap-1'>
