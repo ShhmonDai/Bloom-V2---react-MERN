@@ -4,10 +4,33 @@ import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res, next) => {
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
+    const email = req.body.email.toLowerCase();
 
     if (!username || !email || !password || username === '' || email === '' || password === '') {
         next(errorHandler(400, 'All fields are required'));
+    }
+
+    if (req.body.password) {
+        if (req.body.password.length < 6) {
+            return next(errorHandler(400, 'Password must be at least 6 characters'));
+        }
+        req.body.password = bcryptjs.hashSync(req.body.password, 10);
+    }
+    if (req.body.username) {
+        if (req.body.username.length < 5 || req.body.username.length > 20) {
+            return next(
+                errorHandler(400, 'Username must be between 5 and 20 characters')
+            );
+        }
+        if (req.body.username.includes(' ')) {
+            return next(errorHandler(400, 'Username cannot contain spaces'));
+        }
+        if (!req.body.username.match(/^[a-zA-Z0-9]+$/)) {
+            return next(
+                errorHandler(400, 'Username can only contain letters and numbers')
+            );
+        }
     }
 
     const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -29,7 +52,8 @@ export const signup = async (req, res, next) => {
 };
 
 export const signin = async (req, res, next) => {
-    const { email, password } = req.body;
+    const password = req.body.password;
+    const email = req.body.email.toLowerCase();
 
     if (!email || !password || email === '' || password === '') {
         next(errorHandler(400, 'All fields are required'));
