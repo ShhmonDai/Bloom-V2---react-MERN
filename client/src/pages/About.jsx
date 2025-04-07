@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import p5 from 'p5';
 
 export default function About() {
@@ -3045,37 +3046,19 @@ export default function About() {
 
       <div className='text-md flex flex-col items-center justify-center mx-auto gap-2 max-w-5xl px-5 sm:px-10 text-left text-gray-900 dark:text-gray-400 dark:bg-black dark:bg-opacity-40'>
 
-        <h1 className='text-3xl lg:text-5xl font-bold text-center mt-7'>
-          Track, Achieve, Thrive:
-          <h1>
-            Bloom your way to success
-          </h1>
+
+        <h1 className='text-3xl lg:text-5xl font-bold text-center mt-10 mb-7'>
+          Behind the Code
         </h1>
 
-        <h1 className='text-xl text-center text-gray-600 sm:px-10'>
-          Welcome to Bloom, your personal growth companion! Watch your aspirations take root and flourish into reality
-          as each goal accomplished adds a vibrant leaf
-          to your thriving tree of progress. With Bloom, cultivate habits, track goals,
-          and witness your journey towards success unfold in a visually captivating way.
-        </h1>
+        <h2 className='text-lg mb-5 font-bold text-gray-600'>To explore more about Bloom as a service, please see the 
+          <Link to='/' className='text-blue-500'> Home </Link>
+          page. For an in-depth look at the features and technology behind Bloom, continue reading below. </h2>
 
 
-        <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
-          What is Bloom?
-        </h1>
+        <h2 className='text-lg dark:text-white '>Bloom's Trees are procedurally generated using a recursive using P5.JS canvas. The tree's structure is shaped by a set of key variables that control its overall appearance and complexity, including: </h2>
 
-        <h2 className='text-xl dark:text-white text-center '>
-          Bloom is a goal, habits and journal tracking website meant to help you visualize and see your progress!
-        </h2>
-
-
-        <h1 className='text-3xl dark:text-white font-semibold text-center mt-10 '>
-          Behind the tech
-        </h1>
-
-        <h2 className='text-xl dark:text-white '>Bloom's Trees are created recursively using P5.JS canvas. The shape is made up of many variables such as: </h2>
-
-        <p className='text-xl py-5 text-gray-600 text-left px-5'>
+        <p className='text-lg py-5 text-gray-600 text-left px-5'>
           <b>Size</b> - the general scale of tree while keeping proportions, <br />
           <b>Recursion Level</b> - the number of branch levels, <br />
           <b>Length Variation</b> - the variation in length of branches, <br />
@@ -3083,13 +3066,14 @@ export default function About() {
           <b>Flower Probabilty</b> - probability that a flower will appear at a branch level.<br />
         </p>
 
-        <h2 className='text-xl dark:text-white '>And hidden variables such as the <b>Seed</b> of the random functions which control how the tree will shape up in the end.
-          Not all Seeds produce a pretty tree so I've preselected certain Seeds that produce better visuals.</h2>
+        <h2 className='text-lg dark:text-white  text-gray-600'>Additionally, there are hidden variables such as the <b>Seed</b> of the random functions, 
+          which influence how the tree ultimately takes shape. Not all seeds produce visually appealing trees, 
+          so I’ve preselected certain seeds that generate better visuals.</h2>
 
         <h1 className='text-3xl dark:text-white font font-semibold text-center mt-20 '>
           Try out the Tree Creator
         </h1>
-        <h2 className='text-xl dark:text-white mb-10'>
+        <h2 className='text-lg dark:text-white mb-10'>
           Click on Variables to open options. Click on Grow to see the tree grow in real time.
         </h2>
 
@@ -3114,10 +3098,11 @@ export default function About() {
           Constellation Coordinates Creator
         </h1>
 
-        <h2 className='text-xl dark:text-white text-center mb-5'>Tool I've made for generating coordinates for the progressively drawn dashboard category statistics pictures.
-          You can click on the picture to trace lines and save the lines' coordinates to PC as a JSON file, which can later be exported to the drawings.  </h2>
+        <h2 className='text-lg dark:text-white mb-5'>I've created this tool to generate coordinates for the progressively drawn dashboard category statistics images. 
+          Simply click on the image to trace lines, and the tool will save the coordinates as a JSON file on your PC. 
+          You can then export these coordinates to use in your drawings. </h2>
 
-        <h2 className='text-xl dark:text-white text-center mb-10'>In the future this lineart will be progressively drawn over the picture based on users progress in its category </h2>
+        <h2 className='text-lg dark:text-white mb-10'>In the future this lineart will be progressively drawn over the picture based on users progress in its category </h2>
 
         <div id="treeHolder2" className='mt-5 bg-white flex justify-center flex-wrap'></div>
         <div id="buttonHolder2" className='mb-10 flex justify-center'></div>

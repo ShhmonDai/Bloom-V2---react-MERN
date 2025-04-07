@@ -215,7 +215,7 @@ export default function Home() {
       button_seed.mousePressed(p.buttonGrow = () => {p.startGrow()});
       
 
-      button_hide = p.createButton('Show inputs');
+      button_hide = p.createButton(`How it's made`);
       button_hide.position();
       button_hide.parent("buttonHolder");
       button_hide.id('hideButton');
