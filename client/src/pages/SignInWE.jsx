@@ -89,12 +89,12 @@ export default function SignInWE() {
 
  
   return (
-    <div className='min-h-screen pt-20 bg-gradient-to-tl from-sky-900 to-gray-800'>
+    <div className='min-h-screen bg-gradient-to-tl from-sky-900 to-gray-800'>
       <div className='min-h-screen bg-[url("/bggrid.png")] text-slate-100'>
-      <div className='flex p-3 max-w-4xl mx-auto flex-col lg:flex-row md:items-top sm:gap-10 md:gap-15 lg:gap-20 md:px-14'>
+        <div className='flex p-3 max-w-4xl mx-auto flex-col lg:flex-row md:items-top sm:gap-10 md:gap-15 lg:gap-20 md:px-14 pt-20'>
         {/* left side */}
         
-        <div className='flex flex-col mb-10 justify-center items-center w-auto lg:max-w-72 md:-max-w-xl'>
+          <div className='flex flex-col mb-10 justify-center items-center w-auto lg:max-w-72 md:-max-w-xl'>
           <Link to='/' className='text-6xl md:text-7xl text-center font-QwigleyFont'>Sign In</Link>
           <span className='mt-4 text-center italic font-semibold'>Continue Your Journey</span>
           <p className='text-center lg:text-left text-sm mt-5'>

@@ -127,7 +127,7 @@ export default function WallpaperEngine() {
         'spirit': 'text-sky-500',
     };
 
-    //Refresh the time every second
+    //Refresh the time every 10 seconds
     useEffect(() => {
         const timer = setInterval(() => {
             setTodaysTime(moment().format('hh:mm a'));
@@ -4396,7 +4396,6 @@ export default function WallpaperEngine() {
                                           {currentUser.email}
                                         </span>
                                       </Dropdown.Header>
-                                      <Dropdown.Divider />
                                       <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
                                     </Dropdown> 
                 </div>
