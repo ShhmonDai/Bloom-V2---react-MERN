@@ -377,10 +377,10 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                             <Label>Task Priority</Label>
                             <Select id="priority" required onChange={(e) =>
                                 setFormDataAddSubgoal({ ...formDataAddSubgoal, priority: e.target.value })}>
-                                <option value='2'>Default</option>
-                                <option value='4'>Maximum</option>
-                                <option value='3'>Higher</option>
-                                <option value='1'>Unimportant</option>
+                                <option className='text-cyan-500 font-bold' value='2'>Normal</option>
+                                <option className='text-red-500 font-bold' value='4'>Max</option>
+                                <option className='text-amber-500 font-bold' value='3'>High</option>
+                                <option className='text-gray-500 font-bold' value='1'>Low</option>
                             </Select>
 
 
@@ -432,10 +432,10 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
                             <Label>Task Priority</Label>
                             <Select id="priority" value={formDataUpdateSubgoal.priority} onChange={(e) =>
                                 setFormDataUpdateSubgoal({ ...formDataUpdateSubgoal, priority: e.target.value })}>
-                                <option value='2'>Default</option>
-                                <option value='4'>Maximum</option>
-                                <option value='3'>High</option>
-                                <option value='1'>Unimportant</option>
+                                <option className='text-cyan-500 font-bold' value='2'>Normal</option>
+                                <option className='text-red-500 font-bold' value='4'>Max</option>
+                                <option className='text-amber-500 font-bold' value='3'>High</option>
+                                <option className='text-gray-500 font-bold' value='1'>Low</option>
                             </Select>
 
 
