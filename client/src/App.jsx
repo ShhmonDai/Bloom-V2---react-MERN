@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
+import News from './pages/News'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import WallpaperEngine from './pages/WallpaperEngine'
@@ -28,6 +29,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
+        <Route path="/news" element={<News />}></Route>
         <Route path="/sign-in" element={<SignIn />}></Route>
         <Route path="/sign-in-we" element={<SignInWE />}></Route>
         <Route path="/sign-up" element={<SignUp />}></Route>

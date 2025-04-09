@@ -421,6 +421,9 @@ export default function Header() {
                 <Navbar.Link active={path === "/about"} as={Link} to='/about'>
                   ABOUT
                 </Navbar.Link>
+                <Navbar.Link active={path === "/news"} as={Link} to='/news'>
+                  NEW
+                </Navbar.Link>
                 <Navbar.Link className='flex gap-2 items-center' active={path === "/sign-in"} as={Link} to='/sign-in'>
                   SIGN IN <FaToriiGate />
                 </Navbar.Link>              
