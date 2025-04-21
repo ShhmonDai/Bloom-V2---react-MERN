@@ -68,14 +68,78 @@ export const signin = async (req, res, next) => {
         if (!validPassword) {
             return next(errorHandler(400, 'Invalid password'));
         }
-        const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '3d' });
 
         const { password: pass, ...rest} = validUser._doc;
 
         res.status(200).cookie('access_token', token, {
-            httpOnly: true, maxAge: 60 * 60 * 24 * 1000,
+            httpOnly: true, maxAge: 60 * 60 * 24 * 3,
         })
         .json(rest);
+
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const signindemo = async (req, res, next) => {
+    const password = process.env.DEMO_PASS;
+    const email = req.body.email.toLowerCase();
+
+    if (!email || !password || email === '' || password === '') {
+        next(errorHandler(400, 'All fields are required'));
+    }
+
+    try {
+        const validUser = await User.findOne({ email });
+        if (!validUser) {
+            return next(errorHandler(400, 'User not found'));
+        }
+        const validPassword = bcryptjs.compareSync(password, validUser.password);
+        if (!validPassword) {
+            return next(errorHandler(400, 'Invalid password'));
+        }
+        const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+        const { password: pass, ...rest } = validUser._doc;
+
+        res.status(200).cookie('access_token', token, {
+            httpOnly: true, maxAge: 60 * 60 * 24 * 1,
+        })
+            .json(rest);
+
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const signinwallpaper = async (req, res, next) => {
+    const password = req.body.password;
+    const email = req.body.email.toLowerCase();
+
+    if (!email || !password || email === '' || password === '') {
+        next(errorHandler(400, 'All fields are required'));
+    }
+
+    try {
+        const validUser = await User.findOne({ email });
+        if (!validUser) {
+            return next(errorHandler(400, 'User not found'));
+        }
+        const validPassword = bcryptjs.compareSync(password, validUser.password);
+        if (!validPassword) {
+            return next(errorHandler(400, 'Invalid password'));
+        }
+        const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+        const { password: pass, ...rest } = validUser._doc;
+
+        res.status(200).cookie('access_token', token, {
+            httpOnly: true, maxAge: 60 * 60 * 24 * 7,
+        })
+            .json(rest);
 
 
     } catch (error) {
@@ -96,7 +160,7 @@ export const google = async (req, res, next) => {
             res
                 .status(200)
                 .cookie('access_token', token, {
-                    httpOnly: true, maxAge: 60 * 60 * 24 * 1000,
+                    httpOnly: true, maxAge: 60 * 60 * 24 * 3,
                 })
                 .json(rest);
         } else {
@@ -113,15 +177,14 @@ export const google = async (req, res, next) => {
                 profilePicture: googlePhotoUrl,
             });
             await newUser.save();
-            const token = jwt.sign(
-                { id: newUser._id, isAdmin: newUser.isAdmin },
-                process.env.JWT_SECRET
-            );
+
+            const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '3d' });
             const { password, ...rest } = newUser._doc;
+            
             res
                 .status(200)
                 .cookie('access_token', token, {
-                    httpOnly: true, maxAge: 60 * 60 * 24 * 1000,
+                    httpOnly: true, maxAge: 60 * 60 * 24 * 3,
                 })
                 .json(rest);
         }

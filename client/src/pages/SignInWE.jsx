@@ -34,7 +34,7 @@ export default function SignInWE() {
     try {
       setErrorMessageAlert(null);
       dispatch(signInStart());
-      const res = await fetch('/api/auth/signin', {
+      const res = await fetch('/api/auth/signinwallpaper', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -63,10 +63,10 @@ export default function SignInWE() {
     try {
       setErrorMessageAlert(null);
       dispatch(signInStart());
-      const res = await fetch('/api/auth/signin', {
+      const res = await fetch('/api/auth/signindemo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({email: 'demo@demo.com', password: 'demo'}),
+        body: JSON.stringify({email: 'demo@demo.com'}),
       });
 
       const data = await res.json();
