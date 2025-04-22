@@ -73,7 +73,7 @@ export const signin = async (req, res, next) => {
         const { password: pass, ...rest} = validUser._doc;
 
         res.status(200).cookie('access_token', token, {
-            httpOnly: true, maxAge: 60 * 60 * 24 * 3,
+            httpOnly: true, maxAge: 60 * 60 * 24 * 3 * 1000,
         })
         .json(rest);
 
@@ -105,7 +105,7 @@ export const signindemo = async (req, res, next) => {
         const { password: pass, ...rest } = validUser._doc;
 
         res.status(200).cookie('access_token', token, {
-            httpOnly: true, maxAge: 60 * 60 * 24 * 1,
+            httpOnly: true, maxAge: 60 * 60 * 24 * 1 * 1000
         })
             .json(rest);
 
@@ -137,7 +137,7 @@ export const signinwallpaper = async (req, res, next) => {
         const { password: pass, ...rest } = validUser._doc;
 
         res.status(200).cookie('access_token', token, {
-            httpOnly: true, maxAge: 60 * 60 * 24 * 7,
+            httpOnly: true, maxAge: 60 * 60 * 24 * 7 * 1000,
         })
             .json(rest);
 
@@ -160,7 +160,7 @@ export const google = async (req, res, next) => {
             res
                 .status(200)
                 .cookie('access_token', token, {
-                    httpOnly: true, maxAge: 60 * 60 * 24 * 3,
+                    httpOnly: true, maxAge: 60 * 60 * 24 * 3 * 1000,
                 })
                 .json(rest);
         } else {
@@ -184,7 +184,7 @@ export const google = async (req, res, next) => {
             res
                 .status(200)
                 .cookie('access_token', token, {
-                    httpOnly: true, maxAge: 60 * 60 * 24 * 3,
+                    httpOnly: true, maxAge: 60 * 60 * 24 * 3 * 1000,
                 })
                 .json(rest);
         }
