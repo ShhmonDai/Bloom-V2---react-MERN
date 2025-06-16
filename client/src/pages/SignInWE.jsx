@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
-import OAuth from "../components/OAuth";
 
 export default function SignInWE() {
 
 
-  {/* This is a separate sign in page for Wallpaper Engine Users. It simply has less options visible and redirects to custom WE main page */}
+  {/* This is a separate sign in page for Wallpaper Engine Users. It simply has less options visible and redirects to the custom Wallpaper Engine main page.
+    Unfortunately Google Oauth does not work on Wallpaper Engine as it needs to open a separate tab in order to login */}
 
   const [formData, setFormData] = useState({});
   const {loading, error: errorMessage} = useSelector(state => state.user);
@@ -98,7 +98,7 @@ export default function SignInWE() {
           <Link to='/' className='text-6xl md:text-7xl text-center font-QwigleyFont'>Sign In</Link>
           <span className='mt-4 text-center italic font-semibold'>Continue Your Journey</span>
           <p className='text-center lg:text-left text-sm mt-5'>
-            You can sign in with your email and password or with Google. Or you can use the demo account below.
+            You can sign in with your email and password. Or you can use the demo account below. Unfortunately Google OAuth Login is currently not supported.
           </p>
 
           <div className="mt-5 text-sm text-center flex flex-col">
@@ -146,14 +146,9 @@ export default function SignInWE() {
               ) : ('Sign In'
               )}
             </Button>
-            <OAuth />
+
           </form>
-          <div className='flex gap-2 text-sm mt-5'>
-            <span>Dont have an account?</span>
-            <Link to='/sign-up' className='text-blue-500'>
-              Sign Up
-            </Link>
-          </div>
+
           { errorMessageAlert && (
             <Alert className='mt-5' color='failure' onDismiss={() => clearAlert()}>
                 {errorMessageAlert}

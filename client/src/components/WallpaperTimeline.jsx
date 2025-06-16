@@ -15,7 +15,7 @@ export default function WallpaperTimeline( {tasks, category}) {
 
     const [timelineHour, setTimelineHour] = useState(moment().format('HH'));
 
-    //Refresh the time every 60 seconds
+    //Refresh the time every second
     useEffect(() => {
         const timer = setInterval(() => {
             setTimelineHour(moment().format('HH'));
