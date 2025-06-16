@@ -7,14 +7,40 @@ export const test = (req, res) => {
 };
 
 export const updateUser = async (req, res, next) => {
+
+    const password = req.body.password;
+
     if (req.user.id !== req.params.userId || req.params.userId == process.env.DEMO_ID ) {
         return next(errorHandler(403, 'You are not allowed to update this user'));
     }
-    if (req.body.password) {
-        if (req.body.password.length < 6) {
+
+    if (!password) { 
+        return next(errorHandler(400, 'Current password is required'));
+    }
+
+    try {
+        const validUser = await User.findById(req.params.userId );
+
+        if (!validUser) {
+            return next(errorHandler(400, 'User not found'));
+        }
+
+        const validPassword = bcryptjs.compareSync(password, validUser.password);
+
+        if (!validPassword) {
+            return next(errorHandler(400, 'Invalid current password'));
+        }
+    } catch (error) {
+        next(error);
+    }
+
+
+
+    if (req.body.passwordnew) {
+        if (req.body.passwordnew.length < 6) {
             return next(errorHandler(400, 'Password must be at least 6 characters'));
         }
-        req.body.password = bcryptjs.hashSync(req.body.password, 10);
+        req.body.passwordnew = bcryptjs.hashSync(req.body.passwordnew, 10);
     }
     if (req.body.username) {
         if (req.body.username.length < 5 || req.body.username.length > 20) {
@@ -39,11 +65,14 @@ export const updateUser = async (req, res, next) => {
                     username: req.body.username,
                     email: req.body.email,
                     profilePicture: req.body.profilePicture,
-                    password: req.body.password,
+                    password: req.body.passwordnew,
                 },
             },
             { new: true }
         );
+        if (!updatedUser) {
+            return next(errorHandler(404, 'User not found'));
+        }
         const { password, ...rest } = updatedUser._doc;
         res.status(200).json(rest);
     } catch (error) {

@@ -62,11 +62,11 @@ export const signin = async (req, res, next) => {
     try {
         const validUser = await User.findOne({ email });
         if (!validUser) {
-            return next(errorHandler(400, 'User not found'));
+            return next(errorHandler(400, 'Invalid username or password'));
         }
         const validPassword = bcryptjs.compareSync(password, validUser.password);
         if (!validPassword) {
-            return next(errorHandler(400, 'Invalid password'));
+            return next(errorHandler(400, 'Invalid username or password'));
         }
         const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '3d' });
 
@@ -94,11 +94,11 @@ export const signindemo = async (req, res, next) => {
     try {
         const validUser = await User.findOne({ email });
         if (!validUser) {
-            return next(errorHandler(400, 'User not found'));
+            return next(errorHandler(400, 'Invalid username or password'));
         }
         const validPassword = bcryptjs.compareSync(password, validUser.password);
         if (!validPassword) {
-            return next(errorHandler(400, 'Invalid password'));
+            return next(errorHandler(400, 'Invalid username or password'));
         }
         const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
@@ -126,11 +126,11 @@ export const signinwallpaper = async (req, res, next) => {
     try {
         const validUser = await User.findOne({ email });
         if (!validUser) {
-            return next(errorHandler(400, 'User not found'));
+            return next(errorHandler(400, 'Invalid username or password'));
         }
         const validPassword = bcryptjs.compareSync(password, validUser.password);
         if (!validPassword) {
-            return next(errorHandler(400, 'Invalid password'));
+            return next(errorHandler(400, 'Invalid username or password'));
         }
         const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
