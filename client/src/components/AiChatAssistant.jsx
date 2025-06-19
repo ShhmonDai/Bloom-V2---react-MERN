@@ -109,6 +109,18 @@ export default function AiChatAssistant() {
             setReadyMsg(false);
             setError(null);
         }
+        if (currentUser) {
+            setMessages([
+                {
+                    sender: 'bot',
+                    text: "👋 Welcome! I'm your assistant here to help you with your goals, tasks, habits, and journals. Just type your question below to get started."
+                }
+            ]);
+            setInput('');
+            setReadyMsg(false);
+            setError(null);
+        }
+
     }, [currentUser]);
 
     useEffect(() => {
@@ -131,15 +143,22 @@ export default function AiChatAssistant() {
                 ]);
 
                 const goals = goalsData.goals.map(item => ({
+                    goal_id: item._id,
                     title: item.title,
                     content: item.content,
-                    category: item.category
+                    category: item.category,
+                    accomplished: item.accomplished,
+                    createdOn: item.createdOn
                 }));
 
                 const subgoals = subgoalsData.subgoals.map(item => ({
+                    parent_goal_id: item.goalId,
                     title: item.title,
                     content: item.content,
-                    category: item.category
+                    category: item.category,
+                    priority: item.priority,
+                    accomplished: item.accomplished,
+                    createdOn: item.createdOn
                 }));
 
                 const habits = habitsData.habits.map(item => ({
