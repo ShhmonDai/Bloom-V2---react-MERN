@@ -319,7 +319,7 @@ export default function UserProfile() {
             <> 
             <TextInput color='gray' type='text' id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
             <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
-            <TextInput type='password' id='password' placeholder='old password' autoComplete='old password' onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
+            <TextInput type='password' id='password' placeholder='current password' autoComplete='current password' onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />
             <TextInput type='password' id='passwordnew' placeholder='new password' autoComplete='new password' onChange={handleChange} disabled={currentUser.email == 'demo@demo.com'} />  
             </>
             }
