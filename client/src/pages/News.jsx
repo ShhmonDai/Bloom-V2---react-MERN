@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdOutlineChecklist, MdOutlineTimeline } from "react-icons/md";
 import { LuWallpaper } from "react-icons/lu";
+import { BsStars } from "react-icons/bs";
 
 
 export default function News() {
@@ -40,12 +41,51 @@ export default function News() {
 
                     <p className='text-left px-5 sm:px-10 flex flex-col gap-2'>
 
-                        <span><b>1.</b> Use the new <b>Bloom Desktop Wallpaper</b> as a permanent live and interactable desktop background through Wallpaper Engine! </span>
+                        <span><b>1.</b> Introducing the <b>Bloom AI Chat Assistant!</b> Including a custom <b>RAG (Retrieval-Augmented Generation)</b> system giving the Assistant ability to answer any question about your goals, tasks, habits and journals.  </span>
 
-                        <span><b>2.</b> <b>Current Time Position Marker</b> on the Habits Timeline. Now you can immediately tell which Habit deadline is approaching. </span>
+                        <span><b>2.</b> Use the new <b>Bloom Desktop Wallpaper</b> as a permanent live and interactable desktop background through Wallpaper Engine! </span>
 
-                        <span><b>3.</b> Various bug fixes and UI/UX adjustments to make your experience smoother.</span>
+                        <span><b>3.</b> <b>Current Time Position Marker</b> on the Habits Timeline. Now you can immediately tell which Habit deadline is approaching. </span>
+
+                        <span><b>4.</b> Various bug fixes and UI/UX adjustments to make your experience smoother.</span>
                     </p>  
+
+                    <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7'>
+
+                        <BsStars className='text-center text-3xl text-blue-500 my-2' />
+
+                        <h1>RAG aided AI Chat Assistant</h1>
+
+                    </h1>
+
+                    <p className='text-left px-5 sm:px-10 text-wrap break-words whitespace-pre-wrap flex flex-col gap-4'>
+                        <span>
+                            The AI Assistant is fully integrated with your Bloom profile, meaning it knows your goals, your tasks, your habits, and your journals 
+                            — and it’s ready to help. Not sure where to focus next? Need suggestions on how to structure your day? 
+                            Ask the assistant. It’s like having a personal growth coach right at your fingertips.
+                        </span>
+
+                        <span>
+                            Look for the chat bubble in the lower-right corner of the page to get started. 
+                            Log in to unlock personalized guidance based on your unique habits, goals, and journals. 
+                            Your growth journey just got smarter.
+                        </span>
+
+                        <img src="/news0.png" alt='news' className='rounded-lg' />
+
+                        <h1 className='text-center font-bold'>Data Privacy</h1>
+
+                        <span>
+                            The Assistant only gets access to your data if you choose to use it. If you value your privacy,
+                            simply not messaging the Assistant will keep your data completely confidential. In the future updates
+                            I will include the ability to select which specific parts of data the Assistant gets access to - if any.
+                        </span>
+
+                        <span>
+                            In the future updates I will include the ability to select which specific parts of data the Assistant gets access to - if any.
+                        </span>
+
+                    </p>
 
 
                     <h1 className='text-3xl font-semibold flex flex-col text-center items-center mt-7'>
