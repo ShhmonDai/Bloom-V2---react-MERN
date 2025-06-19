@@ -846,7 +846,7 @@ export default function Habits( {category, sendDataToCategory2}) {
 
                 <div className='my-5 flex justify-center gap-4'>
                   <Button color='gray' type='submit'>
-                    Add
+                    Update
                   </Button>
                   <Button color='gray' onClick={() => {
                     setShowModalUpdateHabit(false);

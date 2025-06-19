@@ -3053,7 +3053,9 @@ export default function About() {
 
         <h2 className='text-lg mb-5 font-bold text-gray-600'>To explore more about Bloom as a service, please see the 
           <Link to='/' className='text-blue-500'> Home </Link>
-          page. For an in-depth look at the features and technology behind Bloom, continue reading below. </h2>
+          page or the
+          <Link to='/news' className='text-blue-500'> News </Link>
+          page for the latest features. For an in-depth look at the features and technology behind Bloom, continue reading below. </h2>
 
 
         <h2 className='text-lg dark:text-white '>Bloom's Trees are procedurally generated using a recursive using P5.JS canvas. The tree's structure is shaped by a set of key variables that control its overall appearance and complexity, including: </h2>
