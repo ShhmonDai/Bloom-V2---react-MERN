@@ -79,12 +79,21 @@ export default function AiChatAssistant() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages: openAIMessages })
               });
+
             const data = await response.json();
+
+            if (!response.ok || data.error) {
+                console.error('OpenAI Error:', data);
+                const errorMessage = data?.error?.error?.message || 'An unexpected error occurred. Please try again.';
+                setMessages(prev => [...prev, { sender: 'bot', text: `❗ ${errorMessage}` }]);
+                return;
+            }
 
             const botMessage = { sender: 'bot', text: data.content };
             setMessages(prev => [...prev, botMessage]);
         } catch (err) {
-            setMessages(prev => [...prev, { sender: 'bot', text: 'Error fetching response.' }]);
+            console.error('Network/Fetch Error:', err);
+            setMessages(prev => [...prev, { sender: 'bot', text: '❗ Unable to connect. Please try again later.' }]);
         }
     };
 
