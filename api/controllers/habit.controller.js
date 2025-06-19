@@ -90,6 +90,19 @@ export const gethabits = async (req, res, next) => {
     }
 };
 
+export const gethabitstogether = async (req, res, next) => {
+    try {
+        const habits = await Habit.find({ userId: req.params.userId }).sort({
+            priority: -1,
+        });
+
+        res.status(200).json({ habits });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 export const edithabit = async (req, res, next) => {
     if (req.user.id !== req.params.userId) {
         return next(errorHandler(403, 'You are not allowed to edit this habit'));

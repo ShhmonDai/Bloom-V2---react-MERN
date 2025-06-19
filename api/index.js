@@ -13,6 +13,7 @@ import dashboardRoutes from './routes/dashboard.route.js';
 import habitRoutes from './routes/habit.route.js';
 import journalRoutes from './routes/journal.route.js';
 import watsonRoutes from './routes/watson.route.js';
+import chatRoutes from './routes/chat.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
@@ -51,6 +52,8 @@ app.use('/api/habit', habitRoutes);
 app.use('/api/journal', journalRoutes);
 app.use('/api/watson', watsonRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/chat', chatRoutes);
+
 
 
 app.use(express.static(path.join(__dirname, '/client/dist')));

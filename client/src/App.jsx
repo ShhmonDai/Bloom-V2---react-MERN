@@ -13,7 +13,7 @@ import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
 import OnlyAdminPrivateRoute from './components/OnlyAdminPrivateRoute'
 import PrivateRouteWE from './components/PrivateRouteWE'
-
+import AiChatAssistant from './components/AiChatAssistant'
 
 import ScrollToTop from './components/ScrollToTop'
 
@@ -46,6 +46,7 @@ export default function App() {
 
 
       </Routes>
+      <AiChatAssistant/>
       <Footer/>
     </BrowserRouter>
     
