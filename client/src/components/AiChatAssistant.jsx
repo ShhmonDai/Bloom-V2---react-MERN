@@ -7,6 +7,9 @@ import { BiSolidSend } from "react-icons/bi";
 import { BsStars } from "react-icons/bs";
 
 export default function AiChatAssistant() {
+
+    const { wallpaper } = useSelector(state => state.wallpaper);
+
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
@@ -103,7 +106,7 @@ export default function AiChatAssistant() {
 
     useEffect(() => {
         chatRef.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
+    }, [messages, isOpen]);
 
     // Reset everything when logged out.
     useEffect(() => {
@@ -151,22 +154,20 @@ export default function AiChatAssistant() {
                     journalsRes.json()
                 ]);
 
-                const goals = goalsData.goals.map(item => ({
+                const goals = goalsData.goals.filter(item => !item.accomplished).map(item => ({
                     goal_id: item._id,
                     title: item.title,
                     content: item.content,
                     category: item.category,
-                    accomplished: item.accomplished,
                     createdOn: item.createdOn
                 }));
 
-                const subgoals = subgoalsData.subgoals.map(item => ({
+                const subgoals = subgoalsData.subgoals.filter(item => !item.accomplished).map(item => ({
                     parent_goal_id: item.goalId,
                     title: item.title,
                     content: item.content,
                     category: item.category,
                     priority: item.priority,
-                    accomplished: item.accomplished,
                     createdOn: item.createdOn
                 }));
 
@@ -178,7 +179,9 @@ export default function AiChatAssistant() {
 
                 const journals = journalsData.journals.map(item => ({
                     title: item.title,
-                    content: item.content
+                    content: item.content,
+                    createdOn: item.createdAt,
+                    emotions: item.emotions
                 }));
 
                 setRagData({ goals, subgoals, habits, journals });
@@ -205,7 +208,7 @@ export default function AiChatAssistant() {
             {/* Floating Button */}
             <button
                 onClick={toggleAssistant}
-                className="fixed bottom-4 right-4 z-50 bg-[#46b9e7] text-white text-xl 2xl:text-2xl border-4 border-white  p-3 rounded-full drop-shadow-[1px_5px_15px_rgba(59,159,199,1.0)] hover:bg-white hover:text-[#46b9e7] transition"
+                className={`fixed bottom-4 right-4 group ${wallpaper} group-[.wallpaper]:bottom-12 z-50 bg-[#46b9e7] text-white text-xl 2xl:text-2xl border-4 border-white  p-3 rounded-full drop-shadow-[1px_5px_15px_rgba(59,159,199,1.0)] hover:bg-white hover:text-[#46b9e7] transition`}
             >
                 <BsStars/>
             </button>
@@ -265,7 +268,6 @@ export default function AiChatAssistant() {
                             onKeyDown={handleKeyDown}
                             placeholder={ currentUser ? ("Write your message...") : ("Log in to continue.")}
                             aria-label="AI Chat Input"
-                            autoFocus={isOpen}
                             className="flex-1 p-2 border-none border-transparent focus:border-transparent focus:ring-0"
                         />
                         <button
