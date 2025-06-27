@@ -71,7 +71,8 @@ export default function WallpaperEngine() {
     const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const date = new Date();
     const [todaysDay, setTodaysDay] = useState(weekday[date.getDay()]);
-    const [todaysDate, setTodaysDate] = useState(moment().format('MMMM Do YYYY'));
+    const [todaysDate, setTodaysDate] = useState(moment().format('MMM-DD-YYYY'));
+    const [todaysWelcomeDate, setTodaysWelcomeDate] = useState(moment().format('MMMM Do YYYY'));
     const [todaysTime, setTodaysTime] = useState(moment().format('hh:mm a'));
 
 
@@ -4346,7 +4347,7 @@ export default function WallpaperEngine() {
                     {/* Welcome text */}
                     <div className='px-5 lg:py-4 sm:px-10 flex flex-col justify-center items-center'>
                         <p className='font-BrushFont text-7xl 2xl:text-8xl text-wrapbreak-words italic max-w-4xl'>{todaysTime}</p>
-                        <h1 className='text-lg -mt-3 font-medium text-slate-400 '><span className=''>{todaysDay}, {todaysDate}</span></h1>
+                        <h1 className='text-lg -mt-3 font-medium text-slate-400 '><span className=''>{todaysDay}, {todaysWelcomeDate}</span></h1>
                     </div>
                     
                     {/* Habits Timeline */}
@@ -4396,6 +4397,7 @@ export default function WallpaperEngine() {
                                           {currentUser.email}
                                         </span>
                                       </Dropdown.Header>
+                                      <Dropdown.Item onClick={() => reload ? setReload(false) : setReload(true)}>Refresh</Dropdown.Item>
                                       <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
                                     </Dropdown> 
                 </div>
