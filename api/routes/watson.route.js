@@ -1,11 +1,13 @@
 import express from 'express';
 import { verifyToken } from '../utils/verifyUser.js';
-import { analyzetext, test } from '../controllers/watson.controller.js';
+import { limitWatsonUsage } from '../utils/limitWatsonUsage.js';
+import { analyzetext, test, getUsage } from '../controllers/watson.controller.js';
 
 const router = express.Router();
 
-router.get('/analyze/:text', analyzetext)
+router.get('/analyze/:text', verifyToken, limitWatsonUsage, analyzetext)
 router.get('/test', test)
+router.get('/getUsage', verifyToken, getUsage);
 
 //Export these routes as a router object for webServer.js
 export default router;

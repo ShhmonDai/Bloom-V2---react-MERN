@@ -86,11 +86,15 @@ export default function AiChatAssistant() {
             const data = await response.json();
 
             if (!response.ok || data.error) {
-                console.error('OpenAI Error:', data);
-                const errorMessage = data?.error?.error?.message || 'An unexpected error occurred. Please try again.';
+                console.error('API Error:', data);
+                const errorMessage =
+                    typeof data.error === 'string'
+                        ? data.error
+                        : data?.error?.error?.message || 'An unexpected error occurred. Please try again.';
+
                 setMessages(prev => [...prev, { sender: 'bot', text: `❗ ${errorMessage}` }]);
                 return;
-            }
+              }
 
             const botMessage = { sender: 'bot', text: data.content };
             setMessages(prev => [...prev, botMessage]);

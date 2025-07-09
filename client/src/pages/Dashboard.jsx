@@ -4,6 +4,8 @@ import DashSidebar from '../components/DashSidebar';
 import UserProfile from '../components/UserProfile';
 import DashUsers from '../components/DashUsers';
 import DashboardComp from '../components/DashboardComp';
+import DashAiUsage from '../components/DashAiUsage';
+import DashWatsonUsage from '../components/DashWatsonUsage';
 
 
 export default function Dashboard() {
@@ -28,6 +30,10 @@ export default function Dashboard() {
       {tab === 'users' && <DashUsers />}
       {/* dashboard comp */}
       {tab === 'dash' && <DashboardComp />}
+      {/* user AI usage */}
+      {tab === 'ai-usage' && <DashAiUsage />}
+      {/* user Watson usage */}
+      {tab === 'watson-usage' && <DashWatsonUsage />}
     </div>
   );
 }

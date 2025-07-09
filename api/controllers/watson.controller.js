@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import NaturalLanguageUnderstandingV1 from 'ibm-watson/natural-language-understanding/v1.js';
 import { IamAuthenticator } from 'ibm-watson/auth/index.js';
 
+import watsonUsage from '../models/watsonusage.model.js';
+
+
 dotenv.config();
 
 
@@ -55,4 +58,28 @@ export const analyzetext = (req, res) => {
 export const test = (req, res) => {
     console.log('aayyLmao');
     res.status(200).json('ayylmao');
+};
+
+export const getUsage = async (req, res, next) => {
+    try {
+        if (!req.user.isAdmin) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+
+        const usage = await watsonUsage.find()
+            .populate('userId', 'username email profilePicture')
+            .sort({ weekStart: -1 });
+
+        const formatted = usage.map(u => ({
+            _id: u._id,
+            count: u.count,
+            weekStart: u.weekStart,
+            user: u.userId,
+        }));
+
+        res.json(formatted);
+    } catch (err) {
+        console.error('Error fetching Watson usage:', err);
+        res.status(500).json({ error: 'Failed to fetch usage data' });
+    }
 };

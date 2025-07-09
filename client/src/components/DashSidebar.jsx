@@ -1,5 +1,6 @@
 import { Sidebar } from 'flowbite-react';
 import {HiAnnotation, HiArrowSmRight, HiChartPie, HiDocumentText, HiOutlineUserGroup, HiUser} from 'react-icons/hi';
+import { BsStars } from "react-icons/bs";
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { useEffect, useState } from 'react';
@@ -87,9 +88,25 @@ export default function DashSidebar() {
                     </Link>
                 )}
 
+                {currentUser.isAdmin && (
+                    <Link to='/dashboard?tab=ai-usage'>
+                        <Sidebar.Item active={tab === 'ai-usage'} icon={BsStars} as='div'>
+                            AI Usage
+                        </Sidebar.Item>
+                    </Link>
+                )}
+
+                {currentUser.isAdmin && (
+                    <Link to='/dashboard?tab=watson-usage'>
+                        <Sidebar.Item active={tab === 'watson-usage'} icon={HiDocumentText} as='div'>
+                            Watson Usage
+                        </Sidebar.Item>
+                    </Link>
+                )}
+
    
-                  <Sidebar.Item icon={HiAnnotation} className='cursor-pointer' label={theme === 'dark' ? <FaMoon /> : <FaSun />} labelColor='dark' onClick={() => dispatch(toggleTheme())}>
-                      THEME
+                <Sidebar.Item icon={HiAnnotation} className='cursor-pointer' label={theme === 'dark' ? <FaMoon /> : <FaSun />} labelColor='dark' onClick={() => dispatch(toggleTheme())}>
+                    THEME
                 </Sidebar.Item> 
 
                 <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
