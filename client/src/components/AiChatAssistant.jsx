@@ -23,6 +23,15 @@ export default function AiChatAssistant() {
     const [readyMsg, setReadyMsg] = useState(false);
     const [error, setError] = useState(null);
 
+    const [ragInclude, setRagInclude] = useState({
+        goals: true,
+        subgoals: true,
+        habits: true,
+        journals: true
+      });
+
+    const [firstMessageSent, setFirstMessageSent] = useState(false);
+
     const toggleAssistant = () => {
 
         setIsOpen(prev => {
@@ -66,11 +75,17 @@ export default function AiChatAssistant() {
         const updatedMessages = [...messages, userMessage];
         setMessages(updatedMessages);
         setInput('');
+        setFirstMessageSent(true); 
+
+        const filteredRag = Object.fromEntries(
+            Object.entries(ragData).filter(([key]) => ragInclude[key])
+        );
+        
 
         try {
             const openAIMessages = [
                 { role: 'system', content: 'You are an assistant helping users with their goals, subgoals (tasks), habits, and journals.' },
-                { role: 'system', content: `Here is their data: ${JSON.stringify(ragData)}` },
+                { role: 'system', content: `Here is their data: ${JSON.stringify(filteredRag)}` },
                 ...updatedMessages.slice(-20).map(msg => ({
                     role: msg.sender === 'user' ? 'user' : 'assistant',
                     content: msg.text
@@ -124,6 +139,7 @@ export default function AiChatAssistant() {
             setInput('');
             setReadyMsg(false);
             setError(null);
+            setFirstMessageSent(false);
         }
         if (currentUser) {
             setMessages([
@@ -135,6 +151,7 @@ export default function AiChatAssistant() {
             setInput('');
             setReadyMsg(false);
             setError(null);
+            setFirstMessageSent(false);
         }
 
     }, [currentUser]);
@@ -246,6 +263,7 @@ export default function AiChatAssistant() {
                         {error && (<div className="text-center p-4 text-red-500">Error loading data.</div>)}
                         {readyMsg && (<div className="text-center p-4 text-gray-500">Everything is ready to go.</div>)}
                     </div>
+               
 
 
                     {/* Chat Messages */}
@@ -262,6 +280,28 @@ export default function AiChatAssistant() {
                             </div>
                         ))}
                     </div>
+
+                    {/* Checkmarks */}
+                    {!firstMessageSent && (
+                            <div className="bg-white border-b px-4 py-3 text-sm text-gray-700 flex flex-col gap-2">
+                                <h3 className="font-semibold text-center">Choose what to include in the assistant's context:</h3>
+                                <div className="flex flex-wrap justify-center gap-4">
+                                    {['goals', 'subgoals', 'habits', 'journals'].map((key) => (
+                                        <label key={key} className="flex items-center gap-2 cursor-pointer">
+                                            <input
+                                                type="checkbox"
+                                                checked={ragInclude[key]}
+                                                onChange={() =>
+                                                    setRagInclude(prev => ({ ...prev, [key]: !prev[key] }))
+                                                }
+                                                className="accent-[#46b9e7]"
+                                            />
+                                            <span className="capitalize">{key}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                    )}     
 
                     {/* Input */}
                     <div className="p-2 bg-white flex gap-2 border-t">
