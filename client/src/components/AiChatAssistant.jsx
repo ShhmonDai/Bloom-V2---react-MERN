@@ -27,7 +27,7 @@ export default function AiChatAssistant() {
         goals: true,
         subgoals: true,
         habits: true,
-        journals: true
+        journals: false
       });
 
     const [firstMessageSent, setFirstMessageSent] = useState(false);
@@ -86,7 +86,7 @@ export default function AiChatAssistant() {
             const openAIMessages = [
                 { role: 'system', content: 'You are an assistant helping users with their goals, subgoals (tasks), habits, and journals.' },
                 { role: 'system', content: `Here is their data: ${JSON.stringify(filteredRag)}` },
-                ...updatedMessages.slice(-20).map(msg => ({
+                ...updatedMessages.slice(-25).map(msg => ({
                     role: msg.sender === 'user' ? 'user' : 'assistant',
                     content: msg.text
                 }))
