@@ -1,5 +1,5 @@
 <h1 align='center'>Welcome to Bloom Habits </h1>
-<h2 align='center'>An ADHD Productivity companion for tracking Goals, Tasks, Daily Structure Builder, Recurring Habits and AI Journal entry emotional analysis. All with dynamic progress visualizations.</h2>
+<h2 align='center'>An ADHD Productivity companion for tracking Goals, Tasks, Daily Structure Builder, Recurring Habits, AI Journal entry emotional analysis and an AI Assistant with RAG. All with dynamic progress visualizations.</h2>
 
 &nbsp;
 
@@ -23,6 +23,7 @@
 
 ## 🎯 Top Features
 - Visualization of progress through dynamically grown trees based on the number of completed Goals, Subgoals and Habits
+- AI Assistant with RAG (Retrieval-Augmented Generation) architecture for context-aware interaction with user data
 - Journal emotion analysis using IBM Machine Learning AI API
 - Recurring Habits with Streak tracking
 - Daily Habit Timeline
@@ -37,6 +38,7 @@
 - `JWT & Bcrypt`
 - `Tailwind`
 - `IBM Machine Learning API`
+- `OpenAI API`
 
 ## 🎨 Full Features
 General:
@@ -69,6 +71,10 @@ Wallpaper Engine:
 - Specialized Dashboard as a Live Interactable Desktop Wallpaper
 - Separate login system for the Wallpaper Engine
 
+AI Chat Assistant:
+-AI Chat Assistant, available at all times, connected to chatGPT, with RAG system to connect chatGPT to user data 
+-The user can ask the AI for help with or questions about their goals, habits, journals
+
 # 🍿 Bloom Screenshots
 Note: Some Screenshots are from earlier builds and the UI has been updated since then. I encourage you to check out Blooms demo account on the Bloom website to see the actual product
 
@@ -95,9 +101,22 @@ Note: Some Screenshots are from earlier builds and the UI has been updated since
 
 # ☀️ New in Bloom!
 
-1. Use the new Bloom Desktop Wallpaper as a permanent live and interactable desktop background through Wallpaper Engine!
-2. Current Time Position Marker on the Habits Timeline. Now you can immediately tell which Habit deadline is approaching.
-3. Various bug fixes and UI/UX adjustments to make your experience smoother.
+1. Introducing the Bloom AI Chat Assistant! Including a custom RAG (Retrieval-Augmented Generation) system giving the Assistant ability to answer any question about your goals, tasks, habits and journals.
+2. Use the new Bloom Desktop Wallpaper as a permanent live and interactable desktop background through Wallpaper Engine!
+3. Current Time Position Marker on the Habits Timeline. Now you can immediately tell which Habit deadline is approaching.
+4. Various bug fixes and UI/UX adjustments to make your experience smoother.
+
+<h3 align='center'>RAG aided AI Chat Assistant</h3>
+
+The AI Assistant is fully integrated with your Bloom profile, meaning it knows your goals, your tasks, your habits, and your journals — and it’s ready to help. Not sure where to focus next? Need suggestions on how to structure your day? Ask the assistant. It’s like having a personal growth coach right at your fingertips.
+
+Look for the chat bubble in the lower-right corner of the page to get started. Log in to unlock personalized guidance based on your unique habits, goals, and journals. Your growth journey just got smarter.
+
+&nbsp;
+
+![news0](https://github.com/user-attachments/assets/b0dd76f8-372b-468c-8c76-a3efe88754a4)
+
+
 
 <h3 align='center'> Interactable Desktop Wallpaper </h3>
 Introducing the Bloom Desktop Wallpaper – a sleek, interactive tool designed to elevate your habit tracking experience right from your desktop! Available through Wallpaper Engine on Steam, this custom wallpaper turns your desktop into a powerful productivity hub. Wallpaper Engine’s Chromium-based framework allows websites to be used as dynamic backgrounds, and we’ve taken full advantage of this to bring you a unique, engaging experience tailored to your habit tracking needs.
