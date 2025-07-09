@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
+import moment from 'moment';
 
 export default function SignInWE() {
 
@@ -15,6 +16,12 @@ export default function SignInWE() {
   const [errorMessageAlert, setErrorMessageAlert] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const date = new Date();
+  const [todaysDay, setTodaysDay] = useState(weekday[date.getDay()]);
+  const [todaysWelcomeDate, setTodaysWelcomeDate] = useState(moment().format('MMMM Do YYYY'));
+  const [todaysTime, setTodaysTime] = useState(moment().format('hh:mm a'));
 
   const clearAlert = () => {
     setErrorMessageAlert(null);
@@ -91,6 +98,17 @@ export default function SignInWE() {
   return (
     <div className='min-h-screen bg-gradient-to-tl from-sky-900 to-gray-800'>
       <div className='min-h-screen bg-[url("/bggrid.png")] text-slate-100'>
+
+        {/* Middle Top Container */}
+        <div className=''>
+          {/* Welcome text */}
+            <div className='px-5 lg:py-4 sm:px-10 flex flex-col justify-center items-center'>
+            <p className='pt-14 font-BrushFont text-7xl 2xl:text-8xl text-wrapbreak-words italic max-w-4xl'>{todaysTime}</p>
+              <h1 className='text-lg -mt-3 font-medium text-slate-400 '><span className=''>{todaysDay}, {todaysWelcomeDate}</span></h1>
+            </div>
+        </div>
+
+
         <div className='flex p-3 max-w-4xl mx-auto flex-col lg:flex-row md:items-top sm:gap-10 md:gap-15 lg:gap-20 md:px-14 pt-20'>
         {/* left side */}
         
