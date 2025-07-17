@@ -35,6 +35,9 @@ mongoose.connect(process.env.MONGO
 
 const __dirname = path.resolve();
 const app = express();
+app.set('trust proxy', 3);
+
+
 
 const aiLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 10 min
@@ -72,6 +75,9 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/chat', aiLimiter, chatRoutes);
 app.use('/api/ai', aiRoutes);
 
+app.get('/ip', (request, response) => {
+    response.send(request.ip);
+});
 
 
 app.use(express.static(path.join(__dirname, '/client/dist')));
