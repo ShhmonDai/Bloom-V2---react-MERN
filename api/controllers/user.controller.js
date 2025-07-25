@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from '../utils/error.js';
 import User from '../models/user.model.js';
+import { deleteFirebaseImage } from '../utils/deleteFirebaseImage.js';
 
 export const test = (req, res) => {
     res.json({ message: 'API is working!' });
@@ -22,7 +23,7 @@ export const updateUser = async (req, res, next) => {
         const validUser = await User.findById(req.params.userId );
 
         if (!validUser) {
-            return next(errorHandler(400, 'User not found'));
+            return next(errorHandler(404, 'User not found'));
         }
 
         const validPassword = bcryptjs.compareSync(password, validUser.password);
@@ -58,6 +59,13 @@ export const updateUser = async (req, res, next) => {
         }
     }
     try {
+        const user = await User.findById(req.params.userId); // Fetch current user data
+
+        // If a new profilePicture is provided and different from the existing one
+        if (req.body.profilePicture && user.profilePicture !== req.body.profilePicture) {
+            await deleteFirebaseImage(user.profilePicture);
+        }
+
         const updatedUser = await User.findByIdAndUpdate(
             req.params.userId,
             {
@@ -84,7 +92,18 @@ export const deleteUser = async (req, res, next) => {
     if (!req.user.isAdmin && req.user.id !== req.params.userId) {
         return next(errorHandler(403, 'You are not allowed to delete this user'));
     }
+
     try {
+        const user = await User.findById(req.params.userId);
+        if (!user) {
+            return next(errorHandler(404, 'User not found'));
+        }
+
+        // Delete profile picture from Firebase, if applicable
+        if (user.profilePicture) {
+            await deleteFirebaseImage(user.profilePicture);
+        }
+
         await User.findByIdAndDelete(req.params.userId);
         res.status(200).json({ message: 'User deleted successfuly'});
     } catch (error) {

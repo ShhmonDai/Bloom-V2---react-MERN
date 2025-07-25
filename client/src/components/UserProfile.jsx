@@ -148,7 +148,6 @@ export default function UserProfile() {
     const [updateUserError, setUpdateUserError] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({});
-    console.log(imageFileUploadProgress, imageFileUploadError);
     const filePickerRef = useRef();
     const dispatch = useDispatch();
 
@@ -231,6 +230,7 @@ export default function UserProfile() {
             }else{
                 dispatch(updateSuccess(data));
                 setUpdateUserSuccess("User's profile updated successsfuly");
+                setImageFileUploadProgress(null);
             }
         } catch (error) {
             dispatch(updateFailure(error.message));
