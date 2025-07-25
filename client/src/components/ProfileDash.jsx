@@ -2818,7 +2818,7 @@ export default function ProfileDash() {
               <>
                 <div className='group/item' key={habit._id}>
 
-                  <div className='grid grid-cols-[25%_10%_auto] sm:grid-cols-[20%_5%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                  <div className='grid grid-cols-[17%_10%_auto] sm:grid-cols-[10%_5%_auto] lg:grid-cols-[7%_5%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                     {/* Time - Icon - Task */}
 
@@ -2889,7 +2889,7 @@ export default function ProfileDash() {
                 <>
                   <div className='group/item' key={subgoal._id}>
 
-                    <div className='grid grid-cols-[12%_auto_24%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                    <div className='grid grid-cols-[10%_auto_24%] sm:grid-cols-[7%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                       {/* Category - Subgoal Name */}
 
@@ -2897,7 +2897,7 @@ export default function ProfileDash() {
                         {categoryIcon[subgoal.category]}
                       </div>
 
-                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start lg:justify-self-center'>
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start'>
                         {subgoal.title}
                       </div>
 
@@ -2935,7 +2935,7 @@ export default function ProfileDash() {
                 <>
                   <div className='group/item' key={subgoal._id}>
 
-                    <div className='grid grid-cols-[12%_auto_24%] sm:grid-cols-[20%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                    <div className='grid grid-cols-[10%_auto_24%] sm:grid-cols-[7%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                       {/* Category - Subgoal Name - Date */}
 
@@ -2943,7 +2943,7 @@ export default function ProfileDash() {
                         {categoryIcon[subgoal.category]}
                       </div>
 
-                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start lg:justify-self-center'>
+                      <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start'>
                         {subgoal.title}
                       </div>
 
