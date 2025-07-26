@@ -83,10 +83,23 @@ export const getUsageOne = async (req, res, next) => {
         if (!userId) {
             return res.status(400).json({ error: 'User ID is required' });
         }
+        // Get start of the current week
         const now = new Date();
-        const weekNow = startOfWeek(now, { weekStartsOn: 1 });
+        const weekStart = startOfWeek(now, { weekStartsOn: 1 });
+        weekStart.setUTCHours(0, 0, 0, 0); // normalize to UTC midnight
 
-        const usage = await AiUsage.find({ userId, weekStart: weekNow });
+        // Get start of the next week
+        const nextWeekStart = new Date(weekStart);
+        nextWeekStart.setUTCDate(weekStart.getUTCDate() + 7);
+
+        // Use range-based match to avoid timezone issues
+        const usage = await AiUsage.find({
+            userId,
+            weekStart: {
+                $gte: weekStart,
+                $lt: nextWeekStart,
+            },
+        });
 
         res.status(200).json(usage);
     } catch (error) {
