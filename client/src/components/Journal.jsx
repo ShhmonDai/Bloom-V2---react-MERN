@@ -44,6 +44,9 @@ export default function Journal() {
     // Joy - Sadness - Anger - Disgust - Fear
     const COLORS = ['#f9c74f', '#5390d9', '#f07167', '#955ec9', '#9a8c98'];
     const [graphData, setGraphData] = useState([]);
+
+    const currentCharCount = userJournals?.[page - 1]?.content?.length || 0;
+    const [weeksUsage, setWeeksUsage] = useState(0);
     
 
     const RADIAN = Math.PI / 180;
@@ -184,7 +187,25 @@ export default function Journal() {
 
             fetchJournals();
         }
-    }, [currentUser._id, reload]);  
+    }, [currentUser._id, reload]);
+    
+    useEffect(() => {
+        const fetchUsage = async () => {
+            try {
+                const res = await fetch(`/api/watson/getUsageOne`);
+                const data = await res.json();
+                if (res.ok) {
+                    setWeeksUsage(data[0]?.count || 0);
+                }
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+
+        if (currentUser) {
+            fetchUsage();
+        }
+    }, [currentUser._id, reload]);
 
 
     useEffect(() => {
@@ -353,10 +374,26 @@ export default function Journal() {
 
         <div className='flex flex-col py-5 rounded-xl max-w-5xl w-full text-center items-center gap-4 bg-gradient-to-b from-white to-indigo-50'>
             <h1>Click to analyze emotions using IBM Watson:Natural Language Understanding</h1>
-              <h1>Limited to entries in English! </h1>
-              <h1>Max Characters: 2000 </h1>
-              <Button className='w-fit mb-5' gradientDuoTone='cyanToBlue' type='button' disabled={loading} onClick={() => {setLoading(true); handleAnalyze();}}>{loading ? 'Loading...' : 'Analyze Emotions!'}</Button>
+              <h1>Limited to entries in English! Max Characters allowed: 2000. Weekly usage limit: 7 </h1>
+              <h1 className={`font-semibold ${currentCharCount > 2000 ? 'text-red-500' : 'text-gray-800'}`}>
+                  Characters Used: {currentCharCount} / 2000
+              </h1>
+              <h1 className={`font-semibold ${weeksUsage > 6 ? 'text-red-500' : 'text-gray-800'}`}>
+                  Weekly Watson Usage: {weeksUsage} / 7
+              </h1>
 
+              <Button
+                  className='w-fit mb-5'
+                  gradientDuoTone='cyanToBlue'
+                  type='button'
+                  disabled={loading || currentCharCount > 2000 || weeksUsage >= 7}
+                  onClick={() => {
+                      setLoading(true);
+                      handleAnalyze();
+                  }}
+              >
+                  {loading ? 'Loading...' : 'Analyze Emotions!'}
+              </Button>
             { visibilityRes && (
                   <div className='w-full min-h-10 pb-10 bg-gradient-to-b from-transparent rounded-b-3xl via-indigo-100 to-indigo-200'>
 
