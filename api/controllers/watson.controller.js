@@ -99,9 +99,24 @@ export const getUsage = async (req, res, next) => {
         const now = new Date();
         const weekStart = startOfWeek(now, { weekStartsOn: 1 });
 
+        const nextWeekStart = new Date(weekStart);
+        nextWeekStart.setDate(weekStart.getDate() + 7);
+
         const lastWeekUsage = await watsonUsage.aggregate([
-            { $match: { weekStart: weekStart } },
-            { $group: { _id: null, total: { $sum: '$count' } } },
+            {
+                $match: {
+                    weekStart: {
+                        $gte: weekStart,
+                        $lt: nextWeekStart,
+                    },
+                },
+            },
+            {
+                $group: {
+                    _id: null,
+                    total: { $sum: '$count' },
+                },
+            },
         ]);
 
         const lastWeekMessages = lastWeekUsage[0]?.total || 0;

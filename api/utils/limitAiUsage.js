@@ -8,6 +8,7 @@ export const limitAiUsage = async (req, res, next) => {
         const userId = req.user.id;
         const now = new Date();
         const weekStart = startOfWeek(now, { weekStartsOn: 1 });
+        weekStart.setUTCHours(0, 0, 0, 0); // normalize to UTC 00:00
 
         let usage = await AiUsage.findOne({ userId, weekStart });
 
