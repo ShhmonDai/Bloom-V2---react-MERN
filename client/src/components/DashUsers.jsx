@@ -64,44 +64,38 @@ const customModalTheme = {
 export default function DashUsers() {
     const { currentUser } = useSelector((state) => state.user);
     const [users, setUsers] = useState([]);
-    const [showMore, setShowMore] = useState(true);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [userIdToDelete, setUserIdToDelete] = useState('');
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const res = await fetch(`/api/user/getusers`);
+                const res = await fetch(`/api/user/getusers?page=${page}&limit=9`);
                 const data = await res.json();
                 if (res.ok) {
                     setUsers(data.users);
-                    if (data.users.length < 9) {
-                        setShowMore(false);
-                    }
+                    setTotalPages(data.totalPages);
+                } else {
+                console.error(data.error || 'Failed to fetch usage data.');
                 }
             } catch (error) {
                 console.log(error.message);
+            } finally {
+                setLoading(false);
             }
         };
         if (currentUser.isAdmin) {
             fetchUsers();
         }
-    }, [currentUser._id]);
+    }, [page, currentUser]);
 
-    const handleShowMore = async () => {
-        const startIndex = users.length;
-        try {
-            const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
-            const data = await res.json();
-            if (res.ok) {
-                setUsers((prev) => [...prev, ...data.users]);
-                if (data.users.length < 9) {
-                    setShowMore(false);
-                }
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [page]);
+
 
     const handleDeleteUser = async () => {
         try {
@@ -122,6 +116,7 @@ export default function DashUsers() {
 
     return (
         <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500'>
+            <h2 className='text-lg text-center font-semibold mb-4'>Complete list of Users</h2>
             <Flowbite theme={{ theme: customModalTheme }}>
             {currentUser.isAdmin && users.length > 0 ? (
                 <>
@@ -171,14 +166,62 @@ export default function DashUsers() {
                             </Table.Body>
                         ))}
                     </Table>
-                    {showMore && (
-                        <button
-                            onClick={handleShowMore}
-                            className='w-full text-teal-500 self-center text-sm py-7'
-                        >
-                            Show more
-                        </button>
-                    )}
+                        {totalPages > 1 && (
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6">
+                                {/* Prev Button */}
+                                <button
+                                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={page === 1}
+                                    className={`px-3 py-1 rounded border text-sm ${page === 1
+                                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                                        : 'bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600'
+                                        }`}
+                                >
+                                    Previous
+                                </button>
+
+                                {/* Desktop Page Numbers */}
+                                <div className="hidden sm:flex gap-1">
+                                    {Array.from({ length: totalPages }, (_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => setPage(i + 1)}
+                                            className={`px-3 py-1 rounded border text-sm ${page === i + 1
+                                                ? 'bg-teal-500 text-white'
+                                                : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600'
+                                                }`}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {/* Mobile Dropdown */}
+                                <select
+                                    value={page}
+                                    onChange={(e) => setPage(Number(e.target.value))}
+                                    className="block sm:hidden px-2 py-1 rounded border bg-white dark:bg-gray-800 text-sm"
+                                >
+                                    {Array.from({ length: totalPages }, (_, i) => (
+                                        <option key={i} value={i + 1}>
+                                            Page {i + 1}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                {/* Next Button */}
+                                <button
+                                    onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={page === totalPages}
+                                    className={`px-3 py-1 rounded border text-sm ${page === totalPages
+                                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                                        : 'bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600'
+                                        }`}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        )}
                 </>
             ) : (
                 <p>You have no users yet!</p>

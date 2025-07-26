@@ -18,10 +18,11 @@ export default function DashboardComp() {
 
     const [totalAiMessages, setTotalAiMessages] = useState(0);
     const [recentAiUsage, setRecentAiUsage] = useState([]);
+    const [lastWeekAi, setLastWeekAi] = useState(0)
 
     const [totalWatsonMessages, setTotalWatsonMessages] = useState(0);
     const [recentWatsonUsage, setRecentWatsonUsage] = useState([]);
-
+    const [lastWeekWatson, setLastWeekWatson] = useState(0)
 
 
     useEffect(() => {
@@ -29,8 +30,8 @@ export default function DashboardComp() {
             try {
                 const [userRes, aiRes, watsonRes] = await Promise.all([
                     fetch('/api/user/getusers?limit=5'),
-                    fetch('/api/ai/getUsage'),
-                    fetch('/api/watson/getUsage')
+                    fetch('/api/ai/getUsage?limit=5'),
+                    fetch('/api/watson/getUsage?limit=5')
                 ]);
                 const userData = await userRes.json();
                 const aiData = await aiRes.json();
@@ -42,20 +43,15 @@ export default function DashboardComp() {
                     setLastMonthUsers(userData.lastMonthUsers);
                 }
                 if (aiRes.ok) {
-                    // Calculate total messages from all usage records
-                    const total = aiData.reduce((sum, entry) => sum + entry.count, 0);
-                    setTotalAiMessages(total);
-                    // Limit to latest 5 entries
-                    const recent = aiData.slice(0, 5);
-                    setRecentAiUsage(recent);
+
+                    setTotalAiMessages(aiData.totalMessagesCount);
+                    setRecentAiUsage(aiData.usage);
+                    setLastWeekAi(aiData.lastWeekMessages);
                 }
                 if (watsonRes.ok) {
-                    // Calculate total messages from all usage records
-                    const total2 = watsonData.reduce((sum, entry) => sum + entry.count, 0);
-                    setTotalWatsonMessages(total2);
-                    // Limit to latest 5 entries
-                    const recent2 = watsonData.slice(0, 5);
-                    setRecentWatsonUsage(recent2);
+                    setTotalWatsonMessages(watsonData.totalMessagesCount);
+                    setRecentWatsonUsage(watsonData.usage);
+                    setLastWeekWatson(watsonData.lastWeekMessages);
                 }
             } catch (err) {
                 console.error(err.message);
@@ -97,12 +93,18 @@ export default function DashboardComp() {
               <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
                   <div className='flex justify-between'>
                       <div>
-                          <h3 className='text-gray-500 text-md uppercase'>AI Messages This Week</h3>
+                          <h3 className='text-gray-500 text-md uppercase'>Total AI Messages</h3>
                           <p className='text-2xl'>{totalAiMessages}</p>
                       </div>
                       <HiAnnotation className='bg-blue-600 text-white rounded-full text-5xl p-3 shadow-lg' />
                   </div>
-                  <div className='text-sm text-gray-500'>Across all users</div>
+                  <div className='flex gap-2 text-sm'>
+                      <span className='text-green-500 flex items-center'>
+                          <HiArrowNarrowUp />
+                          {lastWeekAi}
+                      </span>
+                      <div className='text-gray-500'>This week</div>
+                  </div>
               </div>
 
               {/* Watson this week */}
@@ -110,12 +112,18 @@ export default function DashboardComp() {
               <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
                   <div className='flex justify-between'>
                       <div>
-                          <h3 className='text-gray-500 text-md uppercase'>Watson Usage This Week</h3>
+                          <h3 className='text-gray-500 text-md uppercase'>Total Watson Usage</h3>
                           <p className='text-2xl'>{totalWatsonMessages}</p>
                       </div>
                       <HiDocumentText className='bg-amber-600 text-white rounded-full text-5xl p-3 shadow-lg' />
                   </div>
-                  <div className='text-sm text-gray-500'>Across all users</div>
+                  <div className='flex gap-2 text-sm'>
+                      <span className='text-green-500 flex items-center'>
+                          <HiArrowNarrowUp />
+                          {lastWeekWatson}
+                      </span>
+                      <div className='text-gray-500'>This week</div>
+                  </div>
               </div>              
 
   

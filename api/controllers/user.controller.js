@@ -125,13 +125,14 @@ export const getUsers = async (req, res, next) => {
         return next(errorHandler(403, 'You are not allowed to see all users'));
     }
     try {
-        const startIndex = parseInt(req.query.startIndex) || 0;
+        const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 9;
+        const skip = (page - 1) * limit;
         const sortDirection = req.query.sort === 'asc' ? 1 : -1;
 
         const users = await User.find()
         .sort({ createdAt: sortDirection})
-        .skip(startIndex)
+        .skip(skip)
         .limit(limit);
 
         const usersWithoutPassword = users.map((user) => {
@@ -153,9 +154,12 @@ export const getUsers = async (req, res, next) => {
             createdAt: { $gte: oneMonthAgo }, 
         });
 
+        const totalPages = Math.ceil(totalUsers / limit);
+
         res.status(200).json({
             users: usersWithoutPassword,
             totalUsers,
+            totalPages,
             lastMonthUsers,
         });
 
