@@ -354,7 +354,7 @@ export default function Habits( {category, sendDataToCategory2}) {
             <>
               <div className='group my-1' key={todayshabit._id}>
 
-                <div className='grid grid-cols-[10%_20%_10%_auto_5%]  md:grid-cols-[5%_15%_5%_auto_5%]  items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                <div className='grid grid-cols-[10%_17%_10%_auto_5%] sm:grid-cols-[5%_10%_7%_auto_5%]  lg:grid-cols-[5%_8%_6%_auto_5%]  items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                   {/* Checkmark - Time - Icon - Task - EditOnHover */}
 
@@ -458,7 +458,7 @@ export default function Habits( {category, sendDataToCategory2}) {
                 <>
                   <div className='group/item' key={habit._id}>
 
-                    <div className='grid grid-cols-[22%_15%_auto_5%] items-center rounded-md mx-1 px-2 py-1 sm:mx-4 bg-indigo-50'>
+                    <div className='grid grid-cols-[18%_12%_auto_5%] sm:grid-cols-[12%_7%_auto_5%]  lg:grid-cols-[8%_6%_auto_5%] items-center rounded-md mx-1 px-2 py-1 sm:mx-4 bg-indigo-50'>
 
                       {/* Checkmark - Time - Icon - Task - EditOnHover */}
 

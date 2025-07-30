@@ -148,6 +148,9 @@ export default function UserProfile() {
     const [updateUserError, setUpdateUserError] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({});
+    const [weeksUsageAi, setWeeksUsageAi] = useState(0);
+    const [weeksUsageWatson, setWeeksUsageWatson] = useState(0);
+
     const filePickerRef = useRef();
     const dispatch = useDispatch();
 
@@ -158,6 +161,37 @@ export default function UserProfile() {
             setImageFileUrl(URL.createObjectURL(file));            
         }
     };
+
+    useEffect(() => {
+        const fetchUsageAi = async () => {
+            try {
+                const res = await fetch(`/api/ai/getUsageOne`);
+                const data = await res.json();
+                if (res.ok) {
+                    setWeeksUsageAi(data[0]?.count || 0);
+                }
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+
+        const fetchUsageWatson = async () => {
+            try {
+                const res = await fetch(`/api/watson/getUsageOne`);
+                const data = await res.json();
+                if (res.ok) {
+                    setWeeksUsageWatson(data[0]?.count || 0);
+                }
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+
+        if (currentUser) {
+            fetchUsageAi();
+            fetchUsageWatson();
+        }
+    }, [currentUser._id]);
 
     useEffect(() => {
         if (imageFile) {
@@ -195,7 +229,7 @@ export default function UserProfile() {
                 }); 
             }
         );
-};
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value});
@@ -276,39 +310,48 @@ export default function UserProfile() {
       <div className='max-w-lg mx-auto p-3 w-full min-h-screen'>
           <h1 className='my-7 text-center font-semibold text-3xl dark:text-gray-200'>Profile</h1>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-            <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden
-            />
+            <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden disabled={currentUser.email == 'demo@demo.com'}/>
+
             <div className='relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full' onClick={() => filePickerRef.current.click()} > 
-            {imageFileUploadProgress && (
-                <CircularProgressbar value={imageFileUploadProgress || 0} text={
-                    `${imageFileUploadProgress}%`} 
-                strokeWidth={4}
-                styles={{
-                    root:{
-                        width: '100%',
-                        height: '100%',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                    },
-                    path: {
-                        stroke: `rgba(59, 130, 246, ${imageFileUploadProgress / 100})`,
-                        strokeLinecap: 'round',
-                    },
-                    text: {
-                        fill: '#3b82f6',
-                        fontSize: '22px',
-                    },
-                }}
-                />
-            )}
-            <img src={imageFileUrl || currentUser.profilePicture} alt="user" className={`rounded-full w-full h-full border-4 border-gray-800 ${imageFileUploadProgress && imageFileUploadProgress < 100 && 'opacity-20'}`}/>
+                {imageFileUploadProgress && (
+                    <CircularProgressbar value={imageFileUploadProgress || 0} text={
+                        `${imageFileUploadProgress}%`} 
+                    strokeWidth={4}
+                    styles={{
+                        root:{
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                        },
+                        path: {
+                            stroke: `rgba(59, 130, 246, ${imageFileUploadProgress / 100})`,
+                            strokeLinecap: 'round',
+                        },
+                        text: {
+                            fill: '#3b82f6',
+                            fontSize: '22px',
+                        },
+                    }}
+                    />
+                )}
+
+                <img src={imageFileUrl || currentUser.profilePicture} alt="user" className={`rounded-full w-full h-full border-4 border-gray-800 ${imageFileUploadProgress && imageFileUploadProgress < 100 && 'opacity-20'}`}/>
             </div>
 
+            {imageFileUploadError && <Alert color='failure'>{imageFileUploadError}</Alert>}
+
             
-              {imageFileUploadError && <Alert color='failure'>{imageFileUploadError}</Alert>}
-            
-        <Flowbite theme={{ theme: customModalTheme }}>
+            <Flowbite theme={{ theme: customModalTheme }}>
+
+                <h1 className={`font-semibold text-center ${weeksUsageAi > 6 ? 'text-red-500' : 'text-gray-800'}`}>
+                    This weeks AI Chat Usage: {weeksUsageAi} / 15
+                </h1>
+                <h1 className={`font-semibold text-center ${weeksUsageWatson > 6 ? 'text-red-500' : 'text-gray-800'}`}>
+                    This weeks Watson Usage: {weeksUsageWatson} / 7
+                </h1>
+
             {currentUser.email == 'demo@demo.com' ?
             <>
             <TextInput color='gray' type='text' id='username' placeholder='username' defaultValue={currentUser.username} disabled={currentUser.email == 'demo@demo.com'} />

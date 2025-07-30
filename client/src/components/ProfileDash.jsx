@@ -10,6 +10,7 @@ import { BsYinYang } from "react-icons/bs";
 import { FaBrain, FaDumbbell } from 'react-icons/fa';
 
 import { HiArrowNarrowUp, HiArrowNarrowDown } from 'react-icons/hi';
+import { TiWarningOutline } from "react-icons/ti";
 import { Link } from 'react-router-dom';
 
 
@@ -28,6 +29,7 @@ export default function ProfileDash() {
 
   const [latestSubgoals, setLatestSubgoals] = useState([]);
   const [oldestSubgoals, setOldestSubgoals] = useState([]);
+  const [prioritySubgoals, setPrioritySubgoals] = useState([]);
 
 
   const [totalMindSubgoals, setTotalMindSubgoals] = useState(0);
@@ -111,6 +113,13 @@ export default function ProfileDash() {
     'spirit': 'bg-sky-500',
   };
 
+  const priorityColor = {
+    '4': 'text-red-500',
+    '3': 'text-amber-500',
+    '2': 'text-cyan-500',
+    '1': 'text-gray-500',
+  };
+
   const categoryText = {
     'mind': 'text-teal-500',
     'body': 'text-orange-300',
@@ -140,6 +149,8 @@ export default function ProfileDash() {
 
           setLatestSubgoals(data.latestSubgoals);
           setOldestSubgoals(data.oldestSubgoals);
+          setPrioritySubgoals(data.prioritySubgoals);
+
 
           setTotalMindSubgoals(data.totalMindSubgoals);
           setTotalBodySubgoals(data.totalBodySubgoals);
@@ -2638,7 +2649,118 @@ export default function ProfileDash() {
           {/* Habits Timeline */ }
           <Timeline tasks={timelineHabits} />
 
-                    {/* Constellation and Task/Habit Statistics container */}
+          {/* Habits Table Container */}
+          <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
+
+            {/* Description */}
+
+            <div className='flex justify-between p-3 font-semibold'>
+              <h1 className='text-center text-md p-2 text-gray-500'>Todays Habit Tasks</h1>
+
+              <Link to={"/profile?tab=habits"}><Button outline gradientDuoTone='cyanToBlue'>See all</Button></Link>
+
+            </div>
+
+            <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+              <span>Time</span>
+              <span className='justify-self-center'>Task</span>
+            </div>
+
+            {/* Map of Habits */}
+            {timelineHabits.map((habit) => (
+              <>
+                <div className='group/item' key={habit._id}>
+
+                  <div className='grid grid-cols-[17%_10%_auto] sm:grid-cols-[10%_5%_auto] lg:grid-cols-[7%_5%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+
+                    {/* Time - Icon - Task */}
+
+                    <div className={``}> {habit.timeofday}</div>
+
+                    <div className={``}>{habit.icon}</div>
+
+                    <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0' onClick={() => {
+                      setShowModalOverview(true);
+                      setFormDataDays(habit.daysofweek);
+                      setFormDataCompleted(habit.datescompleted);
+                      setFormDataOverview({ title: habit.title, category: habit.category, icon: habit.icon, timeofday: habit.timeofday, daysofweek: habit.daysofweek, datescompleted: habit.datescompleted });
+                    }}>
+                      {habit.title}
+                    </div>
+
+                    <div className='flex justify-self-end items-center justify-center'>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </>
+            ))}
+
+          </div>
+
+
+          {/* Priority Subgoals Table Container */}
+          <div className='min-h-16 pb-8 flex flex-col bg-white rounded-t-md gap-1'>
+
+            {/* Description */}
+
+            <div className='flex justify-between p-3 font-semibold'>
+              <h1 className='flex gap-2 items-center text-md p-2 text-gray-500'> Highest Priority tasks</h1>
+
+              <Dropdown label="" renderTrigger={() => <Button outline gradientDuoTone='cyanToBlue' >See all</Button>} center>
+                <Link to={'/profile?tab=mind&view=goals'}>
+                  <Dropdown.Item icon={FaBrain}>Mind</Dropdown.Item>
+                </Link>
+                <Link to={'/profile?tab=body&view=goals'}>
+                  <Dropdown.Item icon={FaDumbbell}>Body</Dropdown.Item>
+                </Link>
+                <Link to={'/profile?tab=spirit&view=goals'}>
+                  <Dropdown.Item icon={BsYinYang}>Spirit</Dropdown.Item>
+                </Link>
+              </Dropdown>
+
+            </div>
+
+            <div className='grid grid-cols-[auto_auto_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
+              <span className='justify-self-start'>Priority</span>
+              <span className='justify-self-center'>Task Title</span>
+              <span className='justify-self-end'>Category</span>
+
+            </div>
+
+            {/* Map of Latest Subgoals */}
+            {prioritySubgoals.map((subgoal) => (
+              <>
+                <div className='group/item' key={subgoal._id}>
+
+                  <div className='grid grid-cols-[10%_auto_24%] sm:grid-cols-[7%_auto_20%] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
+
+                    {/* Category - Subgoal Name */}
+
+                    <div className='text-sm sm:text-base '>
+                      <TiWarningOutline className={`text-2xl ${priorityColor[subgoal.priority]}`} />
+                    </div>
+
+                    <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0 justify-self-start'>
+                      {subgoal.title}
+                    </div>
+
+                    <div className={`justify-self-end text-sm sm:text-base text-end' ${categoryText[subgoal.category]}`}>
+                      {categoryIcon[subgoal.category]}
+                    </div>
+
+                  </div>
+
+                </div>
+              </>
+            ))}
+
+          </div>
+          {/* End of Priority Subgoals Table Container */}
+
+          {/* Constellation and Task/Habit Statistics container */}
           <div id="constellationHolder" className='w-full flex justify-center sm:justify-around flex-wrap'>
 
             <div id="constellationSpirit" className='my-5 min-w-[300px] flex flex-col-reverse items-center gap-5'>
@@ -2796,63 +2918,12 @@ export default function ProfileDash() {
             
           </div>
 
-          {/* Habits Table Container */}
-          <div className='min-h-16 pb-8 flex flex-col bg-white rounded-md gap-1'>
-
-            {/* Description */}
-
-            <div className='flex justify-between p-3 font-semibold'>
-              <h1 className='text-center text-md p-2 text-gray-500'>Todays Habit Tasks</h1>
-              
-              <Link to={"/profile?tab=habits"}><Button outline gradientDuoTone='cyanToBlue'>See all</Button></Link>
-              
-            </div>
-
-            <div className='grid grid-cols-[15%_auto] md:grid-cols-[7%_auto] font-bold items-center rounded-t-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-200'>
-              <span>Time</span>
-              <span className='justify-self-center'>Task</span>
-            </div>
-
-            {/* Map of Habits */}
-            {timelineHabits.map((habit) => (
-              <>
-                <div className='group/item' key={habit._id}>
-
-                  <div className='grid grid-cols-[17%_10%_auto] sm:grid-cols-[10%_5%_auto] lg:grid-cols-[7%_5%_auto] items-center rounded-md mx-2 px-2 py-1 sm:mx-4 bg-indigo-50'>
-
-                    {/* Time - Icon - Task */}
-
-                    <div className={``}> {habit.timeofday}</div>
-
-                    <div className={``}>{habit.icon}</div>
-
-                    <div className='font-semibold my-2 text-wrap break-words pr-2 sm:pr-0' onClick={() => {
-                      setShowModalOverview(true);
-                      setFormDataDays(habit.daysofweek);
-                      setFormDataCompleted(habit.datescompleted);
-                      setFormDataOverview({ title: habit.title, category: habit.category, icon: habit.icon, timeofday: habit.timeofday, daysofweek: habit.daysofweek, datescompleted: habit.datescompleted });
-                    }}>
-                      {habit.title}
-                    </div>
-
-                    <div className='flex justify-self-end items-center justify-center'>
-
-                    </div>
-
-                  </div>
-
-                </div>
-              </>
-            ))}
-
-          </div>
-
           
           {/* Newest/Oldest Tasks Container */}
           <div>
 
-              {/* Latest Subgoals Table Container */}
-              <div className='min-h-16 pb-8 flex flex-col bg-white rounded-t-md gap-1'>
+            {/* Latest Subgoals Table Container */}
+            <div className='min-h-16 pb-8 flex flex-col bg-white rounded-t-md gap-1'>
 
                 {/* Description */}
 
