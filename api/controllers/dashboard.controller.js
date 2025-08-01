@@ -396,9 +396,9 @@ export const getstatistics = async (req, res, next) => {
             timeofday: 1,
         });
 
-        const totalMindScore = mindSubgoalScore + mindHabitScore + mindGoalScore;
-        const totalBodyScore = bodySubgoalScore + bodyHabitScore + bodyGoalScore;
-        const totalSpiritScore = spiritSubgoalScore + spiritHabitScore + spiritGoalScore;
+        const totalMindScore = mindSubgoalScore + (mindHabitScore / 2) + (mindGoalScore * 2);
+        const totalBodyScore = bodySubgoalScore + (bodyHabitScore / 2) + (bodyGoalScore * 2);
+        const totalSpiritScore = spiritSubgoalScore + (spiritHabitScore / 2) + (spiritGoalScore * 2);
 
 
 
