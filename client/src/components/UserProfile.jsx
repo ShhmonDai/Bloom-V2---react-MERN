@@ -236,6 +236,42 @@ export default function UserProfile() {
         setFormData({ ...formData, [e.target.id]: e.target.value});
     };
 
+    const handleSettings = async (e) => {
+        const { id, value } = e.target;
+        setUpdateUserError(null);
+        setUpdateUserSuccess(null);
+
+        if (value === (currentUser?.[id]?.toString() || '')) {
+            setUpdateUserError('No changes made');
+            return;
+        }
+
+        const updatedData = { ...formData, [id]: value };
+        setFormData(updatedData);
+
+        try {
+            dispatch(updateStart());
+            const res = await fetch(`/api/user/updateSettings/${currentUser._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ [id]: value }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                dispatch(updateFailure(data.message));
+                setUpdateUserError(data.message);
+            } else {
+                dispatch(updateSuccess(data));
+                setUpdateUserSuccess("User's settings updated successfully");
+            }
+        } catch (error) {
+            dispatch(updateFailure(error.message));
+            setUpdateUserError(error.message);
+        }
+    };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUpdateUserError(null);
@@ -367,13 +403,13 @@ export default function UserProfile() {
             </h1>
 
             <div>
-                <Label>Count Tree Score From</Label>
-                <Select id='scoresFrom' value={formData.scoresFrom || currentUser.scoresFrom || 12} onChange={handleChange}>
+                <Label>Count Tree & Graph Scores From</Label>
+                <Select id='scoresFrom' value={formData.scoresFrom || currentUser.scoresFrom} onChange={handleSettings}>
                     <option value='12'>12 months ago</option>
                     <option value='1'>1 month ago</option>
                     <option value='3'>3 months ago</option>
                     <option value='6'>6 months ago</option>
-                    <option value='0'>From beginning</option>
+                    <option value='0'>Beginning</option>
                 </Select>
             </div>   
 

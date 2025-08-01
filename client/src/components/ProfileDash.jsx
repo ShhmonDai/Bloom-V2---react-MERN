@@ -60,7 +60,7 @@ export default function ProfileDash() {
   const [totalMindScore, setTotalMindScore] = useState('');
   const [totalBodyScore, setTotalBodyScore] = useState('');
   const [totalSpiritScore, setTotalSpiritScore] = useState('');
-  const [renderConstellations, setRenderConstellations] = useState('');
+  const [renderConstellations, setRenderConstellations] = useState('false');
   const [regrow, setRegrow] = useState(false);
 
 
@@ -141,7 +141,7 @@ export default function ProfileDash() {
 
     const fetchStatistics = async () => {
       try {
-        const res = await fetch(`/api/dashboard/getstatistics/${currentUser._id}`);
+        const res = await fetch(`/api/dashboard/getstatistics/${currentUser._id}?scoresFrom=${currentUser.scoresFrom}`);
         const data = await res.json();
         if (res.ok) {
 
@@ -164,17 +164,10 @@ export default function ProfileDash() {
           setCompletedBodySubgoals(data.completedBodySubgoals);
           setCompletedSpiritSubgoals(data.completedSpiritSubgoals);
 
-          if (data.mindHabitScore.length > 0) {
-            setCompletedMindHabits(data.mindHabitScore[0].total);
-          }
-
-          if (data.bodyHabitScore.length > 0){
-            setCompletedBodyHabits(data.bodyHabitScore[0].total);
-          }
-
-          if (data.spiritHabitScore.length > 0) {
-            setCompletedSpiritHabits(data.spiritHabitScore[0].total);
-          }
+          setCompletedMindHabits(data.mindHabitScore);
+          setCompletedBodyHabits(data.bodyHabitScore);
+          setCompletedSpiritHabits(data.spiritHabitScore);
+          
 
           if (data.mindHabitsLastWeek.length > 0) {
             setMindHabitsLastWeek(data.mindHabitsLastWeek[0].total);
@@ -191,6 +184,12 @@ export default function ProfileDash() {
           setMindSubgoalsLastMonth(data.mindSubgoalsLastMonth);
           setBodySubgoalsLastMonth(data.bodySubgoalsLastMonth);
           setSpiritSubgoalsLastMonth(data.spiritSubgoalsLastMonth);
+
+          setTotalMindScore(data.totalMindScore);
+          setTotalBodyScore(data.totalBodyScore);
+          setTotalSpiritScore(data.totalSpiritScore);
+
+          setRenderConstellations('true');
 
         }
       } catch (error) {
@@ -210,18 +209,6 @@ export default function ProfileDash() {
 
   }, [formDataCompleted]);
 
-  useEffect(() => {
-
-    setTotalMindScore(completedMindSubgoals + completedMindHabits);
-    setTotalBodyScore(completedBodySubgoals + completedBodyHabits);
-    setTotalSpiritScore(completedSpiritSubgoals + completedSpiritHabits);
-
-    if (totalMindScore !== '' && totalBodyScore !== '' && totalSpiritScore !== '') {
-      setRenderConstellations('true');
-    }
-
-
-  }, [completedMindSubgoals, completedMindHabits, completedBodySubgoals, completedBodyHabits, completedSpiritSubgoals, completedSpiritHabits]);
 
 
   //Spirit Sketch
@@ -2618,7 +2605,7 @@ export default function ProfileDash() {
 
   useEffect(() => {
 
-    if (renderConstellations !== '') {
+    if (renderConstellations !== 'false') {
 
       const pointsP5 = new p5(SketchPoints);
       const pointsP52 = new p5(SketchPoints2);

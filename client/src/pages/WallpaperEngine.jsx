@@ -64,7 +64,7 @@ export default function WallpaperEngine() {
     const [spiritSubgoalsLastMonth, setSpiritSubgoalsLastMonth] = useState(0);
     const [totalSpiritScore, setTotalSpiritScore] = useState('');
 
-    const [renderConstellations, setRenderConstellations] = useState('');
+    const [renderConstellations, setRenderConstellations] = useState('false');
     const [reload, setReload] = useState(false);
 
 
@@ -143,7 +143,7 @@ export default function WallpaperEngine() {
 
         const fetchStatistics = async () => {
             try {
-                const res = await fetch(`/api/dashboard/getstatistics/${currentUser._id}`);
+                const res = await fetch(`/api/dashboard/getstatistics/${currentUser._id}?scoresFrom=${currentUser.scoresFrom}`);
                 const data = await res.json();
                 if (res.ok) {
 
@@ -170,17 +170,9 @@ export default function WallpaperEngine() {
                     setCompletedSpiritGoals(data.completedSpiritGoals);
 
 
-                    if (data.mindHabitScore.length > 0) {
-                        setCompletedMindHabits(data.mindHabitScore[0].total);
-                    }
-
-                    if (data.bodyHabitScore.length > 0) {
-                        setCompletedBodyHabits(data.bodyHabitScore[0].total);
-                    }
-
-                    if (data.spiritHabitScore.length > 0) {
-                        setCompletedSpiritHabits(data.spiritHabitScore[0].total);
-                    }
+                    setCompletedMindHabits(data.mindHabitScore);
+                    setCompletedBodyHabits(data.bodyHabitScore);
+                    setCompletedSpiritHabits(data.spiritHabitScore);
 
                     if (data.mindHabitsLastWeek.length > 0) {
                         setMindHabitsLastWeek(data.mindHabitsLastWeek[0].total);
@@ -197,6 +189,12 @@ export default function WallpaperEngine() {
                     setMindSubgoalsLastMonth(data.mindSubgoalsLastMonth);
                     setBodySubgoalsLastMonth(data.bodySubgoalsLastMonth);
                     setSpiritSubgoalsLastMonth(data.spiritSubgoalsLastMonth);
+
+                    setTotalMindScore(data.totalMindScore);
+                    setTotalBodyScore(data.totalBodyScore);
+                    setTotalSpiritScore(data.totalSpiritScore);
+
+                    setRenderConstellations('true');
 
                 }
             } catch (error) {
@@ -216,18 +214,6 @@ export default function WallpaperEngine() {
 
     }, [formDataCompleted]);
 
-    useEffect(() => {
-
-        setTotalMindScore(completedMindSubgoals + completedMindHabits + completedMindGoals);
-        setTotalBodyScore(completedBodySubgoals + completedBodyHabits + completedBodyGoals);
-        setTotalSpiritScore(completedSpiritSubgoals + completedSpiritHabits + completedSpiritGoals);
-
-        if (totalMindScore !== '' && totalBodyScore !== '' && totalSpiritScore !== '') {
-            setRenderConstellations('true');
-        }
-
-
-    }, [completedMindSubgoals, completedMindHabits, completedMindGoals, completedBodySubgoals, completedBodyHabits, completedBodyGoals, completedSpiritSubgoals, completedSpiritHabits, completedSpiritGoals]);
 
 /*
     //Spirit Sketch
@@ -4121,7 +4107,7 @@ export default function WallpaperEngine() {
 
     useEffect(() => {
 
-        if (renderConstellations !== '' && category == 'mind') {
+        if (renderConstellations !== 'false' && category == 'mind') {
 
             //const pointsP5 = new p5(SketchPoints);
             //const pointsP52 = new p5(SketchPoints2);
@@ -4133,7 +4119,7 @@ export default function WallpaperEngine() {
             }
         }
 
-        else if (renderConstellations !== '' && category == 'body') {
+        else if (renderConstellations !== 'false' && category == 'body') {
 
             const treeBody = new p5(SketchBody);
 
@@ -4142,7 +4128,7 @@ export default function WallpaperEngine() {
             }
         }
 
-        else if (renderConstellations !== '' && category == 'spirit') {
+        else if (renderConstellations !== 'false' && category == 'spirit') {
 
             const treeSpirit = new p5(SketchSpirit);
 

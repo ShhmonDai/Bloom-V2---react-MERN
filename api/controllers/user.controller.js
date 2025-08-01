@@ -89,6 +89,45 @@ export const updateUser = async (req, res, next) => {
     }
 };
 
+export const updateSettings = async (req, res, next) => {
+
+    if (req.user.id !== req.params.userId || req.params.userId == process.env.DEMO_ID) {
+        return next(errorHandler(403, 'You are not allowed to update this user'));
+    }
+
+    try {
+        const validUser = await User.findById(req.params.userId);
+
+        if (!validUser) {
+            return next(errorHandler(404, 'User not found'));
+        }
+
+    } catch (error) {
+        next(error);
+    }
+
+    try {
+        const user = await User.findById(req.params.userId); // Fetch current user data
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.userId,
+            {
+                $set: {
+                    scoresFrom: req.body.scoresFrom,
+                },
+            },
+            { new: true }
+        );
+        if (!updatedUser) {
+            return next(errorHandler(404, 'User not found'));
+        }
+        const { password, ...rest } = updatedUser._doc;
+        res.status(200).json(rest);
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const deleteUser = async (req, res, next) => {
     if (!req.user.isAdmin && req.user.id !== req.params.userId) {
         return next(errorHandler(403, 'You are not allowed to delete this user'));

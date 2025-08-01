@@ -7,9 +7,20 @@ import Habit from '../models/habit.model.js';
 export const getcategoryscore = async (req, res, next) => {
     try {
 
-        const scoresFromMonths = parseInt(req.query.scoresFrom, 10) || 12;
         const scoresStartDate = new Date();
-        scoresStartDate.setMonth(scoresStartDate.getMonth() - scoresFromMonths);
+        if (!req.query.scoresFrom) {
+            scoresStartDate.setFullYear(scoresStartDate.getFullYear() - 1);
+        } else {
+            const scoresFromMonths = parseInt(req.query.scoresFrom, 10);
+
+            if (scoresFromMonths === 0) {
+                scoresStartDate.setFullYear(scoresStartDate.getFullYear() - 100);
+            } else if (scoresFromMonths === 12) {
+                scoresStartDate.setFullYear(scoresStartDate.getFullYear() - 1);
+            } else {
+                scoresStartDate.setMonth(scoresStartDate.getMonth() - scoresFromMonths);
+            }
+        }
 
         const totalSubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
@@ -24,6 +35,12 @@ export const getcategoryscore = async (req, res, next) => {
             userId: req.params.userId,
             category: req.query.category,
             updatedAt: { $gte: scoresStartDate },
+            accomplished: true,
+        });
+
+        const completedSubgoals = await Subgoal.countDocuments({
+            userId: req.params.userId,
+            category: req.query.category,
             accomplished: true,
         });
 
@@ -172,7 +189,7 @@ export const getcategoryscore = async (req, res, next) => {
             },
         ]);
 
-        res.status(200).json({ totalGoals, totalSubgoals, subgoalScore, goalScore, mindHabitScore, spiritHabitScore, bodyHabitScore });
+        res.status(200).json({ totalGoals, totalSubgoals, subgoalScore, goalScore, mindHabitScore, spiritHabitScore, bodyHabitScore, completedSubgoals });
     } catch (error) {
         next(error);
     }
