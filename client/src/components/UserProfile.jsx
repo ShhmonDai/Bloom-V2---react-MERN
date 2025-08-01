@@ -1,4 +1,4 @@
-import { Alert, Button, Flowbite, Modal, TextInput } from 'flowbite-react';
+import { Alert, Button, Flowbite, Modal, TextInput, Label, Select } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
@@ -15,7 +15,8 @@ import {
     signoutSuccess,
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { HiOutlineExclamationCircle, HiCog } from 'react-icons/hi';
+import { MdAddPhotoAlternate } from "react-icons/md";
 
 const customModalTheme = {
     textInput: {
@@ -307,12 +308,12 @@ export default function UserProfile() {
     };
 
   return (
-      <div className='max-w-lg mx-auto p-3 w-full min-h-screen'>
+      <div className='max-w-lg mx-auto mb-32 p-3 w-full min-h-screen'>
           <h1 className='my-7 text-center font-semibold text-3xl dark:text-gray-200'>Profile</h1>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
             <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden disabled={currentUser.email == 'demo@demo.com'}/>
 
-            <div className='relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full' onClick={() => filePickerRef.current.click()} > 
+            <div className='relative w-32 h-32 self-center cursor-pointer shadow-md rounded-full' onClick={() => filePickerRef.current.click()} > 
                 {imageFileUploadProgress && (
                     <CircularProgressbar value={imageFileUploadProgress || 0} text={
                         `${imageFileUploadProgress}%`} 
@@ -336,6 +337,7 @@ export default function UserProfile() {
                     }}
                     />
                 )}
+                  <div className='absolute top-0 right-0 text-black border-2 border-black rounded-full bg-white drop-shadow-md text-2xl p-1'><MdAddPhotoAlternate /></div>
 
                 <img src={imageFileUrl || currentUser.profilePicture} alt="user" className={`rounded-full w-full h-full border-4 border-gray-800 ${imageFileUploadProgress && imageFileUploadProgress < 100 && 'opacity-20'}`}/>
             </div>
@@ -345,12 +347,41 @@ export default function UserProfile() {
             
             <Flowbite theme={{ theme: customModalTheme }}>
 
-                <h1 className={`font-semibold text-center ${weeksUsageAi > 6 ? 'text-red-500' : 'text-gray-800'}`}>
-                    This weeks AI Chat Usage: {weeksUsageAi} / 15
+            <h1 className={`text-center font-bold text-lg mt-8`}>
+            Statistics
+            </h1>    
+
+            <Label className='text-center'>This Week's API Usage</Label>
+
+            <div className='flex flex-wrap gap-4 justify-center'>
+                <h1 className={`text-center ${weeksUsageAi > 6 ? 'text-red-500' : 'text-gray-800'}`}>
+                    <b>AI Chat</b> Usage: {weeksUsageAi}/15
                 </h1>
-                <h1 className={`font-semibold text-center ${weeksUsageWatson > 6 ? 'text-red-500' : 'text-gray-800'}`}>
-                    This weeks Watson Usage: {weeksUsageWatson} / 7
+                <h1 className={`text-center ${weeksUsageWatson > 6 ? 'text-red-500' : 'text-gray-800'}`}>
+                    <b>Watson</b> Usage: {weeksUsageWatson}/7
                 </h1>
+            </div>
+
+                  <h1 className={`text-center font-bold text-lg mt-8`}>
+            Settings
+            </h1>
+
+            <div>
+                <Label>Count Tree Score From</Label>
+                <Select id='scoresFrom' value={formData.scoresFrom || currentUser.scoresFrom || 12} onChange={handleChange}>
+                    <option value='12'>12 months ago</option>
+                    <option value='1'>1 month ago</option>
+                    <option value='3'>3 months ago</option>
+                    <option value='6'>6 months ago</option>
+                    <option value='0'>From beginning</option>
+                </Select>
+            </div>   
+
+
+
+                  <h1 className={`text-center font-bold text-lg mt-8`}>
+            Personal Info
+            </h1>    
 
             {currentUser.email == 'demo@demo.com' ?
             <>

@@ -28,13 +28,11 @@ export default function ProfileMind() {
   const [goalScore, setGoalScore] = useState('');
   const [habitScore, setHabitScore] = useState('');
 
-  const [totalScore, setTotalScore] = useState('');
-
 
   useEffect(() => {
     const fetchCategoryScore = async () => {
       try {
-        const res = await fetch(`/api/category/getcategoryscore/${currentUser._id}?category=${category}`);
+        const res = await fetch(`/api/category/getcategoryscore/${currentUser._id}?category=${category}&scoresFrom=${currentUser.scoresFrom}`);
         const data = await res.json();
         if (res.ok) {
           setSubgoalScore(data.subgoalScore);
@@ -54,9 +52,9 @@ export default function ProfileMind() {
     if (currentUser) {
       fetchCategoryScore();
     }
-  }, [currentUser._id, mindGoalsScore, mindHabitsScore]);
+  }, [currentUser._id]);
 
-  const Sketch = (p) => {
+  const Sketch = (p, totalScore) => {
 
     const PI = 3.1416;
 
@@ -577,24 +575,13 @@ export default function ProfileMind() {
 
 
   useEffect(() => {
-
-    setTotalScore((goalScore * 2) + subgoalScore + (habitScore / 2));
-    console.log('habitScore: ' + habitScore);
-
-  }, [goalScore, subgoalScore, habitScore]);
-
-
-  useEffect(() => {
-
-    if (goalScore !== '' && subgoalScore !== '' && habitScore !== '' && totalScore !== '') {
-
-      console.log('totalScore: ' + totalScore);
-      const myP5 = new p5(Sketch);
+    if (goalScore !== '' && subgoalScore !== '' && habitScore !== '') {
+      const total = (goalScore * 2) + subgoalScore + (habitScore / 2);
+      console.log('totalScore:', total);
+      const myP5 = new p5((p) => Sketch(p, total)); // pass `total` as arg
       return () => myP5.remove();
-
     }
-
-  }, [totalScore]);
+  }, [goalScore, subgoalScore, habitScore]);
 
 
 

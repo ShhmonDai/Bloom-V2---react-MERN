@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
         type: Boolean,
         default: false,
     },
+    scoresFrom: {
+        type: Number,
+        default: 12,
+    },
     }, {timestamps: true}
 );
 

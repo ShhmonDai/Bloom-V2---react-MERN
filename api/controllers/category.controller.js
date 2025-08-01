@@ -7,8 +7,9 @@ import Habit from '../models/habit.model.js';
 export const getcategoryscore = async (req, res, next) => {
     try {
 
-        const twelveMonthsAgo = new Date();
-        twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+        const scoresFromMonths = parseInt(req.query.scoresFrom, 10) || 12;
+        const scoresStartDate = new Date();
+        scoresStartDate.setMonth(scoresStartDate.getMonth() - scoresFromMonths);
 
         const totalSubgoals = await Subgoal.countDocuments({
             userId: req.params.userId,
@@ -22,14 +23,14 @@ export const getcategoryscore = async (req, res, next) => {
         const subgoalScore = await Subgoal.countDocuments({
             userId: req.params.userId,
             category: req.query.category,
-            updatedAt: { $gte: twelveMonthsAgo },
+            updatedAt: { $gte: scoresStartDate },
             accomplished: true,
         });
 
         const goalScore = await Goal.countDocuments({
             userId: req.params.userId,
             category: req.query.category,
-            updatedAt: { $gte: twelveMonthsAgo },
+            updatedAt: { $gte: scoresStartDate },
             accomplished: true,
         });
 
@@ -68,7 +69,7 @@ export const getcategoryscore = async (req, res, next) => {
             },
             {
                 $match: {
-                    "datescompleted": { $gte: twelveMonthsAgo },
+                    "datescompleted": { $gte: scoresStartDate },
                 },
             },
             {
@@ -114,7 +115,7 @@ export const getcategoryscore = async (req, res, next) => {
             },
             {
                 $match: {
-                    "datescompleted": { $gte: twelveMonthsAgo },
+                    "datescompleted": { $gte: scoresStartDate },
                 },
             },
             {
@@ -160,7 +161,7 @@ export const getcategoryscore = async (req, res, next) => {
             },
             {
                 $match: {
-                    "datescompleted": { $gte: twelveMonthsAgo },
+                    "datescompleted": { $gte: scoresStartDate },
                 },
             },
             {

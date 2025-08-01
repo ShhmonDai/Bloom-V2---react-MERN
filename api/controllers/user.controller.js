@@ -74,6 +74,7 @@ export const updateUser = async (req, res, next) => {
                     email: req.body.email,
                     profilePicture: req.body.profilePicture,
                     password: req.body.passwordnew,
+                    scoresFrom: req.body.scoresFrom,
                 },
             },
             { new: true }
