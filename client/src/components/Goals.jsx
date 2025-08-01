@@ -290,7 +290,7 @@ export default function Goals( {category, sendDataToCategory} ) {
         
         <>
         {/* User Goals */}
-        {userGoals.map((goal, index) => (
+        {userGoals.map((goal) => (
           
           
           <div key={goal._id} id={goal._id} className='group sm:mx-2' >
@@ -407,7 +407,7 @@ export default function Goals( {category, sendDataToCategory} ) {
                       <div className={`border-b-2 rounded-t-md shadow-lg ${goalColor[category]}`}>
                         <div className={`mx-2 ${goalDone.accomplished ? 'bg-slate-200 line-through' : 'bg-white'} flex flex-row justify-between px-5 py-4 text-xl font-semibold shadow-lg`}>
 
-                          <div className={` w-full cursor-pointer `} onClick={() => document.getElementById(goalDone._id).classList.toggle('is-open')}>{goalDone.title}</div>
+                          <div className={` w-full cursor-pointer `} onClick={() => toggleGoalOpen(goalDone._id)}>{goalDone.title}</div>
 
                           <div className='hidden group-[.is-open]/done:inline'>
                             <Dropdown dismissOnClick={false} renderTrigger={() => <button type="button"><BsThreeDots /></button>}>
@@ -427,7 +427,7 @@ export default function Goals( {category, sendDataToCategory} ) {
                       {/* Inner Div of Goals */}
                       <div className='h-0 border-x-2 bg-gradient-to-b from-gray-50 to-white border-gray-300 group-[.is-open]/done:h-auto group-[.is-open]/done:py-10 flex scale-y-0 group-[.is-open]/done:scale-y-100 overflow-hidden flex-col mx-4 sm:mx-10 lg:mx-14 px-2 origin-top transition-all duration-700'>
 
-                        <div className='flex flex-row cursor-pointer justify-between' onClick={() => document.getElementById(goalDone._id).classList.toggle('is-open')} >
+                        <div className='flex flex-row cursor-pointer justify-between' onClick={() => toggleGoalOpen(goalDone._id)} >
                           <button type='button' className=''><TfiAngleDoubleUp /></button>
                           <button type='button' className=''><TfiAngleDoubleUp /></button>
                         </div>
@@ -439,7 +439,7 @@ export default function Goals( {category, sendDataToCategory} ) {
                         <div className='mb-5 p-2 min-h-20 text-center break-words' >{goalDone.content}</div>
 
 
-                        < Subgoals goalId={goalDone._id} category={category} sendDataToParent={handleDataFromChild} />
+                        < Subgoals goalId={goalDone._id} category={category} sendDataToParent={handleDataFromChild} loadSubgoals={openGoals.has(goalDone._id)} />
 
 
                       </div>
@@ -448,7 +448,7 @@ export default function Goals( {category, sendDataToCategory} ) {
                       <div className={`border-t-2 rounded-b shadow-md ${goalColor[category]}`} >
                         <div className={`mx-2 flex ${goalDone.accomplished ? 'bg-slate-200' : 'bg-white'} min-h-[60px] flex-row justify-evenly items-center px-4`}>
                           <span className='hidden group-[.is-open]/done:flex font-semibold'>Created on: {new Date(goalDone.createdOn).toLocaleDateString()} </span>
-                          <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full text-gray-400' onClick={() => document.getElementById(goalDone._id).classList.toggle('is-open')}><TfiAngleDoubleDown /></span>
+                          <span className='flex justify-center group-[.is-open]:rotate-180 cursor-pointer w-full text-gray-400' onClick={() => toggleGoalOpen(goalDone._id)}><TfiAngleDoubleDown /></span>
 
                           {goalDone.accomplished ?
                             (<button type='button' onClick={() => {
