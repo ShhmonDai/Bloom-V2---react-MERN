@@ -11,18 +11,12 @@ export default function ProfileBody() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('body');
 
-  const [bodyGoalsScore, setBodyGoalsScore] = useState('');
   const [bodyHabitsScore, setBodyHabitsScore] = useState('');
-
-  function handleDataFromGoals(data) {
-    setBodyGoalsScore(data);
-  }
+  const [completedTasks, setCompletedTasks] = useState(0);
 
   function handleDataFromHabits(data) {
     setBodyHabitsScore(data);
   }
-
-
 
   const [subgoalScore, setSubgoalScore] = useState('');
   const [goalScore, setGoalScore] = useState('');
@@ -39,10 +33,10 @@ export default function ProfileBody() {
           setGoalScore(data.goalScore);
           if (data.bodyHabitScore > 0){
             setHabitScore(data.bodyHabitScore[0].total);
-          }
-          else {
+          } else {
             setHabitScore(0);
           }
+          setCompletedTasks(data.completedSubgoals);
         }
       } catch (error) {
         console.log(error.message);
@@ -584,7 +578,7 @@ export default function ProfileBody() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder category={category} sendDataToCategory={handleDataFromGoals} sendDataToCategory2={handleDataFromHabits} />
+        <GoalHolder category={category} sendDataToCategory2={handleDataFromHabits} finishedTasks={completedTasks} />
 
 
 

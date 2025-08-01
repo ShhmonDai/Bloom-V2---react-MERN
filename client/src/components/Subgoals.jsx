@@ -5,7 +5,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import Notes from './Notes';
 
-export default function Subgoals({goalId, category, sendDataToParent, loadSubgoals}) {
+export default function Subgoals({goalId, category, loadSubgoals}) {
   
     const { currentUser } = useSelector((state) => state.user);
     const [reload, setReload] = useState(false);
@@ -55,7 +55,6 @@ export default function Subgoals({goalId, category, sendDataToParent, loadSubgoa
                                 setHideCompleted('hidden');
                             }   
                             setFinishedSubgoals(dataSub.finishedSubgoals);
-                            sendDataToParent(dataSub.categoryScore);
                             setLoaded(true);
                         }
                     } catch (error) {

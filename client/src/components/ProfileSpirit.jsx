@@ -11,12 +11,8 @@ export default function ProfileSpirit() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('spirit');
 
-  const [spiritGoalsScore, setSpiritGoalsScore] = useState('');
   const [spiritHabitsScore, setSpiritHabitsScore] = useState('');
-
-  function handleDataFromGoals(data) {
-    setSpiritGoalsScore(data);
-  }
+  const [completedTasks, setCompletedTasks] = useState(0);
 
   function handleDataFromHabits(data) {
     setSpiritHabitsScore(data);
@@ -39,7 +35,7 @@ export default function ProfileSpirit() {
           } else {
             setHabitScore(0);
           }
-
+          setCompletedTasks(data.completedSubgoals);
         }
       } catch (error) {
         console.log(error.message);
@@ -567,7 +563,7 @@ export default function ProfileSpirit() {
           <div id="sliderHolder"></div>
         </div>
 
-        <GoalHolder category={category} sendDataToCategory={handleDataFromGoals} sendDataToCategory2={handleDataFromHabits} />
+        <GoalHolder category={category} sendDataToCategory2={handleDataFromHabits} finishedTasks={completedTasks} />
 
 
 

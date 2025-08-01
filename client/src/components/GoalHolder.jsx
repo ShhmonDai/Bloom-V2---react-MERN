@@ -9,7 +9,7 @@ import { IoArrowUndo, IoArrowRedo } from "react-icons/io5";
 
 
 
-export default function GoalHolder({ category, sendDataToCategory, sendDataToCategory2} ) {
+export default function GoalHolder({ category, sendDataToCategory2, finishedTasks} ) {
 
     const location = useLocation();
     const [view, setView] = useState('');
@@ -105,7 +105,7 @@ export default function GoalHolder({ category, sendDataToCategory, sendDataToCat
 
         <div className='flex flex-col justify-center bg-gradient-to-b from-white via-indigo-100 to-indigo-100'>
           {view === 'habits' && <HabitsComp category={category} sendDataToCategory2={sendDataToCategory2} />}
-          {view === 'goals' && < Goals category={category} sendDataToCategory={sendDataToCategory} />}
+          {view === 'goals' && < Goals category={category} finishedTasks={finishedTasks} />}
           {view === '' && <div className=' pt-28 pb-20 gap-5 font-semibold bg-white flex justify-center items-center'> 
            
             Click on Goals or Habits to continue!

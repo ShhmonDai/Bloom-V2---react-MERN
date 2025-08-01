@@ -8,7 +8,7 @@ import { TfiAngleDoubleUp } from "react-icons/tfi";
 import Subgoals from './Subgoals';
 import moment from 'moment';
 
-export default function Goals( {category, sendDataToCategory} ) {
+export default function Goals( {category, finishedTasks} ) {
 
   const { currentUser } = useSelector((state) => state.user);
   const [reload, setReload] = useState(false);
@@ -16,10 +16,7 @@ export default function Goals( {category, sendDataToCategory} ) {
   const [userGoals, setUserGoals] = useState([]);
   const [userGoalsAccomplished, setUserGoalsAccomplished] = useState([]);
 
-
-  const [finishedTasks, setFinishedTasks] = useState(0);
   const [finishedGoals, setFinishedGoals] = useState(0);
-  const [categoryScore, setCategoryScore] = useState('');
 
   const [openGoals, setOpenGoals] = useState(new Set());
 
@@ -32,7 +29,6 @@ export default function Goals( {category, sendDataToCategory} ) {
           setUserGoals(data.goals);
           setUserGoalsAccomplished(data.accomplishedGoals);
           setFinishedGoals(data.finishedGoals);
-
         }
       } catch (error) {
         console.log(error.message);
@@ -58,23 +54,6 @@ export default function Goals( {category, sendDataToCategory} ) {
 
     document.getElementById(goalId)?.classList.toggle('is-open');
   };
-
-
-  function handleDataFromChild(data) {
-    setFinishedTasks(data);
-  }
-
-  useEffect(() => {
-
-    const catScore = finishedTasks + (finishedGoals * 2)
-
-    setCategoryScore(catScore);
-
-  }, [finishedGoals, finishedTasks]);
-
-  useEffect(() => {
-    sendDataToCategory(categoryScore);
-  }, [categoryScore])
 
   const [idToDelete, setIdToDelete] = useState({});
 
@@ -331,7 +310,7 @@ export default function Goals( {category, sendDataToCategory} ) {
               <div className='mb-5 p-2 min-h-20 text-center break-words' >{goal.content}</div>
 
 
-              < Subgoals goalId={goal._id} category={category} sendDataToParent={handleDataFromChild} loadSubgoals={openGoals.has(goal._id)} />
+              < Subgoals goalId={goal._id} category={category} loadSubgoals={openGoals.has(goal._id)} />
        
 
             </div>
@@ -439,7 +418,7 @@ export default function Goals( {category, sendDataToCategory} ) {
                         <div className='mb-5 p-2 min-h-20 text-center break-words' >{goalDone.content}</div>
 
 
-                        < Subgoals goalId={goalDone._id} category={category} sendDataToParent={handleDataFromChild} loadSubgoals={openGoals.has(goalDone._id)} />
+                        < Subgoals goalId={goalDone._id} category={category} loadSubgoals={openGoals.has(goalDone._id)} />
 
 
                       </div>

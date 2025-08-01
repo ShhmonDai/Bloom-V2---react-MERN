@@ -11,13 +11,8 @@ export default function ProfileMind() {
   const { currentUser, error, loading } = useSelector(state => state.user);
   const [category, setCategory] = useState('mind');
 
-  const [mindGoalsScore, setMindGoalsScore] = useState('');
   const [mindHabitsScore, setMindHabitsScore] = useState('');
-
-
-  function handleDataFromGoals(data) {
-    setMindGoalsScore(data);
-  }
+  const [completedTasks, setCompletedTasks] = useState(0);
 
   function handleDataFromHabits(data) {
     setMindHabitsScore(data);
@@ -39,10 +34,10 @@ export default function ProfileMind() {
           setGoalScore(data.goalScore);
           if (data.mindHabitScore > 0) {
             setHabitScore(data.mindHabitScore[0].total);
-          }
-          else {
+          } else {
             setHabitScore(0);
           }
+          setCompletedTasks(data.completedSubgoals);
         }
       } catch (error) {
         console.log(error.message);
@@ -610,7 +605,7 @@ export default function ProfileMind() {
         </div>
 
 
-        <GoalHolder category={category} sendDataToCategory={handleDataFromGoals} sendDataToCategory2={handleDataFromHabits} />
+        <GoalHolder category={category} sendDataToCategory2={handleDataFromHabits} finishedTasks={completedTasks} />
 
 
 
