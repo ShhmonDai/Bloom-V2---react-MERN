@@ -5,11 +5,12 @@ import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import Notes from './Notes';
 
-export default function Subgoals({goalId, category, sendDataToParent}) {
+export default function Subgoals({goalId, category, sendDataToParent, loadSubgoals}) {
   
     const { currentUser } = useSelector((state) => state.user);
     const [reload, setReload] = useState(false);
     const [refreshNote, setRefreshNote] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
 
 
@@ -42,29 +43,30 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
 
 
     useEffect(() => {
-
-        const fetchSubGoals = async () => {
-            try {
-                const resSub = await fetch(`/api/subgoal/getgoalsubgoals/${goalId}/${currentUser._id}?category=${category}`);
-                const dataSub = await resSub.json();
-                if (resSub.ok) {
-                    setUserSubGoals(dataSub.subgoals);
-                    setTotalSubgoals(dataSub.totalSubgoals);
-                    if (dataSub.goalInfo.hideDone == "hidden") {
-                        setHideCompleted('hidden');
-                    }   
-                    setFinishedSubgoals(dataSub.finishedSubgoals);
-                    sendDataToParent(dataSub.categoryScore);
-                }
-            } catch (error) {
-                console.log(error.message);
+        if (!loaded && loadSubgoals) {
+            const fetchSubGoals = async () => {
+                    try {
+                        const resSub = await fetch(`/api/subgoal/getgoalsubgoals/${goalId}/${currentUser._id}?category=${category}`);
+                        const dataSub = await resSub.json();
+                        if (resSub.ok) {
+                            setUserSubGoals(dataSub.subgoals);
+                            setTotalSubgoals(dataSub.totalSubgoals);
+                            if (dataSub.goalInfo.hideDone == "hidden") {
+                                setHideCompleted('hidden');
+                            }   
+                            setFinishedSubgoals(dataSub.finishedSubgoals);
+                            sendDataToParent(dataSub.categoryScore);
+                            setLoaded(true);
+                        }
+                    } catch (error) {
+                        console.log(error.message);
+                    }
+            };
+            if (currentUser) {
+                fetchSubGoals();
             }
-        };
-
-        if (currentUser) {
-            fetchSubGoals();
         }
-    }, [currentUser._id, category, reload]); 
+    }, [loadSubgoals, loaded, goalId, reload]); 
 
 
     const handleCreateSubgoal = async (e) => {
@@ -348,7 +350,7 @@ export default function Subgoals({goalId, category, sendDataToParent}) {
 
           </div>
 
-          <div> < Notes goalId={goalId} category={category} refresh={refreshNote} /> </div>
+            <div> < Notes goalId={goalId} category={category} refresh={refreshNote} loadNotes={loadSubgoals} /> </div>
 
 
             {/* Add Subgoal Modal */}

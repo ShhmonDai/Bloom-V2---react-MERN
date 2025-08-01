@@ -5,10 +5,11 @@ import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 
-export default function Notes( {goalId, category, refresh} ) {
+export default function Notes( {goalId, category, refresh, loadNotes} ) {
     
     const { currentUser } = useSelector((state) => state.user);
     const [reload, setReload] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     const [userNotes, setUserNotes] = useState([]);
 
@@ -73,25 +74,24 @@ export default function Notes( {goalId, category, refresh} ) {
 
 
     useEffect(() => {
-
-        const fetchNotes = async () => {
-            try {
-                const resNote = await fetch(`/api/note/getgoalnotes/${goalId}?category=${category}`);
-                const dataNote = await resNote.json();
-                if (resNote.ok) {
-                    setUserNotes(dataNote.notes);
-
+        if (!loaded && loadNotes) {
+            const fetchNotes = async () => {
+                try {
+                    const resNote = await fetch(`/api/note/getgoalnotes/${goalId}?category=${category}`);
+                    const dataNote = await resNote.json();
+                    if (resNote.ok) {
+                        setUserNotes(dataNote.notes);
+                        setLoaded(true);
+                    }
+                } catch (error) {
+                    console.log(error.message);
                 }
-            } catch (error) {
-                console.log(error.message);
+            };
+            if (currentUser) {
+                fetchNotes();
             }
-        };
-
-        if (currentUser) {
-
-            fetchNotes();
         }
-    }, [currentUser._id, category, reload, refresh]);   
+    }, [loadNotes, loaded, goalId, reload, refresh]);   
   
     return (
     <div>
