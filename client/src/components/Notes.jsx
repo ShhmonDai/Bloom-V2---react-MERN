@@ -9,8 +9,6 @@ export default function Notes( {goalId, category, refresh, loadNotes} ) {
     
     const { currentUser } = useSelector((state) => state.user);
     const [reload, setReload] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-
     const [userNotes, setUserNotes] = useState([]);
 
 
@@ -74,14 +72,13 @@ export default function Notes( {goalId, category, refresh, loadNotes} ) {
 
 
     useEffect(() => {
-        if (!loaded && loadNotes) {
+        if (loadNotes) {
             const fetchNotes = async () => {
                 try {
                     const resNote = await fetch(`/api/note/getgoalnotes/${goalId}?category=${category}`);
                     const dataNote = await resNote.json();
                     if (resNote.ok) {
                         setUserNotes(dataNote.notes);
-                        setLoaded(true);
                     }
                 } catch (error) {
                     console.log(error.message);
@@ -91,7 +88,7 @@ export default function Notes( {goalId, category, refresh, loadNotes} ) {
                 fetchNotes();
             }
         }
-    }, [loadNotes, loaded, goalId, reload, refresh]);   
+    }, [loadNotes, goalId, reload, refresh]);   
   
     return (
     <div>

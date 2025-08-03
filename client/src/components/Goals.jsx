@@ -45,7 +45,7 @@ export default function Goals( {category, finishedTasks} ) {
     setOpenGoals((prevOpenGoals) => {
       const newOpenGoals = new Set(prevOpenGoals);
       if (newOpenGoals.has(goalId)) {
-        newOpenGoals.delete(goalId);
+        //newOpenGoals.delete(goalId); 
       } else {
         newOpenGoals.add(goalId);
       }

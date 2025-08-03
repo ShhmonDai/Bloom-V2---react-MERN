@@ -10,9 +10,6 @@ export default function Subgoals({goalId, category, loadSubgoals}) {
     const { currentUser } = useSelector((state) => state.user);
     const [reload, setReload] = useState(false);
     const [refreshNote, setRefreshNote] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-
-
 
     const [userSubGoals, setUserSubGoals] = useState([]);
     const [totalSubgoals, setTotalSubgoals] = useState(0);
@@ -20,18 +17,13 @@ export default function Subgoals({goalId, category, loadSubgoals}) {
 
     const [showModalAddSubgoal, setShowModalAddSubgoal] = useState(false);
     const [showModalAddNote, setShowModalAddNote] = useState(false);
-
     const [showModalUpdateSubgoal, setShowModalUpdateSubgoal] = useState(false);
-
     const [showModalDeleteSubgoal, setShowModalDeleteSubgoal] = useState(false);
-
-
     const [showModalAccomplishSubgoal, setShowModalAccomplishSubgoal] = useState(false);
 
 
     const [formDataAddSubgoal, setFormDataAddSubgoal] = useState({});
     const [formDataAddNote, setFormDataAddNote] = useState({});
-
     const [formDataUpdateSubgoal, setFormDataUpdateSubgoal] = useState({});
     const [formDataAccomplishSubgoal, setFormDataAccomplishSubgoal] = useState({});
 
@@ -43,7 +35,7 @@ export default function Subgoals({goalId, category, loadSubgoals}) {
 
 
     useEffect(() => {
-        if (!loaded && loadSubgoals) {
+        if (loadSubgoals) {
             const fetchSubGoals = async () => {
                     try {
                         const resSub = await fetch(`/api/subgoal/getgoalsubgoals/${goalId}/${currentUser._id}?category=${category}`);
@@ -55,7 +47,7 @@ export default function Subgoals({goalId, category, loadSubgoals}) {
                                 setHideCompleted('hidden');
                             }   
                             setFinishedSubgoals(dataSub.finishedSubgoals);
-                            setLoaded(true);
+
                         }
                     } catch (error) {
                         console.log(error.message);
@@ -65,7 +57,7 @@ export default function Subgoals({goalId, category, loadSubgoals}) {
                 fetchSubGoals();
             }
         }
-    }, [loadSubgoals, loaded, goalId, reload]); 
+    }, [loadSubgoals, goalId, reload]); 
 
 
     const handleCreateSubgoal = async (e) => {
